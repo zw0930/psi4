@@ -482,3 +482,22 @@ PSI_DEPRECATED("DTZRQF will soon be removed from LAPACK. Please use DTZRZF")
 int C_DTZRQF(int m, int n, double* a, int lda, double* tau);
 int C_DTZRZF(int m, int n, double* a, int lda, double* tau, double* work, int lwork);
 }  // namespace psi
+
+
+// For single precision ( Mostly level3 for the contractions )
+//http://www.netlib.org/blas/#_level_1
+
+
+// BLAS 3 Double routines
+PSI_API
+void C_SGEMM(char transa, char transb, int m, int n, int k, float alpha, float* a, int lda, float* b,
+             int ldb,float beta, float* c, int ldc);
+void C_SSYMM(char side, char uplo, int m, int n, float alpha, float* a, int lda, float* b, int ldb, float beta,
+             float* c, int ldc);
+void C_STRMM(char side, char uplo, char transa, char diag, int m, int n, float alpha, float* a, int lda, float* b,
+             int ldb);
+void C_SSYRK(char uplo, char trans, int n, int k, float alpha, float* a, int lda, float beta, float* c, int ldc);
+void C_SSYR2K(char uplo, char trans, int n, int k, float alpha, float* a, int lda, float* b, int ldb, float beta,
+              float* c, int ldc);
+void C_STRSV(char uplo, char trans, char diag, int n, float* a, int lda, float* x, int incx);
+
