@@ -256,8 +256,8 @@ class PSI_API IntegralTransform {
     void process_spaces();
     void presort_mo_tpdm_restricted();
     void presort_mo_tpdm_unrestricted();
-    void setup_tpdm_buffer(const dpdbuf4 *D);
-    void sort_so_tpdm(const dpdbuf4 *B, int irrep, size_t first_row, size_t num_rows, bool first_run);
+    void setup_tpdm_buffer(const dpdbuf4<double> *D);
+    void sort_so_tpdm(const dpdbuf4<double> *B, int irrep, size_t first_row, size_t num_rows, bool first_run);
 
     void transform_oei_restricted(const std::shared_ptr<MOSpace> s1, const std::shared_ptr<MOSpace> s2,
                                   const std::vector<double> &soInts, std::string label);
