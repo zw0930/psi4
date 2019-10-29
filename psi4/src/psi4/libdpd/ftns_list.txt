@@ -1,0 +1,158 @@
+contract444
+buf4_mat_irrep_init(X, Hx);
+buf4_mat_irrep_rd(X, Hx);
+buf4_mat_irrep_close(X, Hx);
+buf4_mat_irrep_init_block(X, Hx, rows_per_bucket);
+buf4_mat_irrep_rd_block(X, Hx, n * rows_per_bucket, rows_per_bucket);
+buf4_mat_irrep_rd_block(X, Hx, n * rows_per_bucket, rows_left);
+buf4_mat_irrep_close_block(X, Hx, rows_per_bucket);
+
+buf4_mat_irrep_init(Y, Hy);
+buf4_mat_irrep_rd(Y, Hy);
+buf4_mat_irrep_close(Y, Hy);
+
+buf_mat_irrep_init(Z_tmp, Hz);
+buf4_mat_irrep_init_target(Z, Hz);
+buf4_mat_irrep_wrt(Z, Hz);
+buf4_mat_irrep_close(Z_tmp, Hz);
+buf4_mat_irrep_close_target(Z, Hz);
+
+
+contract442
+buf4_mat_irrep_init(X, hxbuf);
+buf4_mat_irrep_rd(X, hxbuf);
+buf4_mat_irrep_shift13(X, hxbuf);
+trans4_mat_irrep_init(&Xt, hxbuf);
+trans4_mat_irrep_rd(&Xt, hxbuf);
+buf4_mat_irrep_close(X, hxbuf);
+trans4_mat_irrep_shift31(&Xt, hxbuf);
+trans4_mat_irrep_shift13(&Xt, hxbuf);
+trans4_mat_irrep_close(&Xt, hxbuf);
+trans4_close(&Xt);
+
+buf4_mat_irrep_init(Y, hybuf);
+buf4_mat_irrep_rd(Y, hybuf);
+buf4_mat_irrep_shift13(Y, hybuf);
+trans4_mat_irrep_init(&Yt, hybuf);
+trans4_mat_irrep_rd(&Yt, hybuf);
+buf4_mat_irrep_close(Y, hybuf);
+trans4_mat_irrep_shift31(&Yt, hybuf);
+trans4_mat_irrep_shift13(&Yt, hybuf);
+trans4_mat_irrep_close(&Yt, hybuf);
+trans4_close(&Yt);
+
+
+file2_scm(Z, beta);
+file2_mat_init_target(Z);
+file2_mat_init(Z_tmp);
+file2_mat_rd(Z);
+file2_mat_wrt(Z);
+file2_mat_close_target(Z);
+file2_mat_close(Z_tmp);
+
+contract424
+trans4_init(&Xt, X);
+buf4_mat_irrep_init(X, hxbuf);
+buf4_mat_irrep_rd(X, hxbuf);
+buf4_mat_irrep_shift13(X, hxbuf);
+trans4_mat_irrep_init(&Xt, hxbuf);
+trans4_mat_irrep_rd(&Xt, hxbuf);
+buf4_mat_irrep_close(X, hxbuf);
+trans4_mat_irrep_shift31(&Xt, hxbuf);
+trans4_mat_irrep_shift13(&Xt, hxbuf);
+buf4_mat_irrep_row_zero(X, hxbuf, pq);
+buf4_mat_irrep_row_rd(X, hxbuf, pq);
+buf4_mat_irrep_row_close(X, hxbuf);
+
+file2_mat_init(Y);
+file2_mat_rd(Y);
+
+trans4_init(&Zt, Z);
+buf4_scm(Z, beta);
+buf4_mat_irrep_init(Z_tmp, hzbuf);
+buf4_mat_irrep_init_target(Z, hzbuf);
+trans4_mat_irrep_init(&Zt, hzbuf);
+trans4_mat_irrep_rd(&Zt, hzbuf);
+buf4_mat_irrep_close(Z, hzbuf);
+trans4_mat_irrep_shift31(&Zt, hzbuf);
+buf4_mat_irrep_init_target(Z, hzbuf);
+trans4_mat_irrep_wrt(&Zt, hzbuf);
+trans4_mat_irrep_close_target(&Zt, hzbuf);
+buf4_mat_irrep_close(Z_tmp, hzbuf);
+buf4_mat_irrep_row_zero(Z, hzbuf, pq);
+buf4_mat_irrep_row_wrt(Z, hzbuf, pq);
+buf4_mat_irrep_row_close(Z, hzbuf);
+
+
+contract422
+buf4_mat_irrep_init(X, hxbuf);
+buf4_mat_irrep_rd(X, hxbuf);
+dpd_block_matrix(X->params->spi[Gs], X->params->rpi[Gr]);
+dpd_block_matrix(X->params->rpi[Gr], X->params->spi[Gs]);
+free_dpd_block(TMP, X->params->spi[Gs], X->params->rpi[Gr]);
+buf4_mat_irrep_close(X, GZ);
+
+file2_mat_init(Y);
+file2_mat_rd(Y);
+dot_block(TMP, Y->matrix[Gs], X->params->spi[Gs], X->params->rpi[Gr], alpha);
+file2_mat_close(Y);
+
+file2_mat_init(Z);
+file2_mat_wrt(Z);
+file2_mat_close(Z);
+
+
+contract244
+file2_mat_init(X);
+file2_mat_rd(X);
+file2_mat_close(X);
+
+trans4_init(&Yt, Y);
+buf4_mat_irrep_init(Y, hybuf);
+buf4_mat_irrep_rd(Y, hybuf);
+buf4_mat_irrep_shift13(Y, hybuf);
+trans4_mat_irrep_init(&Yt, hybuf);
+trans4_mat_irrep_rd(&Yt, hybuf);
+buf4_mat_irrep_close(Y, hybuf);
+trans4_mat_irrep_shift31(&Yt, hybuf);
+buf4_mat_irrep_row_init(Y, hybuf);
+buf4_mat_irrep_row_zero(Y, hybuf, pq);
+buf4_mat_irrep_row_rd(Y, hybuf, pq);
+buf4_mat_irrep_row_close(Y, hybuf);
+trans4_close(&Yt);
+
+trans4_init(&Zt, Z);
+buf4_scm(Z, beta);
+buf4_mat_irrep_init(Z, hzbuf);
+buf4_mat_irrep_rd(Z, hzbuf);
+trans4_mat_irrep_init(&Zt, hzbuf);
+trans4_mat_irrep_rd(&Zt, hzbuf);
+buf4_mat_irrep_close(Z, hzbuf);
+trans4_mat_irrep_shift13(&Zt, hzbuf);
+trans4_mat_irrep_wrt(&Zt, hzbuf);
+trans4_mat_irrep_close(&Zt, hzbuf);
+buf4_mat_irrep_wrt(Z, hzbuf);
+buf4_mat_irrep_row_zero(Z, hzbuf, pq);
+buf4_mat_irrep_row_rd(Z, hzbuf, pq);
+buf4_mat_irrep_row_wrt(Z, hzbuf, pq);
+buf4_mat_irrep_row_init(Z, hzbuf);
+buf4_mat_irrep_row_close(Z, hzbuf);
+trans4_close(&Zt);
+
+
+contract222
+file2_mat_init(X);
+file2_mat_rd(X);
+file2_mat_close(X);
+
+file2_mat_init(Y);
+file2_mat_rd(Y);
+file2_mat_close(Y);
+
+file2_mat_init(Z);
+file2_mat_rd(Z);
+file2_mat_wrt(Z);
+file2_mat_close(Z);
+
+
+
