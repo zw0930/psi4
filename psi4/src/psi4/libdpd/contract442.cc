@@ -79,10 +79,9 @@ int DPD::contract442(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdfile2<double> *Z
 
     /*  if(std::fabs(beta) > 0.0) dpd_file2_scm(Z, beta); */
     file2_scm(Z, beta);
-    file2_mat_init_target(Z);
-    file2_mat_init(Z_tmp);
+    file2_mat_init(Z);
     /*  if(std::fabs(beta) > 0.0) dpd_file2_mat_rd(Z); */
-    file2_mat_rd_target(Z);
+    file2_mat_rd(Z);
 
 #ifdef DPD_DEBUG
     zrow = Z->params->rowtot;
@@ -326,8 +325,8 @@ int DPD::contract442(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdfile2<double> *Z
     if ((target_Y == 1) || (target_Y == 2)) trans4_close(&Yt);
 
     file2_mat_wrt(Z);
-    file2_mat_close_target(Z);
-    file2_mat_close(Z_tmp);
+    file2_mat_close(Z);
+   
 
     return 0;
 }
