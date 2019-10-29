@@ -96,7 +96,7 @@ dpd_file2_cache_entry *DPD::dpd_file2_cache_last() {
     return (nullptr);
 }
 
-int DPD::file2_cache_add(dpdfile2 *File) {
+int DPD::file2_cache_add(dpdfile2<double> *File) {
     int h, dpdnum;
     dpd_file2_cache_entry *this_entry;
 
@@ -150,7 +150,7 @@ int DPD::file2_cache_add(dpdfile2 *File) {
     return 0;
 }
 
-int DPD::file2_cache_del(dpdfile2 *File) {
+int DPD::file2_cache_del(dpdfile2<double> *File) {
     int dpdnum;
     dpd_file2_cache_entry *this_entry, *next_entry, *last_entry;
 
@@ -211,7 +211,7 @@ void DPD::file2_cache_print(std::string out) {
     printer->Printf("Total cached: %8.1f kB\n", total_size * sizeof(double) / 1e3);
 }
 
-void DPD::file2_cache_dirty(dpdfile2 *File) {
+void DPD::file2_cache_dirty(dpdfile2<double> *File) {
     dpd_file2_cache_entry *this_entry;
 
     this_entry = file2_cache_scan(File->filenum, File->my_irrep, File->params->pnum, File->params->qnum, File->label,
