@@ -233,7 +233,7 @@ Matrix::Matrix(const Dimension &rows, const Dimension &cols, int symmetry) {
     alloc();
 }
 
-Matrix::Matrix(dpdfile2 *inFile)
+Matrix::Matrix(dpdfile2<double> *inFile)
     : rowspi_(inFile->params->nirreps), colspi_(inFile->params->nirreps), name_(inFile->label) {
     global_dpd_->file2_mat_init(inFile);
     global_dpd_->file2_mat_rd(inFile);
@@ -249,7 +249,7 @@ Matrix::Matrix(dpdfile2 *inFile)
     global_dpd_->file2_mat_close(inFile);
 }
 
-Matrix::Matrix(dpdbuf4 *inBuf) : name_(inBuf->file.label), rowspi_(1), colspi_(1) {
+Matrix::Matrix(dpdbuf4<double> *inBuf) : name_(inBuf->file.label), rowspi_(1), colspi_(1) {
     if (inBuf->params->nirreps != 1) {
         throw PSIEXCEPTION("dpdbuf4 <-> matrix is only allowed for C1");
     }
@@ -2685,7 +2685,7 @@ void Matrix::diagonalize(Matrix &eigvectors, Vector &eigvalues, int nMatz) {
     }
 }
 
-void Matrix::write_to_dpdfile2(dpdfile2 *outFile) {
+void Matrix::write_to_dpdfile2(dpdfile2<double> *outFile) {
     global_dpd_->file2_mat_init(outFile);
 
     if (outFile->params->nirreps != nirrep_) {
@@ -2724,7 +2724,7 @@ void Matrix::write_to_dpdfile2(dpdfile2 *outFile) {
     global_dpd_->file2_mat_close(outFile);
 }
 
-void Matrix::write_to_dpdbuf4(dpdbuf4 *outBuf) {
+void Matrix::write_to_dpdbuf4(dpdbuf4<double> *outBuf) {
     if (outBuf->params->nirreps != nirrep_) {
         char *str = new char[100];
         sprintf(str, "Irrep count mismatch.  Matrix class has %d irreps, but dpdbuf4 has %d.", nirrep_,
