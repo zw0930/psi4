@@ -38,7 +38,10 @@
 
 namespace psi {
 
+template<typename U>
 struct dpdfile2;
+
+template<typename U>
 struct dpdbuf4;
 
 class PSIO;
@@ -209,14 +212,14 @@ class PSI_API Matrix : public std::enable_shared_from_this<Matrix> {
      *
      * @param inFile dpdfile2 object to replicate (must already be initialized).
      */
-    Matrix(dpdfile2* inFile);
+    Matrix(dpdfile2<double>* inFile);
 
     /**
      * Contructs a Matrix from a dpdbuf4
      *
      * @param inBuf dpdbuf4 object to replicate (must already be initialized).
      */
-    Matrix(dpdbuf4 *inBuf);
+    Matrix(dpdbuf4<double> *inBuf);
 
 
     /**

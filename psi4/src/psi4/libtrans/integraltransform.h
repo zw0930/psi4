@@ -43,6 +43,7 @@
 
 namespace psi {
 
+template<typename U>
 struct dpdbuf4;
 class Matrix;
 class Dimension;
