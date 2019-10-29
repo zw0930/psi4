@@ -57,7 +57,7 @@ namespace psi {
  * @param beta The prefactor for the existing tensor
  */
 #define PermSym 1
-int DPD::contract444_df(dpdbuf4 *B, dpdbuf4 *tau_in, dpdbuf4 *tau_out, double alpha, double beta) {
+int DPD::contract444_df(dpdbuf4<double> *B, dpdbuf4<double> *tau_in, dpdbuf4<double> *tau_out, double alpha, double beta) {
     // Zero out the target buffer
     buf4_scm(tau_out, beta);
 
