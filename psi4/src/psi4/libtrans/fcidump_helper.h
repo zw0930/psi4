@@ -38,7 +38,10 @@
 namespace psi {
 class Wavefunction;
 class Matrix;
+
+template <typename U>
 struct dpdbuf4;
+
 namespace fcidump {
 /*!  \fn void fcidump_tei_helper(int nirrep, bool restricted, std::map<std::string, int> DPD_info, double
  * ints_tolerance,

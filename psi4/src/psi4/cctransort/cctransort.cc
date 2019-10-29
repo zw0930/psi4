@@ -559,8 +559,8 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
 
         iwl_rdone(PSIF_OEI, PSIF_MO_A_FZC, tmp_oei, ntri_all, 0, 0, "outfile");
 
-        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 0, 0, "h(I,J)");
-        global_dpd_->file2_mat_init_dp(&H);
+        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 0, 0, "h(I,J)");
+        global_dpd_->file2_mat_init(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int i = 0; i < aoccpi[h]; i++) {
                 for (int j = 0; j < aoccpi[h]; j++) {
@@ -570,12 +570,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt_dp(&H);
-        global_dpd_->file2_mat_close_dp(&H);
-        global_dpd_->file2_close_dp(&H);
+        global_dpd_->file2_mat_wrt(&H);
+        global_dpd_->file2_mat_close(&H);
+        global_dpd_->file2_close(&H);
 
-        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 1, 1, "h(A,B)");
-        global_dpd_->file2_mat_init_dp(&H);
+        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 1, 1, "h(A,B)");
+        global_dpd_->file2_mat_init(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int a = 0; a < avirpi[h]; a++) {
                 for (int b = 0; b < avirpi[h]; b++) {
@@ -585,12 +585,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt_dp(&H);
-        global_dpd_->file2_mat_close_dp(&H);
-        global_dpd_->file2_close_dp(&H);
+        global_dpd_->file2_mat_wrt(&H);
+        global_dpd_->file2_mat_close(&H);
+        global_dpd_->file2_close(&H);
 
-        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 0, 1, "h(I,A)");
-        global_dpd_->file2_mat_init_dp(&H);
+        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 0, 1, "h(I,A)");
+        global_dpd_->file2_mat_init(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int i = 0; i < aoccpi[h]; i++) {
                 for (int a = 0; a < avirpi[h]; a++) {
@@ -600,14 +600,14 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt_dp(&H);
-        global_dpd_->file2_mat_close_dp(&H);
-        global_dpd_->file2_close_dp(&H);
+        global_dpd_->file2_mat_wrt(&H);
+        global_dpd_->file2_mat_close(&H);
+        global_dpd_->file2_close(&H);
 
         iwl_rdone(PSIF_OEI, PSIF_MO_B_FZC, tmp_oei, ntri_all, 0, 0, "outfile");
 
-        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 2, 2, "h(i,j)");
-        global_dpd_->file2_mat_initd_dp(&H);
+        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 2, 2, "h(i,j)");
+        global_dpd_->file2_mat_init(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int i = 0; i < boccpi[h]; i++) {
                 for (int j = 0; j < boccpi[h]; j++) {
@@ -617,12 +617,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt_dp(&H);
-        global_dpd_->file2_mat_close_dp(&H);
-        global_dpd_->file2_close_dp(&H);
+        global_dpd_->file2_mat_wrt(&H);
+        global_dpd_->file2_mat_close(&H);
+        global_dpd_->file2_close(&H);
 
-        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 3, 3, "h(a,b)");
-        global_dpd_->file2_mat_init_dp(&H);
+        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 3, 3, "h(a,b)");
+        global_dpd_->file2_mat_init(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int a = 0; a < bvirpi[h]; a++) {
                 for (int b = 0; b < bvirpi[h]; b++) {
@@ -632,12 +632,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt_dp(&H);
-        global_dpd_->file2_mat_close_dp(&H);
-        global_dpd_->file2_close_dp(&H);
+        global_dpd_->file2_mat_wrt(&H);
+        global_dpd_->file2_mat_close(&H);
+        global_dpd_->file2_close(&H);
 
-        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 2, 3, "h(i,a)");
-        global_dpd_->file2_mat_init_dp(&H);
+        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 2, 3, "h(i,a)");
+        global_dpd_->file2_mat_init(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int i = 0; i < boccpi[h]; i++) {
                 for (int a = 0; a < bvirpi[h]; a++) {
@@ -647,9 +647,9 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt_dp(&H);
-        global_dpd_->file2_mat_close_dp(&H);
-        global_dpd_->file2_close_dp(&H);
+        global_dpd_->file2_mat_wrt(&H);
+        global_dpd_->file2_mat_close(&H);
+        global_dpd_->file2_close(&H);
     } else {  // RHF/ROHF
         dpdfile2<double> H;
         int ntri_all = nmo * (nmo + 1) / 2;
