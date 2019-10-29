@@ -1109,7 +1109,7 @@ void DiskSOMCSCF::transform(bool approx_only) {
     throw PSIEXCEPTION("DiskSOMCSCF::transform is not supported for Disk integrals.");
 }
 void DiskSOMCSCF::set_act_MO() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     // => Read dense active MO <= //
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -1171,8 +1171,8 @@ SharedMatrix DiskSOMCSCF::compute_Q(SharedMatrix TPDMmat) {
     timer_on("SOMCSCF: Q matrix");
 
     // => Write active TPDM <= //
-    dpdbuf4 G, TPDM;
-    dpdfile2 Q;
+    dpdbuf4<double> G, TPDM;
+    dpdfile2<double> Q;
 
     double** TPDMmatp = TPDMmat->pointer();
     psio_->open(PSIF_MCSCF, PSIO_OPEN_OLD);
@@ -1246,8 +1246,8 @@ SharedMatrix DiskSOMCSCF::compute_Qk(SharedMatrix TPDMmat, SharedMatrix U, Share
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_MCSCF, PSIO_OPEN_OLD);
 
-    dpdfile2 Qk, dpdUact;
-    dpdbuf4 G, Gk, TPDM;
+    dpdfile2<double> Qk, dpdUact;
+    dpdbuf4<double> G, Gk, TPDM;
 
     // Write out the incoming TPDM
     double** TPDMmatp = TPDMmat->pointer();
