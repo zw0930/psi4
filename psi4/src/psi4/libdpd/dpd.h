@@ -365,6 +365,13 @@ class PSI_API DPD {
     int file2_print(dpdfile2<double> *File, std::string out_fname);
     int file2_mat_print(dpdfile2<double> *File, std::string out_fname);
     int file2_copy(dpdfile2<double> *InFile, int outfilenum, const char *label);
+
+// ** 
+    int file2_cast_copy_dtof(dpdfile2<double> *InFile, int outfilenum, const char *label);
+    int file2_cast_copy_ftod(dpdfile2<float> *InFile, int outfilenum, const char *label);
+
+
+
     int file2_dirprd(dpdfile2<double> *FileA, dpdfile2<double> *FileB);
     double file2_dot(dpdfile2<double> *FileA, dpdfile2<double> *FileB);
     int file2_scm(dpdfile2<double> *InFile, double alpha);
@@ -406,6 +413,14 @@ class PSI_API DPD {
 //**
     int buf4_print(dpdbuf4<double> *Buf, std::string out_fname, int print_data);
     int buf4_copy(dpdbuf4<double> *InBuf, int outfilenum, const char *label);
+
+//**
+    int buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char *label);
+    int buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *label);
+
+
+
+
     int buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
     int buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, std::string pq, std::string rs,
                   const char *label);
