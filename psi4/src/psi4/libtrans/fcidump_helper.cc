@@ -59,7 +59,7 @@ void fcidump_tei_helper(int nirrep, bool restricted, std::map<std::string, int> 
     dpd_set_default(DPD_info["instance_id"]);
 
     _default_psio_lib_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
-    dpdbuf4 K;
+    dpdbuf4<double> K;
 
     // RHF
     if (restricted) {
@@ -102,7 +102,7 @@ void fcidump_tei_helper(int nirrep, bool restricted, std::map<std::string, int> 
 }
 
 namespace detail {
-void write_tei_to_disk(std::shared_ptr<PsiOutStream> intdump, int nirrep, dpdbuf4& K, double ints_tolerance,
+void write_tei_to_disk(std::shared_ptr<PsiOutStream> intdump, int nirrep, dpdbuf4<double>& K, double ints_tolerance,
                        OrbitalIndexing indx1, OrbitalIndexing indx2) {
     for (int h = 0; h < nirrep; ++h) {
         global_dpd_->buf4_mat_irrep_init(&K, h);
