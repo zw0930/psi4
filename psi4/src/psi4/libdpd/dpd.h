@@ -218,7 +218,7 @@ struct thread_data {
     dpdbuf4<double> *WMbIj;
     int do_singles;
     dpdbuf4<double> *Dints;
-    dpdfile2<doube> *SIA;
+    dpdfile2<double> *SIA;
     int do_doubles;
     dpdfile2<double> *FME;
     dpdbuf4<double> *WmAEf;
@@ -238,8 +238,8 @@ struct thread_data {
     int last_ijk;
     std::string outfile;
     int thr_id;
-    dpdfile2 SIA_local;
-    dpdbuf4 SIjAb_local;
+    dpdfile2<double> SIA_local;
+    dpdbuf4<double> SIjAb_local;
     int newtrips;
 };
 
@@ -338,43 +338,41 @@ class PSI_API DPD {
     double **dpd_block_matrix(size_t n, size_t m);
     void free_dpd_block(double **array, size_t n, size_t m);
 
-    int contract222(dpdfile2<U> *X, dpdfile2<U> *Y, dpdfile2_target<U> *Z, int target_X, int target_Y, W alpha, W beta);
-    int contract442(dpdbuf4<U> *X, dpdbuf4<U> *Y, dpdfile2_target<U> *Z, int target_X, int target_Y, W alpha, W beta);
-    int contract422(dpdbuf4<U> *X, dpdfile2<U> *Y, dpdfile2_target<U> *Z, int trans_Y, int trans_Z, W alpha, W beta);
-    int contract244(dpdfile2<U> *X, dpdbuf4<U> *Y, dpdbuf4_target<U> *Z, int sum_X, int sum_Y, int trans_Z, W alpha, W beta);
-    int contract424(dpdbuf4<U> *X, dpdfile2<U> *Y, dpdbuf4_target<U> *Z, int sum_X, int sum_Y, int trans_Z, W alpha, W beta);
-    int contract444(dpdbuf4<U> *X, dpdbuf4<U> *Y, dpdbuf4_target<U> *Z, int target_X, int target_Y, W alpha, W beta);
+    int contract222(dpdfile2<double> *X, dpdfile2<double> *Y, dpdfile2<double> *Z, int target_X, int target_Y, double alpha, double beta);
+    int contract442(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdfile2<double> *Z, int target_X, int target_Y, double alpha, double beta);
+    int contract422(dpdbuf4<double> *X, dpdfile2<double> *Y, dpdfile2<double> *Z, int trans_Y, int trans_Z, double alpha, double beta);
+    int contract244(dpdfile2<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z, int sum_X, int sum_Y, int trans_Z, double alpha, double beta);
+    int contract424(dpdbuf4<double> *X, dpdfile2<double> *Y, dpdbuf4<double> *Z, int sum_X, int sum_Y, int trans_Z, double alpha, double beta);
+    int contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z, int target_X, int target_Y, double alpha, double beta);
     // not used
-    int contract444_df(dpdbuf4<U> *B, dpdbuf4<U> *tau_in, dpdbuf4_target<U> *tau_out, W alpha, W beta);
+    int contract444_df(dpdbuf4<double> *B, dpdbuf4<double> *tau_in, dpdbuf4<double> *tau_out, double alpha, double beta);
 
     /* Need to consolidate these routines into one general function */
-    int dot23(dpdfile2<U> *T, dpdbuf4<U> *I, dpdfile2_target<U> *Z, int transt, int transz, W alpha, W beta);
-    int dot24(dpdfile2<U> *T, dpdbuf4<U> *I, dpdfile2_target<U> *Z, int transt, int transz, W alpha, W beta);
-    int dot13(dpdfile2<U> *T, dpdbuf4<U> *I, dpdfile2_target<U> *Z, int transt, int transz, W alpha, W beta);
-    int dot14(dpdfile2<U> *T, dpdbuf4<U> *I, dpdfile2<U> *Z, int transt, int transz, W alpha, W beta);
+    int dot23(dpdfile2<double> *T, dpdbuf4<double> *I, dpdfile2<double> *Z, int transt, int transz, double alpha, double beta);
+    int dot24(dpdfile2<double> *T, dpdbuf4<double> *I, dpdfile2<double> *Z, int transt, int transz, double alpha, double beta);
+    int dot13(dpdfile2<double> *T, dpdbuf4<double> *I, dpdfile2<double> *Z, int transt, int transz, double alpha, double beta);
+    int dot14(dpdfile2<double> *T, dpdbuf4<double> *I, dpdfile2<double> *Z, int transt, int transz, double alpha, double beta);
 
-    int trace42_13(dpdbuf4<U> *A, dpdfile2<U> *B, int transb, W alpha, W beta);
+    int trace42_13(dpdbuf4<double> *A, dpdfile2<double> *B, int transb, double alpha, double beta);
 
-    int file2_init(dpdfile2<U> *File, int filenum, int irrep, int pnum, int qnum, const char *label);
-    int file2_close(dpdfile2<U> *File);
-    int file2_mat_init(dpdfile2<U> *File);
-    int file2_mat_init_target(dpdfile2_target<U> *File);
-    int file2_mat_close(dpdfile2<U> *File);
-    int file2_mat_close_target(dpdfile2_target<U> *File);
-    int file2_mat_rd(dpdfile2<U> *File);
-    int file2_mat_wrt(dpdfile2<U> *File);
+    int file2_init(dpdfile2<double> *File, int filenum, int irrep, int pnum, int qnum, const char *label);
+    int file2_close(dpdfile2<double> *File);
+    int file2_mat_init(dpdfile2<double> *File);
+    int file2_mat_close(dpdfile2<double> *File);
+    int file2_mat_rd(dpdfile2<double> *File);
+    int file2_mat_wrt(dpdfile2<double> *File);
 //**
-    int file2_print(dpdfile2<U> *File, std::string out_fname);
-    int file2_mat_print(dpdfile2<U> *File, std::string out_fname);
-    int file2_copy(dpdfile2<U> *InFile, int outfilenum, const char *label);
-    int file2_dirprd(dpdfile2<U> *FileA, dpdfile2<U> *FileB);
-    double file2_dot(dpdfile2<U> *FileA, dpdfile2<U> *FileB);
-    int file2_scm(dpdfile2<U> *InFile, W alpha);
+    int file2_print(dpdfile2<double> *File, std::string out_fname);
+    int file2_mat_print(dpdfile2<double> *File, std::string out_fname);
+    int file2_copy(dpdfile2<double> *InFile, int outfilenum, const char *label);
+    int file2_dirprd(dpdfile2<double> *FileA, dpdfile2<U> *FileB);
+    double file2_dot(dpdfile2<double> *FileA, dpdfile2<U> *FileB);
+    int file2_scm(dpdfile2<double> *InFile, double alpha);
 //**   
-    double file2_dot_self(dpdfile2<U> *BufX);
-    double file2_trace(dpdfile2<U> *InFile);
-    int file2_axpy(dpdfile2<U> *FileA, dpdfile2<U> *FileB, W alpha, int transA);
-    int file2_axpbycz(dpdfile2<U> *FileA, dpdfile2<U> *FileB, dpdfile2<U> *FileC, W a, W b, W c);
+    double file2_dot_self(dpdfile2<double> *BufX);
+    double file2_trace(dpdfile2<double> *InFile);
+    int file2_axpy(dpdfile2<double> *FileA, dpdfile2<U> *FileB, double alpha, int transA);
+    int file2_axpbycz(dpdfile2<double> *FileA, dpdfile2<double> *FileB, dpdfile2<double> *FileC, double a, double b, double c);
 
     int file4_init(dpdfile4<double> *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
     int file4_init_nocache(dpdfile4<double> *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
@@ -392,22 +390,22 @@ class PSI_API DPD {
     int file4_mat_irrep_rd_block(dpdfile4<double> *File, int irrep, int start_pq, int num_pq);
     int file4_mat_irrep_wrt_block(dpdfile4<double> *File, int irrep, int start_pq, int num_pq);
 
-    int buf4_init(dpdbuf4<U1> *Buf, int inputfile, int irrep, int pqnum, int rsnum, int file_pqnum, int file_rsnum,
+    int buf4_init(dpdbuf4<double> *Buf, int inputfile, int irrep, int pqnum, int rsnum, int file_pqnum, int file_rsnum,
                   int anti, const char *label);
-    int buf4_init(dpdbuf4<U1> *Buf, int inputfile, int irrep, std::string pq, std::string rs, std::string file_pq,
+    int buf4_init(dpdbuf4<double> *Buf, int inputfile, int irrep, std::string pq, std::string rs, std::string file_pq,
                   std::string file_rs, int anti, const char *label);
-    int buf4_init(dpdbuf4<U1> *Buf, int inputfile, int irrep, std::string pq, std::string rs, int anti, const char *label);
+    int buf4_init(dpdbuf4<double> *Buf, int inputfile, int irrep, std::string pq, std::string rs, int anti, const char *label);
     int pairnum(std::string);
 //*
-    double buf4_trace(dpdbuf4<U2> *Buf);
-    int buf4_close(dpdbuf4<U1> *Buf);
-    int buf4_mat_irrep_init(dpdbuf4<U1> *Buf, int irrep);
-    int buf4_mat_irrep_close(dpdbuf4<U1> *Buf, int irrep);
-    int buf4_mat_irrep_rd(dpdbuf4<U1> *Buf, int irrep);
-    int buf4_mat_irrep_wrt(dpdbuf4<U1> *Buf, int irrep);
+    double buf4_trace(dpdbuf4<double> *Buf);
+    int buf4_close(dpdbuf4<double> *Buf);
+    int buf4_mat_irrep_init(dpdbuf4<double> *Buf, int irrep);
+    int buf4_mat_irrep_close(dpdbuf4<double> *Buf, int irrep);
+    int buf4_mat_irrep_rd(dpdbuf4<double> *Buf, int irrep);
+    int buf4_mat_irrep_wrt(dpdbuf4<double> *Buf, int irrep);
 //**
-    int buf4_print(dpdbuf4<U2> *Buf, std::string out_fname, int print_data);
-    int buf4_copy(dpdbuf4<U2> *InBuf, int outfilenum, const char *label);
+    int buf4_print(dpdbuf4<double> *Buf, std::string out_fname, int print_data);
+    int buf4_copy(dpdbuf4<double> *InBuf, int outfilenum, const char *label);
     int buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
     int buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, std::string pq, std::string rs,
                   const char *label);
@@ -415,41 +413,41 @@ class PSI_API DPD {
     int buf4_sort_axpy(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
                        double alpha);
 //**
-    int buf4_axpy(dpdbuf4<U2> *BufX, dpdbuf4<U2> *BufY, U2 alpha);
-    int buf4_axpbycz(dpdbuf4<U2> *FileA, dpdbuf4<U2> *FileB, dpdbuf4<U2> *FileC, U2 a, U2 b, U2 c);
+    int buf4_axpy(dpdbuf4<double> *BufX, dpdbuf4<double> *BufY, double alpha);
+    int buf4_axpbycz(dpdbuf4<double> *FileA, dpdbuf4<double> *FileB, dpdbuf4<double> *FileC, double a, double b, double c);
 //*
     int buf4_dirprd(dpdbuf4<double> *BufA, dpdbuf4<double> *BufB);
-    double buf4_dot(dpdbuf4<U1> *BufA, dpdbuf4<U1> *BufB);
-    double buf4_dot_self(dpdbuf4<U1> *BufX);
+    double buf4_dot(dpdbuf4<double> *BufA, dpdbuf4<double> *BufB);
+    double buf4_dot_self(dpdbuf4<double> *BufX);
 //**
     int buf4_scm(dpdbuf4<double> *InBuf, double alpha);
     int buf4_scmcopy(dpdbuf4<double> *InBuf, int outfilenum, const char *label, double alpha);
     int buf4_symm(dpdbuf4<double> *Buf);
     int buf4_symm2(dpdbuf4<double> *Buf1, dpdbuf4<double> *Buf2);
-    int buf4_mat_irrep_shift13(dpdbuf4<T> *Buf, int irrep);
-    int buf4_mat_irrep_shift31(dpdbuf4<U2> *Buf, int irrep);
-    int buf4_mat_irrep_row_init(dpdbuf4<U1> *Buf, int irrep);
-    int buf4_mat_irrep_row_close(dpdbuf4<U1> *Buf, int irrep);
-    int buf4_mat_irrep_row_zero(dpdbuf4<U1> *Buf, int irrep, int row);
-    int buf4_mat_irrep_row_rd(dpdbuf4<U1> *Buf, int irrep, int pq);
-    int buf4_mat_irrep_row_wrt(dpdbuf4<U1> *Buf, int irrep, int pq);
+    int buf4_mat_irrep_shift13(dpdbuf4<double> *Buf, int irrep);
+    int buf4_mat_irrep_shift31(dpdbuf4<double> *Buf, int irrep);
+    int buf4_mat_irrep_row_init(dpdbuf4<double> *Buf, int irrep);
+    int buf4_mat_irrep_row_close(dpdbuf4<double> *Buf, int irrep);
+    int buf4_mat_irrep_row_zero(dpdbuf4<double> *Buf, int irrep, int row);
+    int buf4_mat_irrep_row_rd(dpdbuf4<double> *Buf, int irrep, int pq);
+    int buf4_mat_irrep_row_wrt(dpdbuf4<double> *Buf, int irrep, int pq);
 //**
-    int buf4_mat_irrep_init_block(dpdbuf4<U1> *Buf, int irrep, int num_pq);
-    int buf4_mat_irrep_close_block(dpdbuf4<U1> *Buf, int irrep, int num_pq);
-    int buf4_mat_irrep_rd_block(dpdbuf4<U1> *Buf, int irrep, int start_pq, int num_pq);
-    int buf4_mat_irrep_wrt_block(dpdbuf4<U1> *Buf, int irrep, int start_pq, int num_pq);
+    int buf4_mat_irrep_init_block(dpdbuf4<double> *Buf, int irrep, int num_pq);
+    int buf4_mat_irrep_close_block(dpdbuf4<double> *Buf, int irrep, int num_pq);
+    int buf4_mat_irrep_rd_block(dpdbuf4<double> *Buf, int irrep, int start_pq, int num_pq);
+    int buf4_mat_irrep_wrt_block(dpdbuf4<double> *Buf, int irrep, int start_pq, int num_pq);
 //*
     int buf4_dump(dpdbuf4<double> *DPDBuf, struct iwlbuf *IWLBuf, int *prel, int *qrel, int *rrel, int *srel, int bk_pack,
                   int swap23);
-    int trans4_init(dpdtrans4<U1> *Trans, dpdbuf4<U1> *Buf);
-    int trans4_close(dpdtrans4<U1> *Trans);
-    int trans4_mat_irrep_init(dpdtrans4<U1> *Trans, int irrep);
-    int trans4_mat_irrep_close(dpdtrans4<U1> *Trans, int irrep);
-    int trans4_mat_irrep_rd(dpdtrans4<U1> *Trans, int irrep);
-    int trans4_mat_irrep_wrt(dpdtrans4<U1> *Trans, int irrep);
+    int trans4_init(dpdtrans4<double> *Trans, dpdbuf4<double> *Buf);
+    int trans4_close(dpdtrans4<double> *Trans);
+    int trans4_mat_irrep_init(dpdtrans4<double> *Trans, int irrep);
+    int trans4_mat_irrep_close(dpdtrans4<double> *Trans, int irrep);
+    int trans4_mat_irrep_rd(dpdtrans4<double> *Trans, int irrep);
+    int trans4_mat_irrep_wrt(dpdtrans4<double> *Trans, int irrep);
 //*
-    int trans4_mat_irrep_shift13(dpdtrans4<U2> *Trans, int irrep);
-    int trans4_mat_irrep_shift31(dpdtrans4<U2> *Trans, int irrep);
+    int trans4_mat_irrep_shift13(dpdtrans4<double> *Trans, int irrep);
+    int trans4_mat_irrep_shift31(dpdtrans4<double> *Trans, int irrep);
 
     int mat4_irrep_print(double **matrix, dpdparams4 *Params, int irrep, int my_irrep, std::string out_fname);
 
