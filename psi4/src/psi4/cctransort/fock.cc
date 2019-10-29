@@ -66,7 +66,7 @@ void fock_uhf(std::shared_ptr<Wavefunction> ref, Dimension &aoccpi, Dimension &b
     //global_dpd_->file2_cast_copy(&fa, PSIF_CC_OEI, "fIJ_sp");
     //global_dpd_->file2_cast_copy(&fb, PSIF_CC_OEI, "fij_sp");
 
-    global_dpd_->file2_closep(&fa);
+    global_dpd_->file2_close(&fa);
     global_dpd_->file2_close(&fb);
 
     global_dpd_->file2_init(&fa, PSIF_CC_OEI, 0, 1, 1, "fAB");
