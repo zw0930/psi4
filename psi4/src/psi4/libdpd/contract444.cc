@@ -193,7 +193,7 @@ int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z,
             if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx ^ symlink]) {
                 C_DGEMM(Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
                         numlinks[Hx ^ symlink], alpha, &(X->matrix[Hx][0][0]), X->params->coltot[Hx ^ GX],
-                        &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], beta, Z->params->coltot[Hz ^ GZ]);
+                        &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], beta, &(Z->matrix[Hz][0][0]), Z->params->coltot[Hz ^ GZ]);
             }
 
             buf4_mat_irrep_close(X, Hx);
