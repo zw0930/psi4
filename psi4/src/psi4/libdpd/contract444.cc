@@ -55,7 +55,7 @@ namespace psi {
 **   double beta: A prefactor for the target beta * Z.
 */
 
-int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z, int target_X, int target_Y, W alpha, W beta) {
+int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z, int target_X, int target_Y, double alpha, double beta) {
     //**
     //dpdbuf4<float> *Z_tmp;
     int n, Hx, Hy, Hz, GX, GY, GZ, nirreps, Xtrans, Ytrans, *numlinks, symlink;
