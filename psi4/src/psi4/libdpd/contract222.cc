@@ -58,8 +58,7 @@ int DPD::contract222(dpdfile2<double> *X, dpdfile2<double> *Y, dpdfile2<double> 
     file2_mat_rd(X);
     file2_mat_init(Y);
     file2_mat_rd(Y);
-    file2_mat_init(Z_tmp);
-    file2_mat_init_target(Z);
+    file2_mat_init(Z);
     if (std::fabs(beta) > 0.0) file2_mat_rd(Z);
 
     if (target_X == 0) {
@@ -141,8 +140,8 @@ int DPD::contract222(dpdfile2<double> *X, dpdfile2<double> *Y, dpdfile2<double> 
     file2_mat_wrt(Z);
     file2_mat_close(X);
     file2_mat_close(Y);
-    file2_mat_close_target(Z);
-    file2_mat_close(Z_tmp);
+    file2_mat_close(Z);
+ 
 
     return 0;
 }
