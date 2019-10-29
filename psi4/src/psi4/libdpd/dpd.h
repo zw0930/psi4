@@ -365,30 +365,30 @@ class PSI_API DPD {
     int file2_print(dpdfile2<double> *File, std::string out_fname);
     int file2_mat_print(dpdfile2<double> *File, std::string out_fname);
     int file2_copy(dpdfile2<double> *InFile, int outfilenum, const char *label);
-    int file2_dirprd(dpdfile2<double> *FileA, dpdfile2<U> *FileB);
-    double file2_dot(dpdfile2<double> *FileA, dpdfile2<U> *FileB);
+    int file2_dirprd(dpdfile2<double> *FileA, dpdfile2<double> *FileB);
+    double file2_dot(dpdfile2<double> *FileA, dpdfile2<double> *FileB);
     int file2_scm(dpdfile2<double> *InFile, double alpha);
 //**   
     double file2_dot_self(dpdfile2<double> *BufX);
     double file2_trace(dpdfile2<double> *InFile);
-    int file2_axpy(dpdfile2<double> *FileA, dpdfile2<U> *FileB, double alpha, int transA);
+    int file2_axpy(dpdfile2<double> *FileA, dpdfile2<double> *FileB, double alpha, int transA);
     int file2_axpbycz(dpdfile2<double> *FileA, dpdfile2<double> *FileB, dpdfile2<double> *FileC, double a, double b, double c);
 
-    int file4_init(dpdfile4<double> *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
-    int file4_init_nocache(dpdfile4<double> *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
-    int file4_close(dpdfile4<double> *File);
-    int file4_mat_irrep_init(dpdfile4<double> *File, int irrep);
-    int file4_mat_irrep_close(dpdfile4<double> *File, int irrep);
-    int file4_mat_irrep_rd(dpdfile4<double> *File, int irrep);
-    int file4_mat_irrep_wrt(dpdfile4<double> *File, int irrep);
-    int file4_mat_irrep_row_init(dpdfile4<double> *File, int irrep);
-    int file4_mat_irrep_row_close(dpdfile4<double> *File, int irrep);
-    int file4_mat_irrep_row_rd(dpdfile4<double> *File, int irrep, int row);
-    int file4_mat_irrep_row_wrt(dpdfile4<double> *File, int irrep, int row);
-    int file4_mat_irrep_row_zero(dpdfile4<double> *File, int irrep, int row);
-    int file4_print(dpdfile4<double> *File, std::string out_fname);
-    int file4_mat_irrep_rd_block(dpdfile4<double> *File, int irrep, int start_pq, int num_pq);
-    int file4_mat_irrep_wrt_block(dpdfile4<double> *File, int irrep, int start_pq, int num_pq);
+    int file4_init(dpdfile4 *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
+    int file4_init_nocache(dpdfile4 *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
+    int file4_close(dpdfile4 *File);
+    int file4_mat_irrep_init(dpdfile4 *File, int irrep);
+    int file4_mat_irrep_close(dpdfile4 *File, int irrep);
+    int file4_mat_irrep_rd(dpdfile4 *File, int irrep);
+    int file4_mat_irrep_wrt(dpdfile4 *File, int irrep);
+    int file4_mat_irrep_row_init(dpdfile4 *File, int irrep);
+    int file4_mat_irrep_row_close(dpdfile4 *File, int irrep);
+    int file4_mat_irrep_row_rd(dpdfile4 *File, int irrep, int row);
+    int file4_mat_irrep_row_wrt(dpdfile4 *File, int irrep, int row);
+    int file4_mat_irrep_row_zero(dpdfile4 *File, int irrep, int row);
+    int file4_print(dpdfile4 *File, std::string out_fname);
+    int file4_mat_irrep_rd_block(dpdfile4 *File, int irrep, int start_pq, int num_pq);
+    int file4_mat_irrep_wrt_block(dpdfile4 *File, int irrep, int start_pq, int num_pq);
 
     int buf4_init(dpdbuf4<double> *Buf, int inputfile, int irrep, int pqnum, int rsnum, int file_pqnum, int file_rsnum,
                   int anti, const char *label);
@@ -466,18 +466,18 @@ class PSI_API DPD {
     void file4_cache_print(std::string out_fname);
     void file4_cache_print_screen();
 //*
-    int file4_cache_get_priority(dpdfile4<double> *File);
+    int file4_cache_get_priority(dpdfile4 *File);
 
     dpd_file4_cache_entry *file4_cache_scan(int filenum, int irrep, int pqnum, int rsnum, const char *label,
                                             int dpdnum);
     dpd_file4_cache_entry *file4_cache_last();
-    int file4_cache_add(dpdfile4<double> *File, size_t priority);
-    int file4_cache_del(dpdfile4<double> *File);
+    int file4_cache_add(dpdfile4 *File, size_t priority);
+    int file4_cache_del(dpdfile4 *File);
     dpd_file4_cache_entry *file4_cache_find_lru();
     int file4_cache_del_lru();
-    void file4_cache_dirty(dpdfile4<double> *File);
-    void file4_cache_lock(dpdfile4<double> *File);
-    void file4_cache_unlock(dpdfile4<double> *File);
+    void file4_cache_dirty(dpdfile4 *File);
+    void file4_cache_lock(dpdfile4 *File);
+    void file4_cache_unlock(dpdfile4 *File);
 
     void sort_3d(double ***Win, double ***Wout, int nirreps, int h, int *rowtot, int **rowidx, int ***roworb, int *asym,
                  int *bsym, int *aoff, int *boff, int *cpi, int *coff, int **rowidx_out, enum pattern index, int sum);
