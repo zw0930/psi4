@@ -45,8 +45,8 @@ namespace ccenergy {
 void CCEnergyWavefunction::analyze() {
     double value, value2;
 
-    dpdfile2 T1;
-    dpdbuf4 T2;
+    dpdfile2<double> T1;
+    dpdbuf4<double> T2;
 
     auto num_div = 500;
     auto max = 9.0;

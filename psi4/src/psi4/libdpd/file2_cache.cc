@@ -42,7 +42,7 @@ void DPD::file2_cache_init() { dpd_main.file2_cache = nullptr; }
 void DPD::file2_cache_close() {
     int dpdnum;
     dpd_file2_cache_entry *this_entry, *next_entry;
-    dpdfile2 Outfile;
+    dpdfile2<double> Outfile;
 
     this_entry = dpd_main.file2_cache;
 

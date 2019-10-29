@@ -55,6 +55,7 @@ namespace psi {
 #define DPD_BIGNUM 2147483647 /* the four-byte signed int limit */
 /* #define ALL_BUF4_SORT_OOC */
 
+
 struct dpdparams4 {
     int nirreps;   /* No. of irreps */
     int pqnum;     /* Pair number for the row indices */
@@ -95,29 +96,37 @@ struct dpdfile4 {
     double ***matrix;
 };
 
+template <typename U>
 struct dpdshift4 {
     int shift_type;
     int **rowtot;
     int **coltot;
-    double ****matrix;
+    U ****matrix;
 };
 
+template <typename U> 
 struct dpdbuf4 {
     int dpdnum; /* dpd structure reference */
     int anti;   /* Is this buffer antisymmetric? */
     dpdparams4 *params;
     dpdfile4 file;
-    dpdshift4 shift;
+    dpdshift4<U> shift;
     int **row_offset;
     int **col_offset;
-    double ***matrix;
+    U ***matrix;
 };
 
+
+
+
+template <typename U>
 struct dpdtrans4 {
-    double ***matrix;
-    dpdshift4 shift;
-    dpdbuf4 buf;
+    U ***matrix;
+    dpdshift4<U> shift;
+    dpdbuf4<U> buf;
 };
+
+
 
 struct dpdparams2 {
     int nirreps; /* No. of irreps */
@@ -137,6 +146,7 @@ struct dpdparams2 {
     int *qsym;    /* Orbital symmetry for index q */
 };
 
+template <typename U> 
 struct dpdfile2 {
     int dpdnum; /* dpd structure reference */
     char label[PSIO_KEYLEN];
@@ -145,8 +155,9 @@ struct dpdfile2 {
     psio_address *lfiles;
     dpdparams2 *params;
     int incore;
-    double ***matrix;
+    U ***matrix;
 };
+
 
 /* DPD File4 Cache entries */
 struct dpd_file4_cache_entry {
@@ -202,24 +213,24 @@ struct dpd_data {
 };
 
 struct thread_data {
-    dpdbuf4 *CIjAb;
-    dpdbuf4 *WAbEi;
-    dpdbuf4 *WMbIj;
+    dpdbuf4<double> *CIjAb;
+    dpdbuf4<double> *WAbEi;
+    dpdbuf4<double> *WMbIj;
     int do_singles;
-    dpdbuf4 *Dints;
-    dpdfile2 *SIA;
+    dpdbuf4<double> *Dints;
+    dpdfile2<doube> *SIA;
     int do_doubles;
-    dpdfile2 *FME;
-    dpdbuf4 *WmAEf;
-    dpdbuf4 *WMnIe;
-    dpdbuf4 *SIjAb;
+    dpdfile2<double> *FME;
+    dpdbuf4<double> *WmAEf;
+    dpdbuf4<double> *WMnIe;
+    dpdbuf4<double> *SIjAb;
     int *occpi;
     int *occ_off;
     int *virtpi;
     int *vir_off;
     double omega;
-    dpdfile2 *fIJ;
-    dpdfile2 *fAB;
+    dpdfile2<double> *fIJ;
+    dpdfile2<double> *fAB;
     int Gi;
     int Gj;
     int Gk;
@@ -327,105 +338,118 @@ class PSI_API DPD {
     double **dpd_block_matrix(size_t n, size_t m);
     void free_dpd_block(double **array, size_t n, size_t m);
 
-    int contract222(dpdfile2 *X, dpdfile2 *Y, dpdfile2 *Z, int target_X, int target_Y, double alpha, double beta);
-    int contract442(dpdbuf4 *X, dpdbuf4 *Y, dpdfile2 *Z, int target_X, int target_Y, double alpha, double beta);
-    int contract422(dpdbuf4 *X, dpdfile2 *Y, dpdfile2 *Z, int trans_Y, int trans_Z, double alpha, double beta);
-    int contract244(dpdfile2 *X, dpdbuf4 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, int trans_Z, double alpha, double beta);
-    int contract424(dpdbuf4 *X, dpdfile2 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, int trans_Z, double alpha, double beta);
-    int contract444(dpdbuf4 *X, dpdbuf4 *Y, dpdbuf4 *Z, int target_X, int target_Y, double alpha, double beta);
-    int contract444_df(dpdbuf4 *B, dpdbuf4 *tau_in, dpdbuf4 *tau_out, double alpha, double beta);
+    int contract222(dpdfile2<U> *X, dpdfile2<U> *Y, dpdfile2_target<U> *Z, int target_X, int target_Y, W alpha, W beta);
+    int contract442(dpdbuf4<U> *X, dpdbuf4<U> *Y, dpdfile2_target<U> *Z, int target_X, int target_Y, W alpha, W beta);
+    int contract422(dpdbuf4<U> *X, dpdfile2<U> *Y, dpdfile2_target<U> *Z, int trans_Y, int trans_Z, W alpha, W beta);
+    int contract244(dpdfile2<U> *X, dpdbuf4<U> *Y, dpdbuf4_target<U> *Z, int sum_X, int sum_Y, int trans_Z, W alpha, W beta);
+    int contract424(dpdbuf4<U> *X, dpdfile2<U> *Y, dpdbuf4_target<U> *Z, int sum_X, int sum_Y, int trans_Z, W alpha, W beta);
+    int contract444(dpdbuf4<U> *X, dpdbuf4<U> *Y, dpdbuf4_target<U> *Z, int target_X, int target_Y, W alpha, W beta);
+    // not used
+    int contract444_df(dpdbuf4<U> *B, dpdbuf4<U> *tau_in, dpdbuf4_target<U> *tau_out, W alpha, W beta);
 
     /* Need to consolidate these routines into one general function */
-    int dot23(dpdfile2 *T, dpdbuf4 *I, dpdfile2 *Z, int transt, int transz, double alpha, double beta);
-    int dot24(dpdfile2 *T, dpdbuf4 *I, dpdfile2 *Z, int transt, int transz, double alpha, double beta);
-    int dot13(dpdfile2 *T, dpdbuf4 *I, dpdfile2 *Z, int transt, int transz, double alpha, double beta);
-    int dot14(dpdfile2 *T, dpdbuf4 *I, dpdfile2 *Z, int transt, int transz, double alpha, double beta);
+    int dot23(dpdfile2<U> *T, dpdbuf4<U> *I, dpdfile2_target<U> *Z, int transt, int transz, W alpha, W beta);
+    int dot24(dpdfile2<U> *T, dpdbuf4<U> *I, dpdfile2_target<U> *Z, int transt, int transz, W alpha, W beta);
+    int dot13(dpdfile2<U> *T, dpdbuf4<U> *I, dpdfile2_target<U> *Z, int transt, int transz, W alpha, W beta);
+    int dot14(dpdfile2<U> *T, dpdbuf4<U> *I, dpdfile2<U> *Z, int transt, int transz, W alpha, W beta);
 
-    int trace42_13(dpdbuf4 *A, dpdfile2 *B, int transb, double alpha, double beta);
+    int trace42_13(dpdbuf4<U> *A, dpdfile2<U> *B, int transb, W alpha, W beta);
 
-    int file2_init(dpdfile2 *File, int filenum, int irrep, int pnum, int qnum, const char *label);
-    int file2_close(dpdfile2 *File);
-    int file2_mat_init(dpdfile2 *File);
-    int file2_mat_close(dpdfile2 *File);
-    int file2_mat_rd(dpdfile2 *File);
-    int file2_mat_wrt(dpdfile2 *File);
-    int file2_print(dpdfile2 *File, std::string out_fname);
-    int file2_mat_print(dpdfile2 *File, std::string out_fname);
-    int file2_copy(dpdfile2 *InFile, int outfilenum, const char *label);
-    int file2_dirprd(dpdfile2 *FileA, dpdfile2 *FileB);
-    double file2_dot(dpdfile2 *FileA, dpdfile2 *FileB);
-    int file2_scm(dpdfile2 *InFile, double alpha);
-    double file2_dot_self(dpdfile2 *BufX);
-    double file2_trace(dpdfile2 *InFile);
-    int file2_axpy(dpdfile2 *FileA, dpdfile2 *FileB, double alpha, int transA);
-    int file2_axpbycz(dpdfile2 *FileA, dpdfile2 *FileB, dpdfile2 *FileC, double a, double b, double c);
+    int file2_init(dpdfile2<U> *File, int filenum, int irrep, int pnum, int qnum, const char *label);
+    int file2_close(dpdfile2<U> *File);
+    int file2_mat_init(dpdfile2<U> *File);
+    int file2_mat_init_target(dpdfile2_target<U> *File);
+    int file2_mat_close(dpdfile2<U> *File);
+    int file2_mat_close_target(dpdfile2_target<U> *File);
+    int file2_mat_rd(dpdfile2<U> *File);
+    int file2_mat_wrt(dpdfile2<U> *File);
+//**
+    int file2_print(dpdfile2<U> *File, std::string out_fname);
+    int file2_mat_print(dpdfile2<U> *File, std::string out_fname);
+    int file2_copy(dpdfile2<U> *InFile, int outfilenum, const char *label);
+    int file2_dirprd(dpdfile2<U> *FileA, dpdfile2<U> *FileB);
+    double file2_dot(dpdfile2<U> *FileA, dpdfile2<U> *FileB);
+    int file2_scm(dpdfile2<U> *InFile, W alpha);
+//**   
+    double file2_dot_self(dpdfile2<U> *BufX);
+    double file2_trace(dpdfile2<U> *InFile);
+    int file2_axpy(dpdfile2<U> *FileA, dpdfile2<U> *FileB, W alpha, int transA);
+    int file2_axpbycz(dpdfile2<U> *FileA, dpdfile2<U> *FileB, dpdfile2<U> *FileC, W a, W b, W c);
 
-    int file4_init(dpdfile4 *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
-    int file4_init_nocache(dpdfile4 *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
-    int file4_close(dpdfile4 *File);
-    int file4_mat_irrep_init(dpdfile4 *File, int irrep);
-    int file4_mat_irrep_close(dpdfile4 *File, int irrep);
-    int file4_mat_irrep_rd(dpdfile4 *File, int irrep);
-    int file4_mat_irrep_wrt(dpdfile4 *File, int irrep);
-    int file4_mat_irrep_row_init(dpdfile4 *File, int irrep);
-    int file4_mat_irrep_row_close(dpdfile4 *File, int irrep);
-    int file4_mat_irrep_row_rd(dpdfile4 *File, int irrep, int row);
-    int file4_mat_irrep_row_wrt(dpdfile4 *File, int irrep, int row);
-    int file4_mat_irrep_row_zero(dpdfile4 *File, int irrep, int row);
-    int file4_print(dpdfile4 *File, std::string out_fname);
-    int file4_mat_irrep_rd_block(dpdfile4 *File, int irrep, int start_pq, int num_pq);
-    int file4_mat_irrep_wrt_block(dpdfile4 *File, int irrep, int start_pq, int num_pq);
+    int file4_init(dpdfile4<double> *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
+    int file4_init_nocache(dpdfile4<double> *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
+    int file4_close(dpdfile4<double> *File);
+    int file4_mat_irrep_init(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_close(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_rd(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_wrt(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_row_init(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_row_close(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_row_rd(dpdfile4<double> *File, int irrep, int row);
+    int file4_mat_irrep_row_wrt(dpdfile4<double> *File, int irrep, int row);
+    int file4_mat_irrep_row_zero(dpdfile4<double> *File, int irrep, int row);
+    int file4_print(dpdfile4<double> *File, std::string out_fname);
+    int file4_mat_irrep_rd_block(dpdfile4<double> *File, int irrep, int start_pq, int num_pq);
+    int file4_mat_irrep_wrt_block(dpdfile4<double> *File, int irrep, int start_pq, int num_pq);
 
-    int buf4_init(dpdbuf4 *Buf, int inputfile, int irrep, int pqnum, int rsnum, int file_pqnum, int file_rsnum,
+    int buf4_init(dpdbuf4<U1> *Buf, int inputfile, int irrep, int pqnum, int rsnum, int file_pqnum, int file_rsnum,
                   int anti, const char *label);
-    int buf4_init(dpdbuf4 *Buf, int inputfile, int irrep, std::string pq, std::string rs, std::string file_pq,
+    int buf4_init(dpdbuf4<U1> *Buf, int inputfile, int irrep, std::string pq, std::string rs, std::string file_pq,
                   std::string file_rs, int anti, const char *label);
-    int buf4_init(dpdbuf4 *Buf, int inputfile, int irrep, std::string pq, std::string rs, int anti, const char *label);
+    int buf4_init(dpdbuf4<U1> *Buf, int inputfile, int irrep, std::string pq, std::string rs, int anti, const char *label);
     int pairnum(std::string);
-    double buf4_trace(dpdbuf4 *Buf);
-    int buf4_close(dpdbuf4 *Buf);
-    int buf4_mat_irrep_init(dpdbuf4 *Buf, int irrep);
-    int buf4_mat_irrep_close(dpdbuf4 *Buf, int irrep);
-    int buf4_mat_irrep_rd(dpdbuf4 *Buf, int irrep);
-    int buf4_mat_irrep_wrt(dpdbuf4 *Buf, int irrep);
-    int buf4_print(dpdbuf4 *Buf, std::string out_fname, int print_data);
-    int buf4_copy(dpdbuf4 *InBuf, int outfilenum, const char *label);
-    int buf4_sort(dpdbuf4 *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
-    int buf4_sort(dpdbuf4 *InBuf, int outfilenum, enum indices index, std::string pq, std::string rs,
+//*
+    double buf4_trace(dpdbuf4<U2> *Buf);
+    int buf4_close(dpdbuf4<U1> *Buf);
+    int buf4_mat_irrep_init(dpdbuf4<U1> *Buf, int irrep);
+    int buf4_mat_irrep_close(dpdbuf4<U1> *Buf, int irrep);
+    int buf4_mat_irrep_rd(dpdbuf4<U1> *Buf, int irrep);
+    int buf4_mat_irrep_wrt(dpdbuf4<U1> *Buf, int irrep);
+//**
+    int buf4_print(dpdbuf4<U2> *Buf, std::string out_fname, int print_data);
+    int buf4_copy(dpdbuf4<U2> *InBuf, int outfilenum, const char *label);
+    int buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
+    int buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, std::string pq, std::string rs,
                   const char *label);
-    int buf4_sort_ooc(dpdbuf4 *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
-    int buf4_sort_axpy(dpdbuf4 *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
+    int buf4_sort_ooc(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
+    int buf4_sort_axpy(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
                        double alpha);
-    int buf4_axpy(dpdbuf4 *BufX, dpdbuf4 *BufY, double alpha);
-    int buf4_axpbycz(dpdbuf4 *FileA, dpdbuf4 *FileB, dpdbuf4 *FileC, double a, double b, double c);
-    int buf4_dirprd(dpdbuf4 *BufA, dpdbuf4 *BufB);
-    double buf4_dot(dpdbuf4 *BufA, dpdbuf4 *BufB);
-    double buf4_dot_self(dpdbuf4 *BufX);
-    int buf4_scm(dpdbuf4 *InBuf, double alpha);
-    int buf4_scmcopy(dpdbuf4 *InBuf, int outfilenum, const char *label, double alpha);
-    int buf4_symm(dpdbuf4 *Buf);
-    int buf4_symm2(dpdbuf4 *Buf1, dpdbuf4 *Buf2);
-    int buf4_mat_irrep_shift13(dpdbuf4 *Buf, int irrep);
-    int buf4_mat_irrep_shift31(dpdbuf4 *Buf, int irrep);
-    int buf4_mat_irrep_row_init(dpdbuf4 *Buf, int irrep);
-    int buf4_mat_irrep_row_close(dpdbuf4 *Buf, int irrep);
-    int buf4_mat_irrep_row_zero(dpdbuf4 *Buf, int irrep, int row);
-    int buf4_mat_irrep_row_rd(dpdbuf4 *Buf, int irrep, int pq);
-    int buf4_mat_irrep_row_wrt(dpdbuf4 *Buf, int irrep, int pq);
-    int buf4_mat_irrep_init_block(dpdbuf4 *Buf, int irrep, int num_pq);
-    int buf4_mat_irrep_close_block(dpdbuf4 *Buf, int irrep, int num_pq);
-    int buf4_mat_irrep_rd_block(dpdbuf4 *Buf, int irrep, int start_pq, int num_pq);
-    int buf4_mat_irrep_wrt_block(dpdbuf4 *Buf, int irrep, int start_pq, int num_pq);
-    int buf4_dump(dpdbuf4 *DPDBuf, struct iwlbuf *IWLBuf, int *prel, int *qrel, int *rrel, int *srel, int bk_pack,
+//**
+    int buf4_axpy(dpdbuf4<U2> *BufX, dpdbuf4<U2> *BufY, U2 alpha);
+    int buf4_axpbycz(dpdbuf4<U2> *FileA, dpdbuf4<U2> *FileB, dpdbuf4<U2> *FileC, U2 a, U2 b, U2 c);
+//*
+    int buf4_dirprd(dpdbuf4<double> *BufA, dpdbuf4<double> *BufB);
+    double buf4_dot(dpdbuf4<U1> *BufA, dpdbuf4<U1> *BufB);
+    double buf4_dot_self(dpdbuf4<U1> *BufX);
+//**
+    int buf4_scm(dpdbuf4<double> *InBuf, double alpha);
+    int buf4_scmcopy(dpdbuf4<double> *InBuf, int outfilenum, const char *label, double alpha);
+    int buf4_symm(dpdbuf4<double> *Buf);
+    int buf4_symm2(dpdbuf4<double> *Buf1, dpdbuf4<double> *Buf2);
+    int buf4_mat_irrep_shift13(dpdbuf4<T> *Buf, int irrep);
+    int buf4_mat_irrep_shift31(dpdbuf4<U2> *Buf, int irrep);
+    int buf4_mat_irrep_row_init(dpdbuf4<U1> *Buf, int irrep);
+    int buf4_mat_irrep_row_close(dpdbuf4<U1> *Buf, int irrep);
+    int buf4_mat_irrep_row_zero(dpdbuf4<U1> *Buf, int irrep, int row);
+    int buf4_mat_irrep_row_rd(dpdbuf4<U1> *Buf, int irrep, int pq);
+    int buf4_mat_irrep_row_wrt(dpdbuf4<U1> *Buf, int irrep, int pq);
+//**
+    int buf4_mat_irrep_init_block(dpdbuf4<U1> *Buf, int irrep, int num_pq);
+    int buf4_mat_irrep_close_block(dpdbuf4<U1> *Buf, int irrep, int num_pq);
+    int buf4_mat_irrep_rd_block(dpdbuf4<U1> *Buf, int irrep, int start_pq, int num_pq);
+    int buf4_mat_irrep_wrt_block(dpdbuf4<U1> *Buf, int irrep, int start_pq, int num_pq);
+//*
+    int buf4_dump(dpdbuf4<double> *DPDBuf, struct iwlbuf *IWLBuf, int *prel, int *qrel, int *rrel, int *srel, int bk_pack,
                   int swap23);
-    int trans4_init(dpdtrans4 *Trans, dpdbuf4 *Buf);
-    int trans4_close(dpdtrans4 *Trans);
-    int trans4_mat_irrep_init(dpdtrans4 *Trans, int irrep);
-    int trans4_mat_irrep_close(dpdtrans4 *Trans, int irrep);
-    int trans4_mat_irrep_rd(dpdtrans4 *Trans, int irrep);
-    int trans4_mat_irrep_wrt(dpdtrans4 *Trans, int irrep);
-    int trans4_mat_irrep_shift13(dpdtrans4 *Trans, int irrep);
-    int trans4_mat_irrep_shift31(dpdtrans4 *Trans, int irrep);
+    int trans4_init(dpdtrans4<U1> *Trans, dpdbuf4<U1> *Buf);
+    int trans4_close(dpdtrans4<U1> *Trans);
+    int trans4_mat_irrep_init(dpdtrans4<U1> *Trans, int irrep);
+    int trans4_mat_irrep_close(dpdtrans4<U1> *Trans, int irrep);
+    int trans4_mat_irrep_rd(dpdtrans4<U1> *Trans, int irrep);
+    int trans4_mat_irrep_wrt(dpdtrans4<U1> *Trans, int irrep);
+//*
+    int trans4_mat_irrep_shift13(dpdtrans4<U2> *Trans, int irrep);
+    int trans4_mat_irrep_shift31(dpdtrans4<U2> *Trans, int irrep);
 
     int mat4_irrep_print(double **matrix, dpdparams4 *Params, int irrep, int my_irrep, std::string out_fname);
 
@@ -434,82 +458,220 @@ class PSI_API DPD {
     void file2_cache_print(std::string out_fname);
     dpd_file2_cache_entry *file2_cache_scan(int filenum, int irrep, int pnum, int qnum, const char *label, int dpdnum);
     dpd_file2_cache_entry *dpd_file2_cache_last();
-    int file2_cache_add(dpdfile2 *File);
-    int file2_cache_del(dpdfile2 *File);
+    int file2_cache_add(dpdfile2<double> *File);
+    int file2_cache_del(dpdfile2<double> *File);
     int file4_cache_del_low();
-    void file2_cache_dirty(dpdfile2 *File);
+    void file2_cache_dirty(dpdfile2<double> *File);
 
     void file4_cache_init();
     void file4_cache_close();
     void file4_cache_print(std::string out_fname);
     void file4_cache_print_screen();
-    int file4_cache_get_priority(dpdfile4 *File);
+//*
+    int file4_cache_get_priority(dpdfile4<double> *File);
 
     dpd_file4_cache_entry *file4_cache_scan(int filenum, int irrep, int pqnum, int rsnum, const char *label,
                                             int dpdnum);
     dpd_file4_cache_entry *file4_cache_last();
-    int file4_cache_add(dpdfile4 *File, size_t priority);
-    int file4_cache_del(dpdfile4 *File);
+    int file4_cache_add(dpdfile4<double> *File, size_t priority);
+    int file4_cache_del(dpdfile4<double> *File);
     dpd_file4_cache_entry *file4_cache_find_lru();
     int file4_cache_del_lru();
-    void file4_cache_dirty(dpdfile4 *File);
-    void file4_cache_lock(dpdfile4 *File);
-    void file4_cache_unlock(dpdfile4 *File);
+    void file4_cache_dirty(dpdfile4<double> *File);
+    void file4_cache_lock(dpdfile4<double> *File);
+    void file4_cache_unlock(dpdfile4<double> *File);
 
     void sort_3d(double ***Win, double ***Wout, int nirreps, int h, int *rowtot, int **rowidx, int ***roworb, int *asym,
                  int *bsym, int *aoff, int *boff, int *cpi, int *coff, int **rowidx_out, enum pattern index, int sum);
 
-    void T3_AAA(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2, dpdbuf4 *F,
-                dpdbuf4 *E, dpdfile2 *fIJ, dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
+    void T3_AAA(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double> *T2, dpdbuf4<double> *F,
+                dpdbuf4<double> *E, dpdfile2<double> *fIJ, dpdfile2<double> *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
                 double omega);
 
-    void T3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2AA, dpdbuf4 *T2AB,
-                dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA, dpdbuf4 *EAA, dpdbuf4 *EAB, dpdbuf4 *EBA,
-                dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB, dpdfile2 *fab, int *aoccpi, int *aocc_off, int *boccpi,
+    void T3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double> *T2AA, dpdbuf4<double> *T2AB,
+                dpdbuf4<double> *T2BA, dpdbuf4<double> *FAA, dpdbuf4<double> *FAB, dpdbuf4<double> *FBA, dpdbuf4<double> *EAA, dpdbuf4<double> *EAB, dpdbuf4<double> *EBA,
+                dpdfile2<double> *fIJ, dpdfile2<double> *fij, dpdfile2<double> *fAB, dpdfile2<double> *fab, int *aoccpi, int *aocc_off, int *boccpi,
                 int *bocc_off, int *avirtpi, int *avir_off, int *bvirtpi, int *bvir_off, double omega);
 
-    void T3_RHF(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2, dpdbuf4 *F,
-                dpdbuf4 *E, dpdfile2 *fIJ, dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
+    void T3_RHF(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double> *T2, dpdbuf4<double> *F,
+                dpdbuf4<double> *E, dpdfile2<double> *fIJ, dpdfile2<double> *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
                 double omega);
 
-    void T3_RHF_ic(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2, dpdbuf4 *F,
-                   dpdbuf4 *E, dpdfile2 *fIJ, dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
+    void T3_RHF_ic(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double> *T2, dpdbuf4<double> *F,
+                   dpdbuf4<double> *E, dpdfile2<double> *fIJ, dpdfile2<double> *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
                    double omega);
 
-    void cc3_sigma_RHF(dpdbuf4 *CIjAb, dpdbuf4 *WAbEi, dpdbuf4 *WMbIj, int do_singles, dpdbuf4 *Dints, dpdfile2 *SIA,
-                       int do_doubles, dpdfile2 *FME, dpdbuf4 *WAmEf, dpdbuf4 *WMnIe, dpdbuf4 *SIjAb, int *occpi,
+    void cc3_sigma_RHF(dpdbuf4<double> *CIjAb, dpdbuf4<double> *WAbEi, dpdbuf4<double> *WMbIj, int do_singles, dpdbuf4<double> *Dints, dpdfile2<double> *SIA,
+                       int do_doubles, dpdfile2<double> *FME, dpdbuf4<double> *WAmEf, dpdbuf4<double> *WMnIe, dpdbuf4<double> *SIjAb, int *occpi,
                        int *occ_off, int *virtpi, int *vir_off, double omega, std::string out_fname, int newtrips);
 
-    void cc3_sigma_RHF_ic(dpdbuf4 *CIjAb, dpdbuf4 *WAbEi, dpdbuf4 *WMbIj, int do_singles, dpdbuf4 *Dints, dpdfile2 *SIA,
-                          int do_doubles, dpdfile2 *FME, dpdbuf4 *WAmEf, dpdbuf4 *WMnIe, dpdbuf4 *SIjAb, int *occpi,
+    void cc3_sigma_RHF_ic(dpdbuf4<double> *CIjAb, dpdbuf4<double> *WAbEi, dpdbuf4<double> *WMbIj, int do_singles, dpdbuf4<double> *Dints, dpdfile2<double> *SIA,
+                          int do_doubles, dpdfile2<double> *FME, dpdbuf4<double> *WAmEf, dpdbuf4<double> *WMnIe, dpdbuf4<double> *SIjAb, int *occpi,
                           int *occ_off, int *virtpi, int *vir_off, double omega, std::string out_fname, int nthreads,
                           int newtrips);
 
-    void cc3_sigma_UHF_AAA(dpdbuf4 *CMNEF, dpdbuf4 *WABEI, dpdbuf4 *WMBIJ, int do_singles, dpdbuf4 *Dints_anti,
-                           dpdfile2 *SIA, int do_doubles, dpdfile2 *FME, dpdbuf4 *WMAFE, dpdbuf4 *WMNIE, dpdbuf4 *SIJAB,
+    void cc3_sigma_UHF_AAA(dpdbuf4<double> *CMNEF, dpdbuf4<double> *WABEI, dpdbuf4<double> *WMBIJ, int do_singles, dpdbuf4<double> *Dints_anti,
+                           dpdfile2<double> *SIA, int do_doubles, dpdfile2<double> *FME, dpdbuf4<double> *WMAFE, dpdbuf4<double> *WMNIE, dpdbuf4<double> *SIJAB,
                            int *aoccpi, int *aocc_off, int *avirtpi, int *avir_off, double omega,
                            std::string out_fname);
 
-    void cc3_sigma_UHF_BBB(dpdbuf4 *Cmnef, dpdbuf4 *Wabei, dpdbuf4 *Wmbij, int do_singles, dpdbuf4 *Dijab_anti,
-                           dpdfile2 *Sia, int do_doubles, dpdfile2 *Fme, dpdbuf4 *Wmafe, dpdbuf4 *Wmnie, dpdbuf4 *Sijab,
+    void cc3_sigma_UHF_BBB(dpdbuf4<double> *Cmnef, dpdbuf4<double> *Wabei, dpdbuf4<double> *Wmbij, int do_singles, dpdbuf4<double> *Dijab_anti,
+                           dpdfile2<double> *Sia, int do_doubles, dpdfile2<double> *Fme, dpdbuf4<double> *Wmafe, dpdbuf4<double> *Wmnie, dpdbuf4<double> *Sijab,
                            int *boccpi, int *bocc_off, int *bvirtpi, int *bvir_off, double omega,
                            std::string out_fname);
 
-    void cc3_sigma_UHF_AAB(dpdbuf4 *C2AA, dpdbuf4 *C2AB, dpdbuf4 *C2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA,
-                           dpdbuf4 *EAA, dpdbuf4 *EAB, dpdbuf4 *EBA, int do_singles, dpdbuf4 *DAA, dpdbuf4 *DAB,
-                           dpdfile2 *SIA, dpdfile2 *Sia, int do_doubles, dpdfile2 *FME, dpdfile2 *Fme, dpdbuf4 *WMAFE,
-                           dpdbuf4 *WMaFe, dpdbuf4 *WmAfE, dpdbuf4 *WMNIE, dpdbuf4 *WMnIe, dpdbuf4 *WmNiE,
-                           dpdbuf4 *SIJAB, dpdbuf4 *SIjAb, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off,
+    void cc3_sigma_UHF_AAB(dpdbuf4<double> *C2AA, dpdbuf4<double> *C2AB, dpdbuf4<double> *C2BA, dpdbuf4<double> *FAA, dpdbuf4<double> *FAB, dpdbuf4<double> *FBA,
+                           dpdbuf4<double> *EAA, dpdbuf4<double> *EAB, dpdbuf4<double> *EBA, int do_singles, dpdbuf4<double> *DAA, dpdbuf4<double> *DAB,
+                           dpdfile2<double> *SIA, dpdfile2<double> *Sia, int do_doubles, dpdfile2<double> *FME, dpdfile2<double> *Fme, dpdbuf4<double> *WMAFE,
+                           dpdbuf4<double> *WMaFe, dpdbuf4<double> *WmAfE, dpdbuf4<double> *WMNIE, dpdbuf4<double> *WMnIe, dpdbuf4<double> *WmNiE,
+                           dpdbuf4<double> *SIJAB, dpdbuf4<double> *SIjAb, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off,
                            int *avirtpi, int *avir_off, int *bvirtpi, int *bvir_off, double omega,
                            std::string out_fname);
 
-    void cc3_sigma_UHF_BBA(dpdbuf4 *C2BB, dpdbuf4 *C2AB, dpdbuf4 *C2BA, dpdbuf4 *FBB, dpdbuf4 *FAB, dpdbuf4 *FBA,
-                           dpdbuf4 *EBB, dpdbuf4 *EAB, dpdbuf4 *EBA, int do_singles, dpdbuf4 *DBB, dpdbuf4 *DBA,
-                           dpdfile2 *SIA, dpdfile2 *Sia, int do_doubles, dpdfile2 *FME, dpdfile2 *Fme, dpdbuf4 *Wmafe,
-                           dpdbuf4 *WMaFe, dpdbuf4 *WmAfE, dpdbuf4 *Wmnie, dpdbuf4 *WMnIe, dpdbuf4 *WmNiE,
-                           dpdbuf4 *Sijab, dpdbuf4 *SIjAb, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off,
+    void cc3_sigma_UHF_BBA(dpdbuf4<double> *C2BB, dpdbuf4<double> *C2AB, dpdbuf4<double> *C2BA, dpdbuf4<double> *FBB, dpdbuf4<double> *FAB, dpdbuf4<double> *FBA,
+                           dpdbuf4<double> *EBB, dpdbuf4<double> *EAB, dpdbuf4<double> *EBA, int do_singles, dpdbuf4<double> *DBB, dpdbuf4<double> *DBA,
+                           dpdfile2<double> *SIA, dpdfile2<double> *Sia, int do_doubles, dpdfile2<double> *FME, dpdfile2<double> *Fme, dpdbuf4<double> *Wmafe,
+                           dpdbuf4<double> *WMaFe, dpdbuf4<double> *WmAfE, dpdbuf4<double> *Wmnie, dpdbuf4<double> *WMnIe, dpdbuf4<double> *WmNiE,
+                           dpdbuf4<double> *Sijab, dpdbuf4<double> *SIjAb, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off,
                            int *avirtpi, int *avir_off, int *bvirtpi, int *bvir_off, double omega,
                            std::string out_fname);
+
+
+// *functions for single-precision and mixed-precision
+    double **dpd_block_matrix_sp(size_t n, size_t m);
+    void free_dpd_block_sp(float **array, size_t n, size_t m);
+
+    int contract222_sp(dpdfile2<float> *X, dpdfile2<float> *Y, dpdfile2<float> *Z, int target_X, int target_Y, float alpha, float beta);
+    int contract442_sp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<float> *Z, int target_X, int target_Y, float alpha, float beta);
+    int contract422_sp(dpdbuf4<float>*X, dpdfile2<float> *Y, dpdfile2<float> *Z, int trans_Y, int trans_Z, float alpha, float beta);
+    int contract244_sp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z, int sum_X, int sum_Y, int trans_Z, float alpha, float beta);
+    int contract424_sp(dpdbuf4<float> *X, dpdfile2<float> *Y, dpdbuf4<float> *Z, int sum_X, int sum_Y, int trans_Z, float alpha, float beta);
+    int contract444_sp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z, int target_X, int target_Y, float alpha, float beta);
+
+    int contract222_mp(dpdfile2<float> *X, dpdfile2<float> *Y, dpdfile2<double> *Z, int target_X, int target_Y, float alpha, double beta);
+    int contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *Z, int target_X, int target_Y, float alpha, double beta);
+    int contract422_mp(dpdbuf4<float> *X, dpdfile2<double> *Y, dpdfile2<double> *Z, int trans_Y, int trans_Z, float alpha, double beta);
+    int contract244_mp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z, int sum_X, int sum_Y, int trans_Z, float alpha, double beta);
+    int contract424_mp(dpdbuf4<float> *X, dpdfile2<float> *Y, dpdbuf4<double> *Z, int sum_X, int sum_Y, int trans_Z, float alpha, double beta);
+    int contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z, int target_X, int target_Y, float alpha, double beta);
+
+    // not used
+    int contract444_df(dpdbuf4<U> *B, dpdbuf4<U> *tau_in, dpdbuf4_target<U> *tau_out, W alpha, W beta);
+
+    /* Need to consolidate these routines into one general function */
+    int dot23_sp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<float> *Z, int transt, int transz, float alpha, float beta);
+    int dot24_sp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<float> *Z, int transt, int transz, float alpha, float beta);
+    int dot13_sp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<float> *Z, int transt, int transz, float alpha, float beta);
+    int dot14_sp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<float> *Z, int transt, int transz, float alpha, float beta);
+
+    int dot23_mp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<double> *Z, int transt, int transz, float alpha, double beta);
+    int dot24_mp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<double> *Z, int transt, int transz, float alpha, double beta);
+    int dot13_mp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<double> *Z, int transt, int transz, float alpha, double beta);
+    int dot14_mp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<double> *Z, int transt, int transz, float alpha, double beta);
+
+
+
+    //int trace42_13(dpdbuf4<double> *A, dpdfile2<double> *B, int transb, double alpha, double beta);
+
+    int file2_init_sp(dpdfile2<float> *File, int filenum, int irrep, int pnum, int qnum, const char *label);
+    int file2_close_sp(dpdfile2<float> *File);
+    int file2_mat_init_sp(dpdfile2<float> *File);
+    int file2_mat_close_sp(dpdfile2<float> *File);
+    int file2_mat_rd_sp(dpdfile2<float> *File);
+   // int file2_mat_wrt(dpdfile2<U> *File);
+//**
+    // int file2_print(dpdfile2<float> *File, std::string out_fname);
+    // int file2_mat_print(dpdfile2<float> *File, std::string out_fname);
+    //int file2_copy(dpdfile2<U> *InFile, int outfilenum, const char *label);
+   // int file2_dirprd(dpdfile2<U> *FileA, dpdfile2<U> *FileB);
+    double file2_dot_sp(dpdfile2<float> *FileA, dpdfile2<float> *FileB);
+    int file2_scm_sp(dpdfile2<float> *InFile, float alpha);
+//**   
+    double file2_dot_self_sp(dpdfile2<float> *BufX);
+    // double file2_trace(dpdfile2<U> *InFile);
+    //int file2_axpy(dpdfile2<U> *FileA, dpdfile2<U> *FileB, W alpha, int transA);
+    //int file2_axpbycz(dpdfile2<U> *FileA, dpdfile2<U> *FileB, dpdfile2<U> *FileC, W a, W b, W c);
+
+/*
+    int file4_init(dpdfile4<double> *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
+    int file4_init_nocache(dpdfile4<double> *File, int filenum, int irrep, int pqnum, int rsnum, const char *label);
+    int file4_close(dpdfile4<double> *File);
+    int file4_mat_irrep_init(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_close(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_rd(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_wrt(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_row_init(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_row_close(dpdfile4<double> *File, int irrep);
+    int file4_mat_irrep_row_rd(dpdfile4<double> *File, int irrep, int row);
+    int file4_mat_irrep_row_wrt(dpdfile4<double> *File, int irrep, int row);
+    int file4_mat_irrep_row_zero(dpdfile4<double> *File, int irrep, int row);
+    int file4_print(dpdfile4<double> *File, std::string out_fname);
+    int file4_mat_irrep_rd_block(dpdfile4<double> *File, int irrep, int start_pq, int num_pq);
+    int file4_mat_irrep_wrt_block(dpdfile4<double> *File, int irrep, int start_pq, int num_pq);
+*/
+    int buf4_init_sp(dpdbuf4<float> *Buf, int inputfile, int irrep, int pqnum, int rsnum, int file_pqnum, int file_rsnum,
+                  int anti, const char *label);
+    int buf4_init_sp(dpdbuf4<float> *Buf, int inputfile, int irrep, std::string pq, std::string rs, std::string file_pq,
+                  std::string file_rs, int anti, const char *label);
+    int buf4_init_sp(dpdbuf4<float> *Buf, int inputfile, int irrep, std::string pq, std::string rs, int anti, const char *label);
+    //int pairnum(std::string);
+//*
+    //double buf4_trace(dpdbuf4<U2> *Buf);
+    int buf4_close_sp(dpdbuf4<float> *Buf);
+    int buf4_mat_irrep_init_sp(dpdbuf4<float> *Buf, int irrep);
+    int buf4_mat_irrep_close_sp(dpdbuf4<float> *Buf, int irrep);
+    int buf4_mat_irrep_rd_sp(dpdbuf4<float> *Buf, int irrep);
+    int buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep);
+//**
+    int buf4_print_sp(dpdbuf4<float> *Buf, std::string out_fname, int print_data);
+    int buf4_copy_sp(dpdbuf4<float> *InBuf, int outfilenum, const char *label);
+    int buf4_sort_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
+    int buf4_sort_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index, std::string pq, std::string rs,
+                  const char *label);
+    //int buf4_sort_ooc_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
+    int buf4_sort_axpy_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
+                       float alpha);
+//**
+    int buf4_axpy_sp(dpdbuf4<float> *BufX, dpdbuf4<float> *BufY, float alpha);
+    int buf4_axpbycz_sp(dpdbuf4<float> *FileA, dpdbuf4<float> *FileB, dpdbuf4<float> *FileC, float a, float b, float c);
+//*
+    int buf4_dirprd_sp(dpdbuf4<float> *BufA, dpdbuf4<float> *BufB);
+    double buf4_dot_sp(dpdbuf4<float> *BufA, dpdbuf4<float> *BufB);
+    double buf4_dot_self_sp(dpdbuf4<float> *BufX);
+//**
+    int buf4_scm_sp(dpdbuf4<float> *InBuf, float alpha);
+    int buf4_scmcopy_sp(dpdbuf4<float> *InBuf, int outfilenum, const char *label, float alpha);
+   // int buf4_symm(dpdbuf4<double> *Buf);
+   // int buf4_symm2(dpdbuf4<double> *Buf1, dpdbuf4<double> *Buf2);
+    int buf4_mat_irrep_shift13_sp(dpdbuf4<float> *Buf, int irrep);
+    int buf4_mat_irrep_shift31_sp(dpdbuf4<float> *Buf, int irrep);
+    int buf4_mat_irrep_row_init_sp(dpdbuf4<float> *Buf, int irrep);
+    int buf4_mat_irrep_row_close_sp(dpdbuf4<float> *Buf, int irrep);
+    int buf4_mat_irrep_row_zero_sp(dpdbuf4<float> *Buf, int irrep, int row);
+    int buf4_mat_irrep_row_rd_sp(dpdbuf4<float> *Buf, int irrep, int pq);
+    int buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq);
+//**
+    int buf4_mat_irrep_init_block_sp(dpdbuf4<float> *Buf, int irrep, int num_pq);
+    int buf4_mat_irrep_close_block_sp(dpdbuf4<float> *Buf, int irrep, int num_pq);
+    int buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq, int num_pq);
+    int buf4_mat_irrep_wrt_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq, int num_pq);
+//*
+    //int buf4_dump(dpdbuf4<double> *DPDBuf, struct iwlbuf *IWLBuf, int *prel, int *qrel, int *rrel, int *srel, int bk_pack,
+                  int swap23);
+    int trans4_init_sp(dpdtrans4<float> *Trans, dpdbuf4<float> *Buf);
+    int trans4_close_sp(dpdtrans4<float> *Trans);
+    int trans4_mat_irrep_init_sp(dpdtrans4<float> *Trans, int irrep);
+    int trans4_mat_irrep_close_sp(dpdtrans4<float> *Trans, int irrep);
+    int trans4_mat_irrep_rd_sp(dpdtrans4<float> *Trans, int irrep);
+    int trans4_mat_irrep_wrt_sp(dpdtrans4<float> *Trans, int irrep);
+//*
+    int trans4_mat_irrep_shift13_sp(dpdtrans4<float> *Trans, int irrep);
+    int trans4_mat_irrep_shift31_sp(dpdtrans4<float> *Trans, int irrep);
+
+    //int mat4_irrep_print(double **matrix, dpdparams4 *Params, int irrep, int my_irrep, std::string out_fname);
+
+
+
 };  // Dpd class
 
 /*
@@ -529,3 +691,4 @@ extern void dpd_memset(long int memory);
 }  // Namespace psi
 
 #endif /* _psi_src_lib_libdpd_dpd_h */
+

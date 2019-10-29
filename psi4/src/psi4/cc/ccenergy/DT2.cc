@@ -40,7 +40,7 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::DT2() {
-    dpdbuf4 D;
+    dpdbuf4<double> D;
 
     if (params_.ref == 0) { /*** RHF ***/
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab>");
@@ -70,6 +70,16 @@ void CCEnergyWavefunction::DT2() {
         global_dpd_->buf4_copy(&D, PSIF_CC_TAMPS, "New tIjAb");
         global_dpd_->buf4_close(&D);
     }
+}
+
+void CCEnergyWavefunction::DT2_sp() {
+    dpdbuf4<float> D;
+
+    if (params_.ref == 0) { /*** RHF ***/
+        global_dpd_->buf4_init_sp(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab> sp");
+        global_dpd_->buf4_copy_sp(&D, PSIF_CC_TAMPS, "New tIjAb sp");
+        global_dpd_->buf4_close_sp(&D);
+    } 
 }
 }  // namespace ccenergy
 }  // namespace psi

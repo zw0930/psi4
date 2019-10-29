@@ -115,12 +115,12 @@ namespace psi {
 ** spqr: IC     ** sprq: IC
 ** -RAK, Nov. 2005*/
 
-int DPD::buf4_sort(dpdbuf4 *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label) {
+int DPD::buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label) {
     int h, nirreps, row, col, my_irrep, r_irrep;
     int p, q, r, s, P, Q, R, S, pq, rs, sr, pr, qs, qp, rq, qr, ps, sp, rp, sq;
     int PQ, RS;
     int Gp, Gq, Gr, Gs, Gpq, Grs, Gpr, Gqs, Grq, Gqr, Gps, Gsp, Grp, Gsq;
-    dpdbuf4 OutBuf;
+    dpdbuf4<double> OutBuf;
     int incore;
     long int rowtot, coltot, core_total, maxrows;
     int Grow, Gcol;
@@ -1970,7 +1970,7 @@ int DPD::buf4_sort(dpdbuf4 *InBuf, int outfilenum, enum indices index, int pqnum
     return 0;
 }
 
-int DPD::buf4_sort(dpdbuf4 *InBuf, int outfilenum, enum indices index, string pq, string rs, const char *label) {
+int DPD::buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, string pq, string rs, const char *label) {
     return buf4_sort(InBuf, outfilenum, index, pairnum(pq), pairnum(rs), label);
 }
 

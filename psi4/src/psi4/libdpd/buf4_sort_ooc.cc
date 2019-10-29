@@ -50,12 +50,12 @@ namespace psi {
 ** May 2000
 */
 
-int DPD::buf4_sort_ooc(dpdbuf4 *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label) {
+int DPD::buf4_sort_ooc(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label) {
     int h, nirreps, row, col, all_buf_irrep, r_irrep;
     int p, q, r, s, P, Q, R, S, pq, rs, sr, pr, qs, qp, rq, qr, ps, sp, rp, sq;
     int Gp, Gq, Gr, Gs, Gpq, Grs, Gpr, Gqs, Grq, Gqr, Gps, Gsp, Grp, Gsq;
     int memoryd, rows_per_bucket, nbuckets, rows_left, incore, n;
-    dpdbuf4 OutBuf;
+    dpdbuf4<double> OutBuf;
 
     nirreps = InBuf->params->nirreps;
     all_buf_irrep = InBuf->file.my_irrep;

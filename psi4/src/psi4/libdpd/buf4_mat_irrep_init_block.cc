@@ -47,7 +47,7 @@ namespace psi {
 **
 */
 
-int DPD::buf4_mat_irrep_init_block(dpdbuf4 *Buf, int irrep, int num_pq) {
+int DPD::buf4_mat_irrep_init_block(dpdbuf4<double> *Buf, int irrep, int num_pq) {
     int all_buf_irrep;
     all_buf_irrep = Buf->file.my_irrep;
 

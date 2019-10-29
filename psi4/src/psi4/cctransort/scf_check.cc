@@ -36,8 +36,8 @@ namespace psi {
 namespace cctransort {
 
 double scf_check(int reference, Dimension &openpi) {
-    dpdfile2 H;
-    dpdbuf4 A;
+    dpdfile2<double> H;
+    dpdbuf4<double> A;
     double E1A, E1B, E2AA, E2BB, E2AB;
 
     if (reference == 2) {  // UHF/semicanonical

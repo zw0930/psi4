@@ -104,6 +104,19 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
         throw PsiException("ccsort failure", __FILE__, __LINE__);
     }
 
+    //Add options of the precision
+    int precision = 0;
+    if (options.get_str("PRECISION") == "DOUBLE-PRECISION")
+        precision = 0;
+    else if (options.get_str("PRECISION") == "SINGLE-PRECISION")
+        precision = 1;
+    else if (options.get_str("PRECISION") == "MIXED-PRECISION")
+        precision = 2;
+    else {
+        outfile->Printf("Invalid value of input keyword PRECISION: %s\n", options.get_str("PRECISION").c_str());
+        throw PsiException("ccsort failure", __FILE__, __LINE__);
+    }
+
     // Allow user to force semicanonical
     if (options["SEMICANONICAL"].has_changed()) {
         semicanonical = options.get_bool("SEMICANONICAL");
@@ -487,6 +500,8 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
     delete ints;
 
     // Set up DPD object
+   
+       
     std::vector<DPDMOSpace> spaces;
     int *cachefiles = init_int_array(PSIO_MAXUNIT);
     int **cachelist;
@@ -532,19 +547,20 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
         sort_tei_rhf(psio, print);
     psio->close(PSIF_LIBTRANS_DPD, 0);  // delete file
 
-    for (int i = PSIF_CC_MIN; i <= PSIF_CC_MAX; i++) psio->open(i, 1);
+    for (int i = PSIF_CC_MIN; i <= PSIF_CC_MAX; i++) psio->open(i, 1);   
+     
 
     // Sort one-electron integals into three main categories
 
     if (reference == 2) {  // UHF/Semicanonical
-        dpdfile2 H;
+        dpdfile2<double> H;
         int ntri_all = nmo * (nmo + 1) / 2;
         double *tmp_oei = init_array(ntri_all);
 
         iwl_rdone(PSIF_OEI, PSIF_MO_A_FZC, tmp_oei, ntri_all, 0, 0, "outfile");
 
-        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 0, 0, "h(I,J)");
-        global_dpd_->file2_mat_init(&H);
+        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 0, 0, "h(I,J)");
+        global_dpd_->file2_mat_init_dp(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int i = 0; i < aoccpi[h]; i++) {
                 for (int j = 0; j < aoccpi[h]; j++) {
@@ -554,12 +570,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt(&H);
-        global_dpd_->file2_mat_close(&H);
-        global_dpd_->file2_close(&H);
+        global_dpd_->file2_mat_wrt_dp(&H);
+        global_dpd_->file2_mat_close_dp(&H);
+        global_dpd_->file2_close_dp(&H);
 
-        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 1, 1, "h(A,B)");
-        global_dpd_->file2_mat_init(&H);
+        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 1, 1, "h(A,B)");
+        global_dpd_->file2_mat_init_dp(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int a = 0; a < avirpi[h]; a++) {
                 for (int b = 0; b < avirpi[h]; b++) {
@@ -569,12 +585,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt(&H);
-        global_dpd_->file2_mat_close(&H);
-        global_dpd_->file2_close(&H);
+        global_dpd_->file2_mat_wrt_dp(&H);
+        global_dpd_->file2_mat_close_dp(&H);
+        global_dpd_->file2_close_dp(&H);
 
-        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 0, 1, "h(I,A)");
-        global_dpd_->file2_mat_init(&H);
+        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 0, 1, "h(I,A)");
+        global_dpd_->file2_mat_init_dp(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int i = 0; i < aoccpi[h]; i++) {
                 for (int a = 0; a < avirpi[h]; a++) {
@@ -584,14 +600,14 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt(&H);
-        global_dpd_->file2_mat_close(&H);
-        global_dpd_->file2_close(&H);
+        global_dpd_->file2_mat_wrt_dp(&H);
+        global_dpd_->file2_mat_close_dp(&H);
+        global_dpd_->file2_close_dp(&H);
 
         iwl_rdone(PSIF_OEI, PSIF_MO_B_FZC, tmp_oei, ntri_all, 0, 0, "outfile");
 
-        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 2, 2, "h(i,j)");
-        global_dpd_->file2_mat_init(&H);
+        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 2, 2, "h(i,j)");
+        global_dpd_->file2_mat_initd_dp(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int i = 0; i < boccpi[h]; i++) {
                 for (int j = 0; j < boccpi[h]; j++) {
@@ -601,12 +617,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt(&H);
-        global_dpd_->file2_mat_close(&H);
-        global_dpd_->file2_close(&H);
+        global_dpd_->file2_mat_wrt_dp(&H);
+        global_dpd_->file2_mat_close_dp(&H);
+        global_dpd_->file2_close_dp(&H);
 
-        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 3, 3, "h(a,b)");
-        global_dpd_->file2_mat_init(&H);
+        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 3, 3, "h(a,b)");
+        global_dpd_->file2_mat_init_dp(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int a = 0; a < bvirpi[h]; a++) {
                 for (int b = 0; b < bvirpi[h]; b++) {
@@ -616,12 +632,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt(&H);
-        global_dpd_->file2_mat_close(&H);
-        global_dpd_->file2_close(&H);
+        global_dpd_->file2_mat_wrt_dp(&H);
+        global_dpd_->file2_mat_close_dp(&H);
+        global_dpd_->file2_close_dp(&H);
 
-        global_dpd_->file2_init(&H, PSIF_CC_OEI, 0, 2, 3, "h(i,a)");
-        global_dpd_->file2_mat_init(&H);
+        global_dpd_->file2_init_dp(&H, PSIF_CC_OEI, 0, 2, 3, "h(i,a)");
+        global_dpd_->file2_mat_init_dp(&H);
         for (int h = 0; h < nirreps; h++) {
             for (int i = 0; i < boccpi[h]; i++) {
                 for (int a = 0; a < bvirpi[h]; a++) {
@@ -631,11 +647,11 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
                 }
             }
         }
-        global_dpd_->file2_mat_wrt(&H);
-        global_dpd_->file2_mat_close(&H);
-        global_dpd_->file2_close(&H);
+        global_dpd_->file2_mat_wrt_dp(&H);
+        global_dpd_->file2_mat_close_dp(&H);
+        global_dpd_->file2_close_dp(&H);
     } else {  // RHF/ROHF
-        dpdfile2 H;
+        dpdfile2<double> H;
         int ntri_all = nmo * (nmo + 1) / 2;
         double *tmp_oei = init_array(ntri_all);
 
@@ -688,10 +704,12 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
     }
 
     // Generate additional orderings of basic integrals
+    // Cast the MO integrals to single-precision is included in the following functions for rhf
     c_sort(reference);
     d_sort(reference);
     e_sort(reference);
     f_sort(reference);
+    //spinad: TODO!
     if (reference == 0) {
         b_spinad(psio);
         a_spinad();
@@ -700,6 +718,7 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
     }
 
     // Organize Fock matrices
+    // Casting to single-precision is included in fock_rhf()
     if (reference == 2)
         fock_uhf(ref, aoccpi, boccpi, avirpi, bvirpi, frzcpi, print);
     else
@@ -709,6 +728,7 @@ PsiReturnType cctransort(SharedWavefunction ref, Options &options) {
         denom_uhf();
     else
         denom_rhf(openpi);
+          
 
     outfile->Printf("\tNuclear Rep. energy          =  %20.14f\n", enuc);
     outfile->Printf("\tSCF energy                   =  %20.14f\n", escf);

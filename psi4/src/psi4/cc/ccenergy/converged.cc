@@ -44,8 +44,8 @@ namespace ccenergy {
 
 int CCEnergyWavefunction::converged(double ediff) {
     double rms = 0.0;
-    dpdfile2 T1, T1old;
-    dpdbuf4 T2, T2old;
+    dpdfile2<double> T1, T1old;
+    dpdbuf4<double> T2, T2old;
 
     auto nirreps = moinfo_.nirreps;
 

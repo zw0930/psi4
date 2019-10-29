@@ -63,7 +63,7 @@ namespace psi {
  ** non-symmetric states have not been tested for transposed cases
  */
 
-int DPD::dot23(dpdfile2 *T, dpdbuf4 *I, dpdfile2 *Z, int transt, int transz, double alpha, double beta) {
+int DPD::dot23(dpdfile2<double> *T, dpdbuf4<double> *I, dpdfile2<double> *Z, int transt, int transz, double alpha, double beta) {
     int h, Gp, Gq, Gr, Gs, GT, GI, GZ, Tblock, Zblock;
     int p, q, r, s;
     int P, Q, R, S;

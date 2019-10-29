@@ -41,9 +41,9 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::ET2() {
-    dpdfile2 tIA, tia;
-    dpdbuf4 newtIJAB, newtijab, newtIjAb;
-    dpdbuf4 E, t2, t2a, t2b;
+    dpdfile2<double> tIA, tia;
+    dpdbuf4<double> newtIJAB, newtijab, newtIjAb;
+    dpdbuf4<double> E, t2, t2a, t2b;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
@@ -167,6 +167,68 @@ void CCEnergyWavefunction::ET2() {
         global_dpd_->buf4_close(&newtijab);
         global_dpd_->buf4_close(&newtIjAb);
     }
+}
+
+
+void CCEnergyWavefunction::ET2_mp() {
+    dpdfile2<float> tIA_sp;
+    dpdbuf4<double> newtIjAb, buf4_tmp_double;
+    dpdbuf4<float> buf4_tmp_float;
+    dpdbuf4<float> E_sp;
+
+    if (params_.ref == 0) { /** RHF **/
+        global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
+        global_dpd_->buf4_init_sp(&buf4_tmp_float, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_float");
+        global_dpd_->file2_init(&tIA_sp, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+
+        global_dpd_->buf4_init_sp(&E_sp, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E <ai|jk> sp");
+        global_dpd_->contract424_sp(&E_sp, &tIA_sp, &buf4_tmp_float, 1, 0, 0, -1, 0);
+        global_dpd_->buf4_close_sp(&E_sp);
+        global_dpd_->buf4_cast_ftod_copy(&buf4_tmp_float, PSIF_CC_TAMPS, "buf4_tmp_double");
+        global_dpd_->buf4_init(&buf4_tmp_double, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "buf4_tmp_double");
+        global_dpd_->buf4_axpy(&buf4_tmp_double, &newtIjAb, 1);
+        global_dpd_->buf4_close_sp(&buf4_tmp_float);
+        global_dpd_->buf4_close(&buf4_tmp_double);
+
+        global_dpd_->buf4_init_sp(&E_sp, PSIF_CC_EINTS, 0, 10, 0, 10, 0, 0, "E <ia|jk> sp");
+        global_dpd_->buf4_init_sp(&buf4_tmp_float, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_float");
+        global_dpd_->contract244_sp(&tIA_sp, &E_sp, &buf4_tmp_float, 0, 0, 1, -1, 0);
+        global_dpd_->buf4_cast_ftod_copy(&buf4_tmp_float, PSIF_CC_TAMPS, "buf4_tmp_double" );
+        global_dpd_->buf4_init_dp(&buf4_tmp_double, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_double");
+        glabal_dpd_->buf4_axpy(&buf4_tmp_double, &newtIjAb, 1);
+        global_dpd_->buf4_close_sp(&E_sp);
+        global_dpd_->buf4_close(&buf4_tmp_double);
+        global_dpd_->buf4_close_sp(&buf4_tmp_float);
+
+        global_dpd_->file2_close_sp(&tIA_sp);
+
+        global_dpd_->buf4_close(&newtIjAb);
+    } 
+}
+
+
+void CCEnergyWavefunction::ET2_sp() {
+    dpdfile2<float> tIA;
+    dpdbuf4<float> newtIjAb;
+    dpdbuf4<float> E;
+
+    if (params_.ref == 0) { /** RHF **/
+        global_dpd_->buf4_init_sp(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb sp");
+
+        global_dpd_->file2_init_sp(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+
+        global_dpd_->buf4_init_sp(&E, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E <ai|jk> sp");
+        global_dpd_->contract424_sp(&E, &tIA, &newtIjAb, 1, 0, 0, -1, 1);
+        global_dpd_->buf4_close_sp(&E);
+
+        global_dpd_->buf4_init_sp(&E, PSIF_CC_EINTS, 0, 10, 0, 10, 0, 0, "E <ia|jk>");
+        global_dpd_->contract244_sp(&tIA, &E, &newtIjAb, 0, 0, 1, -1, 1);
+        global_dpd_->buf4_close_sp(&E);
+
+        global_dpd_->file2_close_sp(&tIA);
+
+        global_dpd_->buf4_close_sp(&newtIjAb);
+    } 
 }
 }  // namespace ccenergy
 }  // namespace psi

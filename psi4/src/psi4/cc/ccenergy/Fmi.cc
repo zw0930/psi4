@@ -41,10 +41,10 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::Fmi_build() {
-    dpdfile2 FMI, Fmi, FMIt, Fmit, fIJ, fij, fIA, fia;
-    dpdfile2 tIA, tia, FME, Fme;
-    dpdbuf4 E_anti, E, D_anti, D;
-    dpdbuf4 tautIJAB, tautijab, tautIjAb;
+    dpdfile2<double> FMI, Fmi, FMIt, Fmit, fIJ, fij, fIA, fia;
+    dpdfile2<double> tIA, tia, FME, Fme;
+    dpdbuf4<double> E_anti, E, D_anti, D;
+    dpdbuf4<double> tautIJAB, tautijab, tautIjAb;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&fIJ, PSIF_CC_OEI, 0, 0, 0, "fIJ");

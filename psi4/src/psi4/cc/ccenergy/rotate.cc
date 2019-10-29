@@ -62,7 +62,7 @@ namespace ccenergy {
 */
 
 int CCEnergyWavefunction::rotate() {
-    dpdfile2 T1;
+    dpdfile2<double> T1;
     double **U, **S, **X;
     double *evals, *work, **MO_S;
     double **scf, **scf_new, **scf_a, **scf_b;

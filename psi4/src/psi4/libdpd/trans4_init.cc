@@ -37,7 +37,7 @@
 
 namespace psi {
 
-int DPD::trans4_init(dpdtrans4 *Trans, dpdbuf4 *Buf) {
+int DPD::trans4_init(dpdtrans4<double> *Trans, dpdbuf4<double> *Buf) {
     int nirreps;
 
     nirreps = Buf->params->nirreps;

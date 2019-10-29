@@ -94,12 +94,12 @@ namespace psi {
 ** -TDC, August 2005
 */
 
-int DPD::buf4_sort_axpy(dpdbuf4 *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
+int DPD::buf4_sort_axpy(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
                         double alpha) {
     int h, nirreps, row, col, my_irrep, r_irrep;
     int p, q, r, s, P, Q, R, S, pq, rs, sr, pr, qs, qp, rq, qr, ps, sp, rp, sq;
     int Gp, Gq, Gr, Gs, Gpq, Grs, Gsr, Gpr, Gqs, Grq, Gqr, Gps, Gsp, Grp, Gsq;
-    dpdbuf4 OutBuf;
+    dpdbuf4<double> OutBuf;
     long int rowtot, coltot, core_total, maxrows;
     int incore;
     int Grow, Gcol;

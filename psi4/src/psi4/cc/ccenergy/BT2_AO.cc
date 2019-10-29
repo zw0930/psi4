@@ -57,8 +57,8 @@ void CCEnergyWavefunction::BT2_AO() {
     int *avirtpi, *bvirtpi;
     int **T2_cd_row_start, **T2_pq_row_start;
     int **T2_CD_row_start, **T2_Cd_row_start;
-    dpdbuf4 tau, t2, tau1_AO, tau2_AO;
-    dpdfile4 T;
+    dpdbuf4<double> tau, t2, tau1_AO, tau2_AO;
+    dpdfile4<double> T;
     struct iwlbuf InBuf;
     int lastbuf;
     double tolerance = 1e-14;

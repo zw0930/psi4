@@ -42,7 +42,7 @@ namespace psi {
 **   std::string out_fname: The formatted output file stream.
 */
 
-int DPD::file2_print(dpdfile2 *File, std::string out) {
+int DPD::file2_print(dpdfile2<double> *File, std::string out) {
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));
     int i, my_irrep;
     dpdparams2 *Params;

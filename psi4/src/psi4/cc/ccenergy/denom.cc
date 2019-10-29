@@ -40,13 +40,13 @@
 namespace psi {
 namespace ccenergy {
 
-void local_filter_T1(dpdfile2 *T1);
+void local_filter_T1(dpdfile2<double> *T1);
 void dijabT2();
 
 /* apply denominators to t1 and t2 */
 
 void CCEnergyWavefunction::denom() {
-    dpdfile2 newtIA, dIA, tIA, newtia, dia;
+    dpdfile2<double> newtIA, dIA, tIA, newtia, dia;
 
     if (params_.ref == 0) {
         global_dpd_->file2_init(&newtIA, PSIF_CC_OEI, 0, 0, 1, "New tIA");

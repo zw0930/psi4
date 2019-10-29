@@ -44,7 +44,12 @@
 extern "C" {
 extern void F_DGBMV(char*, int*, int*, int*, int*, double*, double*, int*, double*, int*, double*, double*, int*);
 extern void F_DGEMM(char*, char*, int*, int*, int*, double*, double*, int*, double*, int*, double*, double*, int*);
+// Add SGEMM for single/mixed-precision
+extern void F_SGEMM(char*, char*, int*, int*, int*, float*, float*, int*, float*, int*, float*, float*, int*);
 extern void F_DGEMV(char*, int*, int*, double*, double*, int*, double*, int*, double*, double*, int*);
+// Add SGEMV
+extern void F_SGEMV(char*, int*, int*, float*, float*, int*, float*, int*, float*, float*, int*);
+
 extern void F_DGER(int*, int*, double*, double*, int*, double*, int*, double*, int*);
 extern void F_DSBMV(char*, int*, int*, double*, double*, int*, double*, int*, double*, double*, int*);
 extern void F_DSPMV(char*, int*, double*, double*, double*, int*, double*, double*, int*);
@@ -327,6 +332,14 @@ PSI_API void C_DGEMM(char transa, char transb, int m, int n, int k, double alpha
     ::F_DGEMM(&transb, &transa, &n, &m, &k, &alpha, b, &ldb, a, &lda, &beta, c, &ldc);
 }
 
+PSI_API void C_SGEMM(char transa, char transb, int m, int n, int k, float alpha, float* a, int lda, float* b,
+                     int ldb, float beta, float* c, int ldc) {
+    if (m == 0 || n == 0 || k == 0) return;
+    ::F_SGEMM(&transb, &transa, &n, &m, &k, &alpha, b, &ldb, a, &lda, &beta, c, &ldc);
+}
+
+
+
 /**
  *  Purpose
  *  =======
@@ -432,6 +445,19 @@ PSI_API void C_DGEMV(char trans, int m, int n, double alpha, double* a, int lda,
         throw std::invalid_argument("C_DGEMV trans argument is invalid.");
     ::F_DGEMV(&trans, &n, &m, &alpha, a, &lda, x, &incx, &beta, y, &incy);
 }
+
+PSI_API void C_SGEMV(char trans, int m, int n, float alpha, float* a, int lda, float* x, int incx, float beta,
+                     float* y, int incy) {
+    if (m == 0 || n == 0) return;
+    if (trans == 'N' || trans == 'n')
+        trans = 'T';
+    else if (trans == 'T' || trans == 't')
+        trans = 'N';
+    else
+        throw std::invalid_argument("C_SGEMV trans argument is invalid.");
+    ::F_SGEMV(&trans, &n, &m, &alpha, a, &lda, x, &incx, &beta, y, &incy);
+}
+
 
 /**
  *  Purpose

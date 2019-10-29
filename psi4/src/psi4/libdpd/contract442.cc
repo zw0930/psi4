@@ -59,11 +59,10 @@ namespace psi {
  ** So currently we are using dots (0,0) (1,1) (2,2) (3,3) and (0,2);
  ** but (3,2) and (0,3) will not work unless C1 symmetry
  */
-
-int DPD::contract442(dpdbuf4 *X, dpdbuf4 *Y, dpdfile2 *Z, int target_X, int target_Y, double alpha, double beta) {
+int DPD::contract442(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdfile2<double> *Z, int target_X, int target_Y, double alpha, double beta) {
     int h, hxbuf, hybuf, nirreps, Gtar, GX, GY, GZ, Hx, Hy, Hz, hlinks;
     int rking = 0;
-    dpdtrans4 Xt, Yt;
+    dpdtrans4<double> Xt, Yt;
     double ***Xmat, ***Ymat, ***Zmat;
     int Xtrans, Ytrans, *numlinks;
 #ifdef DPD_DEBUG
@@ -80,9 +79,10 @@ int DPD::contract442(dpdbuf4 *X, dpdbuf4 *Y, dpdfile2 *Z, int target_X, int targ
 
     /*  if(std::fabs(beta) > 0.0) dpd_file2_scm(Z, beta); */
     file2_scm(Z, beta);
-    file2_mat_init(Z);
+    file2_mat_init_target(Z);
+    file2_mat_init(Z_tmp);
     /*  if(std::fabs(beta) > 0.0) dpd_file2_mat_rd(Z); */
-    file2_mat_rd(Z);
+    file2_mat_rd_target(Z);
 
 #ifdef DPD_DEBUG
     zrow = Z->params->rowtot;
@@ -326,7 +326,8 @@ int DPD::contract442(dpdbuf4 *X, dpdbuf4 *Y, dpdfile2 *Z, int target_X, int targ
     if ((target_Y == 1) || (target_Y == 2)) trans4_close(&Yt);
 
     file2_mat_wrt(Z);
-    file2_mat_close(Z);
+    file2_mat_close_target(Z);
+    file2_mat_close(Z_tmp);
 
     return 0;
 }

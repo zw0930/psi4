@@ -102,5 +102,80 @@ list(APPEND sources
   trans4_mat_irrep_shift13.cc
   trans4_mat_irrep_shift31.cc
   trans4_mat_irrep_wrt.cc
+
+  block_matrix_sp.cc
+  buf4_axpbycz_sp.cc
+  buf4_axpy_sp.cc
+  buf4_close_sp.cc
+  buf4_copy_sp.cc
+  buf4_dirprd_sp.cc
+  buf4_dot_sp.cc
+  buf4_dot_self_sp.cc
+  buf4_init_sp.cc
+  buf4_mat_irrep_close_sp.cc
+  buf4_mat_irrep_close_block_sp.cc
+  buf4_mat_irrep_init_sp.cc
+  buf4_mat_irrep_init_block_sp.cc
+  buf4_mat_irrep_rd_sp.cc
+  buf4_mat_irrep_rd_block_sp.cc
+  buf4_mat_irrep_row_close_sp.cc
+  buf4_mat_irrep_row_init_sp.cc
+  buf4_mat_irrep_row_rd_sp.cc
+  buf4_mat_irrep_row_wrt_sp.cc
+  buf4_mat_irrep_row_zero_sp.cc
+  buf4_mat_irrep_shift13_sp.cc
+  buf4_mat_irrep_shift31_sp.cc
+  buf4_mat_irrep_wrt_sp.cc
+  buf4_mat_irrep_wrt_block_sp.cc
+  buf4_print_sp.cc
+  buf4_scm_sp.cc
+  buf4_scmcopy_sp.cc
+  buf4_sort_sp.cc
+  buf4_sort_axpy_sp.cc
+  contract222_sp.cc
+  contract244_sp.cc
+  contract422_sp.cc
+  contract424_sp.cc
+  contract442_sp.cc
+  contract444_sp.cc
+  dot13_sp.cc
+  dot14_sp.cc
+  dot23_sp.cc
+  dot24_sp.cc
+
+  contract222_mp.cc
+  contract244_mp.cc
+  contract422_mp.cc
+  contract424_mp.cc
+  contract442_mp.cc
+  contract444_mp.cc
+  dot13_mp.cc
+  dot14_mp.cc
+  dot23_mp.cc
+  dot24_mp.cc
+
+  file2_axpbycz_sp.cc
+  file2_axpy_sp.cc
+  file2_close_sp.cc
+  file2_copy_sp.cc
+  file2_dirprd_sp.cc
+  file2_dot_sp.cc
+  file2_dot_self_sp.cc
+  file2_init_sp.cc
+  file2_mat_close_sp.cc
+  file2_mat_init_sp.cc
+  file2_mat_rd_sp.cc
+  file2_mat_wrt_sp.cc
+  file2_scm_sp.cc
+  trans4_close_sp.cc
+  trans4_init_sp.cc
+  trans4_mat_irrep_close_sp.cc
+  trans4_mat_irrep_init_sp.cc
+  trans4_mat_irrep_rd_sp.cc
+  trans4_mat_irrep_shift13_sp.cc
+  trans4_mat_irrep_shift31_sp.cc
+  trans4_mat_irrep_wrt_sp.cc
+
+
   )
 psi4_add_module(lib dpd sources)

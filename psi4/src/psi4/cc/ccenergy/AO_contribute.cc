@@ -45,7 +45,7 @@
 namespace psi {
 namespace ccenergy {
 
-int CCEnergyWavefunction::AO_contribute(struct iwlbuf *InBuf, dpdbuf4 *tau1_AO, dpdbuf4 *tau2_AO) {
+int CCEnergyWavefunction::AO_contribute(struct iwlbuf *InBuf, dpdbuf4<double> *tau1_AO, dpdbuf4<double> *tau2_AO) {
     int p, q, r, s;
     double value = 0.0;
     int Gp, Gq, Gr, Gs, Gpr, Gps, Gqr, Gqs, Grp, Gsp, Grq, Gsq;

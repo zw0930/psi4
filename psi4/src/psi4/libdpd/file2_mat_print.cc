@@ -36,7 +36,7 @@
 #include "psi4/libpsi4util/PsiOutStream.h"
 namespace psi {
 
-int DPD::file2_mat_print(dpdfile2 *File, std::string out) {
+int DPD::file2_mat_print(dpdfile2<double> *File, std::string out) {
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));
     div_t fraction;
     int i, j;

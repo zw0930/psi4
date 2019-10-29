@@ -41,9 +41,9 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::WmnijT2() {
-    dpdbuf4 newtIJAB, newtijab, newtIjAb;
-    dpdbuf4 WMNIJ, Wmnij, WMnIj;
-    dpdbuf4 tauIJAB, tauijab, tauIjAb;
+    dpdbuf4<double> newtIJAB, newtijab, newtIjAb;
+    dpdbuf4<double> WMNIJ, Wmnij, WMnIj;
+    dpdbuf4<double> tauIJAB, tauijab, tauIjAb;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
@@ -104,5 +104,40 @@ void CCEnergyWavefunction::WmnijT2() {
         global_dpd_->buf4_close(&newtIjAb);
     }
 }
+
+void CCEnergyWavefunction::WmnijT2_mp() {
+    dpdbuf4<double> newtIjAb;
+    dpdbuf4<float> WMnIj;
+    dpdbuf4<float> tauIjAb;
+    dpdbuf4<float> Z_sp;
+    dpdbuf4<double> Z;
+
+    if (params_.ref == 0) { /** RHF **/
+        global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
+        global_dpd_->buf4_init_sp(&WMnIj_sp, PSIF_CC_HBAR, 0, 0, 0, 0, 0, 0, "WMnIj_sp");
+        global_dpd_->buf4_init_sp(&tauIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tauIjAb_sp");
+        global_dpd_->contract444_mp(&WMnIj_sp, &tauIjAb_sp, &newtIjAb, 1, 1, 1, 1);
+        global_dpd_->buf4_close_sp(&tauIjAb_sp);
+        global_dpd_->buf4_close_sp(&WMnIj_sp);
+        global_dpd_->buf4_close(&newtIjAb);
+    }
+}
+
+void CCEnergyWavefunction::WmnijT2_sp() {
+    dpdbuf4<float> newtIjAb;
+    dpdbuf4<float> WMnIj;
+    dpdbuf4<float> tauIjAb;
+
+    if (params_.ref == 0) { /** RHF **/
+        global_dpd_->buf4_init_sp(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb sp");
+        global_dpd_->buf4_init_sp(&WMnIj, PSIF_CC_HBAR, 0, 0, 0, 0, 0, 0, "WMnIj_sp");
+        global_dpd_->buf4_init_sp(&tauIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tauIjAb_sp");
+        global_dpd_->contract444_sp(&WMnIj, &tauIjAb, &newtIjAb, 1, 1, 1, 1);
+        global_dpd_->buf4_close_sp(&tauIjAb);
+        global_dpd_->buf4_close_sp(&WMnIj);
+        global_dpd_->buf4_close_sp(&newtIjAb);
+    }
+}
+
 }  // namespace ccenergy
 }  // namespace psi

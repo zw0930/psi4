@@ -43,10 +43,10 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::FT2() {
-    dpdfile2 tIA, tia, t1;
-    dpdbuf4 newtIJAB, newtijab, newtIjAb, t2, t2a, t2b;
-    dpdbuf4 F_anti, F;
-    dpdbuf4 X;
+    dpdfile2<double> tIA, tia, t1;
+    dpdbuf4<double> newtIJAB, newtijab, newtIjAb, t2, t2a, t2b;
+    dpdbuf4<double> F_anti, F;
+    dpdbuf4<double> X;
     int Gij, Gab, nrows, ncols, nlinks, Ge, Gj, I;
 
     if (params_.ref == 0) { /** RHF **/
@@ -255,5 +255,226 @@ void CCEnergyWavefunction::FT2() {
         global_dpd_->buf4_close(&newtIjAb);
     }
 }
+
+void CCEnergyWavefunction::FT2_mp() {
+    dpdfile2<float> tIA_sp, t1_sp;
+    dpdbuf4<double> newtIjAb, t2;
+    dpdbuf4<float> F_sp, X_sp;
+    dpdbuf4<double> X;
+    float **TMP;
+    int Gij, Gab, nrows, ncols, nlinks, Ge, Gj, I;
+    int row, col;
+
+    if (params_.ref == 0) { /** RHF **/
+
+        /*     dpd_buf4_init(&newtIjAb, CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb"); */
+
+        /*     dpd_buf4_init(&Z, CC_TMP0, 0, 0, 5, 0, 5, 0, "Z1(ij,ab)"); */
+        /*     dpd_buf4_init(&F, CC_FINTS, 0, 11, 5, 11, 5, 0, "F <ai|bc>"); */
+        /*     dpd_file2_init(&tIA, CC_OEI, 0, 0, 1, "tIA"); */
+        /*     dpd_contract244(&tIA, &F, &Z, 1, 0, 0, 1, 0); */
+        /*     dpd_file2_close(&tIA);  */
+        /*     dpd_buf4_close(&F); */
+
+        /*     dpd_buf4_sort(&Z, CC_TMP0, qpsr, 0, 5, "Z2(ji,ba)"); */
+        /*     dpd_buf4_axpy(&Z, &newtIjAb, 1.0); */
+        /*     dpd_buf4_close(&Z); */
+        /*     dpd_buf4_init(&Z, CC_TMP0, 0, 0, 5, 0, 5, 0, "Z2(ji,ba)"); */
+        /*     dpd_buf4_axpy(&Z, &newtIjAb, 1.0); */
+        /*     dpd_buf4_close(&Z); */
+
+        /*     dpd_buf4_close(&newtIjAb); */
+
+        /* t(ij,ab) <-- t(j,e) * <ie|ab> + t(i,e) * <je|ba> */
+        /* OOC code added 3/23/05, TDC */
+        if (params_.df) {
+            dpdbuf4 OV, VV, Tov, Tovov, Toovv;
+            // (Q|ia) = (Q|ea) t_ie
+            dpd_set_default(1);
+            global_dpd_->buf4_init(&VV, PSIF_CC_OEI, 0, 10, 43, 13, 43, 0, "B(VV|Q)");
+            global_dpd_->buf4_init(&Tov, PSIF_CC_TMP0, 0, 27, 43, 27, 43, 0, "T(OV|Q)");
+            dpd_set_default(0);
+            global_dpd_->file2_init(&t1, PSIF_CC_OEI, 0, 0, 1, "tIA");
+            global_dpd_->contract244(&t1, &VV, &Tov, 1, 0, 0, 1.0, 0.0);
+            global_dpd_->file2_close(&t1);
+            global_dpd_->buf4_close(&VV);
+
+            // t_jbia = (Q|jb) (Q|ia)
+            dpd_set_default(1);
+            global_dpd_->buf4_init(&OV, PSIF_CC_OEI, 0, 43, 27, 43, 27, 0, "B(Q|OV)");
+            global_dpd_->buf4_init(&Tovov, PSIF_CC_TMP0, 0, 27, 27, 27, 27, 0, "T(OV|OV)");
+            dpd_set_default(0);
+            global_dpd_->contract444(&Tov, &OV, &Tovov, 0, 1, 1.0, 0.0);
+            global_dpd_->buf4_sort(&Tovov, PSIF_CC_TMP0, prqs, 0, 5, "T<OO|VV>");
+            global_dpd_->buf4_close(&OV);
+            global_dpd_->buf4_close(&Tovov);
+
+            global_dpd_->buf4_init(&Toovv, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T<OO|VV>");
+            global_dpd_->buf4_init(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
+            // T_IjAb -> T2 IjAb
+            global_dpd_->buf4_axpy(&Toovv, &t2, 1.0);
+            // T_IjAb -> T2 jIBa
+            global_dpd_->buf4_sort_axpy(&Toovv, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1.0);
+            global_dpd_->buf4_close(&t2);
+            global_dpd_->buf4_close(&Toovv);
+        } else {
+            global_dpd_->buf4_init_sp(&X_sp, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "X(Ij,Ab)_sp");
+            global_dpd_->buf4_init_sp(&F_sp, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
+            global_dpd_->file2_init_sp(&t1_sp, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+            global_dpd_->file2_mat_init_sp(&t1_sp);
+            global_dpd_->file2_mat_rd_sp(&t1_sp);
+            for (int Gie = 0; Gie < moinfo_.nirreps; Gie++) {
+                Gab = Gie; /* F is totally symmetric */
+                Gij = Gab; /* T2 is totally symmetric */
+                global_dpd_->buf4_mat_irrep_init(&X, Gij);
+                ncols = F_sp.params->coltot[Gie];
+
+                for (int Gi = 0; Gi < moinfo_.nirreps; Gi++) {
+                    Gj = Ge = Gi ^ Gie; /* T1 is totally symmetric */
+
+                    nlinks = moinfo_.virtpi[Ge];
+                    nrows = moinfo_.occpi[Gj];
+
+                    global_dpd_->buf4_mat_irrep_init_block_sp(&F_sp, Gie, nlinks);
+		    global_dpd_->dpd_block_matrix_sp(nrows, ncols);
+                    for (int i = 0; i < moinfo_.occpi[Gi]; i++) {
+                        I = F_sp.params->poff[Gi] + i;
+                        global_dpd_->buf4_mat_irrep_rd_block_sp(&F_sp, Gie, F_sp.row_offset[Gie][I], nlinks);
+
+                        if (nrows && ncols && nlinks)
+                            C_SGEMM('n', 'n', nrows, ncols, nlinks, 1.0, t1_sp.matrix[Gj][0], nlinks, F_sp.matrix[Gie][0],
+                                    ncols, 0.0, TMP[0][0], ncols);
+                        for (row = 0; row < nrows; row++){
+  		        	for (col = 0; col < ncols; col++){
+			            X.matrix[Gij+row][X.row_offset[Gij][I]+col]	= static_cast<double>(TMP[row][col]);
+				}
+		        } 
+                     }
+
+                    global_dpd_->buf4_mat_irrep_close_block_sp(&F_sp, Gie, nlinks);i
+                    global_dpd_->free_dpd_block_sp(&TMP, nrows, ncols);
+                }
+
+                global_dpd_->buf4_mat_irrep_wrt(&X, Gij);
+                global_dpd_->buf4_mat_irrep_close(&X, Gij);
+            }
+            global_dpd_->file2_mat_close_sp(&t1_sp);
+            global_dpd_->file2_close_sp(&t1_sp);
+            global_dpd_->buf4_close_sp(&F_sp);
+            global_dpd_->buf4_init(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
+            global_dpd_->buf4_axpy(&X, &t2, 1);
+            global_dpd_->buf4_close(&t2);
+            global_dpd_->buf4_sort_axpy(&X, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1);
+            global_dpd_->buf4_close(&X);
+            global_dpd_->buf4_close_sp(&X_sp);
+        } // df
+    } // RHF
+} // mp
+
+void CCEnergyWavefunction::FT2_sp() {
+    dpdfile2<float> tIA, t1;
+    dpdbuf4<float>  newtIjAb, t2;
+    dpdbuf4<float> F_anti, F;
+    dpdbuf4<float> X;
+    int Gij, Gab, nrows, ncols, nlinks, Ge, Gj, I;
+
+    if (params_.ref == 0) { /** RHF **/
+
+        /*     dpd_buf4_init(&newtIjAb, CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb"); */
+
+        /*     dpd_buf4_init(&Z, CC_TMP0, 0, 0, 5, 0, 5, 0, "Z1(ij,ab)"); */
+        /*     dpd_buf4_init(&F, CC_FINTS, 0, 11, 5, 11, 5, 0, "F <ai|bc>"); */
+        /*     dpd_file2_init(&tIA, CC_OEI, 0, 0, 1, "tIA"); */
+        /*     dpd_contract244(&tIA, &F, &Z, 1, 0, 0, 1, 0); */
+        /*     dpd_file2_close(&tIA);  */
+        /*     dpd_buf4_close(&F); */
+
+        /*     dpd_buf4_sort(&Z, CC_TMP0, qpsr, 0, 5, "Z2(ji,ba)"); */
+        /*     dpd_buf4_axpy(&Z, &newtIjAb, 1.0); */
+        /*     dpd_buf4_close(&Z); */
+        /*     dpd_buf4_init(&Z, CC_TMP0, 0, 0, 5, 0, 5, 0, "Z2(ji,ba)"); */
+        /*     dpd_buf4_axpy(&Z, &newtIjAb, 1.0); */
+        /*     dpd_buf4_close(&Z); */
+
+        /*     dpd_buf4_close(&newtIjAb); */
+
+        /* t(ij,ab) <-- t(j,e) * <ie|ab> + t(i,e) * <je|ba> */
+        /* OOC code added 3/23/05, TDC */
+        if (params_.df) {
+            dpdbuf4 OV, VV, Tov, Tovov, Toovv;
+            // (Q|ia) = (Q|ea) t_ie
+            dpd_set_default(1);
+            global_dpd_->buf4_init(&VV, PSIF_CC_OEI, 0, 10, 43, 13, 43, 0, "B(VV|Q)");
+            global_dpd_->buf4_init(&Tov, PSIF_CC_TMP0, 0, 27, 43, 27, 43, 0, "T(OV|Q)");
+            dpd_set_default(0);
+            global_dpd_->file2_init(&t1, PSIF_CC_OEI, 0, 0, 1, "tIA");
+            global_dpd_->contract244(&t1, &VV, &Tov, 1, 0, 0, 1.0, 0.0);
+            global_dpd_->file2_close(&t1);
+            global_dpd_->buf4_close(&VV);
+
+            // t_jbia = (Q|jb) (Q|ia)
+            dpd_set_default(1);
+            global_dpd_->buf4_init(&OV, PSIF_CC_OEI, 0, 43, 27, 43, 27, 0, "B(Q|OV)");
+            global_dpd_->buf4_init(&Tovov, PSIF_CC_TMP0, 0, 27, 27, 27, 27, 0, "T(OV|OV)");
+            dpd_set_default(0);
+            global_dpd_->contract444(&Tov, &OV, &Tovov, 0, 1, 1.0, 0.0);
+            global_dpd_->buf4_sort(&Tovov, PSIF_CC_TMP0, prqs, 0, 5, "T<OO|VV>");
+            global_dpd_->buf4_close(&OV);
+            global_dpd_->buf4_close(&Tovov);
+
+            global_dpd_->buf4_init(&Toovv, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T<OO|VV>");
+            global_dpd_->buf4_init(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
+            // T_IjAb -> T2 IjAb
+            global_dpd_->buf4_axpy(&Toovv, &t2, 1.0);
+            // T_IjAb -> T2 jIBa
+            global_dpd_->buf4_sort_axpy(&Toovv, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1.0);
+            global_dpd_->buf4_close(&t2);
+            global_dpd_->buf4_close(&Toovv);
+        } else {
+            global_dpd_->buf4_init_sp(&X, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "X(Ij,Ab)_sp");
+            global_dpd_->buf4_init_sp(&F, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
+            global_dpd_->file2_init_sp(&t1, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+            global_dpd_->file2_mat_init_sp(&t1);
+            global_dpd_->file2_mat_rd_sp(&t1);
+            for (int Gie = 0; Gie < moinfo_.nirreps; Gie++) {
+                Gab = Gie; /* F is totally symmetric */
+                Gij = Gab; /* T2 is totally symmetric */
+                global_dpd_->buf4_mat_irrep_init_sp(&X, Gij);
+                ncols = F.params->coltot[Gie];
+
+                for (int Gi = 0; Gi < moinfo_.nirreps; Gi++) {
+                    Gj = Ge = Gi ^ Gie; /* T1 is totally symmetric */
+
+                    nlinks = moinfo_.virtpi[Ge];
+                    nrows = moinfo_.occpi[Gj];
+
+                    global_dpd_->buf4_mat_irrep_init_block_sp(&F, Gie, nlinks);
+
+                    for (int i = 0; i < moinfo_.occpi[Gi]; i++) {
+                        I = F.params->poff[Gi] + i;
+                        global_dpd_->buf4_mat_irrep_rd_block_sp(&F, Gie, F.row_offset[Gie][I], nlinks);
+
+                        if (nrows && ncols && nlinks)
+                            C_SGEMM('n', 'n', nrows, ncols, nlinks, 1.0, t1.matrix[Gj][0], nlinks, F.matrix[Gie][0],
+                                    ncols, 0.0, X.matrix[Gij][X.row_offset[Gij][I]], ncols);
+                    }
+
+                    global_dpd_->buf4_mat_irrep_close_block_sp(&F, Gie, nlinks);
+                }
+
+                global_dpd_->buf4_mat_irrep_wrt_sp(&X, Gij);
+                global_dpd_->buf4_mat_irrep_close_sp(&X, Gij);
+            }
+            global_dpd_->file2_mat_close_sp(&t1);
+            global_dpd_->file2_close_sp(&t1);
+            global_dpd_->buf4_close_sp(&F);
+            global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
+            global_dpd_->buf4_axpy_sp(&X, &t2, 1);
+            global_dpd_->buf4_close_sp(&t2);
+            global_dpd_->buf4_sort_axpy_sp(&X, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1);
+            global_dpd_->buf4_close_sp(&X);
+        } // params.df = 0
+    } // RHF
+} //FT2_sp
 }  // namespace ccenergy
 }  // namespace psi

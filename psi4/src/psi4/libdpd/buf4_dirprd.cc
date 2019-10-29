@@ -44,7 +44,7 @@ namespace psi {
 **  The results is written to FileB.
 */
 
-int DPD::buf4_dirprd(dpdbuf4 *BufA, dpdbuf4 *BufB) {
+int DPD::buf4_dirprd(dpdbuf4<double> *BufA, dpdbuf4<double> *BufB) {
     int h, nirreps, my_irrep;
 
     nirreps = BufA->params->nirreps;

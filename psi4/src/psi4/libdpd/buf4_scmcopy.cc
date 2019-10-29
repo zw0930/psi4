@@ -52,11 +52,11 @@ namespace psi {
 **
 */
 
-int DPD::buf4_scmcopy(dpdbuf4 *InBuf, int outfilenum, const char *label, double alpha) {
+int DPD::buf4_scmcopy(dpdbuf4<double> *InBuf, int outfilenum, const char *label, double alpha) {
     int h, row, col, rowtot, coltot, all_buf_irrep;
     int nbuckets, incore, n;
     long int size, memoryd, rows_per_bucket, rows_left;
-    dpdbuf4 OutBuf;
+    dpdbuf4<double> OutBuf;
 
     all_buf_irrep = InBuf->file.my_irrep;
 

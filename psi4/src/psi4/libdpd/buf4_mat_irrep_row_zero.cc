@@ -35,8 +35,7 @@
 #include "dpd.h"
 
 namespace psi {
-
-int DPD::buf4_mat_irrep_row_zero(dpdbuf4 *Buf, int irrep, int row) {
+int DPD::buf4_mat_irrep_row_zero(dpdbuf4<double> *Buf, int irrep, int row) {
     int coltot, all_buf_irrep;
 
     all_buf_irrep = Buf->file.my_irrep;
@@ -46,5 +45,4 @@ int DPD::buf4_mat_irrep_row_zero(dpdbuf4 *Buf, int irrep, int row) {
 
     return 0;
 }
-
 }  // namespace psi

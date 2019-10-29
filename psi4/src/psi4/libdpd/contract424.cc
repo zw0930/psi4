@@ -57,8 +57,7 @@ namespace psi {
  **   double alpha: A prefactor for the product alpha * X * Y.
  **   double beta: A prefactor for the target beta * Z.
  */
-
-int DPD::contract424(dpdbuf4 *X, dpdfile2 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, int Ztrans, double alpha, double beta) {
+int DPD::contract424(dpdbuf4<double> *X, dpdfile2<double> *Y, dpdbuf4<double> *Z, int sum_X, int sum_Y, int Ztrans, double alpha, double beta) {
     int h, nirreps, GX, GY, GZ, hxbuf, hzbuf, h0, Hx, Hy, Hz, GsX, GsZ;
     int rking = 0, symlink;
     int Xtrans, Ytrans;
@@ -68,8 +67,9 @@ int DPD::contract424(dpdbuf4 *X, dpdfile2 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, 
     int xcount, zcount, scount, Ysym;
     int rowx, rowz, colx, colz;
     int pq, rs, r, s, Gr, Gs;
-    dpdtrans4 Xt, Zt;
-    double ***Xmat, ***Zmat;
+    dpdtrans4<double> Xt, Zt;
+    double ***Xmat;
+    double ***Zmat;
 #ifdef DPD_DEBUG
     int *xrow, *xcol, *yrow, *ycol, *zrow, *zcol;
 #endif
@@ -315,7 +315,7 @@ int DPD::contract424(dpdbuf4 *X, dpdfile2 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, 
                         } else if (Xtrans && !Ytrans) {
                             C_DGEMM('t', 'n', numrows[Hz], numcols[Hz], numlinks[Hy ^ symlink], alpha,
                                     &(Xmat[Hz][0][0]), numrows[Hz], &(Y->matrix[Hy][0][0]), numcols[Hz], 1.0,
-                                    &(Zmat[Hz][0][0]), numcols[Hz]);
+                                    &(Zmat[Hz][0][0]),  numcols[Hz]);
                         } else if (!Xtrans && Ytrans) {
                             C_DGEMM('n', 't', numrows[Hz], numcols[Hz], numlinks[Hy ^ symlink], alpha,
                                     &(Xmat[Hz][0][0]), numlinks[Hy ^ symlink], &(Y->matrix[Hy][0][0]),

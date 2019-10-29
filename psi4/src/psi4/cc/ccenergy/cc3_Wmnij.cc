@@ -50,8 +50,8 @@ namespace ccenergy {
 void purge_Wmnij();
 
 void CCEnergyWavefunction::cc3_Wmnij() {
-    dpdbuf4 A, E, D, Z, W, Z1;
-    dpdfile2 t1, tIA, tia;
+    dpdbuf4<double> A, E, D, Z, W, Z1;
+    dpdfile2<double> t1, tIA, tia;
 
     if (params_.ref == 0) { /** RHF **/
 

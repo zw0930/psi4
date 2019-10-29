@@ -54,7 +54,7 @@ namespace psi {
     CIjAb, WAbEi, WMbIj, fIJ2, fAB2, omega
 */
 
-void DPD::cc3_sigma_RHF(dpdbuf4 *CIjAb, dpdbuf4 *WAbEi, dpdbuf4 *WMbIj, int do_singles, dpdbuf4 *Dints, dpdfile2 *SIA,
+void DPD::cc3_sigma_RHF(dpdbuf4<double> *CIjAb, dpdbuf4 *WAbEi, dpdbuf4 *WMbIj, int do_singles, dpdbuf4 *Dints, dpdfile2 *SIA,
                         int do_doubles, dpdfile2 *FME, dpdbuf4 *WmAEf, dpdbuf4 *WMnIe, dpdbuf4 *SIjAb, int *occpi,
                         int *occ_off, int *virtpi, int *vir_off, double omega, std::string out, int newtrips) {
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));

@@ -46,8 +46,7 @@ namespace psi {
 **                        dpdbuf4.
 **   double alpha: The scalar prefactor in the multiplication.
 */
-
-int DPD::buf4_axpy(dpdbuf4 *BufX, dpdbuf4 *BufY, double alpha) {
+int DPD::buf4_axpy(dpdbuf4<double> *BufX, dpdbuf4<double> *BufY, double alpha) {
     int h, nirreps, my_irrep;
     int row, col, incore, n, nbuckets;
     long int length;

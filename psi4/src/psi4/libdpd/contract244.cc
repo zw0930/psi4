@@ -59,8 +59,8 @@ namespace psi {
 */
 
 #define DPD_BIGNUM 2147483647 /* the four-byte signed int limit */
-
-int DPD::contract244(dpdfile2 *X, dpdbuf4 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, int Ztrans, double alpha, double beta) {
+int DPD::contract244(dpdfile2<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z, int sum_X, int sum_Y, int Ztrans, double alpha, double beta) {
+    //dpdbuf4<U> *Z_tmp;
     int h, h0, Hx, hybuf, hzbuf, Hy, Hz, nirreps, GX, GY, GZ, bra_y;
     int rking = 0, *yrow, *ycol, symlink;
     int Xtrans, Ytrans = 0;
@@ -70,8 +70,8 @@ int DPD::contract244(dpdfile2 *X, dpdbuf4 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, 
     int ncols, nrows, nlinks;
     long int core, memoryd, core_total, rowtot, coltot, maxrows, Z_core;
     int *numlinks, *numrows, *numcols;
-    dpdtrans4 Yt, Zt;
-    double ***Ymat, ***Zmat;
+    dpdtrans4<double> Yt, Zt;
+    W ***Ymat, ***Zmat;
 #ifdef DPD_DEBUG
     int *xrow, *xcol, *zrow, *zcol;
 #endif
@@ -202,7 +202,7 @@ int DPD::contract244(dpdfile2 *X, dpdbuf4 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, 
                 zcol = Zt.shift.coltot[hzbuf];
 #endif
             } else {
-                buf4_mat_irrep_shift13(Z, hzbuf);
+                buf4_mat_irrep_shift13_target(Z, hzbuf);
                 numrows = Z->shift.rowtot[hzbuf];
                 numcols = Z->shift.coltot[hzbuf];
                 Zmat = Z->shift.matrix[hzbuf];
@@ -362,14 +362,16 @@ int DPD::contract244(dpdfile2 *X, dpdbuf4 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, 
                 buf4_mat_irrep_close(Y, hybuf);
 
             if (Ztrans) {
-                buf4_mat_irrep_init(Z, hzbuf);
+                buf4_mat_irrep_init_target(Z, hzbuf);
+                buf4_mat_irrep_init(Z_tmp, hzbuf);
                 trans4_mat_irrep_wrt(&Zt, hzbuf);
                 trans4_mat_irrep_close(&Zt, hzbuf);
             }
 
             buf4_mat_irrep_wrt(Z, hzbuf);
             buf4_mat_irrep_close(Z, hzbuf);
-
+           // buf4_mat_irrep_close(Z_tmp, hzbuf);
+ 
         }      /* end if(incore) */
         else { /* out-of-core for "normal" 244 contractions */
                /* Prepare the input buffer for the X factor and the target*/
@@ -379,15 +381,16 @@ int DPD::contract244(dpdfile2 *X, dpdbuf4 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, 
 #endif
             buf4_mat_irrep_row_init(Y, hybuf);
             buf4_mat_irrep_row_init(Z, hzbuf);
+            //buf4_mat_irrep_row_init(Z_tmp, hzbuf);
 
             /* Loop over rows of the Y factor and the target */
             for (pq = 0; pq < Z->params->rowtot[hzbuf]; pq++) {
                 buf4_mat_irrep_row_zero(Y, hybuf, pq);
                 buf4_mat_irrep_row_rd(Y, hybuf, pq);
 
-                buf4_mat_irrep_row_zero(Z, hzbuf, pq);
+                buf4_mat_irrep_row_zero_target(Z, hzbuf, pq);
 
-                if (std::fabs(beta) > 0.0) buf4_mat_irrep_row_rd(Z, hzbuf, pq);
+                if (std::fabs(beta) > 0.0) buf4_mat_irrep_row_rd_target(Z, hzbuf, pq);
 
                 for (Gs = 0; Gs < nirreps; Gs++) {
                     GrY = Gs ^ hybuf ^ GY;
@@ -414,6 +417,7 @@ int DPD::contract244(dpdfile2 *X, dpdbuf4 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, 
 
             buf4_mat_irrep_row_close(Y, hybuf);
             buf4_mat_irrep_row_close(Z, hzbuf);
+            //buf4_mat_irrep_row_close(Z_tmp, hzbuf);
         }
     }
 
@@ -425,4 +429,6 @@ int DPD::contract244(dpdfile2 *X, dpdbuf4 *Y, dpdbuf4 *Z, int sum_X, int sum_Y, 
 
     return 0;
 }
+
+
 }

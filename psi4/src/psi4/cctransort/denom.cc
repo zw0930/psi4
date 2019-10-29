@@ -32,8 +32,8 @@ namespace psi {
 namespace cctransort {
 
 void denom_uhf() {
-    dpdfile2 d1, fIJ, fij, fAB, fab;
-    dpdbuf4 d2;
+    dpdfile2<double> d1, fIJ, fij, fAB, fab;
+    dpdbuf4<double> d2;
 
     global_dpd_->file2_init(&fIJ, PSIF_CC_OEI, 0, 0, 0, "fIJ");
     global_dpd_->file2_mat_init(&fIJ);
@@ -185,9 +185,9 @@ void denom_uhf() {
 }
 
 void denom_rhf(Dimension &openpi) {
-    dpdfile2 fIJ, fij, fAB, fab;
-    dpdfile2 d1;
-    dpdbuf4 d2;
+    dpdfile2<double> fIJ, fij, fAB, fab;
+    dpdfile2<double> d1;
+    dpdbuf4<double> d2;
 
     global_dpd_->file2_init(&fIJ, PSIF_CC_OEI, 0, 0, 0, "fIJ");
     global_dpd_->file2_mat_init(&fIJ);

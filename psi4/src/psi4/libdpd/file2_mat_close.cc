@@ -31,10 +31,9 @@
     \brief Enter brief description of file here
 */
 #include "dpd.h"
-
 namespace psi {
 
-int DPD::file2_mat_close(dpdfile2 *File) {
+int DPD::file2_mat_close(dpdfile2<double> *File) {
     int h, my_irrep;
 
     my_irrep = File->my_irrep;
@@ -47,5 +46,4 @@ int DPD::file2_mat_close(dpdfile2 *File) {
 
     return 0;
 }
-
 }  // namespace psi

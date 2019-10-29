@@ -48,14 +48,14 @@ namespace ccenergy {
  */
 
 void CCEnergyWavefunction::cc3() {
-    dpdfile2 TIA_new, Tia_new, FME, Fme;
-    dpdbuf4 TIJAB_new, Tijab_new, TIjAb_new;
-    dpdbuf4 TIJAB, Tijab, TIjAb, TiJaB;
-    dpdbuf4 WABEI, WAbEi, Wabei, WaBeI;
-    dpdbuf4 WMBIJ, WMbIj, Wmbij, WmBiJ;
-    dpdbuf4 Dints, DIJAB_anti, Dijab_anti, DIjAb, DiJaB;
-    dpdbuf4 WAMEF, WAmEf, Wamef, WaMeF;
-    dpdbuf4 WMNIE, WMnIe, Wmnie, WmNiE;
+    dpdfile2<double> TIA_new, Tia_new, FME, Fme;
+    dpdbuf4<double> TIJAB_new, Tijab_new, TIjAb_new;
+    dpdbuf4<double> TIJAB, Tijab, TIjAb, TiJaB;
+    dpdbuf4<double> WABEI, WAbEi, Wabei, WaBeI;
+    dpdbuf4<double> WMBIJ, WMbIj, Wmbij, WmBiJ;
+    dpdbuf4<double> Dints, DIJAB_anti, Dijab_anti, DIjAb, DiJaB;
+    dpdbuf4<double> WAMEF, WAmEf, Wamef, WaMeF;
+    dpdbuf4<double> WMNIE, WMnIe, Wmnie, WmNiE;
 
     if (params_.ref == 0) { /* RHF */
         global_dpd_->file2_init(&TIA_new, PSIF_CC_OEI, 0, 0, 1, "New tIA");

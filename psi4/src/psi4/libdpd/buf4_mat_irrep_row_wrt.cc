@@ -39,8 +39,7 @@
 #include <cstdlib>
 
 namespace psi {
-
-int DPD::buf4_mat_irrep_row_wrt(dpdbuf4 *Buf, int irrep, int pq) {
+int DPD::buf4_mat_irrep_row_wrt(dpdbuf4<double> *Buf, int irrep, int pq) {
     int method = 0;
     int filerow, all_buf_irrep;
     int rs;           /* dpdfile row and column indices */

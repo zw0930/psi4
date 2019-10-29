@@ -30,7 +30,7 @@
 
 namespace psi {
 
-double DPD::buf4_trace(dpdbuf4 *Buf) {
+double DPD::buf4_trace(dpdbuf4<double> *Buf) {
     double trace = 0.0;
     for (int h = 0; h < Buf->params->nirreps; h++) {
         if (Buf->params->rowtot[h] == Buf->params->coltot[h]) {

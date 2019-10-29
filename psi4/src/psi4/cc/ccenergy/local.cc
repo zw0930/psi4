@@ -83,7 +83,7 @@ void CCEnergyWavefunction::local_init() {
 
 void CCEnergyWavefunction::local_done() { outfile->Printf("    Local parameters free.\n"); }
 
-void CCEnergyWavefunction::local_filter_T1(dpdfile2 *T1) {
+void CCEnergyWavefunction::local_filter_T1(dpdfile2<double> *T1) {
     int ii;
     double *T1tilde, *T1bar;
     psio_address next;
@@ -179,7 +179,7 @@ void CCEnergyWavefunction::local_filter_T1(dpdfile2 *T1) {
     /*   free(local.weak_pairs); */
 }
 
-void CCEnergyWavefunction::local_filter_T2(dpdbuf4 *T2) {
+void CCEnergyWavefunction::local_filter_T2(dpdbuf4<double> *T2) {
     psio_address next;
 
     auto nso = local_.nso;

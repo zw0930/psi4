@@ -35,7 +35,7 @@
 
 namespace psi {
 
-int DPD::file2_mat_rd(dpdfile2 *File) {
+int DPD::file2_mat_rd(dpdfile2<double> *File) {
     int h, my_irrep, rowtot, coltot;
     psio_address irrep_ptr, next_address;
 
@@ -58,5 +58,4 @@ int DPD::file2_mat_rd(dpdfile2 *File) {
 
     return 0;
 }
-
 }  // namespace psi

@@ -55,9 +55,9 @@ double CCEnergyWavefunction::energy() {
 
 double CCEnergyWavefunction::rhf_energy() {
     double tauIjAb_energy, tIA_energy;
-    dpdfile2 fIA, tIA;
-    dpdbuf4 tauIjAb, D;
-    dpdbuf4 S;
+    dpdfile2<double> fIA, tIA;
+    dpdbuf4<double> tauIjAb, D;
+    dpdbuf4<double> S;
     double os_energy, ss_energy;
 
     global_dpd_->file2_init(&fIA, PSIF_CC_OEI, 0, 0, 1, "fIA");
@@ -86,8 +86,8 @@ double CCEnergyWavefunction::rhf_energy() {
 
 double CCEnergyWavefunction::rohf_energy() {
     double tIA_energy, tia_energy, tauIJAB_energy, tauijab_energy, tauIjAb_energy;
-    dpdfile2 tIA, tia, fIA, fia;
-    dpdbuf4 tauIJAB, tauijab, tauIjAb, D;
+    dpdfile2<double> tIA, tia, fIA, fia;
+    dpdbuf4<double> tauIJAB, tauijab, tauIjAb, D;
 
     global_dpd_->file2_init(&fIA, PSIF_CC_OEI, 0, 0, 1, "fIA");
     global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
@@ -139,8 +139,8 @@ double CCEnergyWavefunction::rohf_energy() {
 
 double CCEnergyWavefunction::uhf_energy() {
     double E2AA, E2BB, E2AB, T1A, T1B;
-    dpdbuf4 T2, D;
-    dpdfile2 T1, F;
+    dpdbuf4<double> T2, D;
+    dpdfile2<double> T1, F;
 
     global_dpd_->file2_init(&F, PSIF_CC_OEI, 0, 0, 1, "fIA");
     global_dpd_->file2_init(&T1, PSIF_CC_OEI, 0, 0, 1, "tIA");

@@ -36,7 +36,7 @@
 
 namespace psi {
 
-double DPD::file2_dot(dpdfile2 *FileA, dpdfile2 *FileB) {
+double DPD::file2_dot(dpdfile2<double> *FileA, dpdfile2<double> *FileB) {
     int h, nirreps, my_irrep;
     double dot;
 

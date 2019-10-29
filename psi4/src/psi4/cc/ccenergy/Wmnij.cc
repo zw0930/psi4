@@ -42,11 +42,11 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::Wmnij_build() {
-    dpdbuf4 A_anti, A;
-    dpdbuf4 WMNIJ, Wmnij, WMnIj, W;
-    dpdfile2 tIA, tia;
-    dpdbuf4 Eijka, Eijka_anti, Eaijk, Eaijk_anti;
-    dpdbuf4 D_anti, D, tauIJAB, tauijab, tauIjAb;
+    dpdbuf4<double> A_anti, A;
+    dpdbuf4<double> WMNIJ, Wmnij, WMnIj, W;
+    dpdfile2<double> tIA, tia;
+    dpdbuf4<double> Eijka, Eijka_anti, Eaijk, Eaijk_anti;
+    dpdbuf4<double> D_anti, D, tauIJAB, tauijab, tauIjAb;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init(&A, PSIF_CC_AINTS, 0, 0, 0, 0, 0, 0, "A <ij|kl>");

@@ -41,8 +41,7 @@ namespace psi {
 ** Arguments:
 **   dpdfile4 *File: A pointer to the file to be closed.
 */
-
-int DPD::file4_close(dpdfile4 *File) {
+int DPD::file4_close(dpdfile4<double> *File) {
     file4_cache_unlock(File);
 
     free(File->lfiles);

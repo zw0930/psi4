@@ -45,8 +45,7 @@ namespace psi {
 **   dpdbuf4 *FileC: A pointer to the target dpdbuf4.
 **   double a, b, c, scalar prefactors
 */
-
-int DPD::buf4_axpbycz(dpdbuf4 *FileA, dpdbuf4 *FileB, dpdbuf4 *FileC, double a, double b, double c) {
+int DPD::buf4_axpbycz(dpdbuf4<double> *FileA, dpdbuf4<double> *FileB, dpdbuf4<double> *FileC, double a, double b, double c) {
     buf4_scm(FileC, c);
 
     buf4_axpy(FileB, FileC, b);
@@ -54,5 +53,4 @@ int DPD::buf4_axpbycz(dpdbuf4 *FileA, dpdbuf4 *FileB, dpdbuf4 *FileC, double a, 
     buf4_axpy(FileA, FileC, a);
     return 0;
 }
-
 }  // namespace psi

@@ -38,8 +38,8 @@
 #include "psi4/psi4-dec.h"
 #include "psi4/libpsi4util/PsiOutStream.h"
 namespace psi {
-
-int DPD::contract222(dpdfile2 *X, dpdfile2 *Y, dpdfile2 *Z, int target_X, int target_Y, double alpha, double beta) {
+int DPD::contract222(dpdfile2<double> *X, dpdfile2<double> *Y, dpdfile2<double> *Z, int target_X, int target_Y, double alpha, double beta) {
+    //dpdfile2<U> *Z_tmp;
     int h, nirreps, Xtrans, Ytrans, *numlinks;
     int GX, GY, GZ;
     int Hx, Hy, Hz;
@@ -58,7 +58,8 @@ int DPD::contract222(dpdfile2 *X, dpdfile2 *Y, dpdfile2 *Z, int target_X, int ta
     file2_mat_rd(X);
     file2_mat_init(Y);
     file2_mat_rd(Y);
-    file2_mat_init(Z);
+    file2_mat_init(Z_tmp);
+    file2_mat_init_target(Z);
     if (std::fabs(beta) > 0.0) file2_mat_rd(Z);
 
     if (target_X == 0) {
@@ -140,9 +141,9 @@ int DPD::contract222(dpdfile2 *X, dpdfile2 *Y, dpdfile2 *Z, int target_X, int ta
     file2_mat_wrt(Z);
     file2_mat_close(X);
     file2_mat_close(Y);
-    file2_mat_close(Z);
+    file2_mat_close_target(Z);
+    file2_mat_close(Z_tmp);
 
     return 0;
 }
-
 }  // namespace psi

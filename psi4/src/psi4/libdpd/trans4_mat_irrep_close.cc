@@ -37,7 +37,7 @@
 
 namespace psi {
 
-int DPD::trans4_mat_irrep_close(dpdtrans4 *Trans, int irrep) {
+int DPD::trans4_mat_irrep_close(dpdtrans4<double> *Trans, int irrep) {
     int h, nirreps, rowtot, coltot, all_buf_irrep;
     long int size;
 

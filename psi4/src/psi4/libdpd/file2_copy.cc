@@ -36,10 +36,10 @@
 
 namespace psi {
 
-int DPD::file2_copy(dpdfile2 *InFile, int outfilenum, const char *label) {
+int DPD::file2_copy(dpdfile2<double> *InFile, int outfilenum, const char *label) {
     int h, row, col, my_irrep, rowtot, coltot;
     double ***matrix;
-    dpdfile2 OutFile;
+    dpdfile2<double> OutFile;
 
     my_irrep = InFile->my_irrep;
 

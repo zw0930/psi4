@@ -34,7 +34,7 @@ namespace psi {
 namespace cctransort {
 
 void e_sort(int reference) {
-    dpdbuf4 E;
+    dpdbuf4<double> E;
 
     if (reference == 2) { /** UHF **/
         /*** AA ***/
@@ -94,31 +94,37 @@ void e_sort(int reference) {
         /* <ij|ka> */
         global_dpd_->buf4_init(&E, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E <ai|jk>");
         global_dpd_->buf4_sort(&E, PSIF_CC_EINTS, srqp, 0, 10, "E <ij|ka>");
+        global_dpd_->buf4_cast_copy_dtof(&E, PSIF_CC_EINTS, "E <ij|ka> sp");
         global_dpd_->buf4_close(&E);
 
         /* <ij||ka> (i>j,ka) */
         global_dpd_->buf4_init(&E, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 1, "E <ai|jk>");
         global_dpd_->buf4_sort(&E, PSIF_CC_EINTS, srqp, 2, 10, "E <ij||ka> (i>j,ka)");
+        global_dpd_->buf4_cast_copy_dtof(&E, PSIF_CC_EINTS, "E <ij||ka> (i>j,ka) sp");
         global_dpd_->buf4_close(&E);
 
         /* <ij|ka> (ij,ak) */
         global_dpd_->buf4_init(&E, PSIF_CC_EINTS, 0, 0, 10, 0, 10, 0, "E <ij|ka>");
         global_dpd_->buf4_sort(&E, PSIF_CC_EINTS, pqsr, 0, 11, "E <ij|ka> (ij,ak)");
+        global_dpd_->buf4_cast_copy_dtof(&E, PSIF_CC_EINTS, "E <ij|ka> (ij,ak) sp");
         global_dpd_->buf4_close(&E);
 
         /* <ij||ka> (i>j,ak) */
         global_dpd_->buf4_init(&E, PSIF_CC_EINTS, 0, 2, 10, 2, 10, 0, "E <ij||ka> (i>j,ka)");
         global_dpd_->buf4_sort(&E, PSIF_CC_EINTS, pqsr, 2, 11, "E <ij||ka> (i>j,ak)");
+        global_dpd_->buf4_cast_copy_dtof(&E, PSIF_CC_EINTS, "E <ij||ka> (i>j,ak) sp");
         global_dpd_->buf4_close(&E);
 
         /* <ia|jk> */
         global_dpd_->buf4_init(&E, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E <ai|jk>");
         global_dpd_->buf4_sort(&E, PSIF_CC_EINTS, qpsr, 10, 0, "E <ia|jk>");
+        global_dpd_->buf4_cast_copy_dtof(&E, PSIF_CC_EINTS, "E <ia|jk> sp");
         global_dpd_->buf4_close(&E);
 
         /* <ij|ak> */
         global_dpd_->buf4_init(&E, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E <ai|jk>");
         global_dpd_->buf4_sort(&E, PSIF_CC_EINTS, rspq, 0, 11, "E <ij|ak>");
+        global_dpd_->buf4_cast_copy_dtof(&E, PSIF_CC_EINTS, "E <ij|ak> sp");
         global_dpd_->buf4_close(&E);
     }
 }

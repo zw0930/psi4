@@ -49,8 +49,8 @@ namespace ccenergy {
 void purge_Wamef();
 
 void CCEnergyWavefunction::cc3_Wamef() {
-    dpdbuf4 F, D, W;
-    dpdfile2 t1, tia, tIA;
+    dpdbuf4<double> F, D, W;
+    dpdfile2<double> t1, tia, tIA;
 
     if (params_.ref == 0) { /** RHF **/
 
@@ -199,7 +199,7 @@ void CCEnergyWavefunction::cc3_Wamef() {
 }
 
 void CCEnergyWavefunction::purge_Wamef() {
-    dpdfile4 W;
+    dpdfile4<double> W;
     int a, e, f, m;
     int A, E, F, M;
     int asym, esym, fsym, msym;

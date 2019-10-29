@@ -65,8 +65,8 @@ namespace psi {
 
 void cc3_sigma_RHF_ic_thread(thread_data &);
 
-void DPD::cc3_sigma_RHF_ic(dpdbuf4 *CIjAb, dpdbuf4 *WAbEi, dpdbuf4 *WMbIj, int do_singles, dpdbuf4 *Dints,
-                           dpdfile2 *SIA, int do_doubles, dpdfile2 *FME, dpdbuf4 *WmAEf, dpdbuf4 *WMnIe, dpdbuf4 *SIjAb,
+void DPD::cc3_sigma_RHF_ic(dpdbuf4<double> *CIjAb, dpdbuf4<double> *WAbEi, dpdbuf4<double> *WMbIj, int do_singles, dpdbuf4<double> *Dints,
+                           dpdfile2<double> *SIA, int do_doubles, dpdfile2<double> *FME, dpdbuf4<double> *WmAEf, dpdbuf4<double> *WMnIe, dpdbuf4<double> *SIjAb,
                            int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega, std::string out,
                            int nthreads, int newtrips) {
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));

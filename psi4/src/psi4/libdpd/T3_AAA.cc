@@ -95,10 +95,7 @@
 #include "psi4/psifiles.h"
 
 namespace psi {
-
-void DPD::T3_AAA(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *C2, dpdbuf4 *F,
-                 dpdbuf4 *E, dpdfile2 *fIJ, dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
-                 double omega) {
+void DPD::T3_AAA(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double> *C2, dpdbuf4<double> *F, dpdbuf4<double> *E, dpdfile2<double> *fIJ, dpdfile2<double> *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega) {
     int h;
     int i, j, k;
     int ij, ji, ik, ki, jk, kj;

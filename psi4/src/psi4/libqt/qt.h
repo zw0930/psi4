@@ -76,6 +76,13 @@ int ras_set3(int nirreps, int nmo, int* orbspi, int* docc, int* socc, int* frdoc
              int* restruocc, int** ras_opi, int* core_guess, int* order, int ras_type, bool is_mcscf, Options& options);
 void newmm_rking(double** A, int transa, double** B, int transb, double** C, int num_rows, int num_links, int num_cols,
                  double alpha, double beta);
+// Add newmm_rking_sp, dot_block_sp
+void newmm_rking_sp(float** A, int transa, float** B, int transb, float** C, int num_rows, int num_links, int num_cols,
+                 float alpha, float beta);
+float dot_block_sp(float** A, float** B, int rows, int cols, float alpha);
+void dirprd_block_sp(float** A, float** B, int rows, int cols);
+
+
 double dot_block(double** A, double** B, int rows, int cols, double alpha);
 void dirprd_block(double** A, double** B, int rows, int cols);
 int pople(double** A, double* x, int dimen, int num_vecs, double tolerance, std::string out_fname, int print_lvl);
@@ -108,6 +115,10 @@ void C_DROT(size_t ntot, double* x, int incx, double* y, int incy, double costhe
 void C_DSWAP(size_t length, double* x, int incx, double* y, int inc_y);
 void C_DSCAL(size_t len, double alpha, double* vec, int inc);
 void C_DCOPY(size_t length, double* x, int inc_x, double* y, int inc_y);
+
+// Add scopy
+void C_SCOPY(size_t length, float* x, int inc_x, float* y, int inc_y);
+
 void C_DAXPY(size_t length, double a, double* x, int inc_x, double* y, int inc_y);
 double C_DDOT(size_t n, double* X, int inc_x, double* Y, int inc_y);
 double C_DNRM2(size_t n, double* X, int inc_x);
@@ -142,6 +153,11 @@ void C_DTRSM(char side, char uplo, char transa, char diag, int m, int n, double 
 PSI_API
 void C_DGEMM(char transa, char transb, int m, int n, int k, double alpha, double* a, int lda, double* b,
                      int ldb, double beta, double* c, int ldc);
+
+// Add sgemm
+void C_SGEMM(char transa, char transb, int m, int n, int k, float alpha, float* a, int lda, float* b,
+             int ldb,float beta, float* c, int ldc);
+
 void C_DSYMM(char side, char uplo, int m, int n, double alpha, double* a, int lda, double* b, int ldb, double beta,
              double* c, int ldc);
 void C_DTRMM(char side, char uplo, char transa, char diag, int m, int n, double alpha, double* a, int lda, double* b,
@@ -487,8 +503,8 @@ int C_DTZRZF(int m, int n, double* a, int lda, double* tau, double* work, int lw
 // For single precision ( Mostly level3 for the contractions )
 //http://www.netlib.org/blas/#_level_1
 
-
-// BLAS 3 Double routines
+/*
+// BLAS 3 Float routines
 PSI_API
 void C_SGEMM(char transa, char transb, int m, int n, int k, float alpha, float* a, int lda, float* b,
              int ldb,float beta, float* c, int ldc);
@@ -501,3 +517,24 @@ void C_SSYR2K(char uplo, char trans, int n, int k, float alpha, float* a, int ld
               float* c, int ldc);
 void C_STRSV(char uplo, char trans, char diag, int n, float* a, int lda, float* x, int incx);
 
+void C_SGEMM(char transa, char transb, int m, int n, int k, float alpha, float* a, int lda, float* b,
+             int ldb,float beta, float* c, int ldc); 
+
+
+void C_SCOPY(size_t length, float* x, int inc_x, float* y, int inc_y);
+
+// Generalized GEMM for single-precision and mixed-precision
+// precison: 0 dp, 1 sp, 2 mp
+template <typename U>
+void C_GGEMM(int precision, char transa, char transb, int m, int n, int k, U alpha, U* a, int lda, U* b,
+             int ldb, U beta, U* c, int ldc){
+  if (precision == 0) {
+    C_DGEMM(char transa, char transb, int m, int n, int k, double alpha, double* a, int lda, double* b,
+             int ldb,double beta, double* c, int ldc);
+  }
+  else{
+   C_SGEMM(char transa, char transb, int m, int n, int k, float alpha, float* a, int lda, float* b,
+             int ldb,float beta, float* c_tmp, int ldc); 
+  }
+}
+*/

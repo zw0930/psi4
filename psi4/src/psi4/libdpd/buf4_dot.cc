@@ -37,7 +37,7 @@
 
 namespace psi {
 
-double DPD::buf4_dot(dpdbuf4 *BufA, dpdbuf4 *BufB) {
+double DPD::buf4_dot(dpdbuf4<double> *BufA, dpdbuf4<double> *BufB) {
     int h, nirreps, n, my_irrep;
     double dot;
     int incore, nbuckets;

@@ -32,7 +32,7 @@ namespace psi {
 namespace cctransort {
 
 void d_spinad() {
-    dpdbuf4 D;
+    dpdbuf4<double> D;
 
     global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab>");
     global_dpd_->buf4_scmcopy(&D, PSIF_CC_DINTS, "D 2<ij|ab> - <ij|ba>", 2);

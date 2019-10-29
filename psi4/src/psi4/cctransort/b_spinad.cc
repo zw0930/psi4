@@ -35,7 +35,7 @@ namespace psi {
 namespace cctransort {
 
 void b_spinad(std::shared_ptr<PSIO> psio) {
-    dpdbuf4 B, Bs, Ba;
+    dpdbuf4<double> B, Bs, Ba;
 
     // This should probably replace the (VV|VV) sort in sort_tei so that we limit disk usage
     global_dpd_->buf4_init(&B, PSIF_CC_BINTS, 0, 5, 5, 5, 5, 0, "B <ab|cd>");

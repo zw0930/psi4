@@ -74,8 +74,8 @@ namespace ccenergy {
 */
 
 void CCEnergyWavefunction::lmp2() {
-    dpdbuf4 T2, newT2, D;
-    dpdfile2 fij, fab;
+    dpdbuf4<double> T2, newT2, D;
+    dpdfile2<double> fij, fab;
 
     auto nocc = local_.nocc;
     auto nvir = local_.nvir;

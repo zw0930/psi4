@@ -58,12 +58,12 @@ struct twostack {
 
 void onestack_insert(struct onestack *stack, double value, int i, int a, int level, int stacklen);
 void twostack_insert(struct twostack *stack, double value, int i, int j, int a, int b, int level, int stacklen);
-void amp_write_T1(dpdfile2 *T1, int length, const char *label, std::string out_fname);
-void amp_write_T2(dpdbuf4 *T2, int length, const char *label, std::string out_fname);
+void amp_write_T1(dpdfile2<double> *T1, int length, const char *label, std::string out_fname);
+void amp_write_T2(dpdbuf4<double> *T2, int length, const char *label, std::string out_fname);
 
 void CCEnergyWavefunction::amp_write() {
-    dpdfile2 T1;
-    dpdbuf4 T2;
+    dpdfile2<double> T1;
+    dpdbuf4<double> T2;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&T1, PSIF_CC_OEI, 0, 0, 1, "tIA");
@@ -111,7 +111,7 @@ void CCEnergyWavefunction::amp_write() {
     }
 }
 
-void amp_write_T1(dpdfile2 *T1, int length, const char *label, std::string out) {
+void amp_write_T1(dpdfile2<double> *T1, int length, const char *label, std::string out) {
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));
     int I, A;
     int num2print = 0;
@@ -190,7 +190,7 @@ void onestack_insert(struct onestack *stack, double value, int i, int a, int lev
     }
 }
 
-void amp_write_T2(dpdbuf4 *T2, int length, const char *label, std::string out) {
+void amp_write_T2(dpdbuf4<double> *T2, int length, const char *label, std::string out) {
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));
     int i, j, a, b;
     int num2print = 0;

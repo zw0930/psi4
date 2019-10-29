@@ -61,8 +61,7 @@ namespace psi {
 ** June 2000
 **
 */
-
-int DPD::buf4_scm(dpdbuf4 *InBuf, double alpha) {
+int DPD::buf4_scm(dpdbuf4<double> *InBuf, U alpha) {
     int pq;
     long int length, core, memoryd, core_total, rowtot, coltot, maxrows;
     int h, nirreps, new_buf4, all_buf_irrep;
@@ -112,9 +111,9 @@ int DPD::buf4_scm(dpdbuf4 *InBuf, double alpha) {
         if (core_total > memoryd) incore = 0;
 
         if (incore) {
-            buf4_mat_irrep_init(InBuf, h);
+            buf4_mat_irrep_init_target(InBuf, h);
 
-            if (!new_buf4) buf4_mat_irrep_rd(InBuf, h);
+            if (!new_buf4) buf4_mat_irrep_rd_target(InBuf, h);
 
             length = ((long)InBuf->params->rowtot[h]) * ((long)InBuf->params->coltot[h ^ all_buf_irrep]);
             if (length) {

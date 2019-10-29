@@ -47,8 +47,8 @@ namespace ccenergy {
 */
 
 void CCEnergyWavefunction::cc2_Wmnij_build() {
-    dpdbuf4 A, E, D, Z, W, Z1;
-    dpdfile2 t1, tIA, tia;
+    dpdbuf4<double> A, E, D, Z, W, Z1;
+    dpdfile2<double> t1, tIA, tia;
 
     timer_on("A->Wmnij");
     if (params_.ref == 0) { /** RHF **/
@@ -321,7 +321,7 @@ void CCEnergyWavefunction::cc2_Wmnij_build() {
 }
 
 void CCEnergyWavefunction::purge_cc2_Wmnij() {
-    dpdfile4 W;
+    dpdfile4<double> W;
     int *occpi, *virtpi;
     int i, j, m, n;
     int I, J, M, N;

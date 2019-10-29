@@ -35,7 +35,7 @@ namespace cctransort {
 
 void fock_uhf(std::shared_ptr<Wavefunction> ref, Dimension &aoccpi, Dimension &boccpi, Dimension &avirpi,
               Dimension &bvirpi, Dimension &frdocc, int print) {
-    dpdfile2 fa, fb;
+    dpdfile2<double> fa, fb;
 
     SharedMatrix Fa = ref->Fa()->clone();
     SharedMatrix Fb = ref->Fb()->clone();
@@ -62,7 +62,11 @@ void fock_uhf(std::shared_ptr<Wavefunction> ref, Dimension &aoccpi, Dimension &b
         global_dpd_->file2_print(&fa, "outfile");
         global_dpd_->file2_print(&fb, "outfile");
     }
-    global_dpd_->file2_close(&fa);
+    //Cast and make a copy of file2 in single-precision
+    //global_dpd_->file2_cast_copy(&fa, PSIF_CC_OEI, "fIJ_sp");
+    //global_dpd_->file2_cast_copy(&fb, PSIF_CC_OEI, "fij_sp");
+
+    global_dpd_->file2_closep(&fa);
     global_dpd_->file2_close(&fb);
 
     global_dpd_->file2_init(&fa, PSIF_CC_OEI, 0, 1, 1, "fAB");
@@ -85,6 +89,10 @@ void fock_uhf(std::shared_ptr<Wavefunction> ref, Dimension &aoccpi, Dimension &b
         global_dpd_->file2_print(&fa, "outfile");
         global_dpd_->file2_print(&fb, "outfile");
     }
+    //Cast and make a copy of file2 in single-precision
+    //global_dpd_->file2_cast_copy(&fa, PSIF_CC_OEI, "fAB_sp");
+    //global_dpd_->file2_cast_copy(&fb, PSIF_CC_OEI, "fab_sp");
+
     global_dpd_->file2_close(&fa);
     global_dpd_->file2_close(&fb);
 
@@ -108,13 +116,17 @@ void fock_uhf(std::shared_ptr<Wavefunction> ref, Dimension &aoccpi, Dimension &b
         global_dpd_->file2_print(&fa, "outfile");
         global_dpd_->file2_print(&fb, "outfile");
     }
+    //Cast and make a copy of file2 in single-precision
+   // global_dpd_->file2_cast_copy(&fa, PSIF_CC_OEI_SP, "fIA_sp");
+   // global_dpd_->file2_cast_copy(&fb, PSIF_CC_OEI_SP, "fia_sp");
+
     global_dpd_->file2_close(&fa);
     global_dpd_->file2_close(&fb);
 }
 
 void fock_rhf(std::shared_ptr<Wavefunction> ref, Dimension &occpi, Dimension &openpi, Dimension &virpi,
               Dimension &frdocc, int print) {
-    dpdfile2 fa, fb;
+    dpdfile2<double> fa, fb;
 
     SharedMatrix Fa = ref->Fa()->clone();
     SharedMatrix Fb = ref->Fb()->clone();
@@ -142,6 +154,10 @@ void fock_rhf(std::shared_ptr<Wavefunction> ref, Dimension &occpi, Dimension &op
         global_dpd_->file2_print(&fa, "outfile");
         global_dpd_->file2_print(&fb, "outfile");
     }
+
+    //Cast and make a copy of file2 in single-precision
+    global_dpd_->file2_cast_copy_dtof(&fa, PSIF_CC_OEI, "fIJ_sp");
+    global_dpd_->file2_cast_copy_dtof(&fb, PSIF_CC_OEI, "fij_sp");
     global_dpd_->file2_close(&fa);
     global_dpd_->file2_close(&fb);
 
@@ -181,6 +197,10 @@ void fock_rhf(std::shared_ptr<Wavefunction> ref, Dimension &occpi, Dimension &op
         global_dpd_->file2_print(&fa, "outfile");
         global_dpd_->file2_print(&fb, "outfile");
     }
+
+    //Cast and make a copy of file2 in single-precision
+    global_dpd_->file2_cast_copy_dtof(&fa, PSIF_CC_OEI, "fAB_sp");
+    global_dpd_->file2_cast_copy_dtof(&fb, PSIF_CC_OEI, "fab_sp");
     global_dpd_->file2_close(&fa);
     global_dpd_->file2_close(&fb);
 
@@ -212,8 +232,14 @@ void fock_rhf(std::shared_ptr<Wavefunction> ref, Dimension &occpi, Dimension &op
         global_dpd_->file2_print(&fa, "outfile");
         global_dpd_->file2_print(&fb, "outfile");
     }
+   
+     //Cast and make a copy of file2 in single-precision
+    global_dpd_->file2_cast_copy_dtof(&fa, PSIF_CC_OEI, "fIA_sp");
+    global_dpd_->file2_cast_copy_dtof(&fb, PSIF_CC_OEI, "fia_sp");
+    
     global_dpd_->file2_close(&fa);
     global_dpd_->file2_close(&fb);
+
 }
 
 }  // namespace cctransort

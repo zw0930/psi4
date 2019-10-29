@@ -194,6 +194,7 @@ double CCEnergyWavefunction::compute_energy() {
     moinfo_.d2diag = d2diag();
     update();
     checkpoint();
+    if (params_.precision == 0){
     for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps();
 
@@ -290,6 +291,205 @@ double CCEnergyWavefunction::compute_energy() {
         update();
         checkpoint();
     }  // end loop over iterations
+    } else if (params_.precision == 1){
+     for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
+        sort_amps_sp();
+        
+        timer_on("F build");
+        Fme_build_sp();
+        Fae_build_sp();
+        Fmi_build_sp();
+        if (params_.print & 2) status("F intermediates", "outfile");
+        timer_off("F build");
+
+        t1_build_sp();
+        if (params_.print & 2) status("T1 amplitudes", "outfile");
+
+        if (params_.wfn == "CC2" || params_.wfn == "EOM_CC2") {
+            cc2_Wmnij_build();
+            if (params_.print & 2) status("Wmnij", "outfile");
+
+            timer_on("Wmbij build");
+            cc2_Wmbij_build();
+            if (params_.print & 2) status("Wmbij", "outfile");
+            timer_off("Wmbij build");
+
+            timer_on("Wabei build");
+            cc2_Wabei_build();
+            if (params_.print & 2) status("Wabei", "outfile");
+            timer_off("Wabei build");
+
+            timer_on("T2 Build");
+            cc2_t2_build();
+            if (params_.print & 2) status("T2 amplitudes", "outfile");
+            timer_off("T2 Build");
+        } else {
+            timer_on("Wmbej build");
+            Wmbej_build_sp();
+            if (params_.print & 2) status("Wmbej", "outfile");
+            timer_off("Wmbej build");
+
+            Z_build_sp();
+            if (params_.print & 2) status("Z", "outfile");
+            Wmnij_build_sp();
+            if (params_.print & 2) status("Wmnij", "outfile");
+
+            timer_on("T2 Build");
+            t2_build_sp();
+            if (params_.print & 2) status("T2 amplitudes", "outfile");
+            timer_off("T2 Build");
+
+            if (params_.wfn == "CC3" || params_.wfn == "EOM_CC3") {
+                /* step1: build cc3 intermediates, Wabei, Wmnie, Wmbij, Wamef */
+                cc3_Wmnij();
+                cc3_Wmbij();
+                cc3_Wmnie();
+                cc3_Wamef();
+                cc3_Wabei();
+
+                /* step2: loop over T3's and add contributions to T1 and T2 as you go */
+                cc3();
+            }
+        }
+      
+        if (!params_.just_residuals) denom(); /* apply denominators to T1 and T2 */
+
+        if (converged(last_energy - moinfo_.ecc)) {
+            done = 1;
+
+            tsave(); 
+            tau_build(); 
+            taut_build(); 
+            last_energy = moinfo_.ecc;
+            moinfo_.ecc = energy();
+            moinfo_.t1diag = diagnostic();
+            moinfo_.d1diag = d1diag();
+            moinfo_.new_d1diag = new_d1diag();
+            moinfo_.d2diag = d2diag();
+            sort_amps(); 
+            update();
+            outfile->Printf("\n    Iterations converged.\n");
+
+            outfile->Printf("\n");
+            amp_write();
+            if (params_.analyze != 0) analyze();
+            break;
+        }
+        if (params_.diis) diis(moinfo_.iter);
+        tsave(); // Make copies of single-precision t1, t2 for the next iteration
+        tau_build(); // sp copies needed
+        taut_build(); // sp copies needed
+        last_energy = moinfo_.ecc;
+        moinfo_.ecc = energy();
+        moinfo_.t1diag = diagnostic();
+        moinfo_.d1diag = d1diag();
+        moinfo_.new_d1diag = new_d1diag();
+        moinfo_.d2diag = d2diag();
+        update();
+        checkpoint();
+       
+    }  // end loop over iterations
+
+    } else if (params_.precision == 2){
+     for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
+        sort_amps_sp();
+        
+        timer_on("F build");
+        Fme_build_sp();
+        Fae_build_sp();
+        Fmi_build_sp();
+        if (params_.print & 2) status("F intermediates", "outfile");
+        timer_off("F build");
+
+        t1_build_mp(); // sp(tamps&F)->dp(residual)
+        if (params_.print & 2) status("T1 amplitudes", "outfile");
+
+        if (params_.wfn == "CC2" || params_.wfn == "EOM_CC2") {
+            cc2_Wmnij_build();
+            if (params_.print & 2) status("Wmnij", "outfile");
+
+            timer_on("Wmbij build");
+            cc2_Wmbij_build();
+            if (params_.print & 2) status("Wmbij", "outfile");
+            timer_off("Wmbij build");
+
+            timer_on("Wabei build");
+            cc2_Wabei_build();
+            if (params_.print & 2) status("Wabei", "outfile");
+            timer_off("Wabei build");
+
+            timer_on("T2 Build");
+            cc2_t2_build();
+            if (params_.print & 2) status("T2 amplitudes", "outfile");
+            timer_off("T2 Build");
+        } else {
+            timer_on("Wmbej build");
+            Wmbej_build_sp();
+            if (params_.print & 2) status("Wmbej", "outfile");
+            timer_off("Wmbej build");
+
+            Z_build_sp();
+            if (params_.print & 2) status("Z", "outfile");
+            Wmnij_build_sp();
+            if (params_.print & 2) status("Wmnij", "outfile");
+
+            timer_on("T2 Build");
+            t2_build_mp(); // sp->dp
+            if (params_.print & 2) status("T2 amplitudes", "outfile");
+            timer_off("T2 Build");
+
+            if (params_.wfn == "CC3" || params_.wfn == "EOM_CC3") {
+                /* step1: build cc3 intermediates, Wabei, Wmnie, Wmbij, Wamef */
+                cc3_Wmnij();
+                cc3_Wmbij();
+                cc3_Wmnie();
+                cc3_Wamef();
+                cc3_Wabei();
+
+                /* step2: loop over T3's and add contributions to T1 and T2 as you go */
+                cc3();
+            }
+        }
+        
+        if (!params_.just_residuals) denom(); /* apply denominators to T1 and T2 */
+
+        if (converged(last_energy - moinfo_.ecc)) {
+            done = 1;
+            // All in dp
+            tsave();
+            tau_build();
+            taut_build();
+            last_energy = moinfo_.ecc;
+            moinfo_.ecc = energy();
+            moinfo_.t1diag = diagnostic();
+            moinfo_.d1diag = d1diag();
+            moinfo_.new_d1diag = new_d1diag();
+            moinfo_.d2diag = d2diag();
+            sort_amps();
+            update();
+            outfile->Printf("\n    Iterations converged.\n");
+
+            outfile->Printf("\n");
+            amp_write();
+            if (params_.analyze != 0) analyze();
+            break;
+        }
+        if (params_.diis) diis(moinfo_.iter);
+        // Save single-precision tamps
+        tsave_sp();
+        tau_build_sp();
+        taut_build_sp();
+        last_energy = moinfo_.ecc;
+        moinfo_.ecc = energy();
+        moinfo_.t1diag = diagnostic();
+        moinfo_.d1diag = d1diag();
+        moinfo_.new_d1diag = new_d1diag();
+        moinfo_.d2diag = d2diag();
+        update();
+        checkpoint();
+        }  // end loop over iterations
+    }
+
 
     // DGAS Edit
     Process::environment.globals["CC T1 DIAGNOSTIC"] = moinfo_.t1diag;

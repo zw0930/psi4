@@ -44,8 +44,7 @@ namespace psi {
 **   dpdbuf4 *Buf: A pointer to the input dpdbuf.
 **   int irrep: The irrep number to be prepared.
 */
-
-int DPD::buf4_mat_irrep_init(dpdbuf4 *Buf, int irrep) {
+int DPD::buf4_mat_irrep_init(dpdbuf4<double> *Buf, int irrep) {
     int rowtot, coltot, all_buf_irrep;
     long int size;
 
@@ -77,5 +76,4 @@ int DPD::buf4_mat_irrep_init(dpdbuf4 *Buf, int irrep) {
 
     return 0;
 }
-
 }  // namespace psi

@@ -47,7 +47,7 @@ namespace psi {
  **               FileA
  */
 
-int DPD::file2_axpy(dpdfile2 *FileA, dpdfile2 *FileB, double alpha, int transA) {
+int DPD::file2_axpy(dpdfile2<double> *FileA, dpdfile2<double> *FileB, double alpha, int transA) {
     int h, nirreps, my_irrep;
     int row, col;
 

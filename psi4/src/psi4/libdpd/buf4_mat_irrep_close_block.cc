@@ -48,7 +48,7 @@ namespace psi {
 **
 */
 
-int DPD::buf4_mat_irrep_close_block(dpdbuf4 *Buf, int irrep, int num_pq) {
+int DPD::buf4_mat_irrep_close_block(dpdbuf4<double> *Buf, int irrep, int num_pq) {
     int h, nirreps, all_buf_irrep;
 
     nirreps = Buf->params->nirreps;

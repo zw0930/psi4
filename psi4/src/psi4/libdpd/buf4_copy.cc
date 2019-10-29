@@ -51,12 +51,12 @@ namespace psi {
 ** TDC, September 1999
 */
 
-int DPD::buf4_copy(dpdbuf4 *InBuf, int outfilenum, const char *label) {
+int DPD::buf4_copy(dpdbuf4<double> *InBuf, int outfilenum, const char *label) {
     int h, row, col, my_irrep;
     long int rowtot, coltot;
     int nbuckets, incore, n;
     long int memoryd, rows_per_bucket, rows_left, size;
-    dpdbuf4 OutBuf;
+    dpdbuf4<double> OutBuf;
 
     my_irrep = InBuf->file.my_irrep;
 

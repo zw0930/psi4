@@ -49,8 +49,8 @@ namespace ccenergy {
 void purge_Wmnie();
 
 void CCEnergyWavefunction::cc3_Wmnie() {
-    dpdbuf4 E, D, W, Z;
-    dpdfile2 tIA, tia;
+    dpdbuf4<double> E, D, W, Z;
+    dpdfile2<double> tIA, tia;
 
     if (params_.ref == 0) { /** RHF **/
 

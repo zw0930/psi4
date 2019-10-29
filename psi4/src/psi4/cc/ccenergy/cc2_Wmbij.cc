@@ -45,11 +45,11 @@ namespace ccenergy {
 void purge_cc2_Wmbij();
 
 void CCEnergyWavefunction::cc2_Wmbij_build() {
-    dpdfile2 t1, tIA, tia;
-    dpdbuf4 E, D, C, F;
-    dpdbuf4 W, W1;
-    dpdbuf4 Z, Z1;
-    dpdbuf4 X;
+    dpdfile2<double> t1, tIA, tia;
+    dpdbuf4<double> E, D, C, F;
+    dpdbuf4<double> W, W1;
+    dpdbuf4<double> Z, Z1;
+    dpdbuf4<double> X;
 
     if (params_.ref == 0) { /** RHF **/
         /* W(Mb,Ij) <-- <Mb|Ij> */
@@ -490,7 +490,7 @@ void CCEnergyWavefunction::cc2_Wmbij_build() {
 }
 
 void CCEnergyWavefunction::purge_cc2_Wmbij() {
-    dpdfile4 W;
+    dpdfile4<double> W;
     int *occpi, *virtpi;
     int b, i, j, m;
     int B, I, J, M;

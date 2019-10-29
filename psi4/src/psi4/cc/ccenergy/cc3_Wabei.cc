@@ -57,9 +57,9 @@ namespace ccenergy {
 void purge_Wabei();
 
 void CCEnergyWavefunction::cc3_Wabei() {
-    dpdfile2 T1, t1, tIA, tia;
-    dpdbuf4 Z, Z1, Z2, Z3;
-    dpdbuf4 B, C, D, E, F, W;
+    dpdfile2<double> T1, t1, tIA, tia;
+    dpdbuf4<double> Z, Z1, Z2, Z3;
+    dpdbuf4<double> B, C, D, E, F, W;
     int Gei, Gab, Gf, Gi;
     int e;
     int nrows, ncols, nlinks;

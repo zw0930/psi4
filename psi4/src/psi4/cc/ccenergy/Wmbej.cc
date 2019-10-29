@@ -55,9 +55,9 @@ namespace ccenergy {
 */
 
 void CCEnergyWavefunction::Wmbej_build() {
-    dpdbuf4 WMBEJ, Wmbej, WMbEj, WmBeJ, WmBEj, WMbeJ, W;
-    dpdbuf4 C, D, E, F, t2, Y;
-    dpdfile2 tIA, tia;
+    dpdbuf4<double> WMBEJ, Wmbej, WMbEj, WmBeJ, WmBEj, WMbeJ, W;
+    dpdbuf4<double> C, D, E, F, t2, Y;
+    dpdfile2<double> tIA, tia;
     int Ge, Gf, nrows, ncols, nlinks;
 
     timer_on("C->Wmbej");
@@ -366,10 +366,12 @@ void CCEnergyWavefunction::Wmbej_build() {
 
         global_dpd_->buf4_init(&WMbEj, PSIF_CC_TMP0, 0, 10, 11, 10, 11, 0, "WMbEj");
         global_dpd_->buf4_sort(&WMbEj, PSIF_CC_HBAR, prsq, 10, 10, "WMbEj");
+        global_dpd_->buf4_cast_copy_dtof(&WMbEj, PSIF_CC_HBAR, "WMbEj_sp");
         global_dpd_->buf4_close(&WMbEj);
 
         global_dpd_->buf4_init(&WMbeJ, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "WMbeJ");
         global_dpd_->buf4_sort(&WMbeJ, PSIF_CC_HBAR, psrq, 10, 10, "WMbeJ");
+        global_dpd_->buf4_cast_copy_dtof(&WMbeJ, PSIF_CC_HBAR, "WMbeJ_sp");
         global_dpd_->buf4_close(&WMbeJ);
 
     } else if (params_.ref == 1) { /** ROHF **/

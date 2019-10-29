@@ -43,7 +43,7 @@ namespace psi {
 **   dpdfile2 *File: A pointer to the file to be closed.
 */
 
-int DPD::file2_close(dpdfile2 *File) {
+int DPD::file2_close(dpdfile2<double> *File) {
     free(File->lfiles);
 
     if (!File->incore)

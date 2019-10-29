@@ -87,5 +87,99 @@ void CCEnergyWavefunction::t2_build() {
         FT2_CC2();
     }
 }
+
+void CCEnergyWavefunction::t2_build_mp() {
+    DT2_mp();
+    if (params_.print & 2) status("<ij||ab> -> T2", "outfile");
+
+    if (params_.wfn != "CC2" || params_.wfn != "EOM_CC2") { /* skip all this is wfn=CC2 */
+
+        FaetT2_mp();
+        FmitT2_mp();
+        if (params_.print & 2) status("F -> T2", "outfile");
+
+        WmnijT2_mp();
+        if (params_.print & 2) status("Wmnij -> T2", "outfile");
+
+        timer_on("BT2");
+        if (params_.aobasis == "DISK" || params_.aobasis == "DIRECT")
+            BT2_AO_mp();
+        else
+            BT2_mp();
+        if (params_.print & 2) status("<ab||cd> -> T2", "outfile");
+        timer_off("BT2");
+
+        ZT2_mp();
+        if (params_.print & 2) status("Z -> T2", "outfile");
+
+        timer_on("FT2");
+        FT2_mp();
+        if (params_.print & 2) status("<ia||bc> -> T2", "outfile");
+        timer_off("FT2");
+
+        ET2_mp();
+        if (params_.print & 2) status("<ij||ka> -> T2", "outfile");
+
+        timer_on("WmbejT2");
+        WmbejT2_mp();
+        if (params_.print & 2) status("Wmbej -> T2", "outfile");
+        timer_off("WmbejT2");
+
+        timer_on("CT2");
+        CT2_mp();
+        if (params_.print & 2) status("<ia||jb> -> T2", "outfile");
+        timer_off("CT2");
+    } else { /* For CC2, just include (FT2)c->T2 */
+        FT2_CC2();
+    }
+}
+
+void CCEnergyWavefunction::t2_build_sp() {
+    DT2_sp();
+    if (params_.print & 2) status("<ij||ab> -> T2", "outfile");
+
+    if (params_.wfn != "CC2" || params_.wfn != "EOM_CC2") { /* skip all this is wfn=CC2 */
+
+        FaetT2_sp();
+        FmitT2_sp();
+        if (params_.print & 2) status("F -> T2", "outfile");
+
+        WmnijT2_sp();
+        if (params_.print & 2) status("Wmnij -> T2", "outfile");
+
+        timer_on("BT2");
+        if (params_.aobasis == "DISK" || params_.aobasis == "DIRECT")
+            BT2_AO_sp();
+        else
+            BT2_sp();
+        if (params_.print & 2) status("<ab||cd> -> T2", "outfile");
+        timer_off("BT2");
+
+        ZT2_sp();
+        if (params_.print & 2) status("Z -> T2", "outfile");
+
+        timer_on("FT2");
+        FT2_sp();
+        if (params_.print & 2) status("<ia||bc> -> T2", "outfile");
+        timer_off("FT2");
+
+        ET2_sp();
+        if (params_.print & 2) status("<ij||ka> -> T2", "outfile");
+
+        timer_on("WmbejT2");
+        WmbejT2_sp();
+        if (params_.print & 2) status("Wmbej -> T2", "outfile");
+        timer_off("WmbejT2");
+
+        timer_on("CT2");
+        CT2_sp();
+        if (params_.print & 2) status("<ia||jb> -> T2", "outfile");
+        timer_off("CT2");
+    } else { /* For CC2, just include (FT2)c->T2 */
+        FT2_CC2();
+    }
+}
+
+
 }  // namespace ccenergy
 }  // namespace psi

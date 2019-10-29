@@ -40,10 +40,10 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::FaetT2() {
-    dpdfile2 FAEt, Faet;
-    dpdbuf4 newtIJAB, newtijab, newtIjAb;
-    dpdbuf4 tIJAB, tijab, tIjAb;
-    dpdbuf4 t2, Z;
+    dpdfile2<double> FAEt, Faet;
+    dpdbuf4<double> newtIJAB, newtijab, newtIjAb;
+    dpdbuf4<double> tIJAB, tijab, tIjAb;
+    dpdbuf4<double> t2, Z;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init(&tIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb");
@@ -133,5 +133,48 @@ void CCEnergyWavefunction::FaetT2() {
         global_dpd_->buf4_close(&newtIjAb);
     }
 }
+
+void CCEnergyWavefunction::FaetT2_mp() {
+    dpdfile2<float> FAEt_sp, Faet_sp;
+    dpdbuf4<double> newtIjAb;
+    dpdbuf4<float> tIjAb_sp;
+    dpdbuf4<double> Z;
+
+    if (params_.ref == 0) { /** RHF **/
+        global_dpd_->buf4_init_sp(&tIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
+        global_dpd_->file2_init_sp(&FAEt_sp, PSIF_CC_OEI, 0, 1, 1, "FAEt_sp");
+        global_dpd_->buf4_init(&Z, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "Zijab");
+        global_dpd_->contract424(&tIjAb_sp, &FAEt_sp, &Z, 3, 1, 0, 1, 0);
+        global_dpd_->file2_close_sp(&FAEt_sp);
+        global_dpd_->buf4_close_sp(&tIjAb_sp);
+        global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb"); 
+        global_dpd_->buf4_axpy(&Z, &newtIjAb, 1);
+        global_dpd_->buf4_close(&newtIjAb);
+        global_dpd_->buf4_sort_axpy(&Z, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1);
+        global_dpd_->buf4_close(&Z);
+    }
+}
+
+void CCEnergyWavefunction::FaetT2_sp() {
+    dpdfile2<float> FAEt, Faet;
+    dpdbuf4<float> newtIJAB, newtijab, newtIjAb;
+    dpdbuf4<float> tIJAB, tijab, tIjAb;
+    dpdbuf4<float> t2, Z;
+
+    if (params_.ref == 0) { /** RHF **/
+        global_dpd_->buf4_init_sp(&tIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
+        global_dpd_->file2_init_sp(&FAEt, PSIF_CC_OEI, 0, 1, 1, "FAEt_sp");
+        global_dpd_->buf4_init_sp(&Z, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "Zijab_sp");
+        global_dpd_->contract424_sp(&tIjAb, &FAEt, &Z, 3, 1, 0, 1, 0);
+        global_dpd_->file2_close_sp(&FAEt);
+        global_dpd_->buf4_close_sp(&tIjAb);
+        global_dpd_->buf4_init_sp(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb sp");
+        global_dpd_->buf4_axpy_sp(&Z, &newtIjAb, 1);
+        global_dpd_->buf4_close_sp(&newtIjAb);
+        global_dpd_->buf4_sort_axpy_sp(&Z, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb sp", 1);
+        global_dpd_->buf4_close_sp(&Z);
+    }
+}
+
 }  // namespace ccenergy
 }  // namespace psi

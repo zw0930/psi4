@@ -40,8 +40,7 @@
 #include <cstdlib>
 
 namespace psi {
-
-int DPD::buf4_mat_irrep_row_rd(dpdbuf4 *Buf, int irrep, int pq) {
+int DPD::buf4_mat_irrep_row_rd(dpdbuf4<double> *Buf, int irrep, int pq) {
     int method = 0;
     int filerow, all_buf_irrep;
     int rs;                     /* dpdbuf row and column indices */
@@ -487,5 +486,4 @@ int DPD::buf4_mat_irrep_row_rd(dpdbuf4 *Buf, int irrep, int pq) {
 
     return 0;
 }
-
 }  // namespace psi

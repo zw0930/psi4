@@ -40,8 +40,8 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::Fme_build() {
-    dpdfile2 FME, Fme, fIA, fia, tIA, tia;
-    dpdbuf4 D_anti, D;
+    dpdfile2<double> FME, Fme, fIA, fia, tIA, tia;
+    dpdbuf4<double> D_anti, D;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&fIA, PSIF_CC_OEI, 0, 0, 1, "fIA");

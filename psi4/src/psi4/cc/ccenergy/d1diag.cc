@@ -57,7 +57,7 @@ namespace ccenergy {
 
 double CCEnergyWavefunction::d1diag_t1_rhf() {
     double **T, **C, *E;
-    dpdfile2 T1;
+    dpdfile2<double> T1;
 
     auto nirreps = moinfo_.nirreps;
     auto max = 0.0;
@@ -143,7 +143,7 @@ static double d1diag_subblock(double **Tave, int row0, int rown, int col0, int c
 double CCEnergyWavefunction::d1diag_t1_rohf() {
     double **Tave, tmp, max;
     double max_ph = 0.0, max_xp = 0.0, max_hx = 0.0;
-    dpdfile2 T1_a, T1_b;
+    dpdfile2<double> T1_a, T1_b;
 
     auto nirreps = moinfo_.nirreps;
 

@@ -36,8 +36,7 @@
 #include "psi4/libpsio/psio.h"
 
 namespace psi {
-
-int DPD::file2_scm(dpdfile2 *InFile, double alpha) {
+int DPD::file2_scm(dpdfile2<double> *InFile, double alpha) {
     int h, nirreps, new_file2, my_irrep;
     int row, col, length;
     double *X;
@@ -67,5 +66,4 @@ int DPD::file2_scm(dpdfile2 *InFile, double alpha) {
 
     return 0;
 }
-
 }  // namespace psi

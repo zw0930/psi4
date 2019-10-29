@@ -41,7 +41,7 @@
 
 namespace psi {
 
-int DPD::buf4_mat_irrep_rd_block(dpdbuf4 *Buf, int irrep, int start_pq, int num_pq) {
+int DPD::buf4_mat_irrep_rd_block(dpdbuf4<double> *Buf, int irrep, int start_pq, int num_pq) {
     int method = 0;
     int filerow, all_buf_irrep;
     int pq, rs;                 /* dpdbuf row and column indices */

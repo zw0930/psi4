@@ -35,11 +35,10 @@
 #include "dpd.h"
 
 namespace psi {
-
-int DPD::trans4_mat_irrep_rd(dpdtrans4 *Trans, int irrep) {
+int DPD::trans4_mat_irrep_rd(dpdtrans4<double> *Trans, int irrep) {
     int pq, rs, all_buf_irrep;
     int rows, cols;
-    dpdbuf4 *Buf;
+    dpdbuf4<double> *Buf;
     double *A, *B;
 
     Buf = &(Trans->buf);

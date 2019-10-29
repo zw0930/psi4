@@ -41,12 +41,13 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::sort_amps() {
-    dpdbuf4 t2, t2B;
+    dpdbuf4<double> t2, t2B;
 
     if (params_.ref == 0) { /** RHF **/
         /* T(iJ,aB) */
         global_dpd_->buf4_init(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb");
         global_dpd_->buf4_sort(&t2, PSIF_CC_TAMPS, qpsr, 0, 5, "tiJaB");
+        
         global_dpd_->buf4_close(&t2);
 
         /* TIjAb (IA,jb) */
@@ -154,5 +155,53 @@ void CCEnergyWavefunction::sort_amps() {
         global_dpd_->buf4_close(&t2);
     }
 }
+
+void CCEnergyWavefunction::sort_amps_sp() {
+    dpdbuf4<float> t2, t2B;
+
+    if (params_.ref == 0) { /** RHF **/
+        /* T(iJ,aB) */
+        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
+        global_dpd_->buf4_sort_sp(&t2, PSIF_CC_TAMPS, qpsr, 0, 5, "tiJaB_sp");
+        global_dpd_->buf4_close_sp(&t2);
+
+        /* TIjAb (IA,jb) */
+        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
+        global_dpd_->buf4_sort_sp(&t2, PSIF_CC_TAMPS, prqs, 10, 10, "tIAjb_sp");
+        global_dpd_->buf4_close_sp(&t2);
+
+        /* TIjAb (ij,JB) */
+        global_dpd_->buf4_init(&t2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIAjb");
+        global_dpd_->buf4_sort(&t2, PSIF_CC_TAMPS, rspq, 10, 10, "tiaJB");
+        global_dpd_->buf4_close(&t2);
+
+        /* TIjAb (Ib,jA) */
+        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIAjb_sp");
+        global_dpd_->buf4_sort_sp(&t2, PSIF_CC_TAMPS, psrq, 10, 10, "tIbjA_sp");
+        global_dpd_->buf4_close_sp(&t2);
+
+        /* TIjAb (jA,Ib) */
+        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIbjA_sp");
+        global_dpd_->buf4_sort_sp(&t2, PSIF_CC_TAMPS, rspq, 10, 10, "tjAIb_sp");
+        global_dpd_->buf4_close_sp(&t2);
+
+        /* 2 tIjAb - tIjBa */
+        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
+        global_dpd_->buf4_scmcopy_sp(&t2, PSIF_CC_TAMPS, "2 tIjAb - tIjBa sp", 2);
+        global_dpd_->buf4_sort_axpy_sp(&t2, PSIF_CC_TAMPS, pqsr, 0, 5, "2 tIjAb - tIjBa sp", -1);
+        global_dpd_->buf4_close_sp(&t2);
+
+        /* 2 T(IA,jb) - t(IB,ja) */
+        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIAjb_sp");
+        global_dpd_->buf4_scmcopy_sp(&t2, PSIF_CC_TAMPS, "2 tIAjb - tIBja sp", 2);
+        global_dpd_->buf4_close_sp(&t2);
+        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "2 tIAjb - tIBja sp");
+        global_dpd_->buf4_init_sp(&t2B, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIbjA_sp");
+        global_dpd_->buf4_axpy_sp(&t2B, &t2, -1);
+        global_dpd_->buf4_close_sp(&t2B);
+        global_dpd_->buf4_close_sp(&t2);
+
+    } 
+
 }  // namespace ccenergy
 }  // namespace psi

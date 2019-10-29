@@ -46,13 +46,13 @@ void CCEnergyWavefunction::Fae_build() {
     int a, e, nirreps;
     int ef, m, f, M, A, Gm, Ga, Ge, Gf, nrows, ncols;
     double *X;
-    dpdfile2 tIA, tia;
-    dpdfile2 FME, Fme;
-    dpdfile2 fAB, fab, fIA, fia;
-    dpdfile2 FAE, Fae;
-    dpdfile2 FAEt, Faet;
-    dpdbuf4 F_anti, F, D_anti, D;
-    dpdbuf4 tautIJAB, tautijab, tautIjAb, taut;
+    dpdfile2<double> tIA, tia;
+    dpdfile2<double> FME, Fme;
+    dpdfile2<double> fAB, fab, fIA, fia;
+    dpdfile2<double> FAE, Fae;
+    dpdfile2<double> FAEt, Faet;
+    dpdbuf4<double> F_anti, F, D_anti, D;
+    dpdbuf4<double> tautIJAB, tautijab, tautIjAb, taut;
 
     nirreps = moinfo_.nirreps;
 
@@ -403,5 +403,8 @@ void CCEnergyWavefunction::Fae_build() {
         global_dpd_->file2_close(&Faet);
     }
 }
+
+
+
 }  // namespace ccenergy
 }  // namespace psi

@@ -34,7 +34,7 @@
 
 namespace psi {
 
-int DPD::file2_mat_init(dpdfile2 *File) {
+int DPD::file2_mat_init(dpdfile2<double> *File) {
     int h, my_irrep;
 
     my_irrep = File->my_irrep;
@@ -46,5 +46,4 @@ int DPD::file2_mat_init(dpdfile2 *File) {
 
     return 0;
 }
-
 }  // namespace psi

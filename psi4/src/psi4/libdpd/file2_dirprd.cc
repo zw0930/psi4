@@ -44,7 +44,7 @@ namespace psi {
 **  The result is written to FileB.
 */
 
-int DPD::file2_dirprd(dpdfile2 *FileA, dpdfile2 *FileB) {
+int DPD::file2_dirprd(dpdfile2<double> *FileA, dpdfile2<double> *FileB) {
     int h, nirreps, my_irrep;
 
     nirreps = FileA->params->nirreps;

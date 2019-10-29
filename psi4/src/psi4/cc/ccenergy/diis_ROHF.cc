@@ -61,8 +61,8 @@ namespace ccenergy {
 
 void CCEnergyWavefunction::diis_ROHF(int iter) {
     int nvector = 8; /* Number of error vectors to keep */
-    dpdfile2 T1, T1a, T1b;
-    dpdbuf4 T2a, T2b;
+    dpdfile2<double> T1, T1a, T1b;
+    dpdbuf4<double> T2a, T2b;
     psio_address start, end;
     double **B, *C, **vector;
     double product, maximum;

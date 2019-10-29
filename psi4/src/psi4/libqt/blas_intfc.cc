@@ -61,15 +61,28 @@ extern "C" {
 
 extern void F_DSWAP(int *length, double *x, int *incx, double *y, int *inc_y);
 extern void F_DAXPY(int *length, double *a, double *x, int *inc_x, double *y, int *inc_y);
+// Add SAXPY
+extern void F_SAXPY(int *length, float *a, float *x, int *inc_x, float *y, int *inc_y);
+
 extern void F_DCOPY(int *length, double *x, int *inc_x, double *y, int *inc_y);
+// Add SCOPY for single/mixed-precision
+extern void F_SCOPY(int *length, float *x, int *inc_x, float *y, int *inc_y);
+
 extern void F_DGEMM(char *transa, char *transb, int *m, int *n, int *k, double *alpha, double *A, int *lda, double *B,
                     int *ldb, double *beta, double *C, int *ldc);
+// Add SGEMM for single/mixed-precision
+extern void F_SGEMM(char *transa, char *transb, int *m, int *n, int *k, float *alpha, float *A, int *lda, float *B,
+                    int *ldb, float *beta, float *C, int *ldc);
 extern void F_DSYMM(char *side, char *uplo, int *m, int *n, double *alpha, double *A, int *lda, double *B, int *ldb,
                     double *beta, double *C, int *ldc);
 extern void F_DROT(int *ntot, double *x, int *incx, double *y, int *incy, double *cotheta, double *sintheta);
 extern void F_DSCAL(int *n, double *alpha, double *vec, int *inc);
 extern void F_DGEMV(char *transa, int *m, int *n, double *alpha, double *A, int *lda, double *X, int *inc_x,
                     double *beta, double *Y, int *inc_y);
+// Add SGEMV
+extern void F_SGEMV(char *transa, int *m, int *n, float *alpha, float *A, int *lda, float *X, int *inc_x,
+                    float *beta, float *Y, int *inc_y);
+
 extern void F_DSYMV(char *uplo, int *n, double *alpha, double *A, int *lda, double *X, int *inc_x, double *beta,
                     double *Y, int *inc_y);
 extern void F_DSPMV(char *uplo, int *n, double *alpha, double *A, double *X, int *inc_x, double *beta, double *Y,
@@ -129,6 +142,18 @@ void PSI_API C_DAXPY(size_t length, double a, double *x, int inc_x, double *y, i
     }
 }
 
+void PSI_API C_SAXPY(size_t length, float a, float *x, int inc_x, float *y, int inc_y) {
+    int big_blocks = (int)(length / INT_MAX);
+    int small_size = (int)(length % INT_MAX);
+    for (int block = 0; block <= big_blocks; block++) {
+        float *x_s = &x[static_cast<size_t>(block) * inc_x * INT_MAX];
+        float *y_s = &y[static_cast<size_t>(block) * inc_y * INT_MAX];
+        signed int length_s = (block == big_blocks) ? small_size : INT_MAX;
+        ::F_SAXPY(&length_s, &a, x_s, &inc_x, y_s, &inc_y);
+    }
+}
+
+
 /*!
  * This function copies x into y.
  *
@@ -152,6 +177,18 @@ void PSI_API C_DCOPY(size_t length, double *x, int inc_x, double *y, int inc_y) 
         ::F_DCOPY(&length_s, x_s, &inc_x, y_s, &inc_y);
     }
 }
+
+void PSI_API C_SCOPY(size_t length, float *x, int inc_x, float *y, int inc_y) {
+    int big_blocks = (int)(length / INT_MAX);
+    int small_size = (int)(length % INT_MAX);
+    for (int block = 0; block <= big_blocks; block++) {
+        float *x_s = &x[static_cast<size_t>(block) * inc_x * INT_MAX];
+        float *y_s = &y[static_cast<size_t>(block) * inc_y * INT_MAX];
+        signed int length_s = (block == big_blocks) ? small_size : INT_MAX;
+        ::F_SCOPY(&length_s, x_s, &inc_x, y_s, &inc_y);
+    }
+}
+
 
 /*!
  * This function scales a vector by a real scalar.

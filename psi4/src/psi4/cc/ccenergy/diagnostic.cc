@@ -43,7 +43,7 @@ namespace psi {
 namespace ccenergy {
 
 double CCEnergyWavefunction::diagnostic() {
-    dpdfile2 T1A, T1B;
+    dpdfile2<double> T1A, T1B;
 
     auto nirreps = moinfo_.nirreps;
     auto clsdpi = moinfo_.clsdpi;

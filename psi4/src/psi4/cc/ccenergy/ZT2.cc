@@ -40,10 +40,10 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::ZT2() {
-    dpdbuf4 ZIJMA, ZIJAM, Zijma, Zijam, ZIjMa, ZIjAm, Z;
-    dpdbuf4 newtIJAB, newtijab, newtIjAb;
-    dpdfile2 tIA, tia, T1;
-    dpdbuf4 t2, X;
+    dpdbuf4<double> ZIJMA, ZIJAM, Zijma, Zijam, ZIjMa, ZIjAm, Z;
+    dpdbuf4<double> newtIJAB, newtijab, newtIjAb;
+    dpdfile2<double> tIA, tia, T1;
+    dpdbuf4<double> t2, X;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init(&X, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "X(Ab,Ij)");
@@ -143,6 +143,44 @@ void CCEnergyWavefunction::ZT2() {
         global_dpd_->buf4_close(&ZIjMa);
         global_dpd_->buf4_close(&ZIjAm);
     }
+}
+
+void CCEnergyWavefunction::ZT2_mp() {
+    dpdbuf4<float> Z_sp;
+    dpdbuf4<double> newtIjAb;
+    dpdfile2<float> tIA_sp, T1_sp;
+    dpdbuf4<double> X;
+
+    if (params_.ref == 0) { /** RHF **/
+        global_dpd_->buf4_init(&X, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "X(Ab,Ij)");
+        global_dpd_->file2_init_sp(&T1_sp, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+        global_dpd_->buf4_init_sp(&Z_sp, PSIF_CC_MISC, 0, 10, 0, 10, 0, 0, "ZMbIj_sp");
+        global_dpd_->contract244_mp(&T1_sp, &Z_sp, &X, 0, 0, 0, -1, 0);
+        global_dpd_->buf4_close_sp(&Z_sp);
+        global_dpd_->file2_close_sp(&T1_sp);
+        global_dpd_->buf4_sort_axpy(&X, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
+        global_dpd_->buf4_sort_axpy(&X, PSIF_CC_TAMPS, srqp, 0, 5, "New tIjAb", 1);
+        global_dpd_->buf4_close(&X);
+    }
+} 
+
+void CCEnergyWavefunction::ZT2_sp() {
+    dpdbuf4<float> Z;
+    dpdbuf4<float> newtIjAb;
+    dpdfile2<float> tIA, T1;
+    dpdbuf4<float> X;
+
+    if (params_.ref == 0) { /** RHF **/
+        global_dpd_->buf4_init_sp(&X, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "X(Ab,Ij)_sp");
+        global_dpd_->file2_init_sp(&T1, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+        global_dpd_->buf4_init_sp(&Z, PSIF_CC_MISC, 0, 10, 0, 10, 0, 0, "ZMbIj_sp");
+        global_dpd_->contract244_sp(&T1, &Z, &X, 0, 0, 0, -1, 0);
+        global_dpd_->buf4_close_sp(&Z);
+        global_dpd_->file2_close_sp(&T1);
+        global_dpd_->buf4_sort_axpy_sp(&X, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb sp", 1);
+        global_dpd_->buf4_sort_axpy_sp(&X, PSIF_CC_TAMPS, srqp, 0, 5, "New tIjAb sp", 1);
+        global_dpd_->buf4_close_sp(&X);
+    } 
 }
 }  // namespace ccenergy
 }  // namespace psi

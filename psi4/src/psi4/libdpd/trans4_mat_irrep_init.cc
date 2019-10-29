@@ -35,8 +35,7 @@
 #include "dpd.h"
 
 namespace psi {
-
-int DPD::trans4_mat_irrep_init(dpdtrans4 *Trans, int irrep) {
+int DPD::trans4_mat_irrep_init(dpdtrans4<double> *Trans, int irrep) {
     int rowtot, coltot, all_buf_irrep;
     long int size;
 
@@ -50,5 +49,7 @@ int DPD::trans4_mat_irrep_init(dpdtrans4 *Trans, int irrep) {
 
     return 0;
 }
+
+
 
 }  // namespace psi

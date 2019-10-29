@@ -36,7 +36,7 @@
 
 namespace psi {
 
-int DPD::buf4_dump(dpdbuf4 *DPDBuf, struct iwlbuf *IWLBuf, int *prel, int *qrel, int *rrel, int *srel, int bk_pack,
+int DPD::buf4_dump(dpdbuf4<double> *DPDBuf, struct iwlbuf *IWLBuf, int *prel, int *qrel, int *rrel, int *srel, int bk_pack,
                    int swap23) {
     int h, row, col, p, q, r, s, P, Q, R, S, my_irrep;
     double value;

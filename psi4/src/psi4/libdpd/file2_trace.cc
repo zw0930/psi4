@@ -34,7 +34,7 @@
 
 namespace psi {
 
-double DPD::file2_trace(dpdfile2 *InFile) {
+double DPD::file2_trace(dpdfile2<double> *InFile) {
     file2_mat_init(InFile);
     file2_mat_rd(InFile);
 

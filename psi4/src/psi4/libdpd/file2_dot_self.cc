@@ -39,7 +39,7 @@ namespace psi {
 ** given dpdfile2.
 */
 
-double DPD::file2_dot_self(dpdfile2 *BufX) {
+double DPD::file2_dot_self(dpdfile2<double> *BufX) {
     int h, nirreps, my_irrep;
     int row, col;
     double alpha = 0.0;

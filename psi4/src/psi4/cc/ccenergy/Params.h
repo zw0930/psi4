@@ -79,6 +79,9 @@ struct Params {
     double scscc_scale_ss;
     int newtrips;
     int df;
+
+    // Add a parameter for precision
+    int precision;
 };
 
 }  // namespace ccenergy

@@ -38,8 +38,7 @@
 #include "dpd.h"
 
 namespace psi {
-
-int DPD::trans4_mat_irrep_shift31(dpdtrans4 *Trans, int buf_block) {
+int DPD::trans4_mat_irrep_shift31(dpdtrans4<double> *Trans, int buf_block) {
     int h, h_rsp, h_pqr, pq, Gr, Gs, r, nirreps, cnt, all_buf_irrep;
     int rowtot, coltot;
     int *count;
@@ -125,5 +124,4 @@ int DPD::trans4_mat_irrep_shift31(dpdtrans4 *Trans, int buf_block) {
 
     return 0;
 }
-
 }  // namespace psi

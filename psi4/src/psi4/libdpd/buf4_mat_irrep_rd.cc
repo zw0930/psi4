@@ -64,8 +64,7 @@ namespace psi {
 ** TDC
 ** September 1999
 */
-
-int DPD::buf4_mat_irrep_rd(dpdbuf4 *Buf, int irrep) {
+int DPD::buf4_mat_irrep_rd(dpdbuf4<double> *Buf, int irrep) {
     int method=0;
     int filerow, all_buf_irrep;
     int pq, rs;                 /* dpdbuf row and column indices */

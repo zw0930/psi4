@@ -41,7 +41,7 @@ namespace psi {
 
 /* buf_block is the block of buffer to shift (also the row-irrep) */
 
-int DPD::trans4_mat_irrep_shift13(dpdtrans4 *Trans, int buf_block) {
+int DPD::trans4_mat_irrep_shift13(dpdtrans4<double> *Trans, int buf_block) {
     int h, i, nirreps, all_buf_irrep;
     int *count;
     int *dataoff;

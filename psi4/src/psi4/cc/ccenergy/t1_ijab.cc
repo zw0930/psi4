@@ -43,8 +43,8 @@ namespace ccenergy {
 void CCEnergyWavefunction::t1_ijab() {
     int i, j, a, b, I, J, A, B;
     int Isym, Jsym, Asym, Bsym;
-    dpdbuf4 t1_IJAB, t1_ijab, t1_IjAb, t1_IjbA;
-    dpdfile2 tIA, tia;
+    dpdbuf4<double> t1_IJAB, t1_ijab, t1_IjAb, t1_IjbA;
+    dpdfile2<double> tIA, tia;
 
     auto nirreps = moinfo_.nirreps;
 

@@ -60,7 +60,7 @@ namespace ccenergy {
 ** double beta:      Multiplicative factor for the target
 */
 
-void CCEnergyWavefunction::halftrans(dpdbuf4 *Buf1, int dpdnum1, dpdbuf4 *Buf2, int dpdnum2, double ***C1, double ***C2,
+void CCEnergyWavefunction::halftrans(dpdbuf4<double> *Buf1, int dpdnum1, dpdbuf4<double> *Buf2, int dpdnum2, double ***C1, double ***C2,
                                      int nirreps, int **mo_row, int **so_row, int *mospi_left, int *mospi_right,
                                      int *sospi, int type, double alpha, double beta) {
     int Gd, cd, pq;

@@ -40,10 +40,10 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::cc2_faeT2() {
-    dpdfile2 fme, fME, Fae, FAE, fAE, tIA, tia;
-    dpdbuf4 tIjAb, tIJAB, tijab, t2;
-    dpdbuf4 newtIjAb, newtIJAB, newtijab;
-    dpdbuf4 Zijab;
+    dpdfile2<double> fme, fME, Fae, FAE, fAE, tIA, tia;
+    dpdbuf4<double> tIjAb, tIJAB, tijab, t2;
+    dpdbuf4<double> newtIjAb, newtIJAB, newtijab;
+    dpdbuf4<double> Zijab;
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&fAE, PSIF_CC_OEI, 0, 1, 1, "fAB");

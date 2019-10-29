@@ -54,7 +54,7 @@ namespace psi {
 **   double beta: A prefactor for the target beta * Z.
 */
 
-int DPD::contract422(dpdbuf4 *X, dpdfile2 *Y, dpdfile2 *Z, int trans_Y, int trans_Z, double alpha, double beta) {
+int DPD::contract422(dpdbuf4<double> *X, dpdfile2<double> *Y, dpdfile2<double> *Z, int trans_Y, int trans_Z, double alpha, double beta) {
     int nirreps, GX, GY, GZ, hxbuf;
     int row, p, q, r, s, psym, qsym, Gr, Gs, P, Q, R, S, col;
     double **TMP;

@@ -52,7 +52,7 @@ namespace ccenergy {
 */
 
 void CCEnergyWavefunction::pair_energies(double** epair_aa, double** epair_ab) {
-    dpdbuf4 tau, D, E;
+    dpdbuf4<double> tau, D, E;
 
     if (params_.ref == 0) { /** RHF **/
 

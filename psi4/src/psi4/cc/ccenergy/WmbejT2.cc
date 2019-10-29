@@ -118,7 +118,7 @@ namespace ccenergy {
 */
 
 void CCEnergyWavefunction::WmbejT2() {
-    dpdbuf4 T2new, T2, W, W1, W2, Z;
+    dpdbuf4<double> T2new, T2, W, W1, W2, Z;
 
     if (params_.ref == 0) { /** RHF **/
         /*** AB ***/
@@ -497,5 +497,146 @@ void CCEnergyWavefunction::WmbejT2() {
 
     } /*** UHF ***/
 }
+
+
+void CCEnergyWavefunction::WmbejT2_mp() {
+    dpdbuf4<double> T2, W, W1, W2, Z;
+    dpdbuf4<float> T2_sp, W_sp, W1_sp, W2_sp;
+    dpdbuf4<double> T2new;
+
+    if (params_.ref == 0) { /** RHF **/
+        /*** AB ***/
+
+        /* 2 W(ME,jb) + W(Me,Jb) */
+        global_dpd_->buf4_init_sp(&W_sp, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbeJ_sp");
+        global_dpd_->buf4_copy_sp(&W_sp, PSIF_CC_TMP0, "2 W(ME,jb) + W(Me,Jb) sp");
+        global_dpd_->buf4_close_sp(&W_sp);
+        global_dpd_->buf4_init_sp(&W1_sp, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "2 W(ME,jb) + W(Me,Jb) sp");
+        global_dpd_->buf4_init_sp(&W2_sp, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbEj_sp");
+        global_dpd_->buf4_axpy_sp(&W2, &W1, 2);
+        global_dpd_->buf4_close_sp(&W2);
+        global_dpd_->buf4_close_sp(&W1);
+
+        /* T2(Ib,mE) * W(mE,jA) --> Z(Ib,jA) */
+        global_dpd_->buf4_init(&T2new, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "Z (Ib,jA)");
+        global_dpd_->buf4_init_sp(&T2_sp, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIbjA_sp");
+        global_dpd_->buf4_init_sp(&W_sp, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbeJ_sp");
+        global_dpd_->contract444_mp(&T2, &W, &T2new, 0, 1, 1, 0);
+        global_dpd_->buf4_close_sp(&W_sp);
+        global_dpd_->buf4_close_sp(&T2_sp);
+        /* T2(Ib,jA) --> T2(IA,jb) (part III) */
+        global_dpd_->buf4_sort(&T2new, PSIF_CC_TMP0, psrq, 10, 10, "T2 (IA,jb) 3");
+        global_dpd_->buf4_close(&T2new);
+
+        /* 1/2 [ (2 T2(IA,me) - T2(IE,ma)) * (2 W(ME,jb) + W(Me,Jb)] --> T2(IA,jb) */
+        global_dpd_->buf4_init(&T2new, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "T2 (IA,jb) 1");
+        global_dpd_->buf4_init_sp(&T2_sp, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "2 tIAjb - tIBja sp");
+        global_dpd_->buf4_init_sp(&W_sp, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "2 W(ME,jb) + W(Me,Jb) sp");
+        global_dpd_->contract444_mp(&T2_sp, &W_sp, &T2new, 0, 1, 0.5, 0);
+        global_dpd_->buf4_close_sp(&W_sp);
+        global_dpd_->buf4_close_sp(&T2_sp);
+       
+        /* 1/2 Z(Ib,jA) + T2(IA,jb) --> T2(IA,jb) (Part I) */
+        global_dpd_->buf4_init(&Z, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "Z (Ib,jA)");
+        global_dpd_->buf4_axpy(&Z, &T2new, 0.5);
+        global_dpd_->buf4_close(&Z);
+        global_dpd_->buf4_close(&T2new);
+
+        /* T2(IA,jb) (I) + T2(IA,jb) (III) --> T2(IA,jb) */
+        global_dpd_->buf4_init(&T2new, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "T2 (IA,jb) 1");
+        global_dpd_->buf4_init(&T2, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "T2 (IA,jb) 3");
+        global_dpd_->buf4_axpy(&T2, &T2new, 1);
+        global_dpd_->buf4_close(&T2);
+        global_dpd_->buf4_sort(&T2new, PSIF_CC_TMP0, prqs, 0, 5, "T2 (Ij,Ab) (1+3)");
+        global_dpd_->buf4_close(&T2new);
+
+        global_dpd_->buf4_init(&T2new, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T2 (Ij,Ab) (1+3)");
+        global_dpd_->buf4_sort(&T2new, PSIF_CC_TMP0, qpsr, 0, 5, "T2 (Ij,Ab) (2+4)");
+        global_dpd_->buf4_close(&T2new);
+
+        /* T2(Ij,Ab) <--- I + II + III + IV */
+        global_dpd_->buf4_init(&T2new, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
+
+        global_dpd_->buf4_init(&T2, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T2 (Ij,Ab) (1+3)");
+        global_dpd_->buf4_axpy(&T2, &T2new, 1);
+        global_dpd_->buf4_close(&T2);
+
+        global_dpd_->buf4_init(&T2, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T2 (Ij,Ab) (2+4)");
+        global_dpd_->buf4_axpy(&T2, &T2new, 1);
+        global_dpd_->buf4_close(&T2);
+
+        global_dpd_->buf4_close(&T2new);
+
+    } 
+}
+
+void CCEnergyWavefunction::WmbejT2_sp() {
+    dpdbuf4<float> T2new, T2, W, W1, W2, Z;
+
+    if (params_.ref == 0) { /** RHF **/
+        /*** AB ***/
+
+        /* 2 W(ME,jb) + W(Me,Jb) */
+        global_dpd_->buf4_init_sp(&W, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbeJ_sp");
+        global_dpd_->buf4_copy_sp(&W, PSIF_CC_TMP0, "2 W(ME,jb) + W(Me,Jb) sp");
+        global_dpd_->buf4_close_sp(&W);
+        global_dpd_->buf4_init_sp(&W1, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "2 W(ME,jb) + W(Me,Jb) sp");
+        global_dpd_->buf4_init_sp(&W2, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbEj_sp");
+        global_dpd_->buf4_axpy_sp(&W2, &W1, 2);
+        global_dpd_->buf4_close_sp(&W2);
+        global_dpd_->buf4_close_sp(&W1);
+
+        /* T2(Ib,mE) * W(mE,jA) --> Z(Ib,jA) */
+        global_dpd_->buf4_init_sp(&T2new, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "Z (Ib,jA)_sp");
+        global_dpd_->buf4_init_sp(&T2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIbjA_sp");
+        global_dpd_->buf4_init_sp(&W, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbeJ_sp");
+        global_dpd_->contract444_sp(&T2, &W, &T2new, 0, 1, 1, 0);
+        global_dpd_->buf4_close_sp(&W);
+        global_dpd_->buf4_close_sp(&T2);
+        /* T2(Ib,jA) --> T2(IA,jb) (part III) */
+        global_dpd_->buf4_sort_sp(&T2new, PSIF_CC_TMP0, psrq, 10, 10, "T2 (IA,jb) 3 sp");
+        global_dpd_->buf4_close_sp(&T2new);
+
+        /* 1/2 [ (2 T2(IA,me) - T2(IE,ma)) * (2 W(ME,jb) + W(Me,Jb)] --> T2(IA,jb) */
+        global_dpd_->buf4_init_sp(&T2new, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "T2 (IA,jb) 1 sp");
+        global_dpd_->buf4_init_sp(&T2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "2 tIAjb - tIBja sp");
+        global_dpd_->buf4_init_sp(&W, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "2 W(ME,jb) + W(Me,Jb) sp");
+        global_dpd_->contract444_sp(&T2, &W, &T2new, 0, 1, 0.5, 0);
+        global_dpd_->buf4_close_sp(&W);
+        global_dpd_->buf4_close_sp(&T2);
+        /* 1/2 Z(Ib,jA) + T2(IA,jb) --> T2(IA,jb) (Part I) */
+        global_dpd_->buf4_init_sp(&Z, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "Z (Ib,jA)_sp");
+        global_dpd_->buf4_axpy_sp(&Z, &T2new, 0.5);
+        global_dpd_->buf4_close_sp(&Z);
+        global_dpd_->buf4_close_sp(&T2new);
+
+        /* T2(IA,jb) (I) + T2(IA,jb) (III) --> T2(IA,jb) */
+        global_dpd_->buf4_init_sp(&T2new, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "T2 (IA,jb) 1 sp");
+        global_dpd_->buf4_init_sp(&T2, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "T2 (IA,jb) 3 sp");
+        global_dpd_->buf4_axpy_sp(&T2, &T2new, 1);
+        global_dpd_->buf4_close_sp(&T2);
+        global_dpd_->buf4_sort_sp(&T2new, PSIF_CC_TMP0, prqs, 0, 5, "T2 (Ij,Ab) (1+3) sp");
+        global_dpd_->buf4_close_sp(&T2new);
+
+        global_dpd_->buf4_init_sp(&T2new, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T2 (Ij,Ab) (1+3) sp");
+        global_dpd_->buf4_sort_sp(&T2new, PSIF_CC_TMP0, qpsr, 0, 5, "T2 (Ij,Ab) (2+4) sp");
+        global_dpd_->buf4_close_sp(&T2new);
+
+        /* T2(Ij,Ab) <--- I + II + III + IV */
+        global_dpd_->buf4_init_sp(&T2new, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb sp");
+
+        global_dpd_->buf4_init_sp(&T2, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T2 (Ij,Ab) (1+3) sp");
+        global_dpd_->buf4_axpy_sp(&T2, &T2new, 1);
+        global_dpd_->buf4_close_sp(&T2);
+
+        global_dpd_->buf4_init_sp(&T2, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T2 (Ij,Ab) (2+4) sp");
+        global_dpd_->buf4_axpy_sp(&T2, &T2new, 1);
+        global_dpd_->buf4_close_sp(&T2);
+
+        global_dpd_->buf4_close_sp(&T2new);
+
+    } 
+}
+
 }  // namespace ccenergy
 }  // namespace psi

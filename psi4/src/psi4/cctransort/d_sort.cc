@@ -32,7 +32,7 @@ namespace psi {
 namespace cctransort {
 
 void d_sort(int reference) {
-    dpdbuf4 D;
+    dpdbuf4<double> D;
 
     if (reference == 2) { /*** UHF ***/
         /*** AA ***/
@@ -115,66 +115,84 @@ void d_sort(int reference) {
     } else { /*** RHF/ROHF ***/
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 2, 7, 0, 5, 1, "D <ij|ab>");
         global_dpd_->buf4_copy(&D, PSIF_CC_DINTS, "D <ij||ab> (i>j,a>b)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij||ab> (i>j,a>b) sp");
         global_dpd_->buf4_close(&D);
 
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 2, 5, 0, 5, 1, "D <ij|ab>");
         global_dpd_->buf4_copy(&D, PSIF_CC_DINTS, "D <ij||ab> (i>j,ab)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij||ab> (i>j,ab) sp");
         global_dpd_->buf4_close(&D);
 
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 7, 0, 5, 1, "D <ij|ab>");
         global_dpd_->buf4_copy(&D, PSIF_CC_DINTS, "D <ij||ab> (ij,a>b)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij||ab> (ij,a>b) sp");
         global_dpd_->buf4_close(&D);
 
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 1, "D <ij|ab>");
         global_dpd_->buf4_copy(&D, PSIF_CC_DINTS, "D <ij||ab>");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij||ab> sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij|ab> (ia,jb) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab>");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, prqs, 10, 10, "D <ij|ab> (ia,jb)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij|ab> (ia,jb) sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij|ab> (ai,jb) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 10, 10, 10, 10, 0, "D <ij|ab> (ia,jb)");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, qprs, 11, 10, "D <ij|ab> (ai,jb)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij|ab> (ai,jb) sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij|ab> (aj,ib) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab>");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, rqps, 11, 10, "D <ij|ab> (aj,ib)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij|ab> (aj,ib) sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij|ab> (bi,ja) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab>");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, spqr, 11, 10, "D <ij|ab> (bi,ja)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij|ab> (bi,ja) sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij||ab> (ia,jb) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij||ab>");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, prqs, 10, 10, "D <ij||ab> (ia,jb)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij||ab> (ia,jb) sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij|ab> (ib,ja) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 10, 10, 10, 10, 0, "D <ij|ab> (ia,jb)");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, psrq, 10, 10, "D <ij|ab> (ib,ja)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij|ab> (ib,ja) sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij|ab> (ib,aj) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 10, 10, 10, 10, 0, "D <ij|ab> (ib,ja)");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, pqsr, 10, 11, "D <ij|ab> (ib,aj)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij|ab> (ib,aj) sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij|ab> (ia,bj) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 10, 10, 10, 10, 0, "D <ij|ab> (ia,jb)");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, pqsr, 10, 11, "D <ij|ab> (ia,bj)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij|ab> (ia,bj) sp");
         global_dpd_->buf4_close(&D);
 
         /* <ij||ab> (ia,bj) */
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 10, 10, 10, 10, 0, "D <ij||ab> (ia,jb)");
         global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, pqsr, 10, 11, "D <ij||ab> (ia,bj)");
+        global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D <ij||ab> (ia,bj) sp");
         global_dpd_->buf4_close(&D);
     }
 }
 
 }  // namespace cctransort
 }  // namespace psi
+
+
+
+
+

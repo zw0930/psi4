@@ -55,7 +55,9 @@ namespace psi {
 **   double beta: A prefactor for the target beta * Z.
 */
 
-int DPD::contract444(dpdbuf4 *X, dpdbuf4 *Y, dpdbuf4 *Z, int target_X, int target_Y, double alpha, double beta) {
+int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z, int target_X, int target_Y, W alpha, W beta) {
+    //**
+    //dpdbuf4<float> *Z_tmp;
     int n, Hx, Hy, Hz, GX, GY, GZ, nirreps, Xtrans, Ytrans, *numlinks, symlink;
     long int size_Y, size_Z, size_file_X_row;
     int incore, nbuckets;
@@ -143,7 +145,7 @@ int DPD::contract444(dpdbuf4 *X, dpdbuf4 *Y, dpdbuf4 *Z, int target_X, int targe
 
             if (!rows_per_bucket) dpd_error("contract444: Not enough memory for one row", "outfile");
 
-            nbuckets = (int)ceil((double)X->params->rowtot[Hx] / (double)rows_per_bucket);
+            nbuckets = (int)ceil((U)X->params->rowtot[Hx] / (U)rows_per_bucket);
 
             rows_left = X->params->rowtot[Hx] % rows_per_bucket;
 
@@ -185,13 +187,13 @@ int DPD::contract444(dpdbuf4 *X, dpdbuf4 *Y, dpdbuf4 *Z, int target_X, int targe
             buf4_mat_irrep_init(Y, Hy);
             buf4_mat_irrep_rd(Y, Hy);
             buf4_mat_irrep_init(Z, Hz);
+            
             if (std::fabs(beta) > 0.0) buf4_mat_irrep_rd(Z, Hz);
 
             if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx ^ symlink]) {
-                C_DGEMM(Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
+                C_DGEMM(precision, Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
                         numlinks[Hx ^ symlink], alpha, &(X->matrix[Hx][0][0]), X->params->coltot[Hx ^ GX],
-                        &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], beta, &(Z->matrix[Hz][0][0]),
-                        Z->params->coltot[Hz ^ GZ]);
+                        &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], beta, Z->params->coltot[Hz ^ GZ]);
             }
 
             buf4_mat_irrep_close(X, Hx);
@@ -226,7 +228,7 @@ int DPD::contract444(dpdbuf4 *X, dpdbuf4 *Y, dpdbuf4 *Z, int target_X, int targe
                     if (nrows && ncols && nlinks)
                         C_DGEMM('n', 't', nrows, ncols, nlinks, alpha, &(X->matrix[Hx][0][0]), numlinks[Hx ^ symlink],
                                 &(Y->matrix[Hy][0][0]), numlinks[Hx ^ symlink], beta,
-                                &(Z->matrix[Hz][n * rows_per_bucket][0]), Z->params->coltot[Hz ^ GZ]);
+                                &(Z->matrix[Hz][n * rows_per_bucket][0]),  Z->params->coltot[Hz ^ GZ]);
                 } else if (Xtrans && !Ytrans) {
                     /* CAUTION: We need to accumulate the results of DGEMM for
           each bucket in this case.  So, we set beta="user value"
@@ -238,7 +240,7 @@ int DPD::contract444(dpdbuf4 *X, dpdbuf4 *Y, dpdbuf4 *Z, int target_X, int targe
                     if (nrows && ncols && nlinks)
                         C_DGEMM('t', 'n', nrows, ncols, nlinks, alpha, &(X->matrix[Hx][0][0]),
                                 X->params->coltot[Hx ^ GX], &(Y->matrix[Hy][n * rows_per_bucket][0]),
-                                Y->params->coltot[Hy ^ GY], (n == 0 ? beta : 1.0), &(Z->matrix[Hz][0][0]),
+                                Y->params->coltot[Hy ^ GY], (n == 0 ? beta : 1.0), &(Z->matrix[Hz][0][0]), 
                                 Z->params->coltot[Hz ^ GZ]);
                 }
             }
@@ -247,7 +249,7 @@ int DPD::contract444(dpdbuf4 *X, dpdbuf4 *Y, dpdbuf4 *Z, int target_X, int targe
 
             buf4_mat_irrep_close(Y, Hy);
             buf4_mat_irrep_wrt(Z, Hz);
-            buf4_mat_irrep_close(Z, Hz);
+            buf4_mat_irrep_close(Z,Hz);
 
         }  // !incore
     }      // Hx

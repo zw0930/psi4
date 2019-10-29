@@ -52,7 +52,7 @@ namespace psi {
 **   double beta: Prefactor for B.
 */
 
-int DPD::trace42_13(dpdbuf4 *A, dpdfile2 *B, int transb, double alpha, double beta) {
+int DPD::trace42_13(dpdbuf4<double> *A, dpdfile2<double> *B, int transb, double alpha, double beta) {
     int h, Gp, Gq, Gr, Gs;
     int p, q, r, s;
     int P, Q, R, S;

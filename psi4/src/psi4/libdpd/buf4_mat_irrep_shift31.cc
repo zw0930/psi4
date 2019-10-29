@@ -43,7 +43,7 @@
 
 namespace psi {
 
-int DPD::buf4_mat_irrep_shift31(dpdbuf4 *Buf, int buf_block) {
+int DPD::buf4_mat_irrep_shift31(dpdbuf4<double> *Buf, int buf_block) {
     int h, pq, Gr, Gs, r, nirreps, all_buf_irrep, h_pqr;
     int rowtot, coltot, cnt;
     int *count;

@@ -95,9 +95,8 @@
 #include "psi4/psifiles.h"
 
 namespace psi {
-
-void DPD::T3_RHF(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2, dpdbuf4 *F,
-                 dpdbuf4 *E, dpdfile2 *fIJ, dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
+void DPD::T3_RHF(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double> *T2, dpdbuf4<double> *F,
+                 dpdbuf4<double> *E, dpdfile2<double> *fIJ, dpdfile2<double> *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off,
                  double omega) {
     int h;
     int i, j, k;
@@ -511,5 +510,4 @@ void DPD::T3_RHF(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K,
     }
     free(W2);
 }
-
 }  // namespace psi

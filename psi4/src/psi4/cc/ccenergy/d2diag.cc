@@ -52,9 +52,9 @@ namespace ccenergy {
 double CCEnergyWavefunction::d2diag_rhf() {
     double **Co, *Eo;
     double **Cv, *Ev;
-    dpdbuf4 Tikab, Tjkab;
-    dpdbuf4 Tijac, Tijbc;
-    dpdfile2 To, Tv;
+    dpdbuf4<double> Tikab, Tjkab;
+    dpdbuf4<double> Tijac, Tijbc;
+    dpdfile2<double> To, Tv;
 
     auto nirreps = moinfo_.nirreps;
     auto max = 0.0;

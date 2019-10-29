@@ -6,6 +6,7 @@ list(APPEND sources
   david.cc
   dirprd_block.cc
   dot_block.cc
+  dot_block_sp.cc
   dx_read.cc
   dx_write.cc
   fill_sym_matrix.cc
@@ -13,6 +14,7 @@ list(APPEND sources
   lapack_intfc.cc
   mat_print.cc
   newmm_rking.cc
+  newmm_rking_sp.cc
   normalize.cc
   pople.cc
   probabil.cc

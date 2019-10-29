@@ -63,7 +63,7 @@ namespace psi {
 **      the labels currently used in in filenum and is quite useful for debugging.
 */
 
-int DPD::buf4_init(dpdbuf4 *Buf, int inputfile, int irrep, int pqnum, int rsnum, int file_pqnum, int file_rsnum,
+int DPD::buf4_init(dpdbuf4<double> *Buf, int inputfile, int irrep, int pqnum, int rsnum, int file_pqnum, int file_rsnum,
                    int anti, const char *label) {
     int h, nirreps, nump, nrows, p, Gp, Gr, offset;
 
@@ -117,14 +117,14 @@ int DPD::buf4_init(dpdbuf4 *Buf, int inputfile, int irrep, int pqnum, int rsnum,
 }
 
 // Wrapper for the main buf4_init() using strings rather than pair numbers
-int DPD::buf4_init(dpdbuf4 *Buf, int inputfile, int irrep, string pq, string rs, string file_pq, string file_rs,
+int DPD::buf4_init(dpdbuf4<double> *Buf, int inputfile, int irrep, string pq, string rs, string file_pq, string file_rs,
                    int anti, const char *label) {
     return buf4_init(Buf, inputfile, irrep, pairnum(pq), pairnum(rs), pairnum(file_pq), pairnum(file_rs), anti, label);
 }
 
 // Wrapper for the main buf4_init() using strings rather than pair numbers and assuming the buf4 and file4 pairs are
 // identical (common case)
-int DPD::buf4_init(dpdbuf4 *Buf, int inputfile, int irrep, string pq, string rs, int anti, const char *label) {
+int DPD::buf4_init(dpdbuf4<double> *Buf, int inputfile, int irrep, string pq, string rs, int anti, const char *label) {
     return buf4_init(Buf, inputfile, irrep, pairnum(pq), pairnum(rs), pairnum(pq), pairnum(rs), anti, label);
 }
 

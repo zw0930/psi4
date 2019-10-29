@@ -38,8 +38,8 @@ namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::FT2_CC2() {
-    dpdbuf4 newT2, T2, Z;
-    dpdfile2 F;
+    dpdbuf4<double> newT2, T2, Z;
+    dpdfile2<double> F;
 
     if (params_.ref == 0) { /* RHF */
         global_dpd_->buf4_init(&newT2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");

@@ -44,7 +44,10 @@
 #include "FCMangle.h"
 #define F_DSWAP FC_GLOBAL(dswap, DSWAP)
 #define F_DAXPY FC_GLOBAL(daxpy, DAXPY)
+#define F_SAXPY FC_GLOBAL(saxpy, SAXPY)
+
 #define F_DCOPY FC_GLOBAL(dcopy, DCOPY)
+#define F_SCOPY FC_GLOBAL(scopy, SCOPY)
 #define F_DROT FC_GLOBAL(drot, DROT)
 #define F_DSCAL FC_GLOBAL(dscal, DSCAL)
 #define F_DDOT FC_GLOBAL(ddot, DDOT)
@@ -55,7 +58,9 @@
 #if FC_SYMBOL == 2
 #define F_DSWAP dswap_
 #define F_DAXPY daxpy_
+#define F_SAXPY saxpy_
 #define F_DCOPY dcopy_
+#define F_SCOPY scopy_
 #define F_DROT drot_
 #define F_DSCAL dscal_
 #define F_DDOT ddot_
@@ -65,7 +70,10 @@
 #elif FC_SYMBOL == 1
 #define F_DSWAP dswap
 #define F_DAXPY daxpy
+#define F_SAXPY saxpy
+
 #define F_DCOPY dcopy
+#define F_SCOPY scopy
 #define F_DROT drot
 #define F_DSCAL dscal
 #define F_DDOT ddot
@@ -75,7 +83,9 @@
 #elif FC_SYMBOL == 3
 #define F_DSWAP DSWAP
 #define F_DAXPY DAXPY
+#define F_SAXPY SAXPY
 #define F_DCOPY DCOPY
+#define F_SCOPY SCOPY
 #define F_DROT DROT
 #define F_DSCAL DSCAL
 #define F_DDOT DDOT
@@ -85,7 +95,9 @@
 #elif FC_SYMBOL == 4
 #define F_DSWAP DSWAP_
 #define F_DAXPY DAXPY_
+#define F_SAXPY SAXPY_
 #define F_DCOPY DCOPY_
+#define F_SCOPY SCOPY_
 #define F_DROT DROT_
 #define F_DSCAL DSCAL_
 #define F_DDOT DDOT_

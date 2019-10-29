@@ -95,10 +95,9 @@
 #include "psi4/psifiles.h"
 
 namespace psi {
-
-void DPD::T3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2AA, dpdbuf4 *T2AB,
-                 dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA, dpdbuf4 *EAA, dpdbuf4 *EAB, dpdbuf4 *EBA,
-                 dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB, dpdfile2 *fab, int *aoccpi, int *aocc_off, int *boccpi,
+void DPD::T3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double> *T2AA, dpdbuf4<double> *T2AB,
+                 dpdbuf4<double> *T2BA, dpdbuf4<double> *FAA, dpdbuf4<double> *FAB, dpdbuf4<double> *FBA, dpdbuf4<double> *EAA, dpdbuf4<double> *EAB, dpdbuf4<double> *EBA,
+                 dpdfile2<double> *fIJ, dpdfile2<double> *fij, dpdfile2<double> *fAB, dpdfile2<double> *fab, int *aoccpi, int *aocc_off, int *boccpi,
                  int *bocc_off, int *avirtpi, int *avir_off, int *bvirtpi, int *bvir_off, double omega) {
     int h;
     int i, j, k;
@@ -594,5 +593,4 @@ void DPD::T3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K,
         buf4_mat_irrep_close(EBA, h);
     }
 }
-
 }  // namespace psi

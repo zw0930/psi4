@@ -34,7 +34,7 @@ namespace cctransort {
 
 void memcheck(int reference) {
     size_t irrep_size, size;
-    dpdbuf4 Z;
+    dpdbuf4<double> Z;
 
     outfile->Printf("\n");
 

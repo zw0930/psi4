@@ -33,7 +33,7 @@ namespace psi {
 namespace cctransort {
 
 void sort_tei_uhf(std::shared_ptr<PSIO> psio, int print) {
-    dpdbuf4 K;
+    dpdbuf4<double> K;
 
     psio->open(PSIF_CC_AINTS, PSIO_OPEN_OLD);
     global_dpd_->buf4_init(&K, PSIF_LIBTRANS_DPD, 0, "IJ", "KL", "I>=J+", "K>=L+", 0, "MO Ints (OO|OO)");

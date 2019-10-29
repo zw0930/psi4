@@ -52,7 +52,7 @@ double CCEnergyWavefunction::new_d1diag_t1_rohf() {
     double **T1_hp, **T1_hx, **T1_xp, **T1_sq;
     double *E, **C;
     double max_hp = 0.0, max_xp = 0.0, max_hx = 0.0, max;
-    dpdfile2 T1_a, T1_b;
+    dpdfile2<double> T1_a, T1_b;
 
     auto nirreps = moinfo_.nirreps;
 
