@@ -145,7 +145,7 @@ int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z,
 
             if (!rows_per_bucket) dpd_error("contract444: Not enough memory for one row", "outfile");
 
-            nbuckets = (int)ceil((U)X->params->rowtot[Hx] / (U)rows_per_bucket);
+            nbuckets = (int)ceil((double)X->params->rowtot[Hx] / (double)rows_per_bucket);
 
             rows_left = X->params->rowtot[Hx] % rows_per_bucket;
 
@@ -191,7 +191,7 @@ int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z,
             if (std::fabs(beta) > 0.0) buf4_mat_irrep_rd(Z, Hz);
 
             if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx ^ symlink]) {
-                C_DGEMM(precision, Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
+                C_DGEMM(Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
                         numlinks[Hx ^ symlink], alpha, &(X->matrix[Hx][0][0]), X->params->coltot[Hx ^ GX],
                         &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], beta, Z->params->coltot[Hz ^ GZ]);
             }
