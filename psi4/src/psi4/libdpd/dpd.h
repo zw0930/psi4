@@ -554,7 +554,7 @@ class PSI_API DPD {
     int contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z, int target_X, int target_Y, float alpha, double beta);
 
     // not used
-    int contract444_df(dpdbuf4<U> *B, dpdbuf4<U> *tau_in, dpdbuf4_target<U> *tau_out, W alpha, W beta);
+    // int contract444_df(dpdbuf4<double> *B, dpdbuf4<double> *tau_in, dpdbuf4<double> *tau_out, double alpha, double beta);
 
     /* Need to consolidate these routines into one general function */
     int dot23_sp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<float> *Z, int transt, int transz, float alpha, float beta);
@@ -655,7 +655,7 @@ class PSI_API DPD {
     int buf4_mat_irrep_wrt_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq, int num_pq);
 //*
     //int buf4_dump(dpdbuf4<double> *DPDBuf, struct iwlbuf *IWLBuf, int *prel, int *qrel, int *rrel, int *srel, int bk_pack,
-                  int swap23);
+             //     int swap23);
     int trans4_init_sp(dpdtrans4<float> *Trans, dpdbuf4<float> *Buf);
     int trans4_close_sp(dpdtrans4<float> *Trans);
     int trans4_mat_irrep_init_sp(dpdtrans4<float> *Trans, int irrep);
