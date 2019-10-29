@@ -47,7 +47,7 @@ namespace psi {
 **   dpdbuf4 *Buf1: A pointer to the left dpdbuf4 to be symmetrized.
 **   dpdbuf4 *Buf2: A pointer to the right dpdbuf4 to be symmetrized.  */
 
-int DPD::buf4_symm2(dpdbuf4<double> *Buf1, dpdbuf4 *Buf2) {
+int DPD::buf4_symm2(dpdbuf4<double> *Buf1, dpdbuf4<double> *Buf2) {
     int h, row, col, all_buf_irrep;
     double value;
 

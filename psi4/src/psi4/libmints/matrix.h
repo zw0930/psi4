@@ -1074,10 +1074,10 @@ class PSI_API Matrix : public std::enable_shared_from_this<Matrix> {
     /// @}
 
     /// Writes this to the dpdfile2 given
-    void write_to_dpdfile2(dpdfile2* outFile);
+    void write_to_dpdfile2(dpdfile2<double>* outFile);
 
     /// Writes this to the dpdbuf4 given
-    void write_to_dpdbuf4(dpdbuf4 *outBuf);
+    void write_to_dpdbuf4(dpdbuf4<double> *outBuf);
 
     /// @{
     /// Checks matrix equality.
