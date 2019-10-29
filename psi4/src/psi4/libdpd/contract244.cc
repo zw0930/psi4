@@ -71,7 +71,7 @@ int DPD::contract244(dpdfile2<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z
     long int core, memoryd, core_total, rowtot, coltot, maxrows, Z_core;
     int *numlinks, *numrows, *numcols;
     dpdtrans4<double> Yt, Zt;
-    W ***Ymat, ***Zmat;
+    double ***Ymat, ***Zmat;
 #ifdef DPD_DEBUG
     int *xrow, *xcol, *zrow, *zcol;
 #endif
@@ -202,7 +202,7 @@ int DPD::contract244(dpdfile2<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z
                 zcol = Zt.shift.coltot[hzbuf];
 #endif
             } else {
-                buf4_mat_irrep_shift13_target(Z, hzbuf);
+                buf4_mat_irrep_shift13(Z, hzbuf);
                 numrows = Z->shift.rowtot[hzbuf];
                 numcols = Z->shift.coltot[hzbuf];
                 Zmat = Z->shift.matrix[hzbuf];
@@ -362,8 +362,7 @@ int DPD::contract244(dpdfile2<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z
                 buf4_mat_irrep_close(Y, hybuf);
 
             if (Ztrans) {
-                buf4_mat_irrep_init_target(Z, hzbuf);
-                buf4_mat_irrep_init(Z_tmp, hzbuf);
+                buf4_mat_irrep_init(Z, hzbuf);
                 trans4_mat_irrep_wrt(&Zt, hzbuf);
                 trans4_mat_irrep_close(&Zt, hzbuf);
             }
@@ -388,9 +387,9 @@ int DPD::contract244(dpdfile2<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z
                 buf4_mat_irrep_row_zero(Y, hybuf, pq);
                 buf4_mat_irrep_row_rd(Y, hybuf, pq);
 
-                buf4_mat_irrep_row_zero_target(Z, hzbuf, pq);
+                buf4_mat_irrep_row_zero(Z, hzbuf, pq);
 
-                if (std::fabs(beta) > 0.0) buf4_mat_irrep_row_rd_target(Z, hzbuf, pq);
+                if (std::fabs(beta) > 0.0) buf4_mat_irrep_row_rd(Z, hzbuf, pq);
 
                 for (Gs = 0; Gs < nirreps; Gs++) {
                     GrY = Gs ^ hybuf ^ GY;
