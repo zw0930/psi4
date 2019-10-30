@@ -123,7 +123,7 @@ void sort_tei_rhf(std::shared_ptr<PSIO> psio, int print) {
     global_dpd_->buf4_init(&K, PSIF_CC_FINTS, 0, "ia", "bc", 0, "F <ia|bc>");
     global_dpd_->buf4_sort(&K, PSIF_CC_FINTS, qpsr, "ai", "bc", "F <ai|bc>");
     global_dpd_->buf4_close(&K);
-    global_dpd_->buf4_init(&K, PSIF_CC_FINTS, qpsr, "ai", "bc", "F <ai|bc>");
+    global_dpd_->buf4_init(&K, PSIF_CC_FINTS, 0, "ia", "bc", 0, "F <ai|bc>");
     global_dpd_->buf4_cast_copy_dtof(&K, PSIF_CC_FINTS, "F <ai|bc> sp");
     psio->close(PSIF_CC_FINTS, 1);
 }

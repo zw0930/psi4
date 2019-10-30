@@ -59,7 +59,7 @@ void fcidump_tei_helper(int nirrep, bool restricted, std::map<std::string, int> 
 namespace detail {
 using OrbitalIndexing = std::function<int(const int)>;
 
-void write_tei_to_disk(std::shared_ptr<PsiOutStream> intdump, int nirrep, dpdbuf4& K, double ints_tolerance,
+void write_tei_to_disk(std::shared_ptr<PsiOutStream> intdump, int nirrep, dpdbuf4<double>& K, double ints_tolerance,
                        OrbitalIndexing indx1, OrbitalIndexing indx2);
 }  // End namespace detail
 }  // End namespace fcidump

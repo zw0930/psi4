@@ -90,11 +90,11 @@ int DPD::buf4_axpy_sp(dpdbuf4<float> *BufX, dpdbuf4<float> *BufY, float alpha) {
             incore = 1;
 
         if (incore) {
-            buf4_mat_irrep_init(BufX, h);
-            buf4_mat_irrep_rd(BufX, h);
+            buf4_mat_irrep_init_sp(BufX, h);
+            buf4_mat_irrep_rd_sp(BufX, h);
 
-            buf4_mat_irrep_init(BufY, h);
-            buf4_mat_irrep_rd(BufY, h);
+            buf4_mat_irrep_init_sp(BufY, h);
+            buf4_mat_irrep_rd_sp(BufY, h);
 
             length = ((long)BufX->params->rowtot[h]) * ((long)BufX->params->coltot[h ^ my_irrep]);
             if (length) {

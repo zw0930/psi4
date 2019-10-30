@@ -120,6 +120,9 @@ void C_DCOPY(size_t length, double* x, int inc_x, double* y, int inc_y);
 void C_SCOPY(size_t length, float* x, int inc_x, float* y, int inc_y);
 
 void C_DAXPY(size_t length, double a, double* x, int inc_x, double* y, int inc_y);
+// Add SAXPY
+void C_SAXPY(size_t length, float a, float* x, int inc_x, float* y, int inc_y);
+
 double C_DDOT(size_t n, double* X, int inc_x, double* Y, int inc_y);
 double C_DNRM2(size_t n, double* X, int inc_x);
 double C_DASUM(size_t n, double* X, int inc_x);

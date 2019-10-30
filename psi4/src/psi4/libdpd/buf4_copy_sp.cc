@@ -94,10 +94,10 @@ int DPD::buf4_copy_sp(dpdbuf4<float> *InBuf, int outfilenum, const char *label) 
             }
 
             if (incore) {
-                buf4_mat_irrep_init(InBuf, h);
-                buf4_mat_irrep_rd(InBuf, h);
+                buf4_mat_irrep_init_sp(InBuf, h);
+                buf4_mat_irrep_rd_sp(InBuf, h);
 
-                buf4_mat_irrep_init(&OutBuf, h);
+                buf4_mat_irrep_init_sp(&OutBuf, h);
 
                 if (rowtot && coltot)
                     memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(InBuf->matrix[h][0][0]),

@@ -551,7 +551,7 @@ class PSI_API DPD {
 
 
 // *functions for single-precision and mixed-precision
-    double **dpd_block_matrix_sp(size_t n, size_t m);
+    float **dpd_block_matrix_sp(size_t n, size_t m);
     void free_dpd_block_sp(float **array, size_t n, size_t m);
 
     int contract222_sp(dpdfile2<float> *X, dpdfile2<float> *Y, dpdfile2<float> *Z, int target_X, int target_Y, float alpha, float beta);

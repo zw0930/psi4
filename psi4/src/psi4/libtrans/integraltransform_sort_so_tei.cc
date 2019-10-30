@@ -84,7 +84,7 @@ std::vector<SharedMatrix> IntegralTransform::compute_fock_like_matrices(SharedMa
     int currentActiveDPD = psi::dpd_default;
     dpd_set_default(myDPDNum_);
 
-    dpdbuf4 J;
+    dpdbuf4<double> J;
     global_dpd_->buf4_init(&J, PSIF_SO_PRESORT, 0, DPD_ID("[n,n]"), DPD_ID("[n,n]"), DPD_ID("[n>=n]+"),
                            DPD_ID("[n>=n]+"), 0, "SO Ints (nn|nn)");
 
