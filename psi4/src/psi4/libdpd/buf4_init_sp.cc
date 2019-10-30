@@ -81,7 +81,7 @@ int DPD::buf4_init_sp(dpdbuf4<float> *Buf, int inputfile, int irrep, int pqnum, 
     Buf->shift.shift_type = 0;
     Buf->shift.rowtot = init_int_matrix(nirreps, nirreps);
     Buf->shift.coltot = init_int_matrix(nirreps, nirreps);
-    Buf->shift.matrix = (double ****)malloc(nirreps * sizeof(double ***));
+    Buf->shift.matrix = (float ****)malloc(nirreps * sizeof(float ***));
 
     /* row_offset lookup array */
     /* For a (pq,rs) buffer (assuming p and q are NOT packed), on which

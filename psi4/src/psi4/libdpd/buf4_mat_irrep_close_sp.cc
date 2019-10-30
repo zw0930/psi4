@@ -78,7 +78,7 @@ int DPD::buf4_mat_irrep_close_sp(dpdbuf4<float> *Buf, int irrep) {
         //          dpd_free_block(Buf->matrix[irrep], rowtot, coltot);
         if (!(Buf->file.incore && !(Buf->anti) && (Buf->params->pqnum == Buf->file.params->pqnum) &&
               (Buf->params->rsnum == Buf->file.params->rsnum)))
-            free_dpd_block(Buf->matrix[irrep], rowtot, coltot);
+            free_dpd_block_sp(Buf->matrix[irrep], rowtot, coltot);
     }
 
     return 0;
