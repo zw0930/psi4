@@ -130,8 +130,10 @@ void DCTSolver::transform_integrals() {
     dct_timer_off("DCTSolver::transform_integrals()");
 }
 
+
 void DCTSolver::sort_OVOV_integrals() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
+
 
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), 0,
                            "MO Ints (OV|OV)");
@@ -207,7 +209,8 @@ void DCTSolver::sort_OVOV_integrals() {
 }
 
 void DCTSolver::sort_OOOO_integrals() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
+
 
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,O]"), ID("[O,O]"), ID("[O>=O]+"), ID("[O>=O]+"), 0,
                            "MO Ints (OO|OO)");
@@ -230,8 +233,10 @@ void DCTSolver::sort_OOOO_integrals() {
     global_dpd_->buf4_close(&I);
 }
 
+
 void DCTSolver::sort_OOVV_integrals() {
-    dpdbuf4 I, Irs, Isr;
+    dpdbuf4<double> I, Irs, Isr;
+
 
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[V,V]"), ID("[o,o]"), ID("[V>=V]+"), ID("[o>=o]+"), 0,
                            "MO Ints (VV|oo)");
@@ -323,8 +328,10 @@ void DCTSolver::sort_OOVV_integrals() {
     }
 }
 
+
 void DCTSolver::sort_VVVV_integrals() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
+
 
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[V,V]"), ID("[V,V]"), ID("[V>=V]+"), ID("[V>=V]+"), 0,
                            "MO Ints (VV|VV)");
@@ -350,7 +357,7 @@ void DCTSolver::sort_VVVV_integrals() {
 void DCTSolver::sort_OOOV_integrals() {
     // <VO|OO> type
 
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[V,O]"), ID("[O,O]"), ID("[V,O]"), ID("[O>=O]+"), 0,
                            "MO Ints (VO|OO)");
@@ -436,7 +443,7 @@ void DCTSolver::sort_OOOV_integrals() {
 void DCTSolver::sort_OVVV_integrals() {
     // <OV|VV> type
 
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,V]"), ID("[V,V]"), ID("[O,V]"), ID("[V>=V]+"), 0,
                            "MO Ints (OV|VV)");
@@ -496,7 +503,7 @@ void DCTSolver::sort_OVVV_integrals() {
 
 void DCTSolver::transform_core_integrals() {
     // Transform one-electron integrals to the MO basis and store them in the DPD file
-    dpdfile2 H;
+    dpdfile2<double> H;
     Matrix aH(so_h_);
     Matrix bH(so_h_);
     aH.transform(Ca_);
@@ -582,8 +589,8 @@ void DCTSolver::transform_core_integrals() {
 void DCTSolver::build_denominators() {
     dct_timer_on("DCTSolver::build_denominators()");
 
-    dpdbuf4 D;
-    dpdfile2 F;
+    dpdbuf4<double> D;
+    dpdfile2<double> F;
 
     auto *aOccEvals = new double[nalpha_];
     auto *bOccEvals = new double[nbeta_];
@@ -593,11 +600,13 @@ void DCTSolver::build_denominators() {
     // used by the DPD library, i.e. starting from zero for each space and ordering by irrep
     int aOccCount = 0, bOccCount = 0, aVirCount = 0, bVirCount = 0;
 
-    dpdfile2 T_OO, T_oo, T_VV, T_vv;
+
+    dpdfile2<double> T_OO, T_oo, T_VV, T_vv;
     global_dpd_->file2_init(&T_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Tau <O|O>");
     global_dpd_->file2_init(&T_oo, PSIF_DCT_DPD, 0, ID('o'), ID('o'), "Tau <o|o>");
     global_dpd_->file2_init(&T_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "Tau <V|V>");
     global_dpd_->file2_init(&T_vv, PSIF_DCT_DPD, 0, ID('v'), ID('v'), "Tau <v|v>");
+
     global_dpd_->file2_mat_init(&T_OO);
     global_dpd_->file2_mat_init(&T_oo);
     global_dpd_->file2_mat_init(&T_VV);
@@ -808,8 +817,8 @@ void DCTSolver::build_gtau() {
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdfile2 GT_OO, GT_oo, GT_VV, GT_vv, T_OO, T_oo, T_VV, T_vv;
-    dpdbuf4 I;
+    dpdfile2<double> GT_OO, GT_oo, GT_VV, GT_vv, T_OO, T_oo, T_VV, T_vv;
+    dpdbuf4<double> I;
 
     // Compute G * Tau contribution
 

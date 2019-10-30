@@ -47,10 +47,12 @@ namespace dct {
  * to the SO basis
  * for RHF reference.
  */
+
 void DCTSolver::build_tau_RHF() {
     dct_timer_on("DCTSolver::build_tau()");
-    dpdbuf4 L1, L2;
-    dpdfile2 T_OO, T_VV;
+    dpdbuf4<double> L1, L2;
+    dpdfile2<double> T_OO, T_VV;
+
 
     /*
      * The following 4 lines are not able to dump Tau <O|O>'s onto PSIF_DCT_DPD
@@ -115,7 +117,7 @@ void DCTSolver::refine_tau_RHF() {
     dct_timer_on("DCTSolver::refine_tau()");
 
     // Read MO-basis Tau from disk into the memory
-    dpdfile2 T_OO, T_VV;
+    dpdfile2<double> T_OO, T_VV;
 
     // Iteratively compute the exact Tau
 
@@ -227,7 +229,7 @@ void DCTSolver::refine_tau_RHF() {
 void DCTSolver::transform_tau_RHF() {
     dct_timer_on("DCTSolver::transform_tau()");
 
-    dpdfile2 T_OO, T_VV;
+    dpdfile2<double> T_OO, T_VV;
 
     global_dpd_->file2_init(&T_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Tau <O|O>");
     global_dpd_->file2_init(&T_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "Tau <V|V>");
@@ -286,11 +288,13 @@ void DCTSolver::transform_tau_RHF() {
 /**
  * Prints the occupation numbers from the OPDM
  */
+
 void DCTSolver::print_opdm_RHF() {
-    dpdbuf4 L1, L2;
-    dpdfile2 T_OO, T_oo, T_VV, T_vv;
+    dpdbuf4<double> L1, L2;
+    dpdfile2<double> T_OO, T_oo, T_VV, T_vv;
     global_dpd_->file2_init(&T_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Tau <O|O>");
     global_dpd_->file2_init(&T_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "Tau <V|V>");
+
 
     global_dpd_->file2_mat_init(&T_OO);
     global_dpd_->file2_mat_init(&T_VV);

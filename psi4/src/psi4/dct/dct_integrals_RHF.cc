@@ -145,8 +145,10 @@ void DCTSolver::transform_integrals_RHF() {
     dct_timer_off("DCTSolver::transform_integrals()");
 }
 
+
 void DCTSolver::sort_OVOV_integrals_RHF() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
+
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), 0,
                            "MO Ints (OV|OV)");
     global_dpd_->buf4_sort(&I, PSIF_LIBTRANS_DPD, prqs, ID("[O,O]"), ID("[V,V]"),
@@ -155,8 +157,10 @@ void DCTSolver::sort_OVOV_integrals_RHF() {
     global_dpd_->buf4_close(&I);
 }
 
+
 void DCTSolver::sort_OOOO_integrals_RHF() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
+
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,O]"), ID("[O,O]"), ID("[O>=O]+"), ID("[O>=O]+"), 0,
                            "MO Ints (OO|OO)");
     global_dpd_->buf4_sort(&I, PSIF_LIBTRANS_DPD, prqs, ID("[O,O]"), ID("[O,O]"),
@@ -165,7 +169,7 @@ void DCTSolver::sort_OOOO_integrals_RHF() {
 }
 
 void DCTSolver::sort_OOVV_integrals_RHF() {
-    dpdbuf4 I, Irs, Isr;
+    dpdbuf4i<double> I, Irs, Isr;
 
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[V,V]"), ID("[O,O]"), ID("[V>=V]+"), ID("[O>=O]+"), 0,
                            "MO Ints (VV|OO)");
@@ -208,16 +212,20 @@ void DCTSolver::sort_OOVV_integrals_RHF() {
     global_dpd_->buf4_close(&Irs);
 }
 
+
 void DCTSolver::sort_VVVV_integrals_RHF() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
+
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[V,V]"), ID("[V,V]"), ID("[V>=V]+"), ID("[V>=V]+"), 0,
                            "MO Ints (VV|VV)");
     global_dpd_->buf4_sort(&I, PSIF_LIBTRANS_DPD, prqs, ID("[V,V]"), ID("[V,V]"), "MO Ints <VV|VV>");
     global_dpd_->buf4_close(&I);
 }
 
+
 void DCTSolver::sort_OOOV_integrals_RHF() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
+
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[V,O]"), ID("[O,O]"), ID("[V,O]"), ID("[O>=O]+"), 0,
                            "MO Ints (VO|OO)");
     global_dpd_->buf4_sort(&I, PSIF_LIBTRANS_DPD, rpsq, ID("[O,V]"), ID("[O,O]"),
@@ -228,7 +236,8 @@ void DCTSolver::sort_OOOV_integrals_RHF() {
 }
 
 void DCTSolver::sort_OVVV_integrals_RHF() {
-    dpdbuf4 I;
+    dpdbuf4<double> I;
+
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,V]"), ID("[V,V]"), ID("[O,V]"), ID("[V>=V]+"), 0,
                            "MO Ints (OV|VV)");
     global_dpd_->buf4_sort(&I, PSIF_LIBTRANS_DPD, prqs, ID("[O,V]"), ID("[V,V]"),
@@ -240,7 +249,7 @@ void DCTSolver::sort_OVVV_integrals_RHF() {
 
 void DCTSolver::transform_core_integrals_RHF() {
     // Transform one-electron integrals to the MO basis and store them in the DPD file
-    dpdfile2 H;
+    dpdfile2<double> H;
     Matrix aH(so_h_);
     Matrix bH(so_h_);
     aH.transform(Ca_);
@@ -294,8 +303,8 @@ void DCTSolver::transform_core_integrals_RHF() {
 void DCTSolver::build_denominators_RHF() {
     dct_timer_on("DCTSolver::build_denominators()");
 
-    dpdbuf4 D;
-    dpdfile2 F;
+    dpdbuf4<double> D;
+    dpdfile2<double> F;
 
     auto *aOccEvals = new double[nalpha_];
     auto *bOccEvals = new double[nbeta_];
@@ -305,9 +314,11 @@ void DCTSolver::build_denominators_RHF() {
     // used by the DPD library, i.e. starting from zero for each space and ordering by irrep
     int aOccCount = 0, aVirCount = 0;
 
-    dpdfile2 T_OO, T_VV;
+
+    dpdfile2<double> T_OO, T_VV;
     global_dpd_->file2_init(&T_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Tau <O|O>");
     global_dpd_->file2_init(&T_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "Tau <V|V>");
+
     global_dpd_->file2_mat_init(&T_OO);
     global_dpd_->file2_mat_init(&T_VV);
     global_dpd_->file2_mat_rd(&T_OO);

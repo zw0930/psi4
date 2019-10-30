@@ -107,8 +107,9 @@ void DCTSolver::compute_gradient_dc() {
     } else {
         // Start the simultaneous algorithm for the solution of the response equations
         // Set up DIIS extrapolation
-        dpdbuf4 Zaa, Zab, Zbb, Raa, Rab, Rbb;
-        dpdfile2 zaa, zbb, raa, rbb;
+
+        dpdbuf4<double> Zaa, Zab, Zbb, Raa, Rab, Rbb;
+        dpdfile2<double> zaa, zbb, raa, rbb;
         global_dpd_->buf4_init(&Zaa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
                                "Z <OO|VV>");
         global_dpd_->buf4_init(&Zab, PSIF_DCT_DPD, 0, ID("[O,o]"), ID("[V,v]"), ID("[O,o]"), ID("[V,v]"), 0,
@@ -257,7 +258,7 @@ void DCTSolver::gradient_init() {
     avir_ptau_ = std::make_shared<Matrix>("MO basis Perturbed Tau (Alpha Virtual)", nirrep_, navirpi_, navirpi_);
     bvir_ptau_ = std::make_shared<Matrix>("MO basis Perturbed Tau (Beta Virtual)", nirrep_, nbvirpi_, nbvirpi_);
 
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     // Transform the two-electron integrals to the (VO|OO) and (OV|VV) subspaces in chemists' notation
 
@@ -323,8 +324,9 @@ void DCTSolver::gradient_init() {
 }
 
 void DCTSolver::response_guess() {
-    dpdbuf4 L;
-    dpdfile2 T;
+    dpdbuf4<double> L;
+    dpdfile2<double> T;
+
 
     // Copy the converged cumulant as a guess for the cumulant response
 
@@ -369,11 +371,11 @@ void DCTSolver::compute_lagrangian_OV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdbuf4 L, W, U, Z;
-    dpdfile2 X, H, pT;
-    dpdfile2 T_VV, T_vv, dT_VV, dT_vv, pT_VV, pT_vv;
-    dpdfile2 Y1_OV, Y1_ov, Y2_OV, Y2_ov;
+    dpdbuf4<double> G, I;
+    dpdbuf4<double> L, W, U, Z;
+    dpdfile2<double> X, H, pT;
+    dpdfile2<double> T_VV, T_vv, dT_VV, dT_vv, pT_VV, pT_vv;
+    dpdfile2<double> Y1_OV, Y1_ov, Y2_OV, Y2_ov;
 
     // X_OV: One-electron contributions
 
@@ -844,8 +846,8 @@ void DCTSolver::compute_lagrangian_VO() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdfile2 X, H, pT;
+    dpdbuf4<double> G, I;
+    dpdfile2<double> X, H, pT;
 
     // X_VO: One-electron contributions
 
@@ -1098,10 +1100,12 @@ void DCTSolver::iterate_orbital_response() {
     bool converged = false;
 
     // Initialize DIIS
-    dpdfile2 zaa, zbb, raa, rbb;
+
+    dpdfile2<double> zaa, zbb, raa, rbb;
     global_dpd_->file2_init(&zaa, PSIF_DCT_DPD, 0, ID('O'), ID('V'), "z <O|V>");
     global_dpd_->file2_init(&zbb, PSIF_DCT_DPD, 0, ID('o'), ID('v'), "z <o|v>");
     DIISManager ZiaDiisManager(maxdiis_, "DCT DIIS Orbital Z", DIISManager::LargestError, DIISManager::InCore);
+
     ZiaDiisManager.set_error_vector_size(2, DIISEntry::DPDFile2, &zaa, DIISEntry::DPDFile2, &zbb);
     ZiaDiisManager.set_vector_size(2, DIISEntry::DPDFile2, &zaa, DIISEntry::DPDFile2, &zbb);
     global_dpd_->file2_close(&zaa);
@@ -1156,8 +1160,10 @@ void DCTSolver::iterate_orbital_response() {
     if (!converged) throw PSIEXCEPTION("DCT orbital response equations did not converge");
 }
 
+
 void DCTSolver::orbital_response_guess() {
-    dpdfile2 Xia, Xai, zia;
+    dpdfile2<double> Xia, Xai, zia;
+
 
     // Alpha spin
     global_dpd_->file2_init(&Xia, PSIF_DCT_DPD, 0, ID('O'), ID('V'), "X <O|V>");
@@ -1208,9 +1214,11 @@ void DCTSolver::orbital_response_guess() {
     global_dpd_->file2_close(&Xia);
 }
 
+
 void DCTSolver::compute_orbital_response_intermediates() {
-    dpdbuf4 I;
-    dpdfile2 z, zI, zI_ov, zI_vo;
+    dpdbuf4<double> I;
+    dpdfile2<double> z, zI, zI_ov, zI_vo;
+
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -1341,8 +1349,10 @@ void DCTSolver::compute_orbital_response_intermediates() {
 }
 
 // Returns RMS of the orbital response vector
+
 double DCTSolver::update_orbital_response() {
-    dpdfile2 X_ia, X_ai, z_ia, zI_ai, zI_ia, r_ia;
+    dpdfile2<double> X_ia, X_ai, z_ia, zI_ai, zI_ia, r_ia;
+
     auto a_ria = std::make_shared<Matrix>("MO basis Orbital Response Residual (Alpha)", nirrep_, naoccpi_, navirpi_);
     auto b_ria = std::make_shared<Matrix>("MO basis Orbital Response Residual (Beta)", nirrep_, nboccpi_, nbvirpi_);
 
@@ -1453,9 +1463,11 @@ double DCTSolver::update_orbital_response() {
 }
 
 // Returns RMS of the change in the response coupling term (C intermediate)
+
 double DCTSolver::compute_response_coupling() {
-    dpdbuf4 I, L, C, T;
-    dpdfile2 z, zI, zIsym;
+    dpdbuf4<double> I, L, C, T;
+    dpdfile2<double> z, zI, zIsym;
+
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -1892,7 +1904,8 @@ void DCTSolver::iterate_cumulant_response() {
     cumulant_response_guess();
 
     // Set up DIIS extrapolation
-    dpdbuf4 Zaa, Zab, Zbb, Raa, Rab, Rbb;
+
+    dpdbuf4<double> Zaa, Zab, Zbb, Raa, Rab, Rbb;
     global_dpd_->buf4_init(&Zaa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
                            "Z <OO|VV>");
     global_dpd_->buf4_init(&Zab, PSIF_DCT_DPD, 0, ID("[O,o]"), ID("[V,v]"), ID("[O,o]"), ID("[V,v]"), 0,
@@ -1973,8 +1986,10 @@ void DCTSolver::iterate_cumulant_response() {
     if (!converged) throw PSIEXCEPTION("DCT cumulant response equations did not converge");
 }
 
+
 void DCTSolver::cumulant_response_guess() {
-    dpdbuf4 Z, D, dC;
+    dpdbuf4<double> Z, D, dC;
+
 
     /*
      * Z_ijab += dC_ijab / D_ijab
@@ -2017,9 +2032,11 @@ void DCTSolver::cumulant_response_guess() {
     global_dpd_->buf4_close(&Z);
 }
 
+
 void DCTSolver::build_perturbed_tau() {
-    dpdbuf4 L, Z;
-    dpdfile2 pT_OO, pT_oo, pT_VV, pT_vv, dT_OO, dT_oo, dT_VV, dT_vv, T_OO, T_oo, T_VV, T_vv;
+    dpdbuf4<double> L, Z;
+    dpdfile2<double> pT_OO, pT_oo, pT_VV, pT_vv, dT_OO, dT_oo, dT_VV, dT_vv, T_OO, T_oo, T_VV, T_vv;
+
 
     global_dpd_->file2_init(&pT_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Temp <O|O>");
     global_dpd_->file2_init(&pT_oo, PSIF_DCT_DPD, 0, ID('o'), ID('o'), "Temp <o|o>");
@@ -2229,8 +2246,8 @@ void DCTSolver::build_perturbed_tau() {
 void DCTSolver::compute_cumulant_response_intermediates() {
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdfile2 F_OO, F_oo, F_VV, F_vv, Y_OO, Y_oo, Y_VV, Y_vv, T_OO, T_oo, T_VV, T_vv, tmp;
-    dpdbuf4 I, Z, G, T, F, Taa, Tab, Tbb, Laa, Lab, Lbb, Zaa, Zab, Zbb;
+    dpdfile2<double> F_OO, F_oo, F_VV, F_vv, Y_OO, Y_oo, Y_VV, Y_vv, T_OO, T_oo, T_VV, T_vv, tmp;
+    dpdbuf4<double> I, Z, G, T, F, Taa, Tab, Tbb, Laa, Lab, Lbb, Zaa, Zab, Zbb;
 
     //
     // Compute G intermediates
@@ -2931,8 +2948,10 @@ void DCTSolver::compute_cumulant_response_intermediates() {
     psio_->close(PSIF_LIBTRANS_DPD, 1);
 }
 
+
 double DCTSolver::compute_cumulant_response_residual() {
-    dpdbuf4 R, G, F, T, C;
+    dpdbuf4<double> R, G, F, T, C;
+
     double sumSQ = 0.0;
     size_t nElements = 0;
 
@@ -3032,8 +3051,10 @@ double DCTSolver::compute_cumulant_response_residual() {
     return std::sqrt(sumSQ / nElements);
 }
 
+
 void DCTSolver::update_cumulant_response() {
-    dpdbuf4 Z, D, R;
+    dpdbuf4<double> Z, D, R;
+
 
     /*
      * Z_ijab += R_ijab / D_ijab
@@ -3077,8 +3098,8 @@ void DCTSolver::compute_lagrangian_OO() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdfile2 X, H, pT;
+    dpdbuf4<double> G, I;
+    dpdfile2<double> X, H, pT;
 
     // X_OO: One-electron contributions
 
@@ -3378,8 +3399,8 @@ void DCTSolver::compute_lagrangian_VV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdfile2 X, H, pT;
+    dpdbuf4<double> G, I;
+    dpdfile2<double> X, H, pT;
 
     // X_VV: One-electron contributions
 
@@ -3612,7 +3633,8 @@ void DCTSolver::compute_lagrangian_VV() {
 }
 
 void DCTSolver::compute_ewdm_dc() {
-    dpdfile2 zI_OV, zI_VO, X_OV, X_VO, zI_OO, zI_VV, X_OO, X_VV, z_OV;
+    dpdfile2<double> zI_OV, zI_VO, X_OV, X_VO, zI_OO, zI_VV, X_OO, X_VV, z_OV;
+
 
     Matrix aW("Energy-weighted density matrix (Alpha)", nirrep_, nmopi_, nmopi_);
     Matrix bW("Energy-weighted density matrix (Beta)", nirrep_, nmopi_, nmopi_);
@@ -3932,7 +3954,7 @@ void DCTSolver::compute_ewdm_dc() {
         offset += nmopi_[h];
     }
 
-    dpdbuf4 G;
+    dpdbuf4<double> G;
 
     struct iwlbuf AA, AB, BB;
     iwl_buf_init(&AA, PSIF_MO_AA_TPDM, 1.0E-15, 0, 0);
@@ -4572,8 +4594,10 @@ void DCTSolver::compute_ewdm_dc() {
     delete[] beta_pitzer_to_corr;
 }
 
+
 void DCTSolver::compute_ewdm_odc() {
-    dpdfile2 X_OV, X_VO, X_OO, X_VV;
+    dpdfile2<double> X_OV, X_VO, X_OO, X_VV;
+
 
     Matrix aW("Energy-weighted density matrix (Alpha)", nirrep_, nmopi_, nmopi_);
     Matrix bW("Energy-weighted density matrix (Beta)", nirrep_, nmopi_, nmopi_);
@@ -4803,7 +4827,7 @@ void DCTSolver::compute_ewdm_odc() {
         offset += nmopi_[h];
     }
 
-    dpdbuf4 G;
+    dpdbuf4<double> G;
 
     struct iwlbuf AA, AB, BB;
     iwl_buf_init(&AA, PSIF_MO_AA_TPDM, 1.0E-15, 0, 0);

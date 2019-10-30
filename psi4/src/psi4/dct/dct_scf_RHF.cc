@@ -147,8 +147,8 @@ void DCTSolver::process_so_ints_RHF() {
     int qsArr, sqArr, psArr, spArr, prArr, rpArr;
     int offset, labelIndex, p, q, r, s, h, counter;
     int **pq_row_start, **CD_row_start, **Cd_row_start, **cd_row_start;
-    dpdbuf4 tau_temp, lambda;
-    dpdbuf4 tau1_AO_ab, tau2_AO_ab;
+    dpdbuf4<double> tau_temp, lambda;
+    dpdbuf4<double> tau1_AO_ab, tau2_AO_ab;
 
     bool buildTensors = (options_.get_str("AO_BASIS") == "DISK");
 

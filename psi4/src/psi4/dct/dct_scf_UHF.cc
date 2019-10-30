@@ -484,10 +484,10 @@ void DCTSolver::process_so_ints() {
     int qsArr, sqArr, psArr, spArr, prArr, rpArr;
     int offset, labelIndex, p, q, r, s, h, counter;
     int **pq_row_start, **CD_row_start, **Cd_row_start, **cd_row_start;
-    dpdbuf4 tau_temp, lambda;
-    dpdbuf4 tau1_AO_aa, tau2_AO_aa;
-    dpdbuf4 tau1_AO_ab, tau2_AO_ab;
-    dpdbuf4 tau1_AO_bb, tau2_AO_bb;
+    dpdbuf4<double> tau_temp, lambda;
+    dpdbuf4<double> tau1_AO_aa, tau2_AO_aa;
+    dpdbuf4<double> tau1_AO_ab, tau2_AO_ab;
+    dpdbuf4<double> tau1_AO_bb, tau2_AO_bb;
 
     bool buildTensors = (options_.get_str("AO_BASIS") == "DISK");
 
@@ -1011,7 +1011,7 @@ void DCTSolver::process_so_ints() {
 void DCTSolver::update_fock() {
     dct_timer_on("DCTSolver::update_fock");
 
-    dpdfile2 Gtau;
+    dpdfile2<double> Gtau;
 
     moFa_->copy(moF0a_);
     moFb_->copy(moF0b_);
@@ -1099,12 +1099,12 @@ void DCTSolver::build_AO_tensors() {
     int Gc, Gd;
     int offset, labelIndex, p, q, r, s, h, counter;
     int **pq_row_start, **CD_row_start, **Cd_row_start, **cd_row_start;
-    dpdbuf4 tau_temp, lambda;
-    dpdbuf4 tau1_AO_aa, tau2_AO_aa;
-    dpdbuf4 tau1_AO_ab, tau2_AO_ab;
-    dpdbuf4 tau1_AO_bb, tau2_AO_bb;
-    dpdfile2 s_aa_1, s_aa_2, s_aa_3, s_aa_4, tau;
-    dpdfile2 s_bb_1, s_bb_2, s_bb_3, s_bb_4;
+    dpdbuf4<double> tau_temp, lambda;
+    dpdbuf4<double> tau1_AO_aa, tau2_AO_aa;
+    dpdbuf4<double> tau1_AO_ab, tau2_AO_ab;
+    dpdbuf4<double> tau1_AO_bb, tau2_AO_bb;
+    dpdfile2<double> s_aa_1, s_aa_2, s_aa_3, s_aa_4, tau;
+    dpdfile2<double> s_bb_1, s_bb_2, s_bb_3, s_bb_4;
 
     counter = 0;
 

@@ -74,8 +74,9 @@ void DCTSolver::run_qc_dct() {
     outfile->Printf("Compute scf_error_vector\n");
 
     // Set up the DIIS manager
+
     DIISManager diisManager(maxdiis_, "DCT DIIS vectors");
-    dpdbuf4 Laa, Lab, Lbb;
+    dpdbuf4<double> Laa, Lab, Lbb;
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
                            "Lambda <OO|VV>");
     global_dpd_->buf4_init(&Lab, PSIF_DCT_DPD, 0, ID("[O,o]"), ID("[V,v]"), ID("[O,o]"), ID("[V,v]"), 0,
@@ -136,7 +137,8 @@ void DCTSolver::run_qc_dct() {
             compute_orbital_rotation_nr();
             // DIIS
             if (orbitals_convergence_ < diis_start_thresh_ && cumulant_convergence_ < diis_start_thresh_) {
-                dpdbuf4 Laa, Lab, Lbb, Raa, Rab, Rbb;
+
+                dpdbuf4<double> Laa, Lab, Lbb, Raa, Rab, Rbb;
                 global_dpd_->buf4_init(&Raa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"),
                                        0, "R <OO|VV>");
                 global_dpd_->buf4_init(&Rab, PSIF_DCT_DPD, 0, ID("[O,o]"), ID("[V,v]"), ID("[O,o]"), ID("[V,v]"), 0,
@@ -229,7 +231,8 @@ void DCTSolver::compute_orbital_gradient() {
     moFa_->transform(Ca_);
     moFb_->transform(Cb_);
     // Update the Fock matrix DPD file2
-    dpdfile2 F;
+    dpdfile2i<double> F;
+  //  psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
     // Alpha Occupied
     global_dpd_->file2_init(&F, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "F <O|O>");
@@ -370,7 +373,7 @@ void DCTSolver::form_idps() {
 
     if (options_.get_str("QC_TYPE") == "SIMULTANEOUS") {
         // Count the number of IDPs for cumulant updates
-        dpdbuf4 R;
+        dpdbuf4<double> R;
 
         ::memset(lookup_cumulant_, '\0', sizeof(int) * dim_cumulant_);
 
@@ -534,9 +537,11 @@ void DCTSolver::form_idps() {
     delete[] grad;
 }
 
+
 void DCTSolver::compute_sigma_vector() {
-    dpdfile2 D2, S2;
-    dpdbuf4 D4, S4;
+    dpdfile2<double> D2, S2;
+    dpdbuf4<double> D4, S4;
+
 
     // Copy the IDP arrays from memory to DPD file2 and buf4
     int orbital_address = 0;
@@ -771,9 +776,11 @@ void DCTSolver::compute_sigma_vector() {
     }
 }
 
+
 void DCTSolver::compute_sigma_vector_orb_orb() {
-    dpdfile2 D2, S2;
-    dpdbuf4 I;
+    dpdfile2<double> D2, S2;
+    dpdbuf4<double> I;
+
 
     // Orbital-Orbital block of the Hessian
 
@@ -860,9 +867,11 @@ void DCTSolver::compute_sigma_vector_orb_orb() {
     global_dpd_->file2_close(&S2);
 }
 
+
 void DCTSolver::compute_sigma_vector_orb_cum() {
-    dpdfile2 S2, LD_OO, LD_oo, LD_VV, LD_vv;
-    dpdbuf4 I, L, D4;
+    dpdfile2<double> S2, LD_OO, LD_oo, LD_VV, LD_vv;
+    dpdbuf4<double> I, L, D4;
+
 
     // Orbital-Lambda block of the Hessian
 
@@ -1094,8 +1103,10 @@ void DCTSolver::compute_sigma_vector_orb_cum() {
     global_dpd_->file2_close(&S2);
 }
 
+
 void DCTSolver::compute_sigma_vector_cum_cum() {
-    dpdbuf4 I, D4, S4, T, Taa, Tab, Tbb, D4aa, D4ab, D4bb;
+    dpdbuf4<double> I, D4, S4, T, Taa, Tab, Tbb, D4aa, D4ab, D4bb;
+
 
     // Lambda-Lambda block of the Hessian
 
@@ -1403,9 +1414,11 @@ void DCTSolver::compute_sigma_vector_cum_cum() {
     global_dpd_->buf4_close(&Tbb);
 }
 
+
 void DCTSolver::compute_sigma_vector_cum_orb() {
-    dpdfile2 D2, DI, DIsym;
-    dpdbuf4 I, L, S4, T;
+    dpdfile2<double> D2, DI, DIsym;
+    dpdbuf4i<double> I, L, S4, T;
+
 
     // Lambda-Orbital block of the Hessian
 
@@ -1944,8 +1957,10 @@ void DCTSolver::compute_orbital_rotation_nr() {
     Xtotal_b_->add(X_b_);
 }
 
+
 void DCTSolver::update_cumulant_nr() {
-    dpdbuf4 L;
+    dpdbuf4<double> L;
+
 
     int cumulant_address = 0;
     int idpcount = orbital_idp_;

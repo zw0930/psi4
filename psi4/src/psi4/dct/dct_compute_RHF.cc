@@ -147,7 +147,8 @@ void DCTSolver::run_simult_dct_RHF() {
     DIISManager diisManager(maxdiis_, "DCT DIIS vectors");
 
     // DIIS on orbitals (AA and BB) and cumulants (AA, AB, BB)
-    dpdbuf4 Laa, Lab, Lbb;
+
+    dpdbuf4<double> Laa, Lab, Lbb;
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
                            "Lambda <OO|VV>");
     global_dpd_->buf4_init(&Lab, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
@@ -228,7 +229,7 @@ void DCTSolver::run_simult_dct_RHF() {
         energyConverged_ = std::fabs(old_total_energy_ - new_total_energy_) < energy_threshold_;
         if (orbitals_convergence_ < diis_start_thresh_ && cumulant_convergence_ < diis_start_thresh_) {
             // Store the DIIS vectors
-            dpdbuf4 Laa, Lab, Lbb, Raa, Rab, Rbb;
+            dpdbuf4<double> Laa, Lab, Lbb, Raa, Rab, Rbb;
             // Compute R_OOVV and R_oovv from R_OoVv, used as DIIS error vectors
             compute_R_AA_and_BB();
 

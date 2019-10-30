@@ -48,7 +48,7 @@ namespace dct {
 double DCTSolver::compute_cumulant_residual() {
     dct_timer_on("DCTSolver::compute_lambda_residual()");
 
-    dpdbuf4 R, G, F, I, V, W;
+    dpdbuf4<double> R, G, F, I, V, W;
     double sumSQ = 0.0;
     size_t nElements = 0;
 
@@ -200,7 +200,7 @@ double DCTSolver::compute_cumulant_residual() {
 void DCTSolver::update_cumulant_jacobi() {
     dct_timer_on("DCTSolver::update_lambda_from_residual()");
 
-    dpdbuf4 L, D, R;
+    dpdbuf4<double> L, D, R;
 
     /*
      * Lambda_ijab += R_ijab / D_ijab

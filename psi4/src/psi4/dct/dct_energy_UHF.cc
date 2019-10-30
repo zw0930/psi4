@@ -43,7 +43,7 @@ namespace dct {
 void DCTSolver::compute_dct_energy() {
     dct_timer_on("DCTSolver::compute_dct_energy()");
 
-    dpdbuf4 L, G, I;
+    dpdbuf4<double> L, G, I;
     double eGaa, eGab, eGbb, eIaa, eIab, eIbb;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -167,7 +167,7 @@ void DCTSolver::compute_cepa0_energy() {
      *        +L_IjAb <Ij|Ab>
      *    +1/4 L_ijab <ij||ab>
      */
-    dpdbuf4 I, L;
+    dpdbuf4<double> I, L;
     // Alpha - Alpha
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 1,
                            "MO Ints <OO|VV>");

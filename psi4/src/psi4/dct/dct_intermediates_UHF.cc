@@ -65,7 +65,7 @@ void DCTSolver::build_cumulant_intermediates() {
 void DCTSolver::compute_G_intermediate() {
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 I, L, G, T, Taa, Tab, Tbb, Laa, Lab, Lbb;
+    dpdbuf4<double> I, L, G, T, Taa, Tab, Tbb, Laa, Lab, Lbb;
 
     /*
      * G_ijab = 1/2 Sum_cd gbar_cdab lambda_ijcd
@@ -394,9 +394,11 @@ void DCTSolver::compute_G_intermediate() {
     psio_->close(PSIF_LIBTRANS_DPD, 1);
 }
 
+
 void DCTSolver::compute_F_intermediate() {
-    dpdfile2 F_OO, F_oo, F_VV, F_vv;
-    dpdbuf4 F, T, Laa, Lab, Lbb;
+    dpdfile2<double> F_OO, F_oo, F_VV, F_vv;
+    dpdbuf4<double> F, T, Laa, Lab, Lbb;
+
 
     /*
      * F_ijab += P(ab) F_ca lambda_ijcb - P(ij) F_ki lambda_jkab
@@ -509,8 +511,10 @@ void DCTSolver::compute_F_intermediate() {
     global_dpd_->buf4_close(&F);
 }
 
+
 void DCTSolver::form_density_weighted_fock() {
-    dpdfile2 T_OO, T_oo, T_VV, T_vv, F_OO, F_oo, F_VV, F_vv;
+    dpdfile2<double> T_OO, T_oo, T_VV, T_vv, F_OO, F_oo, F_VV, F_vv;
+
 
     global_dpd_->file2_init(&T_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Tau <O|O>");
     global_dpd_->file2_init(&T_oo, PSIF_DCT_DPD, 0, ID('o'), ID('o'), "Tau <o|o>");
@@ -700,8 +704,9 @@ void DCTSolver::form_density_weighted_fock() {
 }
 
 void DCTSolver::compute_V_intermediate() {
-    dpdbuf4 I, L, V, T, II, J, Taa, Tab, Tbb, Kaa, Kab, Kbb, Laa, Lab, Lbb;
-    dpdfile2 T_OO, T_oo, T_VV, T_vv, H_OO, H_oo, H_VV, H_vv;
+    dpdbuf4<double> I, L, V, T, II, J, Taa, Tab, Tbb, Kaa, Kab, Kbb, Laa, Lab, Lbb;
+    dpdfile2<double> T_OO, T_oo, T_VV, T_vv, H_OO, H_oo, H_VV, H_vv;
+
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -1688,9 +1693,11 @@ void DCTSolver::compute_V_intermediate() {
     global_dpd_->buf4_close(&Tbb);
 }
 
+
 void DCTSolver::compute_H_intermediate() {
-    dpdbuf4 L, I;
-    dpdfile2 H_OO, H_oo, H_VV, H_vv, HH_OO, HH_oo, HH_VV, HH_vv;
+    dpdbuf4<double> L, I;
+    dpdfile2<double> H_OO, H_oo, H_VV, H_vv, HH_OO, HH_oo, HH_VV, HH_vv;
+
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -1784,8 +1791,10 @@ void DCTSolver::compute_H_intermediate() {
     global_dpd_->file2_close(&H_vv);
 }
 
+
 void DCTSolver::compute_I_intermediate() {
-    dpdbuf4 LLaa, LLab, LLbb, Laa, Lab, Lbb, Iaa, Iab, Ibb;
+    dpdbuf4<double> LLaa, LLab, LLbb, Laa, Lab, Lbb, Iaa, Iab, Ibb;
+
 
     // I_ijkl = Lambda_ijab * Lambda_klab
     global_dpd_->buf4_init(&Iaa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[O>O]-"), ID("[O>O]-"), ID("[O>O]-"), 0,
@@ -1840,8 +1849,10 @@ void DCTSolver::compute_I_intermediate() {
     global_dpd_->buf4_close(&Ibb);
 }
 
+
 void DCTSolver::compute_J_intermediate() {
-    dpdbuf4 Iaa, Iab, Ibb, Laa, Lab, Lbb, Jaa, Jab, Jbb;
+    dpdbuf4<double> Iaa, Iab, Ibb, Laa, Lab, Lbb, Jaa, Jab, Jbb;
+
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -1896,8 +1907,10 @@ void DCTSolver::compute_J_intermediate() {
     psio_->close(PSIF_LIBTRANS_DPD, 1);
 }
 
+
 void DCTSolver::compute_K_intermediate() {
-    dpdbuf4 LLaa, LLab, LLbb, Laa, Lab, Lbb, Kaa, Kab, Kba, Kbb, K;
+    dpdbuf4<double> LLaa, LLab, LLbb, Laa, Lab, Lbb, Kaa, Kab, Kba, Kbb, K;
+
 
     // There are five unique spin cases: K<IAJB>, K<iajb>, K<IaJb>, K<iAjB>, K<IajB>
 
@@ -2054,8 +2067,10 @@ void DCTSolver::compute_K_intermediate() {
     global_dpd_->buf4_close(&K);
 }
 
+
 void DCTSolver::compute_L_intermediate() {
-    dpdbuf4 I, Iaa, Iab, Ibb, Lambda_aa, Lambda_ab, Lambda_bb, Laa, Lab, Lba, Lbb;
+    dpdbuf4<double> I, Iaa, Iab, Ibb, Lambda_aa, Lambda_ab, Lambda_bb, Laa, Lab, Lba, Lbb;
+
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -2243,7 +2258,8 @@ void DCTSolver::compute_L_intermediate() {
 }
 
 void DCTSolver::compute_O_intermediate() {
-    dpdbuf4 O, L, I;
+    dpdbuf4<double> O, L, I;
+
 
     /*
      * O_ijab = Lambda_abkl I_klij
@@ -2285,8 +2301,9 @@ void DCTSolver::compute_O_intermediate() {
 }
 
 void DCTSolver::compute_W_intermediate() {
-    dpdbuf4 I, Laa, Lab, Lbb, W, T, TT, N, M, K, O, L, Kaa, Kab, Kbb;
-    dpdfile2 T_OO, T_oo, T_VV, T_vv, F_OO, F_oo, F_VV, F_vv, Temp_OO, Temp_oo, Temp_VV, Temp_vv;
+    dpdbuf4<double> I, Laa, Lab, Lbb, W, T, TT, N, M, K, O, L, Kaa, Kab, Kbb;
+    dpdfile2<double> T_OO, T_oo, T_VV, T_vv, F_OO, F_oo, F_VV, F_vv, Temp_OO, Temp_oo, Temp_VV, Temp_vv;
+
 
     // Compute M and N intermediates
     compute_M_intermediate();
@@ -3399,9 +3416,11 @@ void DCTSolver::compute_W_intermediate() {
     global_dpd_->buf4_close(&TT);
 }
 
+
 void DCTSolver::compute_M_intermediate() {
-    dpdbuf4 M, Laa, Lab, Lbb;
-    dpdfile2 F_VV, F_vv;
+    dpdbuf4<double> M, Laa, Lab, Lbb;
+    dpdfile2<double> F_VV, F_vv;
+
 
     // M_IJAB = F_AC Lambda_IJCB
     global_dpd_->buf4_init(&M, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0, "M <OO|V'V>");
@@ -3445,8 +3464,9 @@ void DCTSolver::compute_M_intermediate() {
 }
 
 void DCTSolver::compute_N_intermediate() {
-    dpdbuf4 N, Laa, Lab, Lbb;
-    dpdfile2 F_OO, F_oo;
+    dpdbuf4<double> N, Laa, Lab, Lbb;
+    dpdfile2<double> F_OO, F_oo;
+
 
     // N_IJAB = F_IK lambda_KJAB
     global_dpd_->buf4_init(&N, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0, "N <O'O|VV>");

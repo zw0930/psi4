@@ -72,7 +72,7 @@ void DCTSolver::mp2_guess_RHF() {
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-        dpdbuf4 I, D;
+        dpdbuf4<double> I, D;
 
         /*
          * In spin-adapted closed-shell system, only alpha-beta case is needed for computing energy
@@ -95,7 +95,7 @@ void DCTSolver::mp2_guess_RHF() {
         dct_timer_off("DCTSolver::g_IJAB / D_IJAB");
 
         /* build lambda <OO|VV> for tau and G intermediates */
-        dpdbuf4 T;
+        dpdbuf4<double> T;
         // Lambda_IJAB = Lambda_IjAb - Lambda_JiAb
         global_dpd_->buf4_init(&I, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 1,
                                "Lambda SF <OO|VV>");
@@ -108,7 +108,7 @@ void DCTSolver::mp2_guess_RHF() {
          * E = lambda_IjAb * M_IjAb
          * where M_IjAb = 2 * gbar_IjAb - gbar_JiAb
          */
-        dpdbuf4 L, M, temp;
+        dpdbuf4<double> L, M, temp;
 
         dct_timer_on("DCTSolver::2 * g_IJAB - g_JIAB");
         // M_IjAb = g_IjAb - g_JiAb

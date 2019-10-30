@@ -54,9 +54,8 @@ namespace dct {
  * double beta:        Multiplicative factor for the target
  */
 
-void DCTSolver::half_transform(dpdbuf4 *SO, dpdbuf4 *MO, SharedMatrix &C1, SharedMatrix &C2, int *mospi_left,
-                                int *mospi_right, int **so_row, int **mo_row, bool backwards, double alpha,
-                                double beta) {
+void DCTSolver::half_transform(dpdbuf4<double> *SO, dpdbuf4<double> *MO, SharedMatrix &C1, SharedMatrix &C2, int *mospi_left,
+int *mospi_right, int **so_row, int **mo_row, bool backwards, double alpha, double beta) {
     dct_timer_on("DCTSolver::half_transform");
 
     int Gc, Gd, cd, pq, ij;
@@ -134,8 +133,13 @@ void DCTSolver::half_transform(dpdbuf4 *SO, dpdbuf4 *MO, SharedMatrix &C1, Share
  * bool backwards:     MO --> SO if true, SO --> MO if false
  */
 
+<<<<<<< HEAD:psi4/src/psi4/dct/half_transform.cc
 void DCTSolver::file2_transform(dpdfile2 *SO, dpdfile2 *MO, SharedMatrix C, bool backwards) {
     dct_timer_on("DCTSolver::file2_transform");
+=======
+void DCFTSolver::file2_transform(dpdfile2<double> *SO, dpdfile2<double> *MO, SharedMatrix C, bool backwards) {
+    dcft_timer_on("DCFTSolver::file2_transform");
+>>>>>>> dcft:psi4/src/psi4/dcft/half_transform.cc
 
     if (backwards) {
         Matrix MO_mat(MO);

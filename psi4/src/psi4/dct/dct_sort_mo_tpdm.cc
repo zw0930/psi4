@@ -201,7 +201,7 @@ void DCTSolver::presort_mo_tpdm_AA() {
     }
 
     dpdfile4 I;
-    dpdbuf4 Ibuf, Itot;
+    dpdbuf4<double> Ibuf, Itot;
 
     psio_->open(PSIF_TPDM_PRESORT, PSIO_OPEN_OLD);
 

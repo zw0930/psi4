@@ -67,7 +67,8 @@ void DCTSolver::run_simult_dct_oo_RHF() {
     DIISManager diisManager(maxdiis_, "DCT DIIS vectors");
 
     // DIIS on orbitals (AA and BB) and cumulants (AA, AB, BB)
-    dpdbuf4 Laa, Lab, Lbb;
+
+    dpdbuf4<double> Laa, Lab, Lbb;
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
                            "Lambda <OO|VV>");
     global_dpd_->buf4_init(&Lab, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
@@ -149,7 +150,7 @@ void DCTSolver::run_simult_dct_oo_RHF() {
             // Store the DIIS vectors
 
             // DIIS on orbitals (AA and BB) and cumulants (AA, AB, BB)
-            dpdbuf4 Laa, Lab, Lbb, Raa, Rab, Rbb;
+            dpdbuf4<double> Laa, Lab, Lbb, Raa, Rab, Rbb;
             // Compute R_OOVV and R_oovv from R_OoVv, used as DIIS error vectors
             compute_R_AA_and_BB();
 
@@ -208,7 +209,7 @@ void DCTSolver::run_simult_dct_oo_RHF() {
 double DCTSolver::compute_orbital_residual_RHF() {
     dct_timer_on("DCTSolver::compute_orbital_residual_RHF()");
 
-    dpdfile2 Xai, Xia;
+    dpdfile2<double> Xai, Xia;
 
     // Compute the unrelaxed densities for the orbital gradient
     compute_unrelaxed_density_OOOO_RHF();
@@ -256,11 +257,11 @@ void DCTSolver::compute_orbital_gradient_OV_RHF() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdbuf4 L, W, LL;
-    dpdfile2 X, H, T;
-    dpdfile2 T_VV;
-    dpdfile2 Y2_OV;
+    dpdbuf4<double> G, I;
+    dpdbuf4<double> L, W, LL;
+    dpdfile2<double> X, H, T;
+    dpdfile2<double> T_VV;
+    dpdfile2<double> Y2_OV;
 
     // X_OV: One-electron contributions
 
@@ -438,8 +439,8 @@ void DCTSolver::compute_orbital_gradient_VO_RHF() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdfile2 X, H, T;
+    dpdbuf4<double> G, I;
+    dpdfile2<double> X, H, T;
 
     // X_VO: One-electron contributions
 

@@ -152,12 +152,12 @@ void DCTSolver::dump_semicanonical() {
     Ftilde_b_->set_diagonal(b_evals);
 
     // Write the transformation matrix to disk
-    dpdfile2 U_OO, U_VV, U_oo, U_vv;
-    global_dpd_->file2_init(&U_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "U <O|O>");
-    global_dpd_->file2_init(&U_oo, PSIF_DCT_DPD, 0, ID('o'), ID('o'), "U <o|o>");
-    global_dpd_->file2_init(&U_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "U <V|V>");
-    global_dpd_->file2_init(&U_vv, PSIF_DCT_DPD, 0, ID('v'), ID('v'), "U <v|v>");
 
+    dpdfile2<double> U_OO, U_VV, U_oo, U_vv;
+    global_dpd_->file2_init(&U_OO, PSIF_DCFT_DPD, 0, ID('O'), ID('O'), "U <O|O>");
+    global_dpd_->file2_init(&U_oo, PSIF_DCFT_DPD, 0, ID('o'), ID('o'), "U <o|o>");
+    global_dpd_->file2_init(&U_VV, PSIF_DCFT_DPD, 0, ID('V'), ID('V'), "U <V|V>");
+    global_dpd_->file2_init(&U_vv, PSIF_DCFT_DPD, 0, ID('v'), ID('v'), "U <v|v>");
     global_dpd_->file2_mat_init(&U_OO);
     global_dpd_->file2_mat_init(&U_oo);
     global_dpd_->file2_mat_init(&U_VV);
@@ -209,8 +209,8 @@ void DCTSolver::dump_semicanonical() {
 void DCTSolver::semicanonicalize_gbar_ovvv() {
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 I, It;
-    dpdfile2 U_VV, U_OO, U_vv, U_oo;
+    dpdbuf4<double> I, It;
+    dpdfile2<double> U_VV, U_OO, U_vv, U_oo;
 
     // TODO: The transformed tensors should be packed on disk wherever possible
 
@@ -390,8 +390,8 @@ void DCTSolver::semicanonicalize_gbar_ovvv() {
 void DCTSolver::semicanonicalize_gbar_ooov() {
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 I, It;
-    dpdfile2 U_VV, U_OO, U_vv, U_oo;
+    dpdbuf4<double> I, It;
+    dpdfile2<double> U_VV, U_OO, U_vv, U_oo;
 
     // TODO: The transformed tensors should be packed on disk wherever possible
 
@@ -592,9 +592,12 @@ void DCTSolver::semicanonicalize_gbar_ooov() {
     psio_->close(PSIF_LIBTRANS_DPD, 1);
 }
 
+
 void DCTSolver::semicanonicalize_dc() {
-    dpdbuf4 L, Lt;
-    dpdfile2 U_VV, U_OO, U_vv, U_oo;
+    dpdbuf4<double> L, Lt;
+    dpdfile2<double> U_VV, U_OO, U_vv, U_oo;
+
+
 
     // TODO: The transformed tensors should be packed on disk wherever possible
 
@@ -758,7 +761,7 @@ double DCTSolver::compute_triples_aaa() {
     int lc, la, lb;
     double dijk, denom, ET_aaa;
     int nrows, ncols, nlinks;
-    dpdbuf4 L, I_OVVV, I_OOOV;
+    dpdbuf4<double> L, I_OVVV, I_OOOV;
     double ***WABC, ***WBCA, ***WACB, ***LABC;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -1293,9 +1296,9 @@ double DCTSolver::compute_triples_aab() {
     int il, jl, kl;
     double dijk, denom, ET_aab;
     int nrows, ncols, nlinks;
-    dpdbuf4 L_AB, L_AA, L_BA;
-    dpdbuf4 I_OVVV, I_OvVv, I_oVvV;
-    dpdbuf4 I_OOOV, I_OoOv, I_oOoV;
+    dpdbuf4<double> L_AB, L_AA, L_BA;
+    dpdbuf4<double> I_OVVV, I_OvVv, I_oVvV;
+    dpdbuf4<double> I_OOOV, I_OoOv, I_oOoV;
     double ***WABc, ***WBcA, ***WAcB, ***WcAB, ***WcBA, ***LABc;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -1872,9 +1875,9 @@ double DCTSolver::compute_triples_abb() {
     int il, jl, kl;
     double dijk, denom, ET_abb;
     int nrows, ncols, nlinks;
-    dpdbuf4 L_AB, L_BB, L_BA;
-    dpdbuf4 I_ovvv, I_OvVv, I_oVvV;
-    dpdbuf4 I_ooov, I_OoOv, I_oOoV;
+    dpdbuf4<double> L_AB, L_BB, L_BA;
+    dpdbuf4<double> I_ovvv, I_OvVv, I_oVvV;
+    dpdbuf4<double> I_ooov, I_OoOv, I_oOoV;
     double ***WAbc, ***WAcb, ***WbAc, ***WcAb, ***WbcA, ***LAbc;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -2447,7 +2450,7 @@ double DCTSolver::compute_triples_bbb() {
     int lc, la, lb;
     double dijk, denom, ET_bbb;
     int nrows, ncols, nlinks;
-    dpdbuf4 L, I_ovvv, I_ooov;
+    dpdbuf4<double> L, I_ovvv, I_ooov;
     double ***WABC, ***WBCA, ***WACB, ***LABC;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
