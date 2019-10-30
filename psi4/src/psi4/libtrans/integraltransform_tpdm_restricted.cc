@@ -74,7 +74,7 @@ void IntegralTransform::backtransform_tpdm_restricted() {
     psio_->open(PSIF_TPDM_PRESORT, PSIO_OPEN_OLD);
     psio_->open(PSIF_TPDM_HALFTRANS, PSIO_OPEN_NEW);
 
-    dpdbuf4 J, K;
+    dpdbuf4<double> J, K;
     global_dpd_->buf4_init(&J, PSIF_TPDM_PRESORT, 0, DPD_ID("[A>=A]+"), DPD_ID("[A,A]"), DPD_ID("[A>=A]+"),
                            DPD_ID("[A>=A]+"), 0, "MO TPDM (AA|AA)");
     //    global_dpd_->buf4_print(&J, "outfile", 1);

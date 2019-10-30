@@ -88,7 +88,7 @@ void IntegralTransform::transform_tei_first_half(const std::shared_ptr<MOSpace> 
     psio_->open(PSIF_SO_PRESORT, PSIO_OPEN_OLD);
     psio_->open(PSIF_HALFT0, PSIO_OPEN_NEW);
 
-    dpdbuf4 J, K;
+    dpdbuf4<double> J, K;
     global_dpd_->buf4_init(&J, PSIF_SO_PRESORT, 0, DPD_ID("[n>=n]+"), DPD_ID("[n,n]"), DPD_ID("[n>=n]+"),
                            DPD_ID("[n>=n]+"), 0, "SO Ints (nn|nn)");
 

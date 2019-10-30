@@ -86,7 +86,7 @@ void IntegralTransform::transform_tei_second_half(const std::shared_ptr<MOSpace>
     size_t rowsPerBucket;
     size_t rowsLeft;
     size_t memFree;
-    dpdbuf4 J, K;
+    dpdbuf4<double> J, K;
 
     double **TMP = block_matrix(nso_, nso_);
 
