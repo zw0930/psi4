@@ -53,7 +53,7 @@ void IntegralTransform::backtransform_tpdm_unrestricted() {
     SharedMatrix ca = aMOCoefficients_[MOSPACE_ALL];
     SharedMatrix cb = bMOCoefficients_[MOSPACE_ALL];
 
-    dpdbuf4 J1, J2, K;
+    dpdbuf4<double> J1, J2, K;
 
     // Grab control of DPD for now, but store the active number to restore it later
     int currentActiveDPD = psi::dpd_default;
