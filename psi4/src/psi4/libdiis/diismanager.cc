@@ -78,8 +78,8 @@ void DIISManager::set_vector_size(int numQuantities, ...) {
         throw SanityCheckError("DIISManager: The error vector size must be set before the vector size", __FILE__,
                                __LINE__);
     _numVectorComponents = numQuantities;
-    dpdfile2 *file2;
-    dpdbuf4 *buf4;
+    dpdfile2<double> *file2;
+    dpdbuf4<double> *buf4;
     Vector *vector;
     Matrix *matrix;
     va_list args;
@@ -93,13 +93,13 @@ void DIISManager::set_vector_size(int numQuantities, ...) {
                 size += va_arg(args, int);
                 break;
             case DIISEntry::DPDBuf4:
-                buf4 = va_arg(args, dpdbuf4 *);
+                buf4 = va_arg(args, dpdbuf4<double> *);
                 for (int h = 0; h < buf4->params->nirreps; ++h) {
                     size += static_cast<unsigned long> (buf4->params->rowtot[h]) * buf4->params->coltot[h];
                 }
                 break;
             case DIISEntry::DPDFile2:
-                file2 = va_arg(args, dpdfile2 *);
+                file2 = va_arg(args, dpdfile2<double> *);
                 for (int h = 0; h < file2->params->nirreps; ++h) {
                     size += static_cast<unsigned long> (file2->params->rowtot[h]) * file2->params->coltot[h];
                 }
@@ -132,8 +132,8 @@ void DIISManager::set_error_vector_size(int numQuantities, ...) {
     if (_errorVectorSize)
         throw SanityCheckError("The size of the DIIS error vector has already been set", __FILE__, __LINE__);
     _numErrorVectorComponents = numQuantities;
-    dpdfile2 *file2;
-    dpdbuf4 *buf4;
+    dpdfile2<double> *file2;
+    dpdbuf4<double> *buf4;
     Vector *vector;
     Matrix *matrix;
     va_list args;
@@ -147,13 +147,13 @@ void DIISManager::set_error_vector_size(int numQuantities, ...) {
                 size += va_arg(args, int);
                 break;
             case DIISEntry::DPDBuf4:
-                buf4 = va_arg(args, dpdbuf4 *);
+                buf4 = va_arg(args, dpdbuf4<double> *);
                 for (int h = 0; h < buf4->params->nirreps; ++h) {
                     size += static_cast<unsigned long> (buf4->params->rowtot[h]) * buf4->params->coltot[h];
                 }
                 break;
             case DIISEntry::DPDFile2:
-                file2 = va_arg(args, dpdfile2 *);
+                file2 = va_arg(args, dpdfile2<double> *);
                 for (int h = 0; h < file2->params->nirreps; ++h) {
                     size += static_cast<unsigned long> (file2->params->rowtot[h]) * file2->params->coltot[h];
                 }
@@ -201,8 +201,8 @@ bool DIISManager::add_entry(int numQuantities, ...) {
             __FILE__, __LINE__);
 
     timer_on("DIISManager::add_entry");
-    dpdfile2 *file2;
-    dpdbuf4 *buf4;
+    dpdfile2<double> *file2;
+    dpdbuf4<double> *buf4;
     Vector *vector;
     Matrix *matrix;
     double *array;
@@ -221,7 +221,7 @@ bool DIISManager::add_entry(int numQuantities, ...) {
                 for (int j = 0; j < _componentSizes[i]; ++j) *arrayPtr++ = array[j];
                 break;
             case DIISEntry::DPDBuf4:
-                buf4 = va_arg(args, dpdbuf4 *);
+                buf4 = va_arg(args, dpdbuf4<double> *);
                 for (int h = 0; h < buf4->params->nirreps; ++h) {
                     global_dpd_->buf4_mat_irrep_init(buf4, h);
                     global_dpd_->buf4_mat_irrep_rd(buf4, h);
@@ -234,7 +234,7 @@ bool DIISManager::add_entry(int numQuantities, ...) {
                 }
                 break;
             case DIISEntry::DPDFile2:
-                file2 = va_arg(args, dpdfile2 *);
+                file2 = va_arg(args, dpdfile2<double> *);
                 global_dpd_->file2_mat_init(file2);
                 global_dpd_->file2_mat_rd(file2);
                 for (int h = 0; h < file2->params->nirreps; ++h) {
@@ -419,8 +419,8 @@ bool DIISManager::extrapolate(int numQuantities, ...) {
 
     timer_on("New vector");
 
-    dpdfile2 *file2;
-    dpdbuf4 *buf4;
+    dpdfile2<double> *file2;
+    dpdbuf4<double> *buf4;
     Vector *vector;
     Matrix *matrix;
     double *array;
@@ -444,7 +444,7 @@ bool DIISManager::extrapolate(int numQuantities, ...) {
                     for (int j = 0; j < _componentSizes[componentIndex]; ++j) array[j] += coefficient * *arrayPtr++;
                     break;
                 case DIISEntry::DPDBuf4:
-                    buf4 = va_arg(args, dpdbuf4 *);
+                    buf4 = va_arg(args, dpdbuf4<double> *);
                     if (!n) global_dpd_->buf4_scm(buf4, 0.0);
                     for (int h = 0; h < buf4->params->nirreps; ++h) {
                         global_dpd_->buf4_mat_irrep_init(buf4, h);
@@ -459,7 +459,7 @@ bool DIISManager::extrapolate(int numQuantities, ...) {
                     }
                     break;
                 case DIISEntry::DPDFile2:
-                    file2 = va_arg(args, dpdfile2 *);
+                    file2 = va_arg(args, dpdfile2<double> *);
                     if (!n) global_dpd_->file2_scm(file2, 0.0);
                     global_dpd_->file2_mat_init(file2);
                     global_dpd_->file2_mat_rd(file2);
