@@ -55,8 +55,8 @@ void ADCWfn::rhf_prepare_tensors() {
     bool do_pr = options_.get_bool("PR");
     char lbl[32], ampname[32];
     double *omega, **lambda;
-    dpdbuf4 Aovov, K, V;
-    dpdfile2 Xoo, Xvv, Aoo, Avv, Dov, Cocc, Cvir, B;
+    dpdbuf4<double> Aovov, K, V;
+    dpdfile2<double> Xoo, Xvv, Aoo, Avv, Dov, Cocc, Cvir, B;
 
     outfile->Printf("\t==> CIS/ADC(1) Level <==\n\n");
     psio_->open(PSIF_ADC_SEM, PSIO_OPEN_NEW);

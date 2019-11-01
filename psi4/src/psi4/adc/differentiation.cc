@@ -45,8 +45,8 @@ namespace adc {
 double ADCWfn::rhf_differentiate_omega(int irrep, int root) {
     char lbl[32];
     double dot;
-    dpdfile2 S, D;
-    dpdbuf4 A, V, K, Z;
+    dpdfile2<double> S, D;
+    dpdbuf4<double> A, V, K, Z;
 
     sprintf(lbl, "V^(%d)_[%d]12", root, irrep);
     global_dpd_->file2_init(&S, PSIF_ADC, irrep, ID('O'), ID('V'), lbl);

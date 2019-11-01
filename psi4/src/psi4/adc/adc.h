@@ -72,7 +72,7 @@ class ADCWfn : public Wavefunction {
     void init();
     void release_mem();
     void rhf_prepare_tensors();
-    void amps_write(dpdfile2 *B, int length, std::string out);
+    void amps_write(dpdfile2<double> *B, int length, std::string out);
     void onestack_insert(struct onestack *stack, double value, int i, int a, int level, int staclen);
     double rhf_init_tensors();
     double rhf_differentiate_omega(int irrep, int root);

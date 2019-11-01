@@ -35,7 +35,7 @@ namespace adc {
 
 void ADCWfn::shift_denom2(int root, int irrep, double omega) {
     char lbl[32];
-    dpdfile2 D, L;
+    dpdfile2<double> D, L;
 
     sprintf(lbl, "D_[%d]12", irrep);
     global_dpd_->file2_init(&D, PSIF_ADC_SEM, irrep, ID('O'), ID('V'), lbl);
@@ -67,7 +67,7 @@ void ADCWfn::shift_denom2(int root, int irrep, double omega) {
 
 void ADCWfn::shift_denom4(int irrep, double omega) {
     char lbl[32];
-    dpdbuf4 D;
+    dpdbuf4<double> D;
 
     sprintf(lbl, "D_[%d]1234", irrep);
     global_dpd_->buf4_init(&D, PSIF_ADC_SEM, irrep, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0, lbl);

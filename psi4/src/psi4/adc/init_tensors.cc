@@ -41,8 +41,8 @@ namespace adc {
 double ADCWfn::rhf_init_tensors() {
     bool do_pr;
     double ePR2, sq_norm, energy;
-    dpdbuf4 K, V;
-    dpdfile2 A;
+    dpdbuf4<double> K, V;
+    dpdfile2<double> A;
     // Setting up and initialize the integraltransform object
     std::vector<std::shared_ptr<MOSpace> > spaces;
     spaces.push_back(MOSpace::occ);

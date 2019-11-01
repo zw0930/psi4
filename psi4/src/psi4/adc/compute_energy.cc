@@ -52,7 +52,7 @@ double ADCWfn::compute_energy() {
     struct lambda lmax;
     double corr_energy, trace, *tracepi, **D, *pop, **C, **Dso;
     double *omega, omega_o, omega_diff, theta;
-    dpdfile2 B, V;
+    dpdfile2<double> B, V;
 
     omega_guess_ = std::make_shared<Vector>(nirrep_, rpi_);
 

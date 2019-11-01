@@ -52,7 +52,7 @@ void ADCWfn::rhf_diagonalize(int irrep, int num_root, bool first, double omega_i
     char lbl[32];
     int iter, converged, prev_length, length, *conv, skip_check, maxdim, *residual_ok;
     double **Alpha, **G, *lambda, *lambda_o, *residual_norm, cutoff;
-    dpdfile2 B, S, Bp, Bn, F, L, V;
+    dpdfile2<double> B, S, Bp, Bn, F, L, V;
     dpdfile4 A;
 
     maxdim = 10 * rpi_[irrep];
