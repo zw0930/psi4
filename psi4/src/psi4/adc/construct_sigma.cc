@@ -48,7 +48,7 @@ namespace adc {
 void ADCWfn::rhf_construct_sigma(int irrep, int root) {
     bool do_pr = options_.get_bool("PR");
     char lbl[32], ampname[32];
-    dpdfile2 B, S, D, E, Bt, C;
+    dpdfile2<double> B, S, D, E, Bt, C;
     dpdbuf4<double> A, V, K, Z, BT, XT;
 
     sprintf(lbl, "S^(%d)_[%d]12", root, irrep);
