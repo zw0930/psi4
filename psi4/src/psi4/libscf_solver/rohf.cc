@@ -1071,7 +1071,7 @@ bool ROHF::stability_analysis() {
         ints.transform_tei(MOSpace::occ, MOSpace::vir, MOSpace::occ, MOSpace::vir);
         ints.transform_tei(MOSpace::occ, MOSpace::occ, MOSpace::vir, MOSpace::vir);
         dpd_set_default(ints.get_dpd_id());
-        dpdbuf4 Aaa, Aab, Aba, Abb, I, A;
+        dpdbuf4<double> Aaa, Aab, Aba, Abb, I, A;
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
         global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), 0,
