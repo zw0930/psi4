@@ -82,8 +82,8 @@ std::map<std::string, SharedMatrix> CCEnergyWavefunction::get_amplitudes() {
     }
 
     // grab T1
-    dpdfile2 T1;
-    dpdbuf4 T2;
+    dpdfile2<double> T1;
+    dpdbuf4<double> T2;
     if (ref == "RHF") {
         global_dpd_->file2_init(&T1, PSIF_CC_OEI, 0, 0, 1, "tIA");
         amps["tIA"] = std::make_shared<Matrix>(&T1);
