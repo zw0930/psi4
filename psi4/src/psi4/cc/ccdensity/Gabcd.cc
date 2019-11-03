@@ -42,7 +42,7 @@ namespace psi {
 namespace ccdensity {
 
 void Gabcd() {
-    dpdbuf4 G, L, T;
+    dpdbuf4<double> G, L, T;
     int G_irr;
     G_irr = params.G_irr;
     bool T2_L2_V = true;

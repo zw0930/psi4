@@ -649,7 +649,7 @@ void CIWavefunction::read_dpd_ci_ints() {
     // However, this CI is still limited to 256 basis functions
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
-    dpdbuf4 I;
+    dpdbuf4<double> I;
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ints_->DPD_ID("[X>=X]+"), ints_->DPD_ID("[X>=X]+"),
                            ints_->DPD_ID("[X>=X]+"), ints_->DPD_ID("[X>=X]+"), 0, "MO Ints (XX|XX)");
 
@@ -751,7 +751,7 @@ void CIWavefunction::rotate_dfmcscf_twoel_ints(SharedMatrix Uact, SharedVector t
 void CIWavefunction::rotate_mcscf_twoel_ints(SharedMatrix Uact, SharedVector twoel_out) {
     // Eh, just read it into memory
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
-    dpdbuf4 I;
+    dpdbuf4<double> I;
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ints_->DPD_ID("[X>=X]+"), ints_->DPD_ID("[X,R]"),
                            ints_->DPD_ID("[X>=X]+"), ints_->DPD_ID("[X,R]"), 0, "MO Ints (XX|XR)");
 

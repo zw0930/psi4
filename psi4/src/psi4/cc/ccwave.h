@@ -40,8 +40,14 @@
 
 namespace psi {
 class Options;
+
+template <typename U>
 struct dpdfile2;
+
+template <typename U>
 struct dpdbuf4;
+
+
 struct iwlbuf;
 }  // namespace psi
 
@@ -168,17 +174,17 @@ class CCEnergyWavefunction : public Wavefunction {
 
     /* local correlation */
     void lmp2();
-    void local_filter_T1(dpdfile2 *T1);
-    void local_filter_T2(dpdbuf4 *T2);
+    void local_filter_T1(dpdfile2<double> *T1);
+    void local_filter_T2(dpdbuf4<double> *T2);
     void local_init();
     void local_done();
 
     /* AO basis */
     void BT2_AO();
-    void halftrans(dpdbuf4 *Buf1, int dpdnum1, dpdbuf4 *Buf2, int dpdnum2, double ***C1, double ***C2, int nirreps,
+    void halftrans(dpdbuf4<double> *Buf1, int dpdnum1, dpdbuf4<double> *Buf2, int dpdnum2, double ***C1, double ***C2, int nirreps,
                    int **mo_row, int **so_row, int *mospi_left, int *mospi_right, int *sospi, int type, double alpha,
                    double beta);
-    int AO_contribute(struct iwlbuf *InBuf, dpdbuf4 *tau1_AO, dpdbuf4 *tau2_AO);
+    int AO_contribute(struct iwlbuf *InBuf, dpdbuf4<double> *tau1_AO, dpdbuf4<double> *tau2_AO);
 
     double rhf_energy();
     double uhf_energy();

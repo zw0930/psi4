@@ -43,9 +43,9 @@ namespace psi {
 namespace ccdensity {
 
 void G_build() {
-    dpdbuf4 LIJAB, Lijab, LiJaB, LIjAb, LijAB, LIJab;
-    dpdbuf4 tIJAB, tijab, tiJaB, tIjAb, tijAB, tIJab;
-    dpdfile2 GAE, Gae, GMI, Gmi;
+    dpdbuf4<double> LIJAB, Lijab, LiJaB, LIjAb, LijAB, LIJab;
+    dpdbuf4<double> tIJAB, tijab, tiJaB, tIjAb, tijAB, tIJab;
+    dpdfile2<double> GAE, Gae, GMI, Gmi;
     int G_irr;
     G_irr = params.G_irr;
 
