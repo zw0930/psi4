@@ -125,7 +125,7 @@ void FrozenNO::ComputeNaturalOrbitals() {
     outfile->Printf("        ==> Build MP2 amplitudes, OPDM, and NOs <==\n");
     outfile->Printf("\n");
 
-    dpdbuf4 amps1, amps2;
+    dpdbuf4<double> amps1, amps2;
     std::shared_ptr<PSIO> psio = _default_psio_lib_;
     psio->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -261,7 +261,7 @@ void FrozenNO::ComputeNaturalOrbitals() {
     global_dpd_->buf4_close(&amps2);
 
     // build virtual-virtual block of opdm: sum(ijc) 2.0 * [ 2 t(ij,ac) - t(ji,ac) ] * t(ij,bc)
-    dpdfile2 Dab;
+    dpdfile2<double> Dab;
     global_dpd_->file2_init(&Dab, PSIF_LIBTRANS_DPD, 0, 1, 1, "Dab");
     global_dpd_->buf4_init(&amps2, PSIF_LIBTRANS_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
                            "MO Ints <OO|VV>");
