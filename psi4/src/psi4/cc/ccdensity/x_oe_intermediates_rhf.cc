@@ -46,8 +46,8 @@ namespace ccdensity {
    should be replaced by only this function. */
 
 void x_oe_intermediates_rhf(const struct RHO_Params& rho_params) {
-    dpdfile2 L1, R1, T1, I, LR1, LR2, LT1, LT2;
-    dpdbuf4 L2, T2, R2;
+    dpdfile2<double> L1, R1, T1, I, LR1, LR2, LT1, LT2;
+    dpdbuf4<double> L2, T2, R2;
     int L_irr, R_irr, G_irr;
     int rhf, rohf, uhf;
     rhf = rohf = uhf = 0;

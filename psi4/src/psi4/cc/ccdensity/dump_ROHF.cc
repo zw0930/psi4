@@ -70,7 +70,7 @@ void dump_ROHF(struct iwlbuf *OutBuf, const struct RHO_Params& rho_params) {
     int nirreps, nmo, nfzv;
     int *qt_occ, *qt_vir;
     int h, row, col, p, q, r, s;
-    dpdbuf4 G;
+    dpdbuf4<double> G;
 
     qt_occ = moinfo.qt_occ;
     qt_vir = moinfo.qt_vir;

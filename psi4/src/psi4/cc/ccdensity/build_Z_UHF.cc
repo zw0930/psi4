@@ -61,8 +61,8 @@ namespace ccdensity {
 */
 
 void build_Z_UHF() {
-    dpdbuf4 A_AA, A_BB, A_AB;
-    dpdfile2 X, D;
+    dpdbuf4<double> A_AA, A_BB, A_AB;
+    dpdfile2<double> X, D;
     double **A, *Z;
     int num_ai, a, i, ai, bj;
     int h, nirreps, count, dim_A, dim_B;

@@ -43,11 +43,11 @@ namespace ccdensity {
 /* replace R2L2_oOoO and tau2l2_oOoO with sort later */
 /* just removed cleaning  - shouldn't need this */
 
-extern void c_clean_CIJAB(dpdbuf4 *CMNEF);
+extern void c_clean_CIJAB(dpdbuf4<double> *CMNEF);
 
 void x_te_intermediates() {
-    dpdfile2 R1, L1;
-    dpdbuf4 V, L, R, T2;
+    dpdfile2<double> R1, L1;
+    dpdbuf4<double> V, L, R, T2;
     int G_irr, L_irr, R_irr;
     G_irr = params.G_irr;
     L_irr = params.L_irr;

@@ -50,7 +50,7 @@ namespace ccdensity {
 ** */
 
 void relax_D(const struct RHO_Params& rho_params) {
-    dpdfile2 D1, D2, I1, I2;
+    dpdfile2<double> D1, D2, I1, I2;
 
     if (params.ref == 0) {
         global_dpd_->file2_init(&D1, PSIF_CC_OEI, 0, 0, 1, rho_params.DAI_lbl);

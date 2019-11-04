@@ -59,9 +59,9 @@ void x_xi1() {
 }
 
 void x_xi1_rohf() {
-    dpdfile2 L1, XIA, Xia, I1, R1, F1, Z1A, Z1B;
+    dpdfile2<double> L1, XIA, Xia, I1, R1, F1, Z1A, Z1B;
     int L_irr, R_irr, G_irr;
-    dpdbuf4 D, R2, L2, H2, I2;
+    dpdbuf4<double> D, R2, L2, H2, I2;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -659,8 +659,8 @@ void x_xi1_rohf() {
 }
 
 void x_xi_zero() {
-    dpdfile2 XIA, Xia;
-    dpdbuf4 XIJAB, Xijab, XIjAb;
+    dpdfile2<double> XIA, Xia;
+    dpdbuf4<double> XIJAB, Xijab, XIjAb;
     int G_irr;
     G_irr = params.G_irr;
 

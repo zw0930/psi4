@@ -64,7 +64,7 @@ void sortI_UHF() {
     int *qt_bocc, *qt_bvir;
     double **O_a, **O_b;
     double chksum, value;
-    dpdfile2 D;
+    dpdfile2<double> D;
 
     nmo = moinfo.nmo;
     nfzc = moinfo.nfzc;

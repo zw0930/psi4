@@ -45,15 +45,15 @@ namespace ccdensity {
 void x_xi2_4_rhf();
 extern void x_xi2_14();
 extern void x_xi_check(char *term_lbl);
-extern double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE);
+extern double norm_C_rhf(dpdfile2<double> *CME, dpdbuf4<double> *CMnEf, dpdbuf4<double> *CMnfE);
 
 /* compute xi_2 amplitudes for RHF wavefunctions for zeta equations */
 
 void x_xi2_rhf() {
-    dpdfile2 L1, XIA, Xia, I1, R1, F1, Z1A, Z1B;
+    dpdfile2<double> L1, XIA, Xia, I1, R1, F1, Z1A, Z1B;
     int L_irr, R_irr, G_irr;
     double tval;
-    dpdbuf4 D2, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
+    dpdbuf4<double> D2, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -419,10 +419,10 @@ void x_xi2_rhf() {
 /* compute terms 4 and 6 of xi2 amplitudes */
 /* Xijab += P(ij) P(ab) (Rme Lia + Rmnef Linaf) <mj||eb> */
 void x_xi2_4_rhf() {
-    dpdfile2 RIA, LIA;
+    dpdfile2<double> RIA, LIA;
     int L_irr, R_irr, G_irr, nirreps;
     int I, A, M, E, i, a, m, e, h, row, col, Isym, Esym, Asym, Msym;
-    dpdbuf4 D, R2, L2, H2, I2, Z, Z2, XIjAb;
+    dpdbuf4<double> D, R2, L2, H2, I2, Z, Z2, XIjAb;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;

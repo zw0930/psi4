@@ -48,8 +48,8 @@ namespace ccdensity {
 */
 
 void energy_RHF(const struct RHO_Params& rho_params) {
-    dpdfile2 D, F;
-    dpdbuf4 G, A, B, C, DInts, E, FInts;
+    dpdfile2<double> D, F;
+    dpdbuf4<double> G, A, B, C, DInts, E, FInts;
     double one_energy = 0.0, two_energy = 0.0, total_two_energy = 0.0;
     double this_energy;
 

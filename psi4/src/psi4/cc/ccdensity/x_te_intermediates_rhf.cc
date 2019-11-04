@@ -45,8 +45,8 @@ namespace ccdensity {
    code gets spin-adapted */
 
 void x_te_intermediates_rhf() {
-    dpdfile2 R1, L1;
-    dpdbuf4 V, L, R, T2;
+    dpdfile2<double> R1, L1;
+    dpdbuf4<double> V, L, R, T2;
     int G_irr, L_irr, R_irr;
     int rhf, rohf, uhf;
 

@@ -61,8 +61,8 @@ void x_Gciab_rohf() {
     int II, JJ, IIsym, JJsym;
     int L_irr, R_irr, G_irr;
     double value;
-    dpdfile2 L1, T1, R1, I1;
-    dpdbuf4 G, V, T, L, Z, Z2, R, Tau;
+    dpdfile2<double> L1, T1, R1, I1;
+    dpdbuf4<double> G, V, T, L, Z, Z2, R, Tau;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -470,8 +470,8 @@ void x_Gciab_6() {
     int h, nirreps, c, i, a, b, C, I, A, B, Csym, Isym, Asym, Bsym, row, col;
     int AA, BB, AAsym, BBsym;
     int L_irr, R_irr, G_irr;
-    dpdfile2 LR1A, LR1B, T1A, T1B;
-    dpdbuf4 G;
+    dpdfile2<double> LR1A, LR1B, T1A, T1B;
+    dpdbuf4<double> G;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -651,8 +651,8 @@ void x_Gciab_7() {
     int h, nirreps, c, i, a, b, C, I, A, B, Csym, Isym, Asym, Bsym, row, col;
     int AA, BB, AAsym, BBsym;
     int L_irr, R_irr, G_irr;
-    dpdfile2 LT1A, LT1B, R1A, R1B;
-    dpdbuf4 G;
+    dpdfile2<double> LT1A, LT1B, R1A, R1B;
+    dpdbuf4<double> G;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -834,8 +834,8 @@ void x_Gciab_8_rohf() {
     int II, JJ, IIsym, JJsym;
     int L_irr, R_irr, G_irr;
     double value;
-    dpdfile2 L1A, T1A, L1B, T1B, R1A, R1B, I1A, I1B;
-    dpdbuf4 G, V, T, L, Z, Z1, Z2, Tau;
+    dpdfile2<double> L1A, T1A, L1B, T1B, R1A, R1B, I1A, I1B;
+    dpdbuf4<double> G, V, T, L, Z, Z1, Z2, Tau;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;

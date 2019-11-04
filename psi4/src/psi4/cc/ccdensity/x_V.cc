@@ -46,7 +46,7 @@ namespace ccdensity {
 
 void V_build_x() {
     int L_irr;
-    dpdbuf4 V, L, T;
+    dpdbuf4<double> V, L, T;
     L_irr = params.L_irr;
 
     if (params.ref == 0 || params.ref == 1) { /** RHF/ROHF **/

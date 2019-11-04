@@ -46,8 +46,8 @@ namespace ccdensity {
 */
 
 void relax_I_UHF() {
-    dpdfile2 I, D, f;
-    dpdbuf4 E;
+    dpdfile2<double> I, D, f;
+    dpdbuf4<double> E;
     int h, nirreps, i, a;
     int *aoccpi, *avirtpi;
     int *boccpi, *bvirtpi;

@@ -79,8 +79,8 @@ void fold_UHF(const struct RHO_Params& rho_params) {
     int *bocc_off, *bvir_off;
     int *aocc_sym, *avir_sym;
     int *bocc_sym, *bvir_sym;
-    dpdfile2 D, D1, D2, F;
-    dpdbuf4 G, Aints, E, C, DInts, FInts, BInts, G1, G2;
+    dpdfile2<double> D, D1, D2, F;
+    dpdbuf4<double> G, Aints, E, C, DInts, FInts, BInts, G1, G2;
     double one_energy = 0.0, two_energy = 0.0, total_two_energy = 0.0;
     double this_energy;
 

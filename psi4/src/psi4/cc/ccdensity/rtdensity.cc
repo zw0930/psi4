@@ -42,8 +42,8 @@ namespace psi {
 namespace ccdensity {
 
 void rtdensity(const struct TD_Params& S) {
-    dpdfile2 D, T1, L1, Z;
-    dpdbuf4 T2, L2;
+    dpdfile2<double> D, T1, L1, Z;
+    dpdbuf4<double> T2, L2;
 
     if (params.ref == 0 || params.ref == 1) { /** RHF/ROHF **/
 

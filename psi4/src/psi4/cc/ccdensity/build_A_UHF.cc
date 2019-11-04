@@ -59,8 +59,8 @@ void build_A_UHF() {
     int a, i, b, j;
     int A, I, B, J;
     int Asym, Isym, Bsym, Jsym;
-    dpdfile2 fIJ, fij, fAB, fab, fIA, fia;
-    dpdbuf4 Amat, D, C;
+    dpdfile2<double> fIJ, fij, fAB, fab, fIA, fia;
+    dpdbuf4<double> Amat, D, C;
 
     nirreps = moinfo.nirreps;
 

@@ -54,8 +54,8 @@ namespace ccdensity {
 void Iab(const struct RHO_Params& rho_params) {
     int a, b, c, A, B, C, Ga, Gb, Gc, Gac, Gbc;
     int *vir_off, *virtpi, nirreps, length, col;
-    dpdfile2 F, D, I;
-    dpdbuf4 G, Bints, Cints, Dints, Eints, Fints;
+    dpdfile2<double> F, D, I;
+    dpdbuf4<double> G, Bints, Cints, Dints, Eints, Fints;
     vir_off = moinfo.vir_off;
     virtpi = moinfo.virtpi;
     nirreps = moinfo.nirreps;

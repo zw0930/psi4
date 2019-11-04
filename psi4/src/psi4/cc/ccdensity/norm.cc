@@ -41,10 +41,10 @@
 namespace psi {
 namespace ccdensity {
 
-void c_cleanSS(dpdfile2 *CME, dpdfile2 *Cme);
-void c_clean(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
+void c_cleanSS(dpdfile2<double> *CME, dpdfile2<double> *Cme);
+void c_clean(dpdfile2<double> *CME, dpdfile2<double> *Cme, dpdbuf4<double> *CMNEF, dpdbuf4<double> *Cmnef, dpdbuf4<double> *CMnEf);
 
-double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf) {
+double norm_C(dpdfile2<double> *CME, dpdfile2<double> *Cme, dpdbuf4<double> *CMNEF, dpdbuf4<double> *Cmnef, dpdbuf4<double> *CMnEf) {
     double norm = 0.0;
 
     norm += global_dpd_->file2_dot_self(CME);
@@ -56,7 +56,7 @@ double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdb
     return norm;
 }
 
-double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE) {
+double norm_C_rhf(dpdfile2<double> *CME, dpdbuf4<double> *CMnEf, dpdbuf4<double> *CMnfE) {
     double norm = 0.0;
     norm = 2.0 * global_dpd_->file2_dot_self(CME);
     norm += 2.0 * global_dpd_->buf4_dot_self(CMnEf);
@@ -64,7 +64,7 @@ double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE) {
     return norm;
 }
 
-double norm_C1(dpdfile2 *CME, dpdfile2 *Cme) {
+double norm_C1(dpdfile2<double> *CME, dpdfile2<double> *Cme) {
     double norm = 0.0;
 
     norm += global_dpd_->file2_dot_self(CME);
@@ -73,7 +73,7 @@ double norm_C1(dpdfile2 *CME, dpdfile2 *Cme) {
     return norm;
 }
 
-double norm_C1_rhf(dpdfile2 *CME) {
+double norm_C1_rhf(dpdfile2<double> *CME) {
     double norm = 0.0;
 
     norm = 2 * global_dpd_->file2_dot_self(CME);
@@ -81,7 +81,7 @@ double norm_C1_rhf(dpdfile2 *CME) {
     return norm;
 }
 
-void scm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a) {
+void scm_C(dpdfile2<double> *CME, dpdfile2<double> *Cme, dpdbuf4<double> *CMNEF, dpdbuf4<double> *Cmnef, dpdbuf4<double> *CMnEf, double a) {
     global_dpd_->file2_scm(CME, a);
     global_dpd_->file2_scm(Cme, a);
     global_dpd_->buf4_scm(CMNEF, a);
@@ -90,20 +90,20 @@ void scm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4
     return;
 }
 
-void scm_C2(dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a) {
+void scm_C2(dpdbuf4<double> *CMNEF, dpdbuf4<double> *Cmnef, dpdbuf4<double> *CMnEf, double a) {
     global_dpd_->buf4_scm(CMNEF, a);
     global_dpd_->buf4_scm(Cmnef, a);
     global_dpd_->buf4_scm(CMnEf, a);
     return;
 }
 
-void scm_C1(dpdfile2 *CME, dpdfile2 *Cme, double a) {
+void scm_C1(dpdfile2<double> *CME, dpdfile2<double> *Cme, double a) {
     global_dpd_->file2_scm(CME, a);
     global_dpd_->file2_scm(Cme, a);
     return;
 }
 
-void c_clean(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf) {
+void c_clean(dpdfile2<double> *CME, dpdfile2<double> *Cme, dpdbuf4<double> *CMNEF, dpdbuf4<double> *Cmnef, dpdbuf4<double> *CMnEf) {
     int *occpi, *virtpi, *occ_off, *vir_off, *openpi, C_irr;
     int nirreps, *occ_sym, *vir_sym;
     int mn, ef, m, n, e, f, h, M, N, E, F;
@@ -195,7 +195,7 @@ void c_clean(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbu
     return;
 }
 
-void c_cleanSS(dpdfile2 *CME, dpdfile2 *Cme) {
+void c_cleanSS(dpdfile2<double> *CME, dpdfile2<double> *Cme) {
     int *occpi, *virtpi, *occ_off, *vir_off, *openpi;
     int nirreps, *occ_sym, *vir_sym;
     int mn, ef, m, n, e, f;
@@ -231,7 +231,7 @@ void c_cleanSS(dpdfile2 *CME, dpdfile2 *Cme) {
     return;
 }
 
-void c_clean_CIJAB(dpdbuf4 *CMNEF) {
+void c_clean_CIJAB(dpdbuf4<double> *CMNEF) {
     int *occpi, *virtpi, *occ_off, *vir_off, *openpi, C_irr;
     int nirreps, *occ_sym, *vir_sym;
     int mn, ef, m, n, e, f, h, M, N, E, F;

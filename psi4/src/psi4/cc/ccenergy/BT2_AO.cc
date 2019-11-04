@@ -58,7 +58,7 @@ void CCEnergyWavefunction::BT2_AO() {
     int **T2_cd_row_start, **T2_pq_row_start;
     int **T2_CD_row_start, **T2_Cd_row_start;
     dpdbuf4<double> tau, t2, tau1_AO, tau2_AO;
-    dpdfile4<double> T;
+    dpdfile4 T;
     struct iwlbuf InBuf;
     int lastbuf;
     double tolerance = 1e-14;
@@ -147,7 +147,7 @@ void CCEnergyWavefunction::BT2_AO() {
             global_dpd_->buf4_scm(&tau2_AO, 0.0);
 
             if (params_.df) {
-                dpdbuf4 B;
+                dpdbuf4<double> B;
                 // 5 = unpacked. eventually use perm sym and pair number 8
                 global_dpd_->buf4_init(&B, PSIF_CC_OEI, 0, 5, 43, 8, 43, 0, "B(pq|Q)");
                 global_dpd_->contract444_df(&B, &tau1_AO, &tau2_AO, 1.0, 0.0);

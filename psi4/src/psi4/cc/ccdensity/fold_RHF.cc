@@ -76,8 +76,8 @@ void fold_RHF(const struct RHO_Params& rho_params) {
     int *occ_off, *vir_off;
     int *occ_sym, *vir_sym;
     int *openpi;
-    dpdfile2 D, D1, D2, F;
-    dpdbuf4 G, Aints, E, C, DInts, FInts, BInts, G1, G2;
+    dpdfile2<double> D, D1, D2, F;
+    dpdbuf4<double> G, Aints, E, C, DInts, FInts, BInts, G1, G2;
     double one_energy = 0.0, two_energy = 0.0, total_two_energy = 0.0;
     double test_energy = 0.0, tmp;
     double this_energy;

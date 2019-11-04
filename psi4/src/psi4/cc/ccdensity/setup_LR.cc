@@ -43,8 +43,8 @@ namespace psi {
 namespace ccdensity {
 
 void setup_LR(const struct RHO_Params& rho_params) {
-    dpdfile2 L1, R1, Z1, F;
-    dpdbuf4 L2, R2, Z2;
+    dpdfile2<double> L1, R1, Z1, F;
+    dpdbuf4<double> L2, R2, Z2;
     int i, j, L_irr, R_irr, G_irr, L_root, R_root;
     char L1A_lbl[32], L1B_lbl[32], L2AA_lbl[32], L2BB_lbl[32], L2AB_lbl[32], L2RHF_lbl[32];
     char R1A_lbl[32], R1B_lbl[32], R2AA_lbl[32], R2BB_lbl[32], R2AB_lbl[32], R2RHF_lbl[32];

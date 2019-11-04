@@ -45,8 +45,8 @@ namespace ccdensity {
 void Gciab() {
     int h, nirreps, a, b, c, i, A, B, C, I, Asym, Bsym, Csym, Isym, row, col;
     double value;
-    dpdfile2 L1, T1, g;
-    dpdbuf4 G, L, T, Z, Z1, Z2, V;
+    dpdfile2<double> L1, T1, g;
+    dpdbuf4<double> G, L, T, Z, Z1, Z2, V;
     double factor = 0.0;
     bool T2_L2_V = true;
 

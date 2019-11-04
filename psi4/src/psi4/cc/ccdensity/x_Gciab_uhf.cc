@@ -54,8 +54,8 @@ void x_Gciab_uhf() {
     int II, JJ, IIsym, JJsym;
     int L_irr, R_irr, G_irr;
     double value;
-    dpdfile2 L1, T1, R1, I1;
-    dpdbuf4 G, V, T, L, Z, Z2, R, Tau;
+    dpdfile2<double> L1, T1, R1, I1;
+    dpdbuf4<double> G, V, T, L, Z, Z2, R, Tau;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -478,8 +478,8 @@ void x_Gciab_8_uhf() {
     int II, JJ, IIsym, JJsym;
     int L_irr, R_irr, G_irr;
     double value;
-    dpdfile2 L1A, T1A, L1B, T1B, R1A, R1B, I1A, I1B;
-    dpdbuf4 G, V, T, L, Z, Z1, Z2, Tau;
+    dpdfile2<double> L1A, T1A, L1B, T1B, R1A, R1B, I1A, I1B;
+    dpdbuf4<double> G, V, T, L, Z, Z1, Z2, Tau;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;

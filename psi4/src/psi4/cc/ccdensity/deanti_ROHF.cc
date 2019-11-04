@@ -74,10 +74,10 @@ namespace ccdensity {
 ** */
 
 void deanti_ROHF(const struct RHO_Params& rho_params) {
-    dpdbuf4 G1, G2;
-    dpdfile2 D, F;
+    dpdbuf4<double> G1, G2;
+    dpdfile2<double> D, F;
     double one_energy = 0.0, two_energy = 0.0, total_two_energy = 0.0;
-    dpdbuf4 A, B, C, DInts, E, FInts;
+    dpdbuf4<double> A, B, C, DInts, E, FInts;
 
     if (!params.aobasis && params.debug_) {
         outfile->Printf("\n\tEnergies re-computed from Mulliken density:\n");

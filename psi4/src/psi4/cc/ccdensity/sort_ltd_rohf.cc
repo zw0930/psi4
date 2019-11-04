@@ -49,7 +49,7 @@ void sort_ltd_rohf(const struct TD_Params& S) {
     int *qt_occ, *qt_vir;
     double chksum, value;
     psio_address next;
-    dpdfile2 D;
+    dpdfile2<double> D;
 
     nmo = moinfo.nmo;
     nfzc = moinfo.nfzc;

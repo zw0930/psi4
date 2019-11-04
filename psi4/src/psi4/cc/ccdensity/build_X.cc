@@ -51,8 +51,8 @@ namespace ccdensity {
 ** */
 
 void build_X() {
-    dpdfile2 X, I, I1, I2, I3, F, F1, X2;
-    dpdbuf4 E, Fi;
+    dpdfile2<double> X, I, I1, I2, I3, F, F1, X2;
+    dpdbuf4<double> E, Fi;
 
     if (params.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&I, PSIF_CC_OEI, 0, 1, 0, "I'AI");

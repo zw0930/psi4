@@ -61,8 +61,8 @@ namespace ccdensity {
 */
 
 void onepdm(const struct RHO_Params& rho_params) {
-    dpdfile2 D, D1, T1, L1, Z;
-    dpdbuf4 T2, L2;
+    dpdfile2<double> D, D1, T1, L1, Z;
+    dpdbuf4<double> T2, L2;
     double trace = 0.0, dot_AI, dot_IA, dot_ai, dot_ia;
     double factor = 0.0;
     bool L2_T2_T_F = true;

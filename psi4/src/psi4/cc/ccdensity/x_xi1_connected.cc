@@ -77,12 +77,12 @@ namespace ccdensity {
    RAK 4/04
  */
 
-/* double aug_xi_check(dpdfile2 *HIA, dpdfile2 *Hia); */
+/* double aug_xi_check(dpdfile2<double> *HIA, dpdfile2<double> *Hia); */
 
 void x_xi1_connected() {
-    dpdfile2 L1, XIA, Xia, HIA, Hia, I1, R1, F1, IME, Ime;
+    dpdfile2<double> L1, XIA, Xia, HIA, Hia, I1, R1, F1, IME, Ime;
     int L_irr, R_irr, G_irr;
-    dpdbuf4 D, R2, L2, H2, I2;
+    dpdbuf4<double> D, R2, L2, H2, I2;
     double dot, tval;
 
     L_irr = params.L_irr;
@@ -547,7 +547,7 @@ void x_xi1_connected() {
 }
 
 /*
-double aug_xi_check(dpdfile2 *HIA, dpdfile2 *Hia)
+double aug_xi_check(dpdfile2<double> *HIA, dpdfile2<double> *Hia)
 {
   double tvalA, tvalB;
   tvalA = tvalB = 0.0;

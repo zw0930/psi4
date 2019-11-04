@@ -80,7 +80,7 @@ void Iia(const struct RHO_Params& rho_params);
 void lag(const struct RHO_Params& rho_params) {
     int h, nirreps, i, j, a, b;
     int *occpi, *virtpi, *openpi;
-    dpdfile2 I;
+    dpdfile2<double> I;
 
     Iij(rho_params);
     Iab(rho_params);

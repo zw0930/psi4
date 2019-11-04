@@ -67,7 +67,7 @@ void sortI_RHF() {
     int *occ_sym, *vir_sym, *openpi;
     int *qt_occ, *qt_vir;
     double **O, chksum, value;
-    dpdfile2 D;
+    dpdfile2<double> D;
 
     nmo = moinfo.nmo;
     nfzc = moinfo.nfzc;

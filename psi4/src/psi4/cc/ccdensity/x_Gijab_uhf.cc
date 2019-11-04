@@ -49,8 +49,8 @@ void x_Gijab_uhf() {
     int h, nirreps, II;
     int R_irr, L_irr, G_irr;
     double value, tval;
-    dpdfile2 T1, L1, I1, T1A, T1B, Z1, R1;
-    dpdbuf4 R, I, G, L, T, V, Z, Z2;
+    dpdfile2<double> T1, L1, I1, T1A, T1B, Z1, R1;
+    dpdbuf4<double> R, I, G, L, T, V, Z, Z2;
 
     nirreps = moinfo.nirreps;
     R_irr = params.R_irr;
@@ -1023,8 +1023,8 @@ void x_Gijab_uhf_2() {
     int I1sym, I2sym, I3sym, I4sym, J1sym, J2sym, J3sym, J4sym;
     int A1sym, A2sym, A3sym, A4sym, B1sym, B2sym, B3sym, B4sym;
     int L_irr, R_irr, G_irr;
-    dpdfile2 L1R2A, L1R2B, T1A, T1B, Z1A, Z1B, I1A, I1B, R1A, R1B;
-    dpdbuf4 G, I, Z, Z2, T, L;
+    dpdfile2<double> L1R2A, L1R2B, T1A, T1B, Z1A, Z1B, I1A, I1B, R1A, R1B;
+    dpdbuf4<double> G, I, Z, Z2, T, L;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -1296,8 +1296,8 @@ void x_Gijab_uhf_3() {
     int I1sym, I2sym, I3sym, I4sym, J1sym, J2sym, J3sym, J4sym;
     int A1sym, A2sym, A3sym, A4sym, B1sym, B2sym, B3sym, B4sym;
     int L_irr, R_irr, G_irr;
-    dpdfile2 L1T2A, L1T2B, T1A, T1B, Z1A, Z1B, I1A, I1B, R1A, R1B;
-    dpdbuf4 G, I, Z, Z2, T, L;
+    dpdfile2<double> L1T2A, L1T2B, T1A, T1B, Z1A, Z1B, I1A, I1B, R1A, R1B;
+    dpdbuf4<double> G, I, Z, Z2, T, L;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;

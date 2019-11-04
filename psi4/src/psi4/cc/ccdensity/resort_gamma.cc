@@ -53,8 +53,8 @@ void resort_gamma() {
     int ka;
     int *qt_occ, *qt_vir;
     int *cc_occ, *cc_vir;
-    dpdfile2 g, gnew;
-    dpdbuf4 G, Gnew;
+    dpdfile2<double> g, gnew;
+    dpdbuf4<double> G, Gnew;
 
     nirreps = moinfo.nirreps;
     qt_occ = frozen.qt_occ;

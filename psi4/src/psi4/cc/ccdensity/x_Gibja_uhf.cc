@@ -49,8 +49,8 @@ namespace ccdensity {
 void x_Gibja_uhf() {
     int h, nirreps, row, col, L_irr, R_irr, G_irr;
     int i, j, a, b, I, J, A, B, Isym, Jsym, Asym, Bsym;
-    dpdfile2 L1, T1A, T1B, L1A, L1B, R1A, R1B, I1A, I1B;
-    dpdbuf4 I2, L2, R2, T2, Z, Z1, V2, G, GIBJA, Gibja, GIbJa, GiBjA, GIbjA, GiBJa;
+    dpdfile2<double> L1, T1A, T1B, L1A, L1B, R1A, R1B, I1A, I1B;
+    dpdbuf4<double> I2, L2, R2, T2, Z, Z1, V2, G, GIBJA, Gibja, GIbJa, GiBjA, GIbjA, GiBJa;
     double value;
     L_irr = params.L_irr;
     R_irr = params.R_irr;

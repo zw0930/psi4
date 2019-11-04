@@ -48,10 +48,10 @@ void sort_ltd_rohf(const struct TD_Params& S);
 void sort_ltd_uhf(const struct TD_Params& S);
 
 void ltdensity_rohf(const struct TD_Params& S) {
-    dpdfile2 DAI, Dai, DIA, Dia, DIJ, DAB, Dij, Dab, TIA, Tia;
-    dpdfile2 LIA, Lia, RIA, Ria, Int, XIJ, Xij, R1;
-    dpdbuf4 T2, L2, R2, I2;
-    dpdfile2 D, T1, L1, Z;
+    dpdfile2<double> DAI, Dai, DIA, Dia, DIJ, DAB, Dij, Dab, TIA, Tia;
+    dpdfile2<double> LIA, Lia, RIA, Ria, Int, XIJ, Xij, R1;
+    dpdbuf4<double> T2, L2, R2, I2;
+    dpdfile2<double> D, T1, L1, Z;
 
     if (S.irrep == 0) {
         global_dpd_->file2_init(&D, PSIF_CC_TMP, 0, 0, 0, "LTDIJ");
@@ -457,10 +457,10 @@ void ltdensity_rohf(const struct TD_Params& S) {
 }
 
 void ltdensity_uhf(const struct TD_Params& S) {
-    dpdfile2 DAI, Dai, DIA, Dia, DIJ, DAB, Dij, Dab, TIA, Tia;
-    dpdfile2 LIA, Lia, RIA, Ria, Int, XIJ, Xij, R1;
-    dpdbuf4 T2, L2, R2, I2;
-    dpdfile2 D, T1, L1, Z;
+    dpdfile2<double> DAI, Dai, DIA, Dia, DIJ, DAB, Dij, Dab, TIA, Tia;
+    dpdfile2<double> LIA, Lia, RIA, Ria, Int, XIJ, Xij, R1;
+    dpdbuf4<double> T2, L2, R2, I2;
+    dpdfile2<double> D, T1, L1, Z;
 
     if (S.irrep == 0) { /* Symmetric Transition */
 

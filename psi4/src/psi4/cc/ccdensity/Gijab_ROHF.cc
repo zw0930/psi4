@@ -45,8 +45,8 @@ void Gijab_ROHF() {
     int h, nirreps, i, a, m, e, I, A, M, E, Isym, Asym, Msym, Esym, row, col;
     int j, b, J, B, Jsym, Bsym;
     double value;
-    dpdfile2 T1, L1, g, ZZ, ZZ2, T1A, T1B;
-    dpdbuf4 G, L, T, V, Z, Z1, Z2;
+    dpdfile2<double> T1, L1, g, ZZ, ZZ2, T1A, T1B;
+    dpdbuf4<double> G, L, T, V, Z, Z1, Z2;
     bool T2_L2_V = true;
 
     /*  T2 * L2 * V is absent in CC2 Lagrangian */

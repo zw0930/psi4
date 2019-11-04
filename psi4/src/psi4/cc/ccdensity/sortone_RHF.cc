@@ -72,7 +72,7 @@ void sortone_RHF(const struct RHO_Params& rho_params) {
     int *occ_sym, *vir_sym, *openpi;
     int *qt_occ, *qt_vir;
     double **O, chksum, value;
-    dpdfile2 D;
+    dpdfile2<double> D;
     psio_address next;
 
     nmo = moinfo.nmo;

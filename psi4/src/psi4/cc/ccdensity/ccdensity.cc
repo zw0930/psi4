@@ -140,7 +140,7 @@ PsiReturnType ccdensity(std::shared_ptr<Wavefunction> ref_wfn, Options &options)
     int **cachelist, *cachefiles;
     struct iwlbuf OutBuf;
     struct iwlbuf OutBuf_AA, OutBuf_BB, OutBuf_AB;
-    dpdfile2 D;
+    dpdfile2<double> D;
     double tval;
 
     init_io();

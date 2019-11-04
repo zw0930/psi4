@@ -65,7 +65,7 @@ void dump_UHF(struct iwlbuf *AA, struct iwlbuf *BB, struct iwlbuf *AB, const str
     int *qt_bocc, *qt_bvir;
     int p, q, r, s, P, Q, R, S, pr, qs;
     double value;
-    dpdbuf4 G;
+    dpdbuf4<double> G;
 
     qt_aocc = moinfo.qt_aocc;
     qt_avir = moinfo.qt_avir;

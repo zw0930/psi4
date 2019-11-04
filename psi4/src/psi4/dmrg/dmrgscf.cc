@@ -284,7 +284,7 @@ void buildHamDMRG( std::shared_ptr<IntegralTransform> ints, std::shared_ptr<MOSp
     HamDMRG->setEconst( Econstant );
 
     // Two-electron integrals
-    dpdbuf4 K;
+    dpdbuf4<double> K;
     psio->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     global_dpd_->buf4_init(&K, PSIF_LIBTRANS_DPD, 0, ID("[S,S]"), ID("[S,S]"), ID("[S>=S]+"), ID("[S>=S]+"), 0, "MO Ints (SS|SS)");
     for(int h = 0; h < nirrep; ++h){
@@ -349,7 +349,7 @@ void fillRotatedTEI_coulomb( std::shared_ptr<IntegralTransform> ints, std::share
     const int nirrep = wfn->nirrep();
 
     // Two-electron integrals
-    dpdbuf4 K;
+    dpdbuf4<double> K;
     psio->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     // To only process the permutationally unique integrals, change the ID("[A,A]") to ID("[A>=A]+")
     //global_dpd_->buf4_init(&K, PSIF_LIBTRANS_DPD, 0, ID("[A,A]"), ID("[A,A]"), ID("[A>=A]+"), ID("[A>=A]+"), 0, "MO Ints (AA|AA)");
@@ -390,7 +390,7 @@ void fillRotatedTEI_exchange( std::shared_ptr<IntegralTransform> ints, std::shar
     dpd_set_default(ints->get_dpd_id());
 
     // Two-electron integrals
-    dpdbuf4 K;
+    dpdbuf4<double> K;
     psio->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     // To only process the permutationally unique integrals, change the ID("[A,A]") to ID("[A>=A]+")
     //global_dpd_->buf4_init(&K, PSIF_LIBTRANS_DPD, 0, ID("[A,A]"), ID("[A,A]"), ID("[A>=A]+"), ID("[A>=A]+"), 0, "MO Ints (AA|AA)");

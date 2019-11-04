@@ -54,8 +54,8 @@ namespace ccdensity {
 */
 
 void build_Z_ROHF() {
-    dpdbuf4 A;
-    dpdfile2 X1, D;
+    dpdbuf4<double> A;
+    dpdfile2<double> X1, D;
     double **X, **T, **Y, **Z;
     int num_ai, h, nirreps, a, i, count, lastcol, rank, ai;
     int *virtpi, *occpi, *openpi;

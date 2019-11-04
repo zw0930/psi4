@@ -58,8 +58,8 @@ void build_A_ROHF() {
     int Esym, Msym, Asym, Isym;
     int *virtpi, *openpi, *occpi, *occ_off, *vir_off;
     int *qt_occ, *qt_vir; /* Spatial orbital translators */
-    dpdfile2 fIJ, fij, fAB, fab, fIA, fia;
-    dpdbuf4 Amat, Amat2, D, C;
+    dpdfile2<double> fIJ, fij, fAB, fab, fIA, fia;
+    dpdbuf4<double> Amat, Amat2, D, C;
 
     nirreps = moinfo.nirreps;
     occpi = moinfo.occpi;

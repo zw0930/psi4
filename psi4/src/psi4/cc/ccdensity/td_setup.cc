@@ -43,8 +43,8 @@ namespace psi {
 namespace ccdensity {
 
 void td_setup(const struct TD_Params& S) {
-    dpdfile2 L1, R1;
-    dpdbuf4 L2, R2;
+    dpdfile2<double> L1, R1;
+    dpdbuf4<double> L2, R2;
 
     if ((params.ref == 0) || (params.ref == 1)) {
         global_dpd_->file2_init(&L1, PSIF_CC_LAMPS, 0, 0, 1, "LIA 0 -1");

@@ -51,8 +51,8 @@ namespace ccdensity {
 ** */
 
 void Iia(const struct RHO_Params& rho_params) {
-    dpdfile2 F, D, I;
-    dpdbuf4 G, Aints, Fints, Eints, Dints, Cints;
+    dpdfile2<double> F, D, I;
+    dpdbuf4<double> G, Aints, Fints, Eints, Dints, Cints;
 
     if (params.ref == 0) { /** RHF **/
         /* I'IA <-- sum_J fIJ (DAJ + DJA) + sum_B fIB (DAB + DBA) */

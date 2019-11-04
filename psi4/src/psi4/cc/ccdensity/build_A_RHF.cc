@@ -54,8 +54,8 @@ namespace ccdensity {
 void build_A_RHF() {
     int h, nirreps, e, m, a, i, em, ai, E, M, A, I;
     int Esym, Msym, Asym, Isym;
-    dpdfile2 fIJ, fAB;
-    dpdbuf4 Amat, D, C;
+    dpdfile2<double> fIJ, fAB;
+    dpdbuf4<double> Amat, D, C;
 
     nirreps = moinfo.nirreps;
 

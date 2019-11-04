@@ -52,7 +52,7 @@ void ex_sort_td_uhf(char hand, int Tirrep) {
     int *qt_aocc, *qt_avir;
     int *qt_bocc, *qt_bvir;
     double chksum, value;
-    dpdfile2 D;
+    dpdfile2<double> D;
 
     nmo = moinfo.nmo;
     nfzc = moinfo.nfzc;

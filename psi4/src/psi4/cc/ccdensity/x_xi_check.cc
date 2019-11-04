@@ -45,17 +45,17 @@
 namespace psi {
 namespace ccdensity {
 
-extern double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
+extern double norm_C(dpdfile2<double> *CME, dpdfile2<double> *Cme, dpdbuf4<double> *CMNEF, dpdbuf4<double> *Cmnef, dpdbuf4<double> *CMnEf);
 
-extern double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE);
+extern double norm_C_rhf(dpdfile2<double> *CME, dpdbuf4<double> *CMnEf, dpdbuf4<double> *CMnfE);
 
-extern void c_cleanSS(dpdfile2 *CME, dpdfile2 *Cme);
+extern void c_cleanSS(dpdfile2<double> *CME, dpdfile2<double> *Cme);
 
-void c_clean(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
+void c_clean(dpdfile2<double> *CME, dpdfile2<double> *Cme, dpdbuf4<double> *CMNEF, dpdbuf4<double> *Cmnef, dpdbuf4<double> *CMnEf);
 
 void x_xi_check(char *term_lbl) {
-    dpdfile2 Xia, XIA;
-    dpdbuf4 XIJAB, Xijab, XIjAb, XIjbA;
+    dpdfile2<double> Xia, XIA;
+    dpdbuf4<double> XIJAB, Xijab, XIjAb, XIjbA;
     static double old_norm = 0;
     double norm = 0;
     double dotval;

@@ -48,7 +48,7 @@ void sort_rtd_rohf(const struct TD_Params& S) {
     int *occ_sym, *vir_sym, *openpi;
     int *qt_occ, *qt_vir;
     double chksum, value;
-    dpdfile2 D;
+    dpdfile2<double> D;
 
     nmo = moinfo.nmo;
     nfzc = moinfo.nfzc;

@@ -42,7 +42,7 @@ namespace psi {
 namespace ccdensity {
 
 void zero_onepdm(const struct RHO_Params& rho_params) {
-    dpdfile2 D;
+    dpdfile2<double> D;
     int G_irr;
     G_irr = params.G_irr;
 
@@ -106,7 +106,7 @@ void zero_onepdm(const struct RHO_Params& rho_params) {
 }
 
 void zero_twopdm() {
-    dpdbuf4 G;
+    dpdbuf4<double> G;
     int G_irr;
     G_irr = params.G_irr;
 

@@ -47,8 +47,8 @@ namespace ccdensity {
 ** with both RHF and ROHF cases. */
 
 void relax_I_ROHF() {
-    dpdfile2 I, D, f;
-    dpdbuf4 E;
+    dpdfile2<double> I, D, f;
+    dpdbuf4<double> E;
     int h, nirreps, i, j, e, *occpi, *virtpi, *openpi;
 
     nirreps = moinfo.nirreps;

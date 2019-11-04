@@ -46,8 +46,8 @@ namespace ccdensity {
 /* Gabcd = 0.5 Lmnab * Rmncd + Lmnab (Rmc * Tnd + tmc * Rnd) */
 
 void x_Gabcd() {
-    dpdfile2 R1, T1;
-    dpdbuf4 L2, I2, I3, R2, GABCD, Gabcd, GAbCd;
+    dpdfile2<double> R1, T1;
+    dpdbuf4<double> L2, I2, I3, R2, GABCD, Gabcd, GAbCd;
     int L_irr, R_irr, G_irr;
     double value;
     L_irr = params.L_irr;

@@ -45,8 +45,8 @@ namespace ccdensity {
 void Gijka() {
     int h, nirreps, i, j, k, a, I, J, K, A, Isym, Jsym, Ksym, Asym, row, col;
     double value;
-    dpdfile2 L1, T1, g;
-    dpdbuf4 G, V, T, L, Z, Z1, Z2;
+    dpdfile2<double> L1, T1, g;
+    dpdbuf4<double> G, V, T, L, Z, Z1, Z2;
     double factor = 0.0;
     bool T2_L2_V = true;
 

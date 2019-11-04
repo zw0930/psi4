@@ -51,7 +51,7 @@ void ex_sort_td_rohf(char hand, int Tirrep) {
     int *qt_occ, *qt_vir;
     double chksum, value;
     psio_address next;
-    dpdfile2 D;
+    dpdfile2<double> D;
 
     nmo = moinfo.nmo;
     nfzc = moinfo.nfzc;

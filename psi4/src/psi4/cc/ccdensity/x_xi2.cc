@@ -62,10 +62,10 @@ void x_xi2() {
 }
 
 void x_xi2_rohf() {
-    dpdfile2 L1, XIA, Xia, I1, R1, F1, Z1A, Z1B;
+    dpdfile2<double> L1, XIA, Xia, I1, R1, F1, Z1A, Z1B;
     int L_irr, R_irr, G_irr;
     double tval;
-    dpdbuf4 D2, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
+    dpdbuf4<double> D2, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -848,10 +848,10 @@ void x_xi2_rohf() {
 /* compute terms 4 and 6 of xi2 amplitudes */
 /* Xijab += P(ij) P(ab) (Rme Lia + Rmnef Linaf) <mj||eb> */
 void x_xi2_4_rohf() {
-    dpdfile2 RIA, Ria, LIA, Lia;
+    dpdfile2<double> RIA, Ria, LIA, Lia;
     int L_irr, R_irr, G_irr, nirreps;
     int I, A, M, E, i, a, m, e, h, row, col, Isym, Esym, Asym, Msym;
-    dpdbuf4 D, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
+    dpdbuf4<double> D, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -1108,11 +1108,11 @@ void x_xi2_4_rohf() {
 /* Xijab += P(ij) P(ab) (Lmjeb Rme) Fia */
 
 void x_xi2_14() {
-    dpdfile2 IIA, Iia, FME, Fme;
+    dpdfile2<double> IIA, Iia, FME, Fme;
     int L_irr, R_irr, G_irr, nirreps;
     int I, A, J, B, i, a, j, b, h, row, col, Isym, Asym, Jsym, Bsym;
     int II, AA, JJ, BB, ii, aa, jj, bb, IIsym, AAsym, JJsym, BBsym;
-    dpdbuf4 Z, XIJAB, Xijab, XIjAb;
+    dpdbuf4<double> Z, XIJAB, Xijab, XIjAb;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;

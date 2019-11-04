@@ -43,8 +43,8 @@ namespace psi {
 namespace ccdensity {
 
 void ex_td_setup(const struct TD_Params& S, const struct TD_Params& U) {
-    dpdfile2 L1, R1;
-    dpdbuf4 L2, R2;
+    dpdfile2<double> L1, R1;
+    dpdbuf4<double> L2, R2;
 
     /* Ground State LHS */
     if ((params.ref == 0) || (params.ref == 1)) {

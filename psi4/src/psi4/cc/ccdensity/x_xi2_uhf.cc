@@ -49,10 +49,10 @@ void x_xi2_4_uhf();     /* in x_xi2.c */
 /* compute UHF xi_2 amplitudes for zeta equations */
 
 void x_xi2_uhf() {
-    dpdfile2 L1, XIA, Xia, I1, R1, F1, Z1A, Z1B;
+    dpdfile2<double> L1, XIA, Xia, I1, R1, F1, Z1A, Z1B;
     int L_irr, R_irr, G_irr;
     double tval;
-    dpdbuf4 D2, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
+    dpdbuf4<double> D2, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;
@@ -840,10 +840,10 @@ void x_xi2_uhf() {
 /* Xijab += P(ij) P(ab) (Rme Lia + Rmnef Linaf) <mj||eb> */
 /* Xijab += P(ij) P(ab) Z2(me,ia) <mj||eb>(me,jb) */
 void x_xi2_4_uhf() {
-    dpdfile2 RIA, Ria, LIA, Lia;
+    dpdfile2<double> RIA, Ria, LIA, Lia;
     int L_irr, R_irr, G_irr, nirreps;
     int I, A, M, E, i, a, m, e, h, row, col, Isym, Esym, Asym, Msym;
-    dpdbuf4 D, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
+    dpdbuf4<double> D, R2, L2, H2, I2, Z, Z2, XIJAB, Xijab, XIjAb;
 
     L_irr = params.L_irr;
     R_irr = params.R_irr;

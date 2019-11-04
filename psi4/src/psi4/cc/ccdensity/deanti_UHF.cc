@@ -78,8 +78,8 @@ namespace ccdensity {
 ** */
 
 void deanti_UHF(const struct RHO_Params& rho_params) {
-    dpdfile2 h, d;
-    dpdbuf4 G, G2, A, B, C, D, E, F;
+    dpdfile2<double> h, d;
+    dpdbuf4<double> G, G2, A, B, C, D, E, F;
 
     double one_energy = 0.0, two_energy = 0.0, total_two_energy = 0.0;
 

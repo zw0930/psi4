@@ -72,9 +72,9 @@ void x_onepdm(const struct RHO_Params& rho_params) {
  */
 
 void x_onepdm_rohf(const struct RHO_Params& rho_params) {
-    dpdfile2 DAI, Dai, DIA, Dia, DIJ, DAB, Dij, Dab, TIA, Tia;
-    dpdfile2 LIA, Lia, RIA, Ria, I, XIJ, Xij;
-    dpdbuf4 T2, L2, R2, I2;
+    dpdfile2<double> DAI, Dai, DIA, Dia, DIJ, DAB, Dij, Dab, TIA, Tia;
+    dpdfile2<double> LIA, Lia, RIA, Ria, I, XIJ, Xij;
+    dpdbuf4<double> T2, L2, R2, I2;
     int L_irr, R_irr, G_irr;
     double dot_IA, dot_ia, dot_AI, dot_ai;
     double dot_IJ;
