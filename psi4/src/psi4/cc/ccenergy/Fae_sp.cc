@@ -60,7 +60,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
     nirreps = moinfo_.nirreps;
 
     if (params_.ref == 0) { /** RHF **/
-        global_dpd_->file2_initi_sp(&fAB_sp, PSIF_CC_OEI, 0, 1, 1, "fAB_sp");
+        global_dpd_->file2_init_sp(&fAB_sp, PSIF_CC_OEI, 0, 1, 1, "fAB_sp");
         global_dpd_->file2_copy_sp(&fAB_sp, PSIF_CC_OEI, "FAE_sp");
         global_dpd_->file2_close_sp(&fAB_sp);
     } else if (params_.ref == 1) { /** ROHF **/
@@ -121,7 +121,8 @@ void CCEnergyWavefunction::Fae_build_sp() {
 
         global_dpd_->file2_close_sp(&FAE_sp);
         global_dpd_->file2_close_sp(&Fae_sp);
-    } else if (params_.ref == 2) { /** UHF **/
+    }
+ /* else if (params_.ref == 2) { /** UHF **/
         global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
         global_dpd_->file2_init_sp(&Fae_sp, PSIF_CC_OEI, 0, 3, 3, "Fae_sp");
 
@@ -180,7 +181,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->buf4_init_sp(&F_sp, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
         for (int Gma = 0; Gma < nirreps; Gma++) {
             global_dpd_->buf4_mat_irrep_row_init_sp(&F_sp, Gma);
-            X = init_array(F_sp.params->coltot[Gma]);
+            X = init_array_sp(F_sp.params->coltot[Gma]);
 
             for (int ma = 0; ma < F_sp.params->rowtot[Gma]; ma++) {
                 global_dpd_->buf4_mat_irrep_row_rd_sp(&F_sp, Gma, ma);
@@ -205,7 +206,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
                 nrows = moinfo_.virtpi[Gf];
                 ncols = moinfo_.virtpi[Ge];
                 if (nrows && ncols)
-                    C_SGEMV('t', nrows, ncols, 1.0, &X[F.col_offset[Gma][Gf]], ncols, tIA_sp.matrix[Gm][M], 1, 1.0,
+                    C_SGEMV('t', nrows, ncols, 1.0, &X[F_sp.col_offset[Gma][Gf]], ncols, tIA_sp.matrix[Gm][M], 1, 1.0,
                             FAE_sp.matrix[Ga][A], 1);
             }
 
@@ -240,170 +241,6 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->file2_close_sp(&FME_sp);
 
         global_dpd_->file2_close_sp(&FAEt_sp);
-    } else if (params_.ref == 1) { /** ROHF **/
-        global_dpd_->file2_init(&FAE, PSIF_CC_OEI, 0, 1, 1, "FAE");
-        global_dpd_->file2_init(&Fae, PSIF_CC_OEI, 0, 1, 1, "Fae");
-
-        global_dpd_->file2_init(&fIA, PSIF_CC_OEI, 0, 0, 1, "fIA");
-        global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
-        global_dpd_->contract222(&tIA, &fIA, &FAE, 1, 1, -0.5, 1);
-        global_dpd_->file2_close(&tIA);
-        global_dpd_->file2_close(&fIA);
-
-        global_dpd_->file2_init(&fia, PSIF_CC_OEI, 0, 0, 1, "fia");
-        global_dpd_->file2_init(&tia, PSIF_CC_OEI, 0, 0, 1, "tia");
-        global_dpd_->contract222(&tia, &fia, &Fae, 1, 1, -0.5, 1);
-        global_dpd_->file2_close(&tia);
-        global_dpd_->file2_close(&fia);
-
-        global_dpd_->buf4_init(&F_anti, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 1, "F <ia|bc>");
-        global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc>");
-        global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
-        global_dpd_->file2_init(&tia, PSIF_CC_OEI, 0, 0, 1, "tia");
-
-        global_dpd_->dot13(&tIA, &F_anti, &FAE, 0, 0, 1.0, 1.0);
-        global_dpd_->dot13(&tia, &F, &FAE, 0, 0, 1.0, 1.0);
-
-        global_dpd_->dot13(&tia, &F_anti, &Fae, 0, 0, 1.0, 1.0);
-        global_dpd_->dot13(&tIA, &F, &Fae, 0, 0, 1.0, 1.0);
-
-        global_dpd_->file2_close(&tIA);
-        global_dpd_->file2_close(&tia);
-        global_dpd_->buf4_close(&F_anti);
-        global_dpd_->buf4_close(&F);
-
-        global_dpd_->buf4_init(&D_anti, PSIF_CC_DINTS, 0, 2, 5, 2, 5, 0, "D <ij||ab> (i>j,ab)");
-
-        global_dpd_->buf4_init(&tautIJAB, PSIF_CC_TAMPS, 0, 2, 5, 2, 7, 0, "tautIJAB");
-        global_dpd_->buf4_init(&tautijab, PSIF_CC_TAMPS, 0, 2, 5, 2, 7, 0, "tautijab");
-
-        global_dpd_->contract442(&tautIJAB, &D_anti, &FAE, 2, 2, -1, 1);
-        global_dpd_->contract442(&tautijab, &D_anti, &Fae, 2, 2, -1, 1);
-
-        global_dpd_->buf4_close(&D_anti);
-        global_dpd_->buf4_close(&tautIJAB);
-        global_dpd_->buf4_close(&tautijab);
-
-        global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab>");
-        global_dpd_->buf4_init(&tautIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tautIjAb");
-
-        global_dpd_->contract442(&tautIjAb, &D, &Fae, 3, 3, -1, 1);
-        global_dpd_->contract442(&tautIjAb, &D, &FAE, 2, 2, -1, 1);
-
-        global_dpd_->buf4_close(&D);
-        global_dpd_->buf4_close(&tautIjAb);
-
-        /* Build the tilde intermediates */
-        global_dpd_->file2_copy(&FAE, PSIF_CC_OEI, "FAEt");
-        global_dpd_->file2_copy(&Fae, PSIF_CC_OEI, "Faet");
-
-        global_dpd_->file2_close(&FAE);
-        global_dpd_->file2_close(&Fae);
-
-        global_dpd_->file2_init(&FAEt, PSIF_CC_OEI, 0, 1, 1, "FAEt");
-        global_dpd_->file2_init(&Faet, PSIF_CC_OEI, 0, 1, 1, "Faet");
-
-        global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
-        global_dpd_->file2_init(&FME, PSIF_CC_OEI, 0, 0, 1, "FME");
-        global_dpd_->contract222(&tIA, &FME, &FAEt, 1, 1, -0.5, 1);
-        global_dpd_->file2_close(&tIA);
-        global_dpd_->file2_close(&FME);
-
-        global_dpd_->file2_init(&tia, PSIF_CC_OEI, 0, 0, 1, "tia");
-        global_dpd_->file2_init(&Fme, PSIF_CC_OEI, 0, 0, 1, "Fme");
-        global_dpd_->contract222(&tia, &Fme, &Faet, 1, 1, -0.5, 1);
-        global_dpd_->file2_close(&tia);
-        global_dpd_->file2_close(&Fme);
-
-        global_dpd_->file2_close(&FAEt);
-        global_dpd_->file2_close(&Faet);
-    } else if (params_.ref == 2) { /** UHF **/
-
-        global_dpd_->file2_init(&FAE, PSIF_CC_OEI, 0, 1, 1, "FAE");
-        global_dpd_->file2_init(&Fae, PSIF_CC_OEI, 0, 3, 3, "Fae");
-
-        global_dpd_->file2_init(&fIA, PSIF_CC_OEI, 0, 0, 1, "fIA");
-        global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
-        global_dpd_->contract222(&tIA, &fIA, &FAE, 1, 1, -0.5, 1);
-        global_dpd_->file2_close(&tIA);
-        global_dpd_->file2_close(&fIA);
-
-        global_dpd_->file2_init(&fia, PSIF_CC_OEI, 0, 2, 3, "fia");
-        global_dpd_->file2_init(&tia, PSIF_CC_OEI, 0, 2, 3, "tia");
-        global_dpd_->contract222(&tia, &fia, &Fae, 1, 1, -0.5, 1);
-        global_dpd_->file2_close(&tia);
-        global_dpd_->file2_close(&fia);
-
-        global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
-        global_dpd_->file2_init(&tia, PSIF_CC_OEI, 0, 2, 3, "tia");
-
-        global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 20, 5, 20, 5, 1, "F <IA|BC>");
-        global_dpd_->dot13(&tIA, &F, &FAE, 0, 0, 1, 1);
-        global_dpd_->buf4_close(&F);
-
-        global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 27, 29, 27, 29, 0, "F <iA|bC>");
-        global_dpd_->dot13(&tia, &F, &FAE, 0, 0, 1, 1);
-        global_dpd_->buf4_close(&F);
-
-        global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 30, 15, 30, 15, 1, "F <ia|bc>");
-        global_dpd_->dot13(&tia, &F, &Fae, 0, 0, 1, 1);
-        global_dpd_->buf4_close(&F);
-
-        global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 24, 28, 24, 28, 0, "F <Ia|Bc>");
-        global_dpd_->dot13(&tIA, &F, &Fae, 0, 0, 1, 1);
-        global_dpd_->buf4_close(&F);
-
-        global_dpd_->file2_close(&tIA);
-        global_dpd_->file2_close(&tia);
-
-        global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 2, 5, 2, 5, 0, "D <IJ||AB> (I>J,AB)");
-        global_dpd_->buf4_init(&taut, PSIF_CC_TAMPS, 0, 2, 5, 2, 7, 0, "tautIJAB");
-        global_dpd_->contract442(&taut, &D, &FAE, 2, 2, -1, 1);
-        global_dpd_->buf4_close(&taut);
-        global_dpd_->buf4_close(&D);
-
-        global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 22, 28, 22, 28, 0, "D <Ij|Ab>");
-        global_dpd_->buf4_init(&taut, PSIF_CC_TAMPS, 0, 22, 28, 22, 28, 0, "tautIjAb");
-        global_dpd_->contract442(&taut, &D, &FAE, 2, 2, -1, 1);
-        global_dpd_->buf4_close(&taut);
-        global_dpd_->buf4_close(&D);
-
-        global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 12, 15, 12, 15, 0, "D <ij||ab> (i>j,ab)");
-        global_dpd_->buf4_init(&taut, PSIF_CC_TAMPS, 0, 12, 15, 12, 17, 0, "tautijab");
-        global_dpd_->contract442(&taut, &D, &Fae, 2, 2, -1, 1);
-        global_dpd_->buf4_close(&taut);
-        global_dpd_->buf4_close(&D);
-
-        global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 22, 28, 22, 28, 0, "D <Ij|Ab>");
-        global_dpd_->buf4_init(&taut, PSIF_CC_TAMPS, 0, 22, 28, 22, 28, 0, "tautIjAb");
-        global_dpd_->contract442(&taut, &D, &Fae, 3, 3, -1, 1);
-        global_dpd_->buf4_close(&taut);
-        global_dpd_->buf4_close(&D);
-
-        /* Build the tilde intermediates */
-        global_dpd_->file2_copy(&FAE, PSIF_CC_OEI, "FAEt");
-        global_dpd_->file2_copy(&Fae, PSIF_CC_OEI, "Faet");
-
-        global_dpd_->file2_close(&FAE);
-        global_dpd_->file2_close(&Fae);
-
-        global_dpd_->file2_init(&FAEt, PSIF_CC_OEI, 0, 1, 1, "FAEt");
-        global_dpd_->file2_init(&Faet, PSIF_CC_OEI, 0, 3, 3, "Faet");
-
-        global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
-        global_dpd_->file2_init(&FME, PSIF_CC_OEI, 0, 0, 1, "FME");
-        global_dpd_->contract222(&tIA, &FME, &FAEt, 1, 1, -0.5, 1);
-        global_dpd_->file2_close(&tIA);
-        global_dpd_->file2_close(&FME);
-
-        global_dpd_->file2_init(&tia, PSIF_CC_OEI, 0, 2, 3, "tia");
-        global_dpd_->file2_init(&Fme, PSIF_CC_OEI, 0, 2, 3, "Fme");
-        global_dpd_->contract222(&tia, &Fme, &Faet, 1, 1, -0.5, 1);
-        global_dpd_->file2_close(&tia);
-        global_dpd_->file2_close(&Fme);
-
-        global_dpd_->file2_close(&FAEt);
-        global_dpd_->file2_close(&Faet);
     }
 }
 
