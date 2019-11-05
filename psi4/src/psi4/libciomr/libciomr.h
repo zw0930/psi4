@@ -59,6 +59,8 @@ PSI_API void mosort(double *d, double **v, int *sym, int nso, int nmo);
 PSI_API void flin(double **a, double *b, int in, int im, double *det);
 PSI_API void free_matrix(double **array, size_t size);
 PSI_API double *init_array(size_t size);
+// *
+PSI_API float *init_array_sp(size_t size);
 PSI_API double **init_matrix(size_t rows, size_t cols);
 
 PSI_API void lubksb(double **a, int n, int *indx, double *b);
@@ -90,6 +92,9 @@ void tstop();
 /* Functions in zero.c */
 PSI_API void zero_arr(double *a, int size);
 PSI_API void zero_mat(double **a, int rows, int cols);
+PSI_API void zero_arr_sp(float *a, int size);
+PSI_API void zero_mat_sp(float **a, int rows, int cols);
+
 
 /* Functions in int_array.c */
 PSI_API int *init_int_array(int size);
