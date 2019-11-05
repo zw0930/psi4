@@ -144,7 +144,7 @@ void CCEnergyWavefunction::FaetT2_mp() {
         global_dpd_->buf4_init_sp(&tIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
         global_dpd_->file2_init_sp(&FAEt_sp, PSIF_CC_OEI, 0, 1, 1, "FAEt_sp");
         global_dpd_->buf4_init(&Z, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "Zijab");
-        global_dpd_->contract424(&tIjAb_sp, &FAEt_sp, &Z, 3, 1, 0, 1, 0);
+        global_dpd_->contract424_mp(&tIjAb_sp, &FAEt_sp, &Z, 3, 1, 0, 1, 0);
         global_dpd_->file2_close_sp(&FAEt_sp);
         global_dpd_->buf4_close_sp(&tIjAb_sp);
         global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb"); 
