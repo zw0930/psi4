@@ -122,7 +122,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->file2_close_sp(&FAE_sp);
         global_dpd_->file2_close_sp(&Fae_sp);
     }
- /* else if (params_.ref == 2) { /** UHF **/
+  else if (params_.ref == 2) { /** UHF **/
         global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
         global_dpd_->file2_init_sp(&Fae_sp, PSIF_CC_OEI, 0, 3, 3, "Fae_sp");
 
