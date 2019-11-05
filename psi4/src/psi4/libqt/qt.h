@@ -134,6 +134,11 @@ void C_DGBMV(char trans, int m, int n, int kl, int ku, double alpha, double* a, 
 PSI_API
 void C_DGEMV(char trans, int m, int n, double alpha, double* a, int lda, double* x, int incx, double beta,
                      double* y, int incy);
+// Add C_DSEMV
+void C_SGEMV(char trans, int m, int n, float alpha, float* a, int lda, float* x, int incx, float beta,
+                     float* y, int incy);
+
+
 PSI_API
 void C_DGER(int m, int n, double alpha, double* x, int incx, double* y, int incy, double* a, int lda);
 void C_DSBMV(char uplo, int n, int k, double alpha, double* a, int lda, double* x, int incx, double beta, double* y,
