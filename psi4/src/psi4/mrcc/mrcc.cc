@@ -70,7 +70,7 @@ void write_oei_to_disk(std::shared_ptr<PsiOutStream> &printer, SharedMatrix moH)
     }
 }
 
-void write_tei_to_disk(std::shared_ptr<PsiOutStream> &printer, int nirrep, dpdbuf4 &K, double ints_tolerance) {
+void write_tei_to_disk(std::shared_ptr<PsiOutStream> &printer, int nirrep, dpdbuf4<double> &K, double ints_tolerance) {
     for (int h = 0; h < nirrep; ++h) {
         global_dpd_->buf4_mat_irrep_init(&K, h);
         global_dpd_->buf4_mat_irrep_rd(&K, h);
@@ -395,7 +395,7 @@ void load_restricted(SharedWavefunction ref, FILE *ccdensities, double tolerance
     _default_psio_lib_->open(PSIF_TPDM_PRESORT, PSIO_OPEN_NEW);
 
     // Just in case the buffer exists, delete it now
-    dpdbuf4 Ibuf;
+    dpdbuf4<double> Ibuf;
     global_dpd_->buf4_init(&Ibuf, PSIF_TPDM_PRESORT, 0, ints.DPD_ID("[A>=A]+"), ints.DPD_ID("[A>=A]+"),
                            ints.DPD_ID("[A>=A]+"), ints.DPD_ID("[A>=A]+"), 0, "MO TPDM (AA|AA)");
     global_dpd_->buf4_scm(&Ibuf, 0.0);
@@ -439,9 +439,9 @@ void load_restricted(SharedWavefunction ref, FILE *ccdensities, double tolerance
     X->gemm(false, false, 1.0, one_particle, H, 0.0);
 
     // Two-electron contribution: Xpq <- 2 (pr|st) G_qrst
-    dpdbuf4 G;
-    dpdbuf4 D;
-    dpdfile2 X2;
+    dpdbuf4<double> G;
+    dpdbuf4<double> D;
+    dpdfile2<double> X2;
 
     _default_psio_lib_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     _default_psio_lib_->tocprint(PSIF_LIBTRANS_DPD);
@@ -765,7 +765,7 @@ PsiReturnType mrcc_generate_input(SharedWavefunction ref_wfn, Options &options, 
     double ints_tolerance = options.get_double("INTS_TOLERANCE");
 
     _default_psio_lib_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
-    dpdbuf4 K;
+    dpdbuf4<double> K;
 
     printer->Printf(" 150000\n");
 
