@@ -343,7 +343,7 @@ void CCEnergyWavefunction::FT2_mp() {
 
                         if (nrows && ncols && nlinks)
                             C_SGEMM('n', 'n', nrows, ncols, nlinks, 1.0, t1_sp.matrix[Gj][0], nlinks, F_sp.matrix[Gie][0],
-                                    ncols, 0.0,&(TMP[0][0]), ncols);
+                                    ncols, 0.0, &(TMP[0][0]), ncols);
                         for (row = 0; row < nrows; row++){
   		        	for (col = 0; col < ncols; col++){
 			            X.matrix[Gij][X.row_offset[Gij][I]+row][col] = static_cast<double>(TMP[row][col]);
@@ -352,7 +352,7 @@ void CCEnergyWavefunction::FT2_mp() {
                      }
 
                     global_dpd_->buf4_mat_irrep_close_block_sp(&F_sp, Gie, nlinks);
-                    global_dpd_->free_dpd_block_sp(&TMP, nrows, ncols);
+                    global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
                 }
 
                 global_dpd_->buf4_mat_irrep_wrt(&X, Gij);
