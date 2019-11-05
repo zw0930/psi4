@@ -361,6 +361,7 @@ class PSI_API DPD {
     int file2_mat_close(dpdfile2<double> *File);
     int file2_mat_rd(dpdfile2<double> *File);
     int file2_mat_wrt(dpdfile2<double> *File);
+    int file2_mat_wrt_sp(dpdfile2<float> *File);
 //**
     int file2_print(dpdfile2<double> *File, std::string out_fname);
     int file2_mat_print(dpdfile2<double> *File, std::string out_fname);
