@@ -314,7 +314,7 @@ void CCEnergyWavefunction::BT2_mp() {
         if (params_.df) {
             dpdbuf4<double> B;
             // Transpose, for faster DAXPY operations inside contract444_df
-            global_dpd_->buf4_init(&tauIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tauIjAb");
+            global_dpd_->buf4_init(&tauIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tauIjAb");
             global_dpd_->buf4_sort(&tauIjAb, PSIF_CC_TMP0, rspq, 5, 0, "Temp AbIj");
             global_dpd_->buf4_close(&tauIjAb);
 
@@ -355,7 +355,7 @@ void CCEnergyWavefunction::BT2_mp() {
             global_dpd_->buf4_init(&tau_a, PSIF_CC_TMP0, 0, 3, 8, 0, 5, 0, "tau(+)(ij,ab)");
             global_dpd_->buf4_copy(&tau_a, PSIF_CC_TAMPS, "tau(+)(ij,ab)");
             global_dpd_->buf4_close(&tau_a);
-            global_dpd_->buf4_cast_copy_dtof(&tau_a, PSFI_CC_TAMPS, "tau(+)(ij,ab)_sp");
+            global_dpd_->buf4_cast_copy_dtof(&tau_a, PSIF_CC_TAMPS, "tau(+)(ij,ab)_sp");
 
             timer_on("ABCD:S");
             global_dpd_->buf4_init_sp(&tau_s_sp, PSIF_CC_TAMPS, 0, 3, 8, 3, 8, 0, "tau(+)(ij,ab)_sp");
@@ -416,7 +416,7 @@ void CCEnergyWavefunction::BT2_mp() {
                             TMP[0][0], ncols);
                     for (row = 0; row < nrows; row++){
 			for (col = 0; col < ncols; col++){
-				S.matrix[0][rows_start + row][col] = static_cast<double>(TMP[row][col]);
+				S.matrix[0][row_start + row][col] = static_cast<double>(TMP[row][col]);
 			}
 		    }
                 }
@@ -620,10 +620,10 @@ void CCEnergyWavefunction::BT2_sp() {
             timer_off("ABCD:A");
 
             timer_on("ABCD:axpy");
-            global_dpd_->buf4_init_sp(&S, PSIF_CC_TMP0, 0, 5, 0, 8, 3, 0, "S(ab,ij)");
-            global_dpd_->buf4_sort_axpy_sp(&S, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
-            global_dpd_->buf4_close_sp(&S);
-            global_dpd_->buf4_init_sp(&A, PSIF_CC_TMP0, 0, 5, 0, 9, 4, 0, "A(ab,ij)");
+	    global_dpd_->buf4_init_sp(&S, PSIF_CC_TMP0, 0, 5, 0, 8, 3, 0, "S(ab,ij)");
+	    global_dpd_->buf4_sort_axpy_sp(&S, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
+	    global_dpd_->buf4_close_sp(&S);
+	    global_dpd_->buf4_init_sp(&A, PSIF_CC_TMP0, 0, 5, 0, 9, 4, 0, "A(ab,ij)");
             global_dpd_->buf4_sort_axpy_sp(&A, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
             global_dpd_->buf4_close_sp(&A);
             timer_off("ABCD:axpy");
