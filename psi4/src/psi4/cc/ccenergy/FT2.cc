@@ -72,7 +72,7 @@ void CCEnergyWavefunction::FT2() {
         /* t(ij,ab) <-- t(j,e) * <ie|ab> + t(i,e) * <je|ba> */
         /* OOC code added 3/23/05, TDC */
         if (params_.df) {
-            dpdbuf4 OV, VV, Tov, Tovov, Toovv;
+            dpdbuf4<double> OV, VV, Tov, Tovov, Toovv;
             // (Q|ia) = (Q|ea) t_ie
             dpd_set_default(1);
             global_dpd_->buf4_init(&VV, PSIF_CC_OEI, 0, 10, 43, 13, 43, 0, "B(VV|Q)");
@@ -288,35 +288,35 @@ void CCEnergyWavefunction::FT2_mp() {
         /* t(ij,ab) <-- t(j,e) * <ie|ab> + t(i,e) * <je|ba> */
         /* OOC code added 3/23/05, TDC */
         if (params_.df) {
-            dpdbuf4 OV, VV, Tov, Tovov, Toovv;
+            dpdbuf4<float> OV, VV, Tov, Tovov, Toovv;
             // (Q|ia) = (Q|ea) t_ie
             dpd_set_default(1);
-            global_dpd_->buf4_init(&VV, PSIF_CC_OEI, 0, 10, 43, 13, 43, 0, "B(VV|Q)");
-            global_dpd_->buf4_init(&Tov, PSIF_CC_TMP0, 0, 27, 43, 27, 43, 0, "T(OV|Q)");
+            global_dpd_->buf4_init_sp(&VV, PSIF_CC_OEI, 0, 10, 43, 13, 43, 0, "B(VV|Q)_sp");
+            global_dpd_->buf4_init_sp(&Tov, PSIF_CC_TMP0, 0, 27, 43, 27, 43, 0, "T(OV|Q)_sp");
             dpd_set_default(0);
-            global_dpd_->file2_init(&t1, PSIF_CC_OEI, 0, 0, 1, "tIA");
-            global_dpd_->contract244(&t1, &VV, &Tov, 1, 0, 0, 1.0, 0.0);
-            global_dpd_->file2_close(&t1);
-            global_dpd_->buf4_close(&VV);
+            global_dpd_->file2_init_sp(&t1_sp, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+            global_dpd_->contract244_sp(&t1_sp, &VV, &Tov, 1, 0, 0, 1.0, 0.0);
+            global_dpd_->file2_close_sp(&t1_sp);
+            global_dpd_->buf4_close_sp(&VV);
 
             // t_jbia = (Q|jb) (Q|ia)
             dpd_set_default(1);
-            global_dpd_->buf4_init(&OV, PSIF_CC_OEI, 0, 43, 27, 43, 27, 0, "B(Q|OV)");
-            global_dpd_->buf4_init(&Tovov, PSIF_CC_TMP0, 0, 27, 27, 27, 27, 0, "T(OV|OV)");
+            global_dpd_->buf4_init_sp(&OV, PSIF_CC_OEI, 0, 43, 27, 43, 27, 0, "B(Q|OV)_sp");
+            global_dpd_->buf4_init_sp(&Tovov, PSIF_CC_TMP0, 0, 27, 27, 27, 27, 0, "T(OV|OV)_sp");
             dpd_set_default(0);
-            global_dpd_->contract444(&Tov, &OV, &Tovov, 0, 1, 1.0, 0.0);
-            global_dpd_->buf4_sort(&Tovov, PSIF_CC_TMP0, prqs, 0, 5, "T<OO|VV>");
-            global_dpd_->buf4_close(&OV);
-            global_dpd_->buf4_close(&Tovov);
+            global_dpd_->contract444_sp(&Tov, &OV, &Tovov, 0, 1, 1.0, 0.0);
+            global_dpd_->buf4_sort_sp(&Tovov, PSIF_CC_TMP0, prqs, 0, 5, "T<OO|VV>_sp");
+            global_dpd_->buf4_close_sp(&OV);
+            global_dpd_->buf4_close_sp(&Tovov);
 
-            global_dpd_->buf4_init(&Toovv, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T<OO|VV>");
+            global_dpd_->buf4_init_sp(&Toovv, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "T<OO|VV>_sp");
             global_dpd_->buf4_init(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
             // T_IjAb -> T2 IjAb
-            global_dpd_->buf4_axpy(&Toovv, &t2, 1.0);
+            //global_dpd_->buf4_axpy(&Toovv, &t2, 1.0);
             // T_IjAb -> T2 jIBa
-            global_dpd_->buf4_sort_axpy(&Toovv, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1.0);
+            //global_dpd_->buf4_sort_axpy(&Toovv, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1.0);
             global_dpd_->buf4_close(&t2);
-            global_dpd_->buf4_close(&Toovv);
+            global_dpd_->buf4_close_sp(&Toovv);
         } else {
             global_dpd_->buf4_init_sp(&X_sp, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "X(Ij,Ab)_sp");
             global_dpd_->buf4_init_sp(&F_sp, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
@@ -401,7 +401,7 @@ void CCEnergyWavefunction::FT2_sp() {
         /* t(ij,ab) <-- t(j,e) * <ie|ab> + t(i,e) * <je|ba> */
         /* OOC code added 3/23/05, TDC */
         if (params_.df) {
-            dpdbuf4 OV, VV, Tov, Tovov, Toovv;
+            dpdbuf4<double> OV, VV, Tov, Tovov, Toovv;
             // (Q|ia) = (Q|ea) t_ie
             dpd_set_default(1);
             global_dpd_->buf4_init(&VV, PSIF_CC_OEI, 0, 10, 43, 13, 43, 0, "B(VV|Q)");

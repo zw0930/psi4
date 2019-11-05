@@ -178,27 +178,27 @@ void CCEnergyWavefunction::ET2_mp() {
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
-        global_dpd_->buf4_init_sp(&buf4_tmp_float, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_float");
-        global_dpd_->file2_init(&tIA_sp, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+        //global_dpd_->buf4_init_sp(&buf4_tmp_float, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_float");
+        global_dpd_->file2_init_sp(&tIA_sp, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
 
         global_dpd_->buf4_init_sp(&E_sp, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E <ai|jk> sp");
-        global_dpd_->contract424_sp(&E_sp, &tIA_sp, &buf4_tmp_float, 1, 0, 0, -1, 0);
+        global_dpd_->contract424_mp(&E_sp, &tIA_sp, &newtIjAb, 1, 0, 0, -1, 1);
         global_dpd_->buf4_close_sp(&E_sp);
-        global_dpd_->buf4_cast_ftod_copy(&buf4_tmp_float, PSIF_CC_TAMPS, "buf4_tmp_double");
-        global_dpd_->buf4_init(&buf4_tmp_double, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "buf4_tmp_double");
-        global_dpd_->buf4_axpy(&buf4_tmp_double, &newtIjAb, 1);
-        global_dpd_->buf4_close_sp(&buf4_tmp_float);
-        global_dpd_->buf4_close(&buf4_tmp_double);
+       // global_dpd_->buf4_cast_ftod_copy(&buf4_tmp_float, PSIF_CC_TAMPS, "buf4_tmp_double");
+       // global_dpd_->buf4_init(&buf4_tmp_double, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "buf4_tmp_double");
+       // global_dpd_->buf4_axpy(&buf4_tmp_double, &newtIjAb, 1);
+        //global_dpd_->buf4_close_sp(&buf4_tmp_float);
+        //global_dpd_->buf4_close(&buf4_tmp_double);
 
         global_dpd_->buf4_init_sp(&E_sp, PSIF_CC_EINTS, 0, 10, 0, 10, 0, 0, "E <ia|jk> sp");
-        global_dpd_->buf4_init_sp(&buf4_tmp_float, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_float");
-        global_dpd_->contract244_sp(&tIA_sp, &E_sp, &buf4_tmp_float, 0, 0, 1, -1, 0);
-        global_dpd_->buf4_cast_ftod_copy(&buf4_tmp_float, PSIF_CC_TAMPS, "buf4_tmp_double" );
-        global_dpd_->buf4_init_dp(&buf4_tmp_double, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_double");
-        glabal_dpd_->buf4_axpy(&buf4_tmp_double, &newtIjAb, 1);
+        //global_dpd_->buf4_init_sp(&buf4_tmp_float, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_float");
+        global_dpd_->contract244_mp(&tIA_sp, &E_sp, &newtIjAb, 0, 0, 1, -1, 1);
+       // global_dpd_->buf4_cast_ftod_copy(&buf4_tmp_float, PSIF_CC_TAMPS, "buf4_tmp_double" );
+       // global_dpd_->buf4_init_dp(&buf4_tmp_double, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "buf4_tmp_double");
+       // glabal_dpd_->buf4_axpy(&buf4_tmp_double, &newtIjAb, 1);
         global_dpd_->buf4_close_sp(&E_sp);
-        global_dpd_->buf4_close(&buf4_tmp_double);
-        global_dpd_->buf4_close_sp(&buf4_tmp_float);
+       // global_dpd_->buf4_close(&buf4_tmp_double);
+       // global_dpd_->buf4_close_sp(&buf4_tmp_float);
 
         global_dpd_->file2_close_sp(&tIA_sp);
 

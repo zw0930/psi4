@@ -521,17 +521,17 @@ void CCEnergyWavefunction::CT2_mp() {
         /*** AB ***/
 
         /* C(mA|jE) * T(I,E) --> Y(mA,jI) */
-        global_dpd_->buf4_initi_sp(&Y_sp, PSIF_CC_TMP0, 0, 10, 0, 10, 0, 0, "Y (mA,jI) sp");
-        global_dpd_->buf4_initi_sp(&C_sp, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb> sp");
+        global_dpd_->buf4_init_sp(&Y_sp, PSIF_CC_TMP0, 0, 10, 0, 10, 0, 0, "Y (mA,jI) sp");
+        global_dpd_->buf4_init_sp(&C_sp, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb> sp");
         global_dpd_->contract424_sp(&C_sp, &tIA_sp, &Y_sp, 3, 1, 0, 1, 0);
         global_dpd_->buf4_close_sp(&C_sp);
 
         /* T(m,b) * Y(mA,jI) --> T2(bA,jI) */
         global_dpd_->buf4_init(&T2new, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "X(5,0)");
-        global_dpd_->contract244_sp(&tIA_sp, &Y_sp, &T2new, 0, 0, 0, 1, 0);
+        global_dpd_->contract244_mp(&tIA_sp, &Y_sp, &T2new, 0, 0, 0, 1, 0);
         global_dpd_->buf4_close_sp(&Y_sp);
 
-        /* T(bA,jI) --> Tnew(Ij,Ab) */
+        /* T(bA,jI) --> T2new(Ij,Ab) */
         global_dpd_->buf4_sort(&T2new, PSIF_CC_TMP0, srqp, 0, 5, "X(0,5) 1");
         global_dpd_->buf4_close(&T2new);
         global_dpd_->buf4_init(&T2, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "X(0,5) 1");

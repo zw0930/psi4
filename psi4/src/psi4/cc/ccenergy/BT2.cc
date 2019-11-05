@@ -510,7 +510,7 @@ void CCEnergyWavefunction::BT2_sp() {
             // 10 = unpacked. eventually use perm sym and pair number 13
             global_dpd_->buf4_init_sp(&B, PSIF_CC_OEI, 0, 13, 43, 13, 43, 0, "B(VV|Q)_sp");
             dpd_set_default(0);
-            global_dpd_->contract444_sp(&B, &tauIjAb, &Z1, 1.0, 0.0);
+            global_dpd_->contract444_sp(&B, &tauIjAb, &Z1, 0, 0, 1.0, 0.0);
             global_dpd_->buf4_sort_axpy_sp(&Z1, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
             global_dpd_->buf4_close_sp(&Z1);
             global_dpd_->buf4_close_sp(&B);
