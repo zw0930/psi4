@@ -439,7 +439,7 @@ void CCEnergyWavefunction::BT2_mp() {
                             &(TMP[0][0]), ncols);
                     for (row = 0; row < nrows; row++){
 			for (col = 0; col < ncols; col++){
-				S.matrix[0][rows_start + row][col] = static_cast<double>(TMP[row][col]);
+				S.matrix[0][row_start + row][col] = static_cast<double>(TMP[row][col]);
 			}
 		    }
 
@@ -459,9 +459,9 @@ void CCEnergyWavefunction::BT2_mp() {
             global_dpd_->buf4_close(&tau);
 
             timer_on("ABCD:A");
-            global_dpd_->buf4_init(&tau_a_sp, PSIF_CC_TAMPS, 0, 4, 9, 4, 9, 0, "tau(-)(ij,ab)_sp");
+            global_dpd_->buf4_init_sp(&tau_a_sp, PSIF_CC_TAMPS, 0, 4, 9, 4, 9, 0, "tau(-)(ij,ab)_sp");
             global_dpd_->buf4_init(&B_a, PSIF_CC_BINTS, 0, 9, 9, 9, 9, 0, "B(-) <ab|cd> - <ab|dc>");
-            global_dpd_->buf4_cast_copy_dtof(&B_a, PSIF_CC_BINTS, "b(-) <ab|cd> - <ab|dc> sp")
+            global_dpd_->buf4_cast_copy_dtof(&B_a, PSIF_CC_BINTS, "b(-) <ab|cd> - <ab|dc> sp");
             global_dpd_->buf4_init(&A, PSIF_CC_TMP0, 0, 9, 4, 9, 4, 0, "A(ab,ij)");
             global_dpd_->contract444_mp(&B_a_sp, &tau_a_sp, &A, 0, 0, 0.5, 0);
             global_dpd_->buf4_close(&A);
@@ -504,27 +504,27 @@ void CCEnergyWavefunction::BT2_sp() {
             global_dpd_->buf4_sort_sp(&tauIjAb, PSIF_CC_TMP0, rspq, 5, 0, "Temp AbIj sp");
             global_dpd_->buf4_close_sp(&tauIjAb);
 
-            global_dpd_->buf4_init_sp(&tauIjAb_sp, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "Temp AbIj sp");
+            global_dpd_->buf4_init_sp(&tauIjAb, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "Temp AbIj sp");
             global_dpd_->buf4_init_sp(&Z1, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "Z(Ab,Ij)_sp");
             dpd_set_default(1);
             // 10 = unpacked. eventually use perm sym and pair number 13
             global_dpd_->buf4_init_sp(&B, PSIF_CC_OEI, 0, 13, 43, 13, 43, 0, "B(VV|Q)_sp");
             dpd_set_default(0);
-            global_dpd_->contract444_df(&B, &tauIjAb, &Z1, 1.0, 0.0);
-            global_dpd_->buf4_sort_axpy(&Z1, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
-            global_dpd_->buf4_close(&Z1);
-            global_dpd_->buf4_close(&B);
-            global_dpd_->buf4_close(&tauIjAb);
+            global_dpd_->contract444_sp(&B, &tauIjAb, &Z1, 1.0, 0.0);
+            global_dpd_->buf4_sort_axpy_sp(&Z1, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
+            global_dpd_->buf4_close_sp(&Z1);
+            global_dpd_->buf4_close_sp(&B);
+            global_dpd_->buf4_close_sp(&tauIjAb);
         } else if (params_.abcd == "OLD") {
             timer_on("ABCD:old");
-            global_dpd_->buf4_init(&tauIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tauIjAb");
-            global_dpd_->buf4_init(&B, PSIF_CC_BINTS, 0, 5, 5, 5, 5, 0, "B <ab|cd>");
-            global_dpd_->buf4_init(&Z1, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "Z(Ab,Ij)");
-            global_dpd_->contract444(&B, &tauIjAb, &Z1, 0, 0, 1, 0);
-            global_dpd_->buf4_sort_axpy(&Z1, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
-            global_dpd_->buf4_close(&Z1);
-            global_dpd_->buf4_close(&B);
-            global_dpd_->buf4_close(&tauIjAb);
+            global_dpd_->buf4_init_sp(&tauIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tauIjAb");
+            global_dpd_->buf4_init_sp(&B, PSIF_CC_BINTS, 0, 5, 5, 5, 5, 0, "B <ab|cd>");
+            global_dpd_->buf4_init_sp(&Z1, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "Z(Ab,Ij)");
+            global_dpd_->contract444_sp(&B, &tauIjAb, &Z1, 0, 0, 1, 0);
+            global_dpd_->buf4_sort_axpy_sp(&Z1, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
+            global_dpd_->buf4_close_sp(&Z1);
+            global_dpd_->buf4_close_sp(&B);
+            global_dpd_->buf4_close_sp(&tauIjAb);
             timer_off("ABCD:old");
         } else if (params_.abcd == "NEW") {
             timer_on("ABCD:new");
