@@ -409,18 +409,18 @@ void CCEnergyWavefunction::BT2_mp() {
                               &next);
                     for (row = 0; row < nrows; row++){
 			for (col = 0; col < nlinks; col++){
-				B_diag_sp[0][row][col] = static_cast<float>(B_diag[0][row][col]);
+				B_diag_sp[row][col] = static_cast<float>(B_diag[row][col]);
 			}
 		    }
                     C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag_sp[0], nlinks, tau_diag_sp[0], nlinks, 1,
-                            TMP[0][0], ncols);
+                            &(TMP[0][0]), ncols);
                     for (row = 0; row < nrows; row++){
 			for (col = 0; col < ncols; col++){
 				S.matrix[0][row_start + row][col] = static_cast<double>(TMP[row][col]);
 			}
 		    }
                 }
-                global_dpd_->free_dpd_block(&TMP, nrows, ncols);
+                global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
             }
             if (rows_left) {
                 row_start = m * rows_per_bucket;
@@ -431,12 +431,12 @@ void CCEnergyWavefunction::BT2_mp() {
                               &next);
                      for (row = 0; row < nrows; row++){
 			for (col = 0; col < nlinks; col++){
-				B_diag_sp[0][row][col] = static_cast<float>(B_diag[0][row][col]);
+				B_diag_sp[row][col] = static_cast<float>(B_diag[row][col]);
 			}
 		    }
 
-                    C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag[0], nlinks, tau_diag[0], nlinks, 1,
-                            TMP[0][0], ncols);
+                    C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag_sp[0], nlinks, tau_diag_sp[0], nlinks, 1,
+                            &(TMP[0][0]), ncols);
                     for (row = 0; row < nrows; row++){
 			for (col = 0; col < ncols; col++){
 				S.matrix[0][rows_start + row][col] = static_cast<double>(TMP[row][col]);
@@ -444,7 +444,7 @@ void CCEnergyWavefunction::BT2_mp() {
 		    }
 
                 }
-                global_dpd_->free_dpd_block(&TMP, nrows, ncols);
+                global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
 
             }
             global_dpd_->buf4_mat_irrep_wrt(&S, 0);
