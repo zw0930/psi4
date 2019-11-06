@@ -52,29 +52,7 @@ void CCEnergyWavefunction::Wmnij_build_sp() {
         global_dpd_->buf4_init_sp(&A, PSIF_CC_AINTS, 0, 0, 0, 0, 0, 0, "A <ij|kl> sp");
         global_dpd_->buf4_copy_sp(&A, PSIF_CC_HBAR, "WMnIj_sp");
         global_dpd_->buf4_close_sp(&A);
-    } else if (params_.ref == 1) { /** ROHF **/
-        global_dpd_->buf4_init(&A_anti, PSIF_CC_AINTS, 0, 2, 2, 0, 0, 1, "A <ij|kl>");
-        global_dpd_->buf4_copy(&A_anti, PSIF_CC_HBAR, "WMNIJ");
-        global_dpd_->buf4_copy(&A_anti, PSIF_CC_HBAR, "Wmnij");
-        global_dpd_->buf4_close(&A_anti);
-
-        global_dpd_->buf4_init(&A, PSIF_CC_AINTS, 0, 0, 0, 0, 0, 0, "A <ij|kl>");
-        global_dpd_->buf4_copy(&A, PSIF_CC_HBAR, "WMnIj");
-        global_dpd_->buf4_close(&A);
-    } else if (params_.ref == 2) { /*** UHF ***/
-        global_dpd_->buf4_init(&A, PSIF_CC_AINTS, 0, 2, 2, 0, 0, 1, "A <IJ|KL>");
-        global_dpd_->buf4_copy(&A, PSIF_CC_HBAR, "WMNIJ");
-        global_dpd_->buf4_close(&A);
-
-        global_dpd_->buf4_init(&A, PSIF_CC_AINTS, 0, 12, 12, 10, 10, 1, "A <ij|kl>");
-        global_dpd_->buf4_copy(&A, PSIF_CC_HBAR, "Wmnij");
-        global_dpd_->buf4_close(&A);
-
-        global_dpd_->buf4_init(&A, PSIF_CC_AINTS, 0, 22, 22, 22, 22, 0, "A <Ij|Kl>");
-        global_dpd_->buf4_copy(&A, PSIF_CC_HBAR, "WMnIj");
-        global_dpd_->buf4_close(&A);
-    }
-
+    } 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init_sp(&WMnIj, PSIF_CC_HBAR, 0, 0, 0, 0, 0, 0, "WMnIj_sp");
         global_dpd_->file2_init_sp(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");

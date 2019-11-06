@@ -63,24 +63,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->file2_init_sp(&fAB_sp, PSIF_CC_OEI, 0, 1, 1, "fAB_sp");
         global_dpd_->file2_copy_sp(&fAB_sp, PSIF_CC_OEI, "FAE_sp");
         global_dpd_->file2_close_sp(&fAB_sp);
-    } else if (params_.ref == 1) { /** ROHF **/
-        global_dpd_->file2_init_sp(&fAB_sp, PSIF_CC_OEI, 0, 1, 1, "fAB_sp");
-        global_dpd_->file2_copy_sp(&fAB_sp, PSIF_CC_OEI, "FAE_sp");
-        global_dpd_->file2_close_sp(&fAB_sp);
-
-        global_dpd_->file2_init_sp(&fab_sp, PSIF_CC_OEI, 0, 1, 1, "fab_sp");
-        global_dpd_->file2_copy_sp(&fab_sp, PSIF_CC_OEI, "Fae_sp");
-        global_dpd_->file2_close_sp(&fab_sp);
-    } else if (params_.ref == 2) { /** UHF **/
-        global_dpd_->file2_init_sp(&fAB_sp, PSIF_CC_OEI, 0, 1, 1, "fAB_sp");
-        global_dpd_->file2_copy_sp(&fAB_sp, PSIF_CC_OEI, "FAE_sp");
-        global_dpd_->file2_close_sp(&fAB_sp);
-
-        global_dpd_->file2_init_sp(&fab_sp, PSIF_CC_OEI, 0, 3, 3, "fab_sp");
-        global_dpd_->file2_copy_sp(&fab_sp, PSIF_CC_OEI, "Fae_sp");
-        global_dpd_->file2_close_sp(&fab_sp);
-    }
-
+   
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
 
@@ -97,57 +80,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->file2_mat_wrt_sp(&FAE_sp);
         global_dpd_->file2_mat_close_sp(&FAE_sp);
         global_dpd_->file2_close_sp(&FAE_sp);
-    } else if (params_.ref == 1) { /** ROHF **/
-        global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
-        global_dpd_->file2_init_sp(&Fae_sp, PSIF_CC_OEI, 0, 1, 1, "Fae_sp");
-
-        global_dpd_->file2_mat_init_sp(&FAE_sp);
-        global_dpd_->file2_mat_rd_sp(&FAE_sp);
-        global_dpd_->file2_mat_init_sp(&Fae_sp);
-        global_dpd_->file2_mat_rd_sp(&Fae_sp);
-
-        for (int h = 0; h < moinfo_.nirreps; h++) {
-            for (int a = 0; a < FAE_sp.params->rowtot[h]; a++)
-                for (int e = 0; e < FAE_sp.params->coltot[h]; e++) FAE_sp.matrix[h][a][e] *= (1 - (a == e));
-
-            for (int a = 0; a < Fae_sp.params->rowtot[h]; a++)
-                for (int e = 0; e < Fae_sp.params->coltot[h]; e++) Fae_sp.matrix[h][a][e] *= (1 - (a == e));
-        }
-
-        global_dpd_->file2_mat_wrt_sp(&FAE_sp);
-        global_dpd_->file2_mat_close_sp(&FAE_sp);
-        global_dpd_->file2_mat_wrt_sp(&Fae_sp);
-        global_dpd_->file2_mat_close_sp(&Fae_sp);
-
-        global_dpd_->file2_close_sp(&FAE_sp);
-        global_dpd_->file2_close_sp(&Fae_sp);
-    }
-  else if (params_.ref == 2) { /** UHF **/
-        global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
-        global_dpd_->file2_init_sp(&Fae_sp, PSIF_CC_OEI, 0, 3, 3, "Fae_sp");
-
-        global_dpd_->file2_mat_init_sp(&FAE_sp);
-        global_dpd_->file2_mat_rd_sp(&FAE_sp);
-        global_dpd_->file2_mat_init_sp(&Fae_sp);
-        global_dpd_->file2_mat_rd_sp(&Fae_sp);
-
-        for (int h = 0; h < moinfo_.nirreps; h++) {
-            for (int a = 0; a < FAE_sp.params->rowtot[h]; a++)
-                for (int e = 0; e < FAE_sp.params->coltot[h]; e++) FAE_sp.matrix[h][a][e] *= (1 - (a == e));
-
-            for (int a = 0; a < Fae_sp.params->rowtot[h]; a++)
-                for (int e = 0; e < Fae_sp.params->coltot[h]; e++) Fae_sp.matrix[h][a][e] *= (1 - (a == e));
-        }
-
-        global_dpd_->file2_mat_wrt_sp(&FAE_sp);
-        global_dpd_->file2_mat_close_sp(&FAE_sp);
-        global_dpd_->file2_mat_wrt_sp(&Fae_sp);
-        global_dpd_->file2_mat_close_sp(&Fae_sp);
-
-        global_dpd_->file2_close_sp(&FAE_sp);
-        global_dpd_->file2_close_sp(&Fae_sp);
-    }
-
+   
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
         global_dpd_->file2_init_sp(&fIA_sp, PSIF_CC_OEI, 0, 0, 1, "fIA_sp");
