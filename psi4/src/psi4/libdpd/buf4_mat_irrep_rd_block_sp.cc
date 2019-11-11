@@ -166,9 +166,9 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                     filers = rs;
                     filesr = Buf->file.params->colidx[s][r];
 
-                    value = Buf->file.matrix[irrep][filerow][filers];
+                    value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
 
-                    value -= Buf->file.matrix[irrep][filerow][filesr];
+                    value -= static_cast<float>(Buf->file.matrix[irrep][filerow][filesr]);
 
                     /* Assign the value */
                     Buf->matrix[irrep][pq][rs] = value;
@@ -181,15 +181,38 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
             break;
 
         case 12: /* no change in pq or rs */
-
-            if (Buf->file.incore)
+           
+           /* if (Buf->file.incore)
                 for (pq = 0; pq < num_pq; pq++)
                     for (rs = 0; rs < coltot; rs++)
-                        Buf->matrix[irrep][pq][rs] = Buf->file.matrix[irrep][pq + start_pq][rs];
+                        Buf->matrix[irrep][pq][rs] = static_cast<float>(Buf->file.matrix[irrep][pq + start_pq][rs]);
             else {
                 Buf->file.matrix[irrep] = Buf->matrix[irrep];
                 file4_mat_irrep_rd_block(&(Buf->file), irrep, start_pq, num_pq);
             }
+*/
+             /* Prepare the input buffer from the input file */
+            file4_mat_irrep_row_init(&(Buf->file), irrep);
+
+            /* Loop over rows in the dpdbuf/dpdfile */
+            for (pq = 0; pq < num_pq; pq++) {
+                filerow = Buf->file.incore ? pq : 0;
+
+                /* Fill the buffer */
+                file4_mat_irrep_row_rd(&(Buf->file), irrep, pq + start_pq);
+
+                /* Loop over the columns in the dpdbuf */
+                for (rs = 0; rs < coltot; rs++) {
+                                   
+                    value = static_cast<float>(Buf->file.matrix[irrep][pq + start_pq][rs]);
+
+                    /* Assign the value */
+                    Buf->matrix[irrep][pq][rs] = value;
+                }
+            }
+
+            /* Close the input buffer */
+            file4_mat_irrep_row_close(&(Buf->file), irrep);
 
             break;
         case 21: /* unpack pq; no change in rs */
@@ -217,7 +240,7 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                 for (rs = 0; rs < coltot; rs++) {
                     filers = rs;
 
-                    value = Buf->file.matrix[irrep][filerow][filers];
+                    value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
 
                     /* assign the value, keeping track of the sign */
                     Buf->matrix[irrep][pq][rs] = permute * value;
@@ -252,9 +275,9 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                     filers = rs;
                     filesr = Buf->file.params->colidx[s][r];
 
-                    value = Buf->file.matrix[irrep][filerow][filers];
+                    value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
 
-                    value -= Buf->file.matrix[irrep][filerow][filesr];
+                    value -= static_cast<float>(Buf->file.matrix[irrep][filerow][filesr]);
 
                     /* assign the value */
                     Buf->matrix[irrep][pq][rs] = value;
@@ -283,7 +306,7 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                 for (rs = 0; rs < coltot; rs++) {
                     filers = rs;
 
-                    value = Buf->file.matrix[irrep][filerow][filers];
+                    value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
 
                     /* assign the value */
                     Buf->matrix[irrep][pq][rs] = value;
@@ -317,7 +340,7 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                     permute = ((r < s) && (f_perm_rs < 0) ? -1 : 1);
 
                     /* is this fast enough? */
-                    value = ((filers < 0) ? 0 : Buf->file.matrix[irrep][filerow][filers]);
+                    value = ((filers < 0) ? 0 : static_cast<float>(Buf->file.matrix[irrep][filerow][filers]));
 
                     /* assign the value */
                     Buf->matrix[irrep][pq][rs] = permute * value;
@@ -350,8 +373,8 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                     filers = Buf->file.params->colidx[r][s];
                     filesr = Buf->file.params->colidx[s][r];
 
-                    value = Buf->file.matrix[irrep][filerow][filers];
-                    value -= Buf->file.matrix[irrep][filerow][filesr];
+                    value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
+                    value -= static_cast<float>(Buf->file.matrix[irrep][filerow][filesr]);
 
                     /* Assign the value */
                     Buf->matrix[irrep][pq][rs] = value;
@@ -381,7 +404,7 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                     s = Buf->params->colorb[irrep ^ all_buf_irrep][rs][1];
                     filers = Buf->file.params->colidx[r][s];
 
-                    value = Buf->file.matrix[irrep][filerow][filers];
+                    value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
 
                     /* Assign the value */
                     Buf->matrix[irrep][pq][rs] = value;
@@ -426,7 +449,7 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
 
                     /* if(filers >= 0) */
                     if ((filers >= 0) && (filerow >= 0)) /* Is this alright? (RAK, 11-2005) */
-                        value = Buf->file.matrix[irrep][filerow][filers];
+                        value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
 
                     /* Assign the value */
                     Buf->matrix[irrep][pq][rs] = permute * value;
@@ -471,8 +494,8 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                     filers = Buf->file.params->colidx[r][s];
                     filesr = Buf->file.params->colidx[s][r];
 
-                    value = Buf->file.matrix[irrep][filerow][filers];
-                    value -= Buf->file.matrix[irrep][filerow][filesr];
+                    value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
+                    value -= static_cast<float>(Buf->file.matrix[irrep][filerow][filesr]);
 
                     /* Assign the value */
                     Buf->matrix[irrep][pq][rs] = value;
@@ -508,7 +531,7 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
                         exit(PSI_RETURN_FAILURE);
                     }
 
-                    value = Buf->file.matrix[irrep][filerow][filers];
+                    value = static_cast<float>(Buf->file.matrix[irrep][filerow][filers]);
 
                     /* Assign the value */
                     Buf->matrix[irrep][pq][rs] = value;

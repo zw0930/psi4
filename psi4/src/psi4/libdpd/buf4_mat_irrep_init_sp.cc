@@ -62,12 +62,13 @@ int DPD::buf4_mat_irrep_init_sp(dpdbuf4<float> *Buf, int irrep) {
         /* If the file member is already in cache and its ordering is the
        same as the parent buffer, don't malloc() memory, just assign
        the pointer */
-        if (Buf->file.incore && !(Buf->anti) && (Buf->params->pqnum == Buf->file.params->pqnum) &&
-            (Buf->params->rsnum == Buf->file.params->rsnum))
-            Buf->matrix[irrep] = Buf->file.matrix[irrep];
-        else {
+//        if (Buf->file.incore && !(Buf->anti) && (Buf->params->pqnum == Buf->file.params->pqnum) &&
+//
+  //          (Buf->params->rsnum == Buf->file.params->rsnum))
+    //        Buf->matrix[irrep] = Buf->file.matrix[irrep];
+    //    else {
             Buf->matrix[irrep] = dpd_block_matrix_sp(rowtot, coltot);
-        }
+      //  }
     }
 
 #ifdef DPD_TIMER

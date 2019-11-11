@@ -96,6 +96,18 @@ struct dpdfile4 {
     double ***matrix;
 };
 
+struct dpdfile4_sp {
+    int dpdnum; /* dpd structure reference */
+    char label[PSIO_KEYLEN];
+    int filenum;
+    int my_irrep;         /* Total irrep of this quantity */
+    psio_address *lfiles; /* File address for each submatrix by ROW irrep */
+    dpdparams4 *params;
+    int incore;
+    float ***matrix;
+};
+
+
 template <typename U>
 struct dpdshift4 {
     int shift_type;
@@ -110,6 +122,7 @@ struct dpdbuf4 {
     int anti;   /* Is this buffer antisymmetric? */
     dpdparams4 *params;
     dpdfile4 file;
+    dpdfile4_sp file_sp;
     dpdshift4<U> shift;
     int **row_offset;
     int **col_offset;

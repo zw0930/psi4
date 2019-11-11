@@ -76,6 +76,7 @@ int DPD::buf4_mat_irrep_rd_sp(dpdbuf4<float> *Buf, int irrep) {
     int pq_permute, permute;
     float value;
     long int size;
+    int row, col;
 
 #ifdef DPD_TIMER
     timer_on("buf_rd");
@@ -201,7 +202,7 @@ int DPD::buf4_mat_irrep_rd_sp(dpdbuf4<float> *Buf, int irrep) {
                     value -= Buf->file.matrix[irrep][filerow][filesr];
 
                     /* Assign the value */
-                    Buf->matrix[irrep][pq][rs] = value;
+                    Buf->matrix[irrep][pq][rs] = static_cast<float>(value);
                 }
             }
 
@@ -233,6 +234,11 @@ int DPD::buf4_mat_irrep_rd_sp(dpdbuf4<float> *Buf, int irrep) {
             //      }
 
             if (!(Buf->file.incore && size)) {
+                for (row = 0; row < rowtot; row++){
+			for (col = 0; col < coltot; coltot++){
+				Buf->file.matrix_sp[irrep][row][col] = Buf->file.matrix[irrep][row][col];
+			}
+		}
                 Buf->file.matrix[irrep] = Buf->matrix[irrep];
                 file4_mat_irrep_rd(&(Buf->file), irrep);
             }
