@@ -156,6 +156,7 @@ void CCEnergyWavefunction::FmitT2_mp() {
         global_dpd_->buf4_sort_axpy(&Z, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", -1);
         global_dpd_->buf4_close(&Z);
 }
+}
 
 void CCEnergyWavefunction::FmitT2_sp() {
     dpdfile2<float> FMIt, Fmit;
