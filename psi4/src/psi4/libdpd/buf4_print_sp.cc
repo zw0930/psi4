@@ -73,7 +73,7 @@ int DPD::buf4_print_sp(dpdbuf4<float> *Buf, std::string out, int print_data) {
             mat4_irrep_print_sp(Buf->matrix[h], Buf->params, h, all_buf_irrep, "outfile");
             buf4_mat_irrep_close_sp(Buf, h);
         }
-        outfile->Printf("\tTrace = %20.14f\n", buf4_trace(Buf));
+        //outfile->Printf("\tTrace = %20.14f\n", buf4_trace(Buf));
     }
 
     return 0;
