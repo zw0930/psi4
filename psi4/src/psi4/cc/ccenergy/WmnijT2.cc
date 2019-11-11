@@ -107,8 +107,8 @@ void CCEnergyWavefunction::WmnijT2() {
 
 void CCEnergyWavefunction::WmnijT2_mp() {
     dpdbuf4<double> newtIjAb;
-    dpdbuf4<float> WMnIj;
-    dpdbuf4<float> tauIjAb;
+    dpdbuf4<float> WMnIj_sp;
+    dpdbuf4<float> tauIjAb_sp;
     dpdbuf4<float> Z_sp;
     dpdbuf4<double> Z;
 
