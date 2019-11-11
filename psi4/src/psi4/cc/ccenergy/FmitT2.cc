@@ -147,7 +147,7 @@ void CCEnergyWavefunction::FmitT2_mp() {
         global_dpd_->buf4_init(&Z, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "Z(Ij,Ab)");
         global_dpd_->buf4_init_sp(&tIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
         global_dpd_->file2_init_sp(&FMIt_sp, PSIF_CC_OEI, 0, 0, 0, "FMIt_sp");
-        global_dpd_->contract244_mp(&FMIt, &tIjAb, &Z, 0, 0, 0, 1, 0);
+        global_dpd_->contract244_mp(&FMIt_sp, &tIjAb_sp, &Z, 0, 0, 0, 1, 0);
         global_dpd_->file2_close_sp(&FMIt_sp);
         global_dpd_->buf4_close_sp(&tIjAb_sp);
         global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
@@ -176,5 +176,7 @@ void CCEnergyWavefunction::FmitT2_sp() {
         global_dpd_->buf4_sort_axpy_sp(&Z, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb sp", -1);
         global_dpd_->buf4_close_sp(&Z);
 }
+}
+
 }  // namespace ccenergy
 }  // namespace psi

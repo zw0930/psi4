@@ -41,7 +41,7 @@ int DPD::buf4_mat_irrep_row_zero_sp(dpdbuf4<float> *Buf, int irrep, int row) {
     all_buf_irrep = Buf->file.my_irrep;
     coltot = Buf->params->coltot[irrep ^ all_buf_irrep];
 
-    if (coltot) zero_arr(Buf->matrix[irrep][0], coltot);
+    if (coltot) zero_arr_sp(Buf->matrix[irrep][0], coltot);
 
     return 0;
 }

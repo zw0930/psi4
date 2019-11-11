@@ -91,7 +91,7 @@ void CCEnergyWavefunction::Fmi_build_sp() {
 
         global_dpd_->buf4_init_sp(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D 2<ij|ab> - <ij|ba> sp");
         global_dpd_->buf4_init_sp(&tautIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tautIjAb_sp");
-        global_dpd_->contract444_sp(&D, &tautIjAb, &FMI, 0, 0, 1, 1);
+        global_dpd_->contract442_sp(&D, &tautIjAb, &FMI, 0, 0, 1, 1);
         global_dpd_->buf4_close_sp(&tautIjAb);
         global_dpd_->buf4_close_sp(&D);
 
