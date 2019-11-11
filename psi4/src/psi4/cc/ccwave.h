@@ -91,7 +91,7 @@ class CCEnergyWavefunction : public Wavefunction {
     void Fae_build();
     void Fae_build_sp();
     void Fmi_build();
-    void Fmi_buildi_sp();
+    void Fmi_build_sp();
     void Fme_build();
     void Fme_build_sp();
     void Wmnij_build();
