@@ -63,6 +63,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->file2_init_sp(&fAB_sp, PSIF_CC_OEI, 0, 1, 1, "fAB_sp");
         global_dpd_->file2_copy_sp(&fAB_sp, PSIF_CC_OEI, "FAE_sp");
         global_dpd_->file2_close_sp(&fAB_sp);
+    }
    
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
@@ -80,6 +81,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->file2_mat_wrt_sp(&FAE_sp);
         global_dpd_->file2_mat_close_sp(&FAE_sp);
         global_dpd_->file2_close_sp(&FAE_sp);
+    }
    
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
