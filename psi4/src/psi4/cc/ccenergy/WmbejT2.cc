@@ -513,15 +513,15 @@ void CCEnergyWavefunction::WmbejT2_mp() {
         global_dpd_->buf4_close_sp(&W_sp);
         global_dpd_->buf4_init_sp(&W1_sp, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "2 W(ME,jb) + W(Me,Jb) sp");
         global_dpd_->buf4_init_sp(&W2_sp, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbEj_sp");
-        global_dpd_->buf4_axpy_sp(&W2, &W1, 2);
-        global_dpd_->buf4_close_sp(&W2);
-        global_dpd_->buf4_close_sp(&W1);
+        global_dpd_->buf4_axpy_sp(&W2_sp, &W1, 2);
+        global_dpd_->buf4_close_sp(&W2_sp);
+        global_dpd_->buf4_close_sp(&W1_sp);
 
         /* T2(Ib,mE) * W(mE,jA) --> Z(Ib,jA) */
         global_dpd_->buf4_init(&T2new, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "Z (Ib,jA)");
         global_dpd_->buf4_init_sp(&T2_sp, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIbjA_sp");
         global_dpd_->buf4_init_sp(&W_sp, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbeJ_sp");
-        global_dpd_->contract444_mp(&T2, &W, &T2new, 0, 1, 1, 0);
+        global_dpd_->contract444_mp(&T2_sp, &W_sp, &T2new, 0, 1, 1, 0);
         global_dpd_->buf4_close_sp(&W_sp);
         global_dpd_->buf4_close_sp(&T2_sp);
         /* T2(Ib,jA) --> T2(IA,jb) (part III) */
