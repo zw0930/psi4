@@ -45,7 +45,7 @@ namespace psi {
 **   int print_data: 0 = print buf4 parameters only; 1 = print matrices
 */
 
-int DPD::buf4_print(dpdbuf4<float> *Buf, std::string out, int print_data) {
+int DPD::buf4_print_sp(dpdbuf4<float> *Buf, std::string out, int print_data) {
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));
     int h, i, all_buf_irrep;
     dpdparams4 *Params;

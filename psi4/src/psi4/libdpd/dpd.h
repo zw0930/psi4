@@ -480,6 +480,9 @@ class PSI_API DPD {
     int trans4_mat_irrep_shift31(dpdtrans4<double> *Trans, int irrep);
 
     int mat4_irrep_print(double **matrix, dpdparams4 *Params, int irrep, int my_irrep, std::string out_fname);
+    int mat4_irrep_print_sp(float **matrix, dpdparams4 *Params, int irrep, int my_irrep, std::string out_fname);
+
+
 
     void file2_cache_init();
     void file2_cache_close();
