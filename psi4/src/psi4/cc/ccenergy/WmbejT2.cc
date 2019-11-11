@@ -513,7 +513,7 @@ void CCEnergyWavefunction::WmbejT2_mp() {
         global_dpd_->buf4_close_sp(&W_sp);
         global_dpd_->buf4_init_sp(&W1_sp, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "2 W(ME,jb) + W(Me,Jb) sp");
         global_dpd_->buf4_init_sp(&W2_sp, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbEj_sp");
-        global_dpd_->buf4_axpy_sp(&W2_sp, &W1, 2);
+        global_dpd_->buf4_axpy_sp(&W2_sp, &W1_sp, 2);
         global_dpd_->buf4_close_sp(&W2_sp);
         global_dpd_->buf4_close_sp(&W1_sp);
 
