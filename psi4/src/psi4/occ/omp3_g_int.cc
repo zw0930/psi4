@@ -43,9 +43,9 @@ void OCCWave::omp3_g_int() {
         GooA->zero();
         GvvA->zero();
 
-        dpdbuf4 T2_1, L2_1, Tau_1, Tau, T, L;
-        dpdbuf4 T2_2, L2_2, Tau_2;
-        dpdfile2 G;
+        dpdbuf4<double> T2_1, L2_1, Tau_1, Tau, T, L;
+        dpdbuf4<double> T2_2, L2_2, Tau_2;
+        dpdfile2<double> G;
 
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -135,9 +135,9 @@ void OCCWave::omp3_g_int() {
         GvvA->zero();
         GvvB->zero();
 
-        dpdbuf4 T2_1AA, T2_1AB, T2_1BB, L2_1AA, L2_1AB, L2_1BB;
-        dpdbuf4 T2_2AA, T2_2AB, T2_2BB, L2_2AA, L2_2AB, L2_2BB;
-        dpdfile2 G;
+        dpdbuf4<double> T2_1AA, T2_1AB, T2_1BB, L2_1AA, L2_1AB, L2_1BB;
+        dpdbuf4<double> T2_2AA, T2_2AB, T2_2BB, L2_2AA, L2_2AB, L2_2BB;
+        dpdfile2<double> G;
 
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);

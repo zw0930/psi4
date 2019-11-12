@@ -54,8 +54,8 @@ void OCCWave::gfock() {
         // outfile->Printf("\tOPDM energy (a.u.)          : %12.14f\n", Ecc_rdm);
 
         // 2e-part
-        dpdbuf4 G, K, X, T, Y;
-        dpdfile2 GF;
+        dpdbuf4<double> G, K, X, T, Y;
+        dpdfile2<double> GF;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -108,7 +108,7 @@ void OCCWave::gfock() {
         global_dpd_->buf4_close(&G);
 
         if (wfn_type_ == "OMP2" && incore_iabc_ == 1) {
-            dpdfile2 G;
+            dpdfile2<double> G;
 
             // Build Virtual-Virtual block of correlation OPDM
             global_dpd_->file2_init(&G, PSIF_OCC_DENSITY, 0, ID('V'), ID('V'), "CORR OPDM <V|V>");
@@ -384,8 +384,8 @@ void OCCWave::gfock() {
         /********************************************************************************************/
         /************************** 2e-part *********************************************************/
         /********************************************************************************************/
-        dpdbuf4 G, K, T, L, X;
-        dpdfile2 GF;
+        dpdbuf4<double> G, K, T, L, X;
+        dpdfile2<double> GF;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);

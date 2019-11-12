@@ -37,7 +37,7 @@ namespace psi {
 namespace occwave {
 
 void OCCWave::w_1st_order() {
-    dpdbuf4 K, W;
+    dpdbuf4<double> K, W;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);

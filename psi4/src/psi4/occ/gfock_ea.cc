@@ -52,8 +52,8 @@ void OCCWave::gfock_ea() {
         Ftilde->subtract(GFock);
 
         // 2e-part
-        dpdbuf4 G, K, X, T, Y;
-        dpdfile2 GF, F, G1;
+        dpdbuf4<double> G, K, X, T, Y;
+        dpdfile2<double> GF, F, G1;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -366,8 +366,8 @@ void OCCWave::gfock_ea() {
         FtildeB->subtract(GFockB);
 
         // 2e-part
-        dpdbuf4 G, K, X, T, Y;
-        dpdfile2 GF, F, G1;
+        dpdbuf4<double> G, K, X, T, Y;
+        dpdfile2<double> GF, F, G1;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);

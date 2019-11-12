@@ -77,8 +77,8 @@ void OCCWave::coord_grad() {
 //========================================================================
 void OCCWave::dump_ints() {
     // outfile->Printf("\n dump_ints is starting... \n");
-    dpdfile2 H;
-    dpdbuf4 K;
+    dpdfile2<double> H;
+    dpdbuf4<double> K;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -172,8 +172,8 @@ void OCCWave::dump_pdms() {
     //========================= RHF =============================================================
     //===========================================================================================
     if (reference_ == "RESTRICTED") {
-        dpdfile2 H;
-        dpdbuf4 G, G2;
+        dpdfile2<double> H;
+        dpdbuf4<double> G, G2;
 
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 
@@ -377,8 +377,8 @@ void OCCWave::dump_pdms() {
     //========================= UHF =============================================================
     //===========================================================================================
     else if (reference_ == "UNRESTRICTED") {
-        dpdfile2 H;
-        dpdbuf4 G, G2;
+        dpdfile2<double> H;
+        dpdbuf4<double> G, G2;
 
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 
@@ -878,7 +878,7 @@ void OCCWave::effective_pdms() {
         }
 
         // Form VOOO-block TPDM
-        dpdbuf4 G, G2;
+        dpdbuf4<double> G, G2;
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
         // G_amin = 8 z_ai delta_mn
         global_dpd_->buf4_init(&G, PSIF_OCC_DENSITY, 0, ID("[V,O]"), ID("[O,O]"), ID("[V,O]"), ID("[O,O]"), 0,
@@ -952,7 +952,7 @@ void OCCWave::effective_pdms() {
         }
 
         // Form VOOO-block TPDM
-        dpdbuf4 G, G2;
+        dpdbuf4<double> G, G2;
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 
         // G_AMIN = 2 * Z_AI delta_MN
@@ -1134,7 +1134,7 @@ void OCCWave::effective_gfock() {
         }
 
         // OPEN DPD FILES
-        dpdbuf4 G, K;
+        dpdbuf4<double> G, K;
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
         // F_ai += 8 \sum_{e,m} Z_em <mi|ea>
@@ -1373,7 +1373,7 @@ void OCCWave::effective_gfock() {
         }
 
         // OPEN DPD FILES
-        dpdbuf4 G, K;
+        dpdbuf4<double> G, K;
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
         // F_AI += 2 \sum_{E,M} Z_EM <MI|EA>

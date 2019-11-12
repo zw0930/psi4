@@ -42,8 +42,8 @@ void OCCWave::ocepa_g_int() {
         GooA->zero();
         GvvA->zero();
 
-        dpdbuf4 Tau, T;
-        dpdfile2 G;
+        dpdbuf4<double> Tau, T;
+        dpdfile2<double> G;
 
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -119,8 +119,8 @@ void OCCWave::ocepa_g_int() {
         GvvA->zero();
         GvvB->zero();
 
-        dpdbuf4 TAA, TAB, TBB, LAA, LAB, LBB;
-        dpdfile2 G;
+        dpdbuf4<double> TAA, TAB, TBB, LAA, LAB, LBB;
+        dpdfile2<double> G;
 
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);

@@ -44,8 +44,8 @@ void OCCWave::fock_beta() {
     /************************************************************************************************/
     // F(ij) = h(ij) + \sum_{m} <im||jm> + \sum_{M} <Mi|Mj>
 
-    dpdfile2 F;
-    dpdbuf4 K;
+    dpdfile2<double> F;
+    dpdbuf4<double> K;
 
     /* Prepare the alpha occ-occ Fock matrix files */
     global_dpd_->file2_init(&F, PSIF_LIBTRANS_DPD, 0, ID('o'), ID('o'), "Fock <o|o>");

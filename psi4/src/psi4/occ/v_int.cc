@@ -36,7 +36,7 @@ namespace occwave {
 
 void OCCWave::v_int() {
     if (reference_ == "RESTRICTED") {
-        dpdbuf4 T, Tau, V;
+        dpdbuf4<double> T, Tau, V;
 
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -109,7 +109,7 @@ void OCCWave::v_int() {
     }  // end if (reference_ == "RESTRICTED")
 
     else if (reference_ == "UNRESTRICTED") {
-        dpdbuf4 T, L, V, V1, V2;
+        dpdbuf4<double> T, L, V, V1, V2;
 
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);

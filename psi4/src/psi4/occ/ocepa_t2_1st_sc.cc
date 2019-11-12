@@ -41,7 +41,7 @@ void OCCWave::ocepa_t2_1st_sc() {
     //========================= RHF =============================================================
     //===========================================================================================
     if (reference_ == "RESTRICTED") {
-        dpdbuf4 K, T, D, Tau, Ttemp, Tss;
+        dpdbuf4<double> K, T, D, Tau, Ttemp, Tss;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
@@ -105,7 +105,7 @@ void OCCWave::ocepa_t2_1st_sc() {
     //========================= UHF =============================================================
     //===========================================================================================
     else if (reference_ == "UNRESTRICTED") {
-        dpdbuf4 K, T, D;
+        dpdbuf4<double> K, T, D;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);

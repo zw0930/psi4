@@ -75,7 +75,7 @@ void OCCWave::ref_energy() {
 // omp2_mp2_energy       //
 //=======================//
 void OCCWave::omp2_mp2_energy() {
-    dpdbuf4 K, T, Tau, Tss;
+    dpdbuf4<double> K, T, Tau, Tss;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
@@ -233,7 +233,7 @@ void OCCWave::omp2_mp2_energy() {
 // omp3_mp2_energy       //
 //=======================//
 void OCCWave::omp3_mp2_energy() {
-    dpdbuf4 K, T;
+    dpdbuf4<double> K, T;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
@@ -374,7 +374,7 @@ void OCCWave::omp3_mp2_energy() {
 /*  mp3_energy()         */
 /*=======================*/
 void OCCWave::mp3_energy() {
-    dpdbuf4 K, T;
+    dpdbuf4<double> K, T;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
@@ -450,7 +450,7 @@ void OCCWave::mp3_energy() {
 // ocepa_mp2_energy      //
 //=======================//
 void OCCWave::ocepa_mp2_energy() {
-    dpdbuf4 K, T;
+    dpdbuf4<double> K, T;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
@@ -586,7 +586,7 @@ void OCCWave::ocepa_mp2_energy() {
 /*  cepa_energy()         */
 /*=======================*/
 void OCCWave::cepa_energy() {
-    dpdbuf4 K, T;
+    dpdbuf4<double> K, T;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);

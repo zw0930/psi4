@@ -527,7 +527,7 @@ void CCEnergyWavefunction::t1_build_mp() {
         global_dpd_->file2_mat_init_sp(&TMP);
         global_dpd_->file2_mat_rd_sp(&TMP);
         global_dpd_->buf4_init_sp(&T2_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "2 tIjAb - tIjBa sp");
-        global_dpd_->buf4_init(&F_sp, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
+        global_dpd_->buf4_init_sp(&F_sp, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
         for (int Gma = 0; Gma < moinfo_.nirreps; Gma++) {
             Gmi = Gma; /* T1 is totally symmetric */
 
@@ -550,10 +550,11 @@ void CCEnergyWavefunction::t1_build_mp() {
 
                 if (nrows && ncols && moinfo_.virtpi[Ga]){
                     C_SGEMV('n', nrows, ncols, 1.0, T2_sp.matrix[Gmi][T2_sp.row_offset[Gmi][m]], ncols, F_sp.matrix[Gma][0], 1,
-                            0.0, &TMP.matrix[Gi][0][A], moinfo_.virtpi[Ga]);
+                            0.0, &(TMP.matrix[Gi][0][A]), moinfo_.virtpi[Ga]);
                     for (row = 0; row < 1+(nrows-1)*moinfo_.virtpi[Ga]; row += moinfo_.virtpi[Ga]){
-                         newtIA.matrix[Gi][0][A][row] += static_cast<double>(TMP.matrix[Gi][0][A][row]);                 }
+                         newtIA.matrix[Gi][0][A][row] += static_cast<double>(TMP.matrix[Gi][0][A][row]);   
                     }
+               }
             }
 
             global_dpd_->buf4_mat_irrep_close_sp(&T2_sp, Gmi);
@@ -561,7 +562,7 @@ void CCEnergyWavefunction::t1_build_mp() {
         }
         global_dpd_->buf4_close_sp(&F_sp);
         global_dpd_->buf4_close_sp(&T2_sp);
-        global_dpd_->buf4_close_sp(&TMP);
+        global_dpd_->file2_close_sp(&TMP);
         global_dpd_->file2_mat_wrt(&newtIA);
         global_dpd_->file2_mat_close(&newtIA);
 

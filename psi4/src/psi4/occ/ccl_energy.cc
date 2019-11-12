@@ -37,7 +37,7 @@ namespace occwave {
 void OCCWave::ccl_energy() {
     // outfile->Printf("\n ccl_energy is starting... \n");
     // Two-electron contribution
-    dpdbuf4 G, K;
+    dpdbuf4<double> G, K;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);

@@ -69,7 +69,7 @@ void OCCWave::omp3_ip_poles() {
         auto eOccOrbA = std::make_shared<Vector>("eOccOrbA", nirrep_, occpiA);
         eOccOrbA->zero();
 
-        dpdbuf4 K, T, D;
+        dpdbuf4<double> K, T, D;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
@@ -261,7 +261,7 @@ void OCCWave::omp3_ip_poles() {
         eOccOrbA->zero();
         eOccOrbB->zero();
 
-        dpdbuf4 K, T, D;
+        dpdbuf4<double> K, T, D;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);

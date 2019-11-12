@@ -54,8 +54,8 @@ void OCCWave::kappa_orb_resp_iter() {
         // Open dpd files
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
-        dpdbuf4 K;
-        dpdfile2 P, F, S;
+        dpdbuf4<double> K;
+        dpdfile2<double> P, F, S;
 
         // Sort some integrals
         // (OV|OV) -> (VO|VO)
@@ -77,7 +77,7 @@ void OCCWave::kappa_orb_resp_iter() {
         global_dpd_->buf4_close(&K);
 
         // Build Sigma_0 = A * k0
-        // Write p vector to dpdfile2
+        // Write p vector to dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('V'), ID('O'), "P <V|O>");
         global_dpd_->file2_mat_init(&P);
         int idp_idx = 0;
@@ -115,7 +115,7 @@ void OCCWave::kappa_orb_resp_iter() {
         global_dpd_->file2_close(&P);
         global_dpd_->file2_close(&S);
 
-        // Read sigma vector from dpdfile2
+        // Read sigma vector from dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('V'), ID('O'), "Sigma <V|O>");
         global_dpd_->file2_mat_init(&P);
         global_dpd_->file2_mat_rd(&P);
@@ -265,8 +265,8 @@ void OCCWave::kappa_orb_resp_iter() {
         // Open dpd files
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
-        dpdbuf4 K;
-        dpdfile2 P, F, S;
+        dpdbuf4<double> K;
+        dpdfile2<double> P, F, S;
 
         // Sort some integrals
         // (OV|OV) -> (VO|VO)
@@ -318,7 +318,7 @@ void OCCWave::kappa_orb_resp_iter() {
         global_dpd_->buf4_close(&K);
 
         // Build Sigma_0 = A * k0
-        // Write alpha p vector to dpdfile2
+        // Write alpha p vector to dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('V'), ID('O'), "P <V|O>");
         global_dpd_->file2_mat_init(&P);
         idp_idx = 0;
@@ -333,7 +333,7 @@ void OCCWave::kappa_orb_resp_iter() {
         global_dpd_->file2_mat_wrt(&P);
         global_dpd_->file2_close(&P);
 
-        // Write beta p vector to dpdfile2
+        // Write beta p vector to dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('v'), ID('o'), "P <v|o>");
         global_dpd_->file2_mat_init(&P);
         idp_idx = 0;
@@ -380,7 +380,7 @@ void OCCWave::kappa_orb_resp_iter() {
         global_dpd_->file2_close(&P);
         global_dpd_->file2_close(&S);
 
-        // Read sigma vector from dpdfile2
+        // Read sigma vector from dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('V'), ID('O'), "Sigma <V|O>");
         global_dpd_->file2_mat_init(&P);
         global_dpd_->file2_mat_rd(&P);
@@ -472,7 +472,7 @@ void OCCWave::kappa_orb_resp_iter() {
         global_dpd_->file2_close(&P);
         global_dpd_->file2_close(&S);
 
-        // Read sigma vector from dpdfile2
+        // Read sigma vector from dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('v'), ID('o'), "Sigma <v|o>");
         global_dpd_->file2_mat_init(&P);
         global_dpd_->file2_mat_rd(&P);
@@ -650,10 +650,10 @@ void OCCWave::orb_resp_pcg_rhf() {
     do {
         // outfile->Printf( "pcg iter: %3d \n", itr_pcg);
         // Open dpd files
-        dpdbuf4 K;
-        dpdfile2 P, S, F;
+        dpdbuf4<double> K;
+        dpdfile2<double> P, S, F;
 
-        // Write p vector to dpdfile2
+        // Write p vector to dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('V'), ID('O'), "P <V|O>");
         global_dpd_->file2_mat_init(&P);
         idp_idx = 0;
@@ -691,7 +691,7 @@ void OCCWave::orb_resp_pcg_rhf() {
         global_dpd_->file2_close(&P);
         global_dpd_->file2_close(&S);
 
-        // Read sigma vector from dpdfile2
+        // Read sigma vector from dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('V'), ID('O'), "Sigma <V|O>");
         global_dpd_->file2_mat_init(&P);
         global_dpd_->file2_mat_rd(&P);
@@ -829,10 +829,10 @@ void OCCWave::orb_resp_pcg_uhf() {
     do {
         // outfile->Printf( "pcg iter: %3d \n", itr_pcg);
         // Open dpd files
-        dpdbuf4 K;
-        dpdfile2 P, S, F;
+        dpdbuf4<double> K;
+        dpdfile2<double> P, S, F;
 
-        // Write alpha p vector to dpdfile2
+        // Write alpha p vector to dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('V'), ID('O'), "P <V|O>");
         global_dpd_->file2_mat_init(&P);
         idp_idx = 0;
@@ -847,7 +847,7 @@ void OCCWave::orb_resp_pcg_uhf() {
         global_dpd_->file2_mat_wrt(&P);
         global_dpd_->file2_close(&P);
 
-        // Write beta p vector to dpdfile2
+        // Write beta p vector to dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('v'), ID('o'), "P <v|o>");
         global_dpd_->file2_mat_init(&P);
         idp_idx = 0;
@@ -894,7 +894,7 @@ void OCCWave::orb_resp_pcg_uhf() {
         global_dpd_->file2_close(&P);
         global_dpd_->file2_close(&S);
 
-        // Read sigma vector from dpdfile2
+        // Read sigma vector from dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('V'), ID('O'), "Sigma <V|O>");
         global_dpd_->file2_mat_init(&P);
         global_dpd_->file2_mat_rd(&P);
@@ -986,7 +986,7 @@ void OCCWave::orb_resp_pcg_uhf() {
         global_dpd_->file2_close(&P);
         global_dpd_->file2_close(&S);
 
-        // Read sigma vector from dpdfile2
+        // Read sigma vector from dpdfile2<double>
         global_dpd_->file2_init(&P, PSIF_OCC_DPD, 0, ID('v'), ID('o'), "Sigma <v|o>");
         global_dpd_->file2_mat_init(&P);
         global_dpd_->file2_mat_rd(&P);

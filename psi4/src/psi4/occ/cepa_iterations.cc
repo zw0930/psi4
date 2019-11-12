@@ -54,7 +54,7 @@ void OCCWave::cepa_iterations() {
                  // DIIS
     if (nooA + nooB != 1) {
         if (reference_ == "RESTRICTED") {
-            dpdbuf4 T;
+            dpdbuf4<double> T;
             psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
             global_dpd_->buf4_init(&T, PSIF_OCC_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
                                    "T2 <OO|VV>");
@@ -67,7 +67,7 @@ void OCCWave::cepa_iterations() {
         }
 
         else if (reference_ == "UNRESTRICTED") {
-            dpdbuf4 Taa, Tbb, Tab;
+            dpdbuf4<double> Taa, Tbb, Tab;
             psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
             global_dpd_->buf4_init(&Taa, PSIF_OCC_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
                                    "T2 <OO|VV>");

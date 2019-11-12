@@ -44,8 +44,8 @@ void OCCWave::t2_2nd_general() {
     //========================= RHF =============================================================
     //===========================================================================================
     if (reference_ == "RESTRICTED") {
-        dpdbuf4 K, T, Tau, Tnew, D, R, Tp, W, TAA, TAB, TBB, Ttemp;
-        dpdfile2 Fo, Fv;
+        dpdbuf4<double> K, T, Tau, Tnew, D, R, Tp, W, TAA, TAB, TBB, Ttemp;
+        dpdfile2<double> Fo, Fv;
         int nElements;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -273,8 +273,8 @@ void OCCWave::t2_2nd_general() {
         w_1st_order();
         timer_off("W int");
 
-        dpdbuf4 K, T, Tnew, D, R, Tp, W, TAA, TAB, TBB;
-        dpdfile2 Fo, Fv;
+        dpdbuf4<double> K, T, Tnew, D, R, Tp, W, TAA, TAB, TBB;
+        dpdfile2<double> Fo, Fv;
         int nElements;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);

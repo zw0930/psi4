@@ -75,7 +75,7 @@ class SymBlockMatrix {
     void set(double value);
     void set(int h, int i, int j, double value);
     void set(double **Asq);
-    void set(dpdbuf4 G);
+    void set(dpdbuf4<double> G);
     double get(int h, int m, int n);
     double *to_lower_triangle();
     double **to_block_matrix();

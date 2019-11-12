@@ -44,8 +44,8 @@ void OCCWave::t2_amps() {
     //========================= RHF =============================================================
     //===========================================================================================
     if (reference_ == "RESTRICTED") {
-        dpdbuf4 K, T, Tau, Tnew, D, R, Tp, W, TAA, TAB, TBB, Ttemp;
-        dpdfile2 Fo, Fv;
+        dpdbuf4<double> K, T, Tau, Tnew, D, R, Tp, W, TAA, TAB, TBB, Ttemp;
+        dpdfile2<double> Fo, Fv;
         int nElements;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -263,8 +263,8 @@ void OCCWave::t2_amps() {
         w_int();
         timer_off("W int");
 
-        dpdbuf4 K, T, Tnew, D, R, Tp, W, TAA, TAB, TBB;
-        dpdfile2 Fo, Fv;
+        dpdbuf4<double> K, T, Tnew, D, R, Tp, W, TAA, TAB, TBB;
+        dpdfile2<double> Fo, Fv;
         int nElements;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -762,7 +762,7 @@ void OCCWave::t2_amps() {
         // DIIS
         if (nooA + nooB != 1) {
             if (orb_opt_ == "FALSE" || mo_optimized == 1) {
-                dpdbuf4 Raa, Rbb, Rab, Taa, Tbb, Tab;
+                dpdbuf4<double> Raa, Rbb, Rab, Taa, Tbb, Tab;
                 global_dpd_->buf4_init(&Raa, PSIF_OCC_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
                                        "RT2 <OO|VV>");
                 global_dpd_->buf4_init(&Taa, PSIF_OCC_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,

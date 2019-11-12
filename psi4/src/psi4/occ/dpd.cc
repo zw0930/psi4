@@ -336,7 +336,7 @@ void SymBlockMatrix::set(double **Asq) {
     }
 }  //
 
-void SymBlockMatrix::set(dpdbuf4 G) {
+void SymBlockMatrix::set(dpdbuf4<double> G) {
     for (int h = 0; h < nirreps_; ++h) {
         global_dpd_->buf4_mat_irrep_init(&G, h);
         global_dpd_->buf4_mat_irrep_rd(&G, h);

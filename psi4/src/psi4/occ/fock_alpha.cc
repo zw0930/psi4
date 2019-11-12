@@ -42,8 +42,8 @@ void OCCWave::fock_alpha() {
         /************************************************************************************************/
         /*********************************** Build Fij **************************************************/
         /************************************************************************************************/
-        dpdfile2 F;
-        dpdbuf4 K;
+        dpdfile2<double> F;
+        dpdbuf4<double> K;
 
         /* Prepare the alpha and beta occ-occ Fock matrix files */
         global_dpd_->file2_init(&F, PSIF_LIBTRANS_DPD, 0, ID('O'), ID('O'), "Fock <O|O>");
@@ -336,8 +336,8 @@ void OCCWave::fock_alpha() {
         /************************************************************************************************/
         // F(IJ) = h(IJ) + \sum_{M} <IM||JM> + \sum_{m} <Im|Jm>
 
-        dpdfile2 F;
-        dpdbuf4 K;
+        dpdfile2<double> F;
+        dpdbuf4<double> K;
 
         /* Prepare the alpha occ-occ Fock matrix files */
         global_dpd_->file2_init(&F, PSIF_LIBTRANS_DPD, 0, ID('O'), ID('O'), "Fock <O|O>");

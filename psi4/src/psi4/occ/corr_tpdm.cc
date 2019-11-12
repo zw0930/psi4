@@ -37,7 +37,7 @@ namespace psi {
 namespace occwave {
 
 void OCCWave::omp2_tpdm_oovv() {
-    dpdbuf4 G, T, Tau;
+    dpdbuf4<double> G, T, Tau;
 
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -100,7 +100,7 @@ void OCCWave::omp2_tpdm_oovv() {
 /*  tpdm_oovv()          */
 /*=======================*/
 void OCCWave::tpdm_oovv() {
-    dpdbuf4 G, T, V, Tau;
+    dpdbuf4<double> G, T, V, Tau;
 
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -194,7 +194,7 @@ void OCCWave::tpdm_oovv() {
 /*  tpdm_oooo()        */
 /*=======================*/
 void OCCWave::tpdm_oooo() {
-    dpdbuf4 G, T, V;
+    dpdbuf4<double> G, T, V;
 
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 
@@ -265,7 +265,7 @@ void OCCWave::tpdm_oooo() {
 void OCCWave::omp3_tpdm_vvvv() {
     // NOTE: contract444 can handle only TN and NT type contractions, which means (0,0) and (1,1) type target indices,
     //  with out-of-core algorithm!!!!
-    dpdbuf4 T, L, G, V;
+    dpdbuf4<double> T, L, G, V;
 
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -435,7 +435,7 @@ void OCCWave::ocepa_tpdm_vvvv() {
     // outfile->Printf("\n ocepa_tpdm_vvvv is starting... \n");
     // NOTE: contract444 can handle only TN and NT type contractions, which means (0,0) and (1,1) type target indices,
     //  with out-of-core algorithm!!!!
-    dpdbuf4 T, L, G, V;
+    dpdbuf4<double> T, L, G, V;
 
     psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -586,7 +586,7 @@ void OCCWave::ocepa_tpdm_vvvv() {
 /*  tpdm_ovov()        */
 /*=======================*/
 void OCCWave::tpdm_ovov() {
-    dpdbuf4 G, T, V;
+    dpdbuf4<double> G, T, V;
 
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 
@@ -665,7 +665,7 @@ void OCCWave::tpdm_ovov() {
 /*  tpdm_vovo()        */
 /*=======================*/
 void OCCWave::tpdm_vovo() {
-    dpdbuf4 G, T, V;
+    dpdbuf4<double> G, T, V;
 
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 
@@ -691,7 +691,7 @@ void OCCWave::tpdm_vovo() {
 /*  tpdm_ovvo()        */
 /*=======================*/
 void OCCWave::tpdm_ovvo() {
-    dpdbuf4 G, T, V;
+    dpdbuf4<double> G, T, V;
 
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 

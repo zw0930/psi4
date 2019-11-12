@@ -217,8 +217,8 @@ void OCCWave::omp2_g_int() {
         GooA->zero();
         GvvA->zero();
 
-        dpdbuf4 T, Tau;
-        dpdfile2 Go, Gv;
+        dpdbuf4<double> T, Tau;
+        dpdfile2<double> Go, Gv;
 
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -284,11 +284,11 @@ void OCCWave::omp2_g_int() {
         GvvA->zero();
         GvvB->zero();
 
-        dpdbuf4 TAA, TAB, TBB;
-        dpdbuf4 TAA2, TBB2;
-        dpdbuf4 TAB2_;
-        // dpdbuf4 TAA, TAB, TBB, TAA2, TAB2_, TBB2;
-        dpdfile2 G;
+        dpdbuf4<double> TAA, TAB, TBB;
+        dpdbuf4<double> TAA2, TBB2;
+        dpdbuf4<double> TAB2_;
+        // dpdbuf4<double> TAA, TAB, TBB, TAA2, TAB2_, TBB2;
+        dpdfile2<double> G;
 
         psio_->open(PSIF_OCC_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);

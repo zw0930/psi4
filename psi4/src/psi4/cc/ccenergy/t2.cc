@@ -103,7 +103,7 @@ void CCEnergyWavefunction::t2_build_mp() {
 
         timer_on("BT2");
         if (params_.aobasis == "DISK" || params_.aobasis == "DIRECT")
-            BT2_AO_mp();
+            BT2_AO();
         else
             BT2_mp();
         if (params_.print & 2) status("<ab||cd> -> T2", "outfile");
@@ -149,7 +149,7 @@ void CCEnergyWavefunction::t2_build_sp() {
 
         timer_on("BT2");
         if (params_.aobasis == "DISK" || params_.aobasis == "DIRECT")
-            BT2_AO_sp();
+            BT2_AO();
         else
             BT2_sp();
         if (params_.print & 2) status("<ab||cd> -> T2", "outfile");

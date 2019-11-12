@@ -78,7 +78,7 @@ void OCCWave::tei_sort_iabc() {
 
     /*
             // Test reading
-            dpdbuf4 K;
+            dpdbuf4<double> K;
             //psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
             dpd_buf4_init(&K, PSIF_LIBTRANS_DPD, 0, ints->DPD_ID("[O,V]"), ints->DPD_ID("[V,V]"),
                       ints->DPD_ID("[O,V]"), ints->DPD_ID("[V,V]"), 0, "MO Ints <OV|VV>");

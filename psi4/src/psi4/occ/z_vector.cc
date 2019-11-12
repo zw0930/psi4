@@ -53,7 +53,7 @@ void OCCWave::z_vector() {
 
         // Open dpd files
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
-        dpdbuf4 K;
+        dpdbuf4<double> K;
 
         // Sort some integrals
         // (OV|OV) -> (VO|VO)
@@ -197,7 +197,7 @@ void OCCWave::z_vector() {
 
         // Open dpd files
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
-        dpdbuf4 K;
+        dpdbuf4<double> K;
 
         // Sort some integrals
         // (OV|OV) -> (VO|VO)

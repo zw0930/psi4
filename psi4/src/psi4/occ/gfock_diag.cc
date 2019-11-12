@@ -42,8 +42,8 @@ void OCCWave::gfock_diag() {
     //===========================================================================================
     if (reference_ == "RESTRICTED") {
         // 2e-part
-        dpdbuf4 G, K, X, T, Y;
-        dpdfile2 GF;
+        dpdbuf4<double> G, K, X, T, Y;
+        dpdfile2<double> GF;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
@@ -208,8 +208,8 @@ void OCCWave::gfock_diag() {
         /********************************************************************************************/
         /************************** 2e-part *********************************************************/
         /********************************************************************************************/
-        dpdbuf4 G, K, T, L, X;
-        dpdfile2 GF;
+        dpdbuf4<double> G, K, T, L, X;
+        dpdfile2<double> GF;
 
         psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
         psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);

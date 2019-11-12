@@ -89,7 +89,7 @@ void OCCWave::trans_ints_rhf() {
     /********************************************************************************************/
     /************************** sort chem -> phys ***********************************************/
     /********************************************************************************************/
-    dpdbuf4 K, G;
+    dpdbuf4<double> K, G;
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
@@ -193,8 +193,8 @@ void OCCWave::trans_ints_rhf() {
 
 void OCCWave::denominators_rhf() {
     // outfile->Printf("\n denominators is starting... \n");
-    dpdbuf4 D;
-    dpdfile2 Fo, Fv;
+    dpdbuf4<double> D;
+    dpdfile2<double> Fo, Fv;
 
     auto *aOccEvals = new double[nacooA];
     auto *aVirEvals = new double[nacvoA];

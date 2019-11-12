@@ -40,7 +40,7 @@ namespace occwave {
 /*  tpdm_ref()           */
 /*=======================*/
 void OCCWave::tpdm_ref() {
-    dpdbuf4 G;
+    dpdbuf4<double> G;
 
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 
@@ -146,7 +146,7 @@ void OCCWave::tpdm_ref() {
 /*  tpdm_corr_opdm()     */
 /*=======================*/
 void OCCWave::tpdm_corr_opdm() {
-    dpdbuf4 G;
+    dpdbuf4<double> G;
 
     psio_->open(PSIF_OCC_DENSITY, PSIO_OPEN_OLD);
 
