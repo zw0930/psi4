@@ -61,7 +61,7 @@ namespace ccenergy {
 */
 
 void CCEnergyWavefunction::spinad_amps() {
-    dpdfile2 T1, F;
+    dpdfile2<double> T1, F;
     dpdbuf4<double> T2AB1, T2AB2, W, W1, W2;
 
     if (params_.ref == 0) { /** RHF **/

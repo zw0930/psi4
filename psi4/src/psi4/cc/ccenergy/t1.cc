@@ -451,14 +451,15 @@ void CCEnergyWavefunction::t1_build() {
 // Mixed-precision
 void CCEnergyWavefunction::t1_build_mp() {
     dpdfile2<double> newtIA, tIA, fIA, file2_tmp_double;
-    dpdfile2<float> tIA_sp, fIA_sp, file2_tmp_float;
+    dpdfile2<float> tIA_sp, fIA_sp, file2_tmp_float, TMP;
     dpdfile2<double> FAE, FMI, FME;
     dpdfile2<float> FAE_sp, FMI_sp, FME_sp;
     dpdbuf4<double> tIjAb, T2;
-    dpdbuf4<float> tIjAb_sp. T2_sp;
+    dpdbuf4<float> tIjAb_sp, T2_sp;
     dpdbuf4<double> C_anti, D, F, E;
     dpdbuf4<float> C_anti_sp, D_sp, F_sp, E_sp;
     int Gmi, Gm, Gi, Ga, m, a, A, nrows, ncols;
+    int row, col;
 
     if (params_.ref == 0) { /** RHF **/
         // **1
@@ -555,7 +556,7 @@ void CCEnergyWavefunction::t1_build_mp() {
                     }
             }
 
-            global_dpd_->buf4_mat_irrep_close_sp(&T2_Sp, Gmi);
+            global_dpd_->buf4_mat_irrep_close_sp(&T2_sp, Gmi);
             global_dpd_->buf4_mat_irrep_row_close_sp(&F_sp, Gma);
         }
         global_dpd_->buf4_close_sp(&F_sp);

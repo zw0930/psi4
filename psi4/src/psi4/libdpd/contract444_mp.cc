@@ -146,7 +146,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
 
             if (!rows_per_bucket) dpd_error("contract444: Not enough memory for one row", "outfile");
 
-            nbuckets = (int)ceil((U)X->params->rowtot[Hx] / (U)rows_per_bucket);
+            nbuckets = (int)ceil((double)X->params->rowtot[Hx] / (double)rows_per_bucket);
 
             rows_left = X->params->rowtot[Hx] % rows_per_bucket;
 
@@ -190,7 +190,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
             buf4_mat_irrep_init(Z, Hz);
             
             if (std::fabs(beta) > 0.0) buf4_mat_irrep_rd(Z, Hz);
-            TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ Gz]);
+            TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
 
             if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx ^ symlink]) {
                 C_SGEMM(Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
@@ -198,11 +198,11 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
                         &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], 0, &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
             }
             for (row = 0, row < Z->params->rowtot[Hz]; row++){
-  		for (col = 0, col < Z->params->coltot[Hz ^ Gz]){
+  		for (col = 0, col < Z->params->coltot[Hz ^ GZ]){
 			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
 		}
 	    }
-            free_dpd_block_matrix_sp(TMP,Z->params->rowtot[Hz],Z->params->coltot[Hz ^ Gz]);
+            free_dpd_block_matrix_sp(TMP,Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
 
             buf4_mat_irrep_close_sp(X, Hx);
 
@@ -237,7 +237,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
                     if (nrows && ncols && nlinks)
                         C_SGEMM('n', 't', nrows, ncols, nlinks, alpha, &(X->matrix[Hx][0][0]), numlinks[Hx ^ symlink],
                                 &(Y->matrix[Hy][0][0]), numlinks[Hx ^ symlink], beta,
-                                &(Z->matrix[Hz][n * rows_per_bucket][0]),  Z->params->coltot[Hz ^ GZ]);
+                                &(TMP[0][0]),  Z->params->coltot[Hz ^ GZ]);
                     for (row = 0; row < nrows; row++){
   			for (col = 0; col < ncols; col++){
 				Z->matrix[Hz][n * rows_per_bucket+row][col] = beta * Z->matrix[Hz][n * rows_per_bucket+row][col] + TMP[row][col];
