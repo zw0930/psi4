@@ -321,7 +321,7 @@ void CCEnergyWavefunction::cc2_Wmnij_build() {
 }
 
 void CCEnergyWavefunction::purge_cc2_Wmnij() {
-    dpdfile4<double> W;
+    dpdfile4 W;
     int *occpi, *virtpi;
     int i, j, m, n;
     int I, J, M, N;

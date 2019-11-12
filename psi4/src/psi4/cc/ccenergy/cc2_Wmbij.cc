@@ -490,7 +490,7 @@ void CCEnergyWavefunction::cc2_Wmbij_build() {
 }
 
 void CCEnergyWavefunction::purge_cc2_Wmbij() {
-    dpdfile4<double> W;
+    dpdfile4 W;
     int *occpi, *virtpi;
     int b, i, j, m;
     int B, I, J, M;

@@ -199,7 +199,7 @@ void CCEnergyWavefunction::cc3_Wamef() {
 }
 
 void CCEnergyWavefunction::purge_Wamef() {
-    dpdfile4<double> W;
+    dpdfile4 W;
     int a, e, f, m;
     int A, E, F, M;
     int asym, esym, fsym, msym;
