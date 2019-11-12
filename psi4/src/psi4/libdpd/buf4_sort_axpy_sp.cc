@@ -95,7 +95,7 @@ namespace psi {
 */
 
 int DPD::buf4_sort_axpy_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
-                        double alpha) {
+                        float alpha) {
     int h, nirreps, row, col, my_irrep, r_irrep;
     int p, q, r, s, P, Q, R, S, pq, rs, sr, pr, qs, qp, rq, qr, ps, sp, rp, sq;
     int Gp, Gq, Gr, Gs, Gpq, Grs, Gsr, Gpr, Gqs, Grq, Gqr, Gps, Gsp, Grp, Gsq;
