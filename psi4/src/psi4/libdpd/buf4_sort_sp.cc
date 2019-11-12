@@ -940,7 +940,7 @@ int DPD::buf4_sort_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index,
                                 q = OutBuf.params->roworb[Gpq][pq + out_row_start][1];
                                 qp = InBuf->params->rowidx[q][p] - in_row_start;
                                 if (qp >= 0 && qp < rows_per_bucket) {
-                                    C_DCOPY(OutBuf.params->coltot[Grs], InBuf->matrix[Gpq][qp], 1,
+                                    C_SCOPY(OutBuf.params->coltot[Grs], InBuf->matrix[Gpq][qp], 1,
                                             OutBuf.matrix[Gpq][pq], 1);
                                 }
                             }
