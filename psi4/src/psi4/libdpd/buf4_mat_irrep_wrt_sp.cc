@@ -150,7 +150,7 @@ int DPD::buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep) {
              sizeof(double)*rowtot*coltot);
     */
             else {
-                Buf->file.matrix[irrep] = Buf->matrix[irrep];
+                Buf->file_sp.matrix[irrep] = Buf->matrix[irrep];
                 file4_mat_irrep_wrt(&(Buf->file), irrep);
             }
 
@@ -177,7 +177,7 @@ int DPD::buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep) {
                     value = Buf->matrix[irrep][bufpq][bufrs];
 
                     /* Assign the value */
-                    Buf->file.matrix[irrep][filerow][rs] = value;
+                    Buf->file_sp.matrix[irrep][filerow][rs] = value;
                 }
 
                 /* Write out the row */
@@ -213,7 +213,7 @@ int DPD::buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep) {
                     value = Buf->matrix[irrep][bufpq][bufrs];
 
                     /* Assign the value */
-                    Buf->file.matrix[irrep][filerow][rs] = permute * value;
+                    Buf->file_sp.matrix[irrep][filerow][rs] = permute * value;
                 }
 
                 /* Write out the row */
@@ -243,7 +243,7 @@ int DPD::buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep) {
                     value = Buf->matrix[irrep][bufpq][bufrs];
 
                     /* Assign the value */
-                    Buf->file.matrix[irrep][filerow][rs] = value;
+                    Buf->file_sp.matrix[irrep][filerow][rs] = value;
                 }
 
                 /* Write out the row */
@@ -276,7 +276,7 @@ int DPD::buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep) {
                     value = Buf->matrix[irrep][bufpq][bufrs];
 
                     /* Assign the value */
-                    Buf->file.matrix[irrep][filerow][rs] = value;
+                    Buf->file_sp.matrix[irrep][filerow][rs] = value;
                 }
 
                 /* Write out the row */
@@ -308,7 +308,7 @@ int DPD::buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep) {
                     value = Buf->matrix[irrep][bufpq][bufrs];
 
                     /* Assign the value */
-                    Buf->file.matrix[irrep][filerow][rs] = value;
+                    Buf->file_sp.matrix[irrep][filerow][rs] = value;
                 }
 
                 /* Write out the row */
@@ -353,7 +353,7 @@ int DPD::buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep) {
                     value = Buf->matrix[irrep][bufpq][bufrs];
 
                     /* Assign the value */
-                    Buf->file.matrix[irrep][filerow][rs] = value;
+                    Buf->file_sp.matrix[irrep][filerow][rs] = value;
                 }
 
                 /* Write out the row */
