@@ -188,7 +188,7 @@ int DPD::contract244_sp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z
         if (incore) {
             /*       dpd_buf4_scm(Z, beta); */
             buf4_mat_irrep_init_sp(Z, hzbuf);
-            if (std::fabs(beta) > 0.0) buf4_mat_irrep_rd(Z, hzbuf);
+            if (std::fabs(beta) > 0.0) buf4_mat_irrep_rd_sp(Z, hzbuf);
             if (Ztrans) {
                 trans4_mat_irrep_init_sp(&Zt, hzbuf);
                 trans4_mat_irrep_rd_sp(&Zt, hzbuf);
@@ -226,7 +226,7 @@ int DPD::contract244_sp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z
 
             if (sum_Y == 0) {
                 buf4_mat_irrep_init_sp(Y, hybuf);
-                buf4_mat_irrep_rd_Sp(Y, hybuf);
+                buf4_mat_irrep_rd_sp(Y, hybuf);
                 buf4_mat_irrep_shift13_sp(Y, hybuf);
                 Ymat = Y->shift.matrix[hybuf];
                 Ytrans = 0;
@@ -363,7 +363,6 @@ int DPD::contract244_sp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z
 
             if (Ztrans) {
                 buf4_mat_irrep_init_sp(Z, hzbuf);
-                buf4_mat_irrep_init_sp(Z_tmp, hzbuf);
                 trans4_mat_irrep_wrt_sp(&Zt, hzbuf);
                 trans4_mat_irrep_close_sp(&Zt, hzbuf);
             }

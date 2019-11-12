@@ -1677,7 +1677,7 @@ int DPD::buf4_sort_axpy_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices i
 
                         /*	  mat_print(OutBuf.matrix[Gpq], out_rows_per_bucket, OutBuf.params->coltot[Grs],
                          * "outfile"); */
-                        buf4_mat_irrep_wrt_block(&OutBuf, Gpq, out_row_start, out_rows_per_bucket);
+                        buf4_mat_irrep_wrt_block_sp(&OutBuf, Gpq, out_row_start, out_rows_per_bucket);
                     }
                     if (out_rows_left) {
                         out_row_start = n * out_rows_per_bucket;

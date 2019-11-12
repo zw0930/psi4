@@ -1955,9 +1955,9 @@ int DPD::buf4_sort_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index,
 
     if (incore) {
         for (h = 0; h < nirreps; h++) {
-            buf4_mat_irrep_wrt(&OutBuf, h);
-            buf4_mat_irrep_close(&OutBuf, h);
-            buf4_mat_irrep_close(InBuf, h);
+            buf4_mat_irrep_wrt_sp(&OutBuf, h);
+            buf4_mat_irrep_close_sp(&OutBuf, h);
+            buf4_mat_irrep_close_sp(InBuf, h);
         }
     }
 
@@ -1970,8 +1970,8 @@ int DPD::buf4_sort_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index,
     return 0;
 }
 
-int DPD::buf4_sort(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, string pq, string rs, const char *label) {
-    return buf4_sort(InBuf, outfilenum, index, pairnum(pq), pairnum(rs), label);
+int DPD::buf4_sort_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index, string pq, string rs, const char *label) {
+    return buf4_sort_sp(InBuf, outfilenum, index, pairnum(pq), pairnum(rs), label);
 }
 
 }  // namespace psi
