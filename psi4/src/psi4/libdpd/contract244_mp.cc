@@ -426,7 +426,7 @@ int DPD::contract244_mp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *
                     nlinks = Y->params->rpi[GrY];
 		   
   		    // TMP: temporarily holds the product of X and Y in single-precision 
-                    TMP = block_dpd_block_matrix_sp(nrows, ncols);
+                    TMP = dpd_block_matrix_sp(nrows, ncols);
 
                     rowx = Y->params->rpi[GrY];
                     colx = Y->params->spi[Gs];
@@ -464,5 +464,5 @@ int DPD::contract244_mp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *
     return 0;
 }
 
-}
+
 }

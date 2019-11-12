@@ -132,13 +132,13 @@ int DPD::contract222_mp(dpdfile2<float> *X, dpdfile2<float> *Y, dpdfile2<double>
         if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx ^ symlink]) {
             C_SGEMM(Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
                     numlinks[Hx ^ symlink], alpha, &(X->matrix[Hx][0][0]), X->params->coltot[Hx ^ GX],
-                    &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], 0, &TMP,
+                    &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], 0, &(TMP[0][0]),
                     Z->params->coltot[Hz ^ GZ]);
         }
        
         // Cast and add the matrix to Z
         for (row = 0; row < Z->params->rowtot[Hz]; row++){
-		for (col= 0; col < Z->params->coltot[Hz,GZ]){
+		for (col= 0; col < Z->params->coltot[Hz,GZ]; col++){
 		    Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
 		}
 	} 

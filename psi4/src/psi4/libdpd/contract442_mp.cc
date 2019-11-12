@@ -253,12 +253,12 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                 newmm_rking_sp(Xmat[Hx], Xtrans, Ymat[Hy], Ytrans, TMP, Z->params->rowtot[Hz], numlinks[Hx],
                             Z->params->coltot[Hz ^ GZ], alpha, 0);
             }
-            for (row = 0; row < Z->params->rowtot[Hz]){
-                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
+            for (row = 0; row < Z->params->rowtot[Hz]; row++){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]; col++){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
-            free_dpd_block_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+            free_dpd_block_sp(TMP, Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
         else
             for (Hx = 0; Hx < nirreps; Hx++) {
 #ifdef DPD_DEBUG
@@ -308,7 +308,7 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
-            free_dpd_block_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+            free_dpd_block_sp(TMP, Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
 
                 /*
         newmm(Xmat[Hx], Xtrans, Ymat[Hy], Ytrans,

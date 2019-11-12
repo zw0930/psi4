@@ -202,6 +202,6 @@ void CCEnergyWavefunction::sort_amps_sp() {
         global_dpd_->buf4_close_sp(&t2);
 
     } 
-
+}
 }  // namespace ccenergy
 }  // namespace psi
