@@ -351,7 +351,7 @@ int DPD::contract244_mp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *
                         } else if (Xtrans && !Ytrans) {
                             C_SGEMM('t', 'n', numrows[Hz], numcols[Hz], numlinks[Hx ^ symlink], alpha,
                                     &(X->matrix[Hx][0][0]), numrows[Hz], &(Ymat[Hy][0][0]), numcols[Hz], 0,
-                                    &TMP([0][0]), numcols[Hz]);
+                                    &(TMP[0][0]), numcols[Hz]);
                         } else if (!Xtrans && Ytrans) {
                             C_SGEMM('n', 't', numrows[Hz], numcols[Hz], numlinks[Hx ^ symlink], alpha,
                                     &(X->matrix[Hx][0][0]), numlinks[Hx ^ symlink], &(Ymat[Hy][0][0]),
@@ -464,5 +464,5 @@ int DPD::contract244_mp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *
     return 0;
 }
 
-
+}
 }

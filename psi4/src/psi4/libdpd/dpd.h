@@ -582,7 +582,7 @@ class PSI_API DPD {
 
     int contract222_mp(dpdfile2<float> *X, dpdfile2<float> *Y, dpdfile2<double> *Z, int target_X, int target_Y, float alpha, double beta);
     int contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *Z, int target_X, int target_Y, float alpha, double beta);
-    int contract422_mp(dpdbuf4<float> *X, dpdfile2<double> *Y, dpdfile2<double> *Z, int trans_Y, int trans_Z, float alpha, double beta);
+    int contract422_mp(dpdbuf4<float> *X, dpdfile2<float> *Y, dpdfile2<double> *Z, int trans_Y, int trans_Z, float alpha, double beta);
     int contract244_mp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z, int sum_X, int sum_Y, int trans_Z, float alpha, double beta);
     int contract424_mp(dpdbuf4<float> *X, dpdfile2<float> *Y, dpdbuf4<double> *Z, int sum_X, int sum_Y, int trans_Z, float alpha, double beta);
     int contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z, int target_X, int target_Y, float alpha, double beta);

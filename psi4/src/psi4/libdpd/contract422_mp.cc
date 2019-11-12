@@ -60,7 +60,7 @@ int DPD::contract422_mp(dpdbuf4<float> *X, dpdfile2<float> *Y, dpdfile2<double> 
     float **TMP;
     float value;
     double value_double;
-    int row, col;
+
 #ifdef DPD_DEBUG
     int *yrow, *ycol, *zrow, *zcol;
 #endif

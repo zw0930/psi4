@@ -128,22 +128,22 @@ int DPD::contract222_mp(dpdfile2<float> *X, dpdfile2<float> *Y, dpdfile2<double>
         }
 
         // TMP: temporarily holds the product of X and Y in single-precision
-        TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz], Z->paramscoltot[Hz,Gz]);
+        TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz], Z->params->coltot[Hz,GZ]);
         if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx ^ symlink]) {
             C_SGEMM(Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
                     numlinks[Hx ^ symlink], alpha, &(X->matrix[Hx][0][0]), X->params->coltot[Hx ^ GX],
-                    &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], 0, TMP,
+                    &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], 0, &TMP,
                     Z->params->coltot[Hz ^ GZ]);
         }
        
         // Cast and add the matrix to Z
         for (row = 0; row < Z->params->rowtot[Hz]; row++){
-		for (col= 0; col < Z->params->coltot[Hz,Gz]){
+		for (col= 0; col < Z->params->coltot[Hz,GZ]){
 		    Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
 		}
 	} 
 	
-        free_dpd_block_sp(TMP, Z->params->rowtot[Hz], Z->paramscoltot[Hz,Gz]);
+        free_dpd_block_sp(TMP, Z->params->rowtot[Hz], Z->params->coltot[Hz,GZ]);
         /*
     newmm(X->matrix[Hx], Xtrans, Y->matrix[Hy], Ytrans, Z->matrix[Hz],
         Z->params->rowtot[Hz], numlinks[Hx^symlink], Z->params->coltot[Hz^GZ],
