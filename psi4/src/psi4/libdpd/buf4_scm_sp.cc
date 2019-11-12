@@ -118,7 +118,7 @@ int DPD::buf4_scm_sp(dpdbuf4<float> *InBuf, float alpha) {
             length = ((long)InBuf->params->rowtot[h]) * ((long)InBuf->params->coltot[h ^ all_buf_irrep]);
             if (length) {
                 X = &(InBuf->matrix[h][0][0]);
-                C_DSCAL(length, alpha, X, 1);
+                C_SSCAL(length, alpha, X, 1);
             }
 
             buf4_mat_irrep_wrt_sp(InBuf, h);
@@ -133,7 +133,7 @@ int DPD::buf4_scm_sp(dpdbuf4<float> *InBuf, float alpha) {
 
                 if (length) {
                     X = &(InBuf->matrix[h][0][0]);
-                    C_DSCAL(length, alpha, X, 1);
+                    C_SSCAL(length, alpha, X, 1);
                 }
                 buf4_mat_irrep_row_wrt_sp(InBuf, h, pq);
             }
