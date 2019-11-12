@@ -442,9 +442,7 @@ class PSI_API DPD {
     int buf4_sort_ooc(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label);
     int buf4_sort_axpy(dpdbuf4<double> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
                        double alpha);
-     int buf4_sort_axpy_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index, int pqnum, int rsnum, const char *label,
-                       float alpha);
-
+    
 //**
     int buf4_axpy(dpdbuf4<double> *BufX, dpdbuf4<double> *BufY, double alpha);
     int buf4_axpbycz(dpdbuf4<double> *FileA, dpdbuf4<double> *FileB, dpdbuf4<double> *FileC, double a, double b, double c);
