@@ -77,6 +77,10 @@ extern void F_DSYMM(char *side, char *uplo, int *m, int *n, double *alpha, doubl
                     double *beta, double *C, int *ldc);
 extern void F_DROT(int *ntot, double *x, int *incx, double *y, int *incy, double *cotheta, double *sintheta);
 extern void F_DSCAL(int *n, double *alpha, double *vec, int *inc);
+// Add SSCAL
+extern void F_SSCAL(int *n, float *alpha, float *vec, int *inc);
+
+
 extern void F_DGEMV(char *transa, int *m, int *n, double *alpha, double *A, int *lda, double *X, int *inc_x,
                     double *beta, double *Y, int *inc_y);
 // Add SGEMV
