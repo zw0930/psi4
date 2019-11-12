@@ -44,11 +44,11 @@ namespace cclambda {
 
 void cc2_fmiL2(int L_irr) {
     int h, m;
-    dpdbuf4 Lijab, LIJAB, LIjAb;
-    dpdbuf4 newLijab, newLIJAB, newLIjAb;
-    dpdfile2 fij, fIJ, F;
-    dpdbuf4 X, X1, X2;
-    dpdbuf4 L2, newL2;
+    dpdbuf4<double>Lijab, LIJAB, LIjAb;
+    dpdbuf4<double>newLijab, newLIJAB, newLIjAb;
+    dpdfile2<double>fij, fIJ, F;
+    dpdbuf4<double>X, X1, X2;
+    dpdbuf4<double>L2, newL2;
 
     /* RHS -= P(ij)*Limab*Fjm */
     if (params.ref == 0) { /** RHF **/

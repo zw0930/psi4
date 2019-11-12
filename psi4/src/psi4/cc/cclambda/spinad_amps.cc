@@ -52,8 +52,8 @@ namespace cclambda {
 */
 
 void spinad_amps() {
-    dpdfile2 T1;
-    dpdbuf4 T2;
+    dpdfile2<double>T1;
+    dpdbuf4<double>T2;
 
     if (params.ref == 0) { /** RHF **/
 

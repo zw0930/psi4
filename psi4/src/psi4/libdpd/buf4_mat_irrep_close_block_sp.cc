@@ -41,7 +41,7 @@ namespace psi {
 ** a matrix for a single irrep of a dpd four-index buffer.
 **
 ** Arguments:
-**   dpdbuf4 *Buf: A pointer to the input dpdbuf4.
+**   dpdbuf4<double>*Buf: A pointer to the input dpdbuf4.
 **   int irrep: The irrep number to be freed.
 **
 ** Note that shift information is freed here as well.

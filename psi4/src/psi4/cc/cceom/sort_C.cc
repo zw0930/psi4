@@ -45,7 +45,7 @@ namespace cceom {
 #include "psi4/physconst.h"
 
 void sort_C(int C_index, int C_irr) {
-    dpdbuf4 CMNEF, Cmnef, CMnEf, CMnfE, CMneF, C2;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, CMnfE, CMneF, C2;
     char lbl[32];
 
     /* Copy used in WmbejDD */

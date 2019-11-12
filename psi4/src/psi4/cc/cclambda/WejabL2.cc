@@ -69,9 +69,9 @@ namespace cclambda {
 void WejabL2(int L_irr) {
     int GW, GL1, GZ, Gej, Gab, Gi, Ge, Gij, Gj, Ga;
     int e, E, i, I, num_j, num_i, num_e, nlinks;
-    dpdbuf4 W, L2;
-    dpdfile2 LIA, Lia;
-    dpdbuf4 Z, Z1, Z2;
+    dpdbuf4<double>W, L2;
+    dpdfile2<double>LIA, Lia;
+    dpdbuf4<double>Z, Z1, Z2;
 
     /* RHS += P(ij) Lie * Wejab */
     if (params.ref == 0) { /** RHF **/

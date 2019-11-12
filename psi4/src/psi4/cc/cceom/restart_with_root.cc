@@ -49,8 +49,8 @@ namespace psi {
 namespace cceom {
 
 void restart_with_root(int prop_root, int C_irr) {
-    dpdfile2 CME, Cme;
-    dpdbuf4 CMNEF, Cmnef, CMnEf;
+    dpdfile2<double>CME, Cme;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf;
     char lbl[32];
 
     outfile->Printf("Copying root %d to start of EOM_Cxxx files.\n", prop_root + 1);
@@ -124,8 +124,8 @@ void restart_with_root(int prop_root, int C_irr) {
 */
 
 void save_C_ccsd(int prop_root, int C_irr) {
-    dpdfile2 CME, Cme;
-    dpdbuf4 CMNEF, Cmnef, CMnEf;
+    dpdfile2<double>CME, Cme;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf;
     char lbl[32];
 
     outfile->Printf("Copying root %d to CC3_MISC file.\n", prop_root + 1);

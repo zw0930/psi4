@@ -60,8 +60,8 @@ double ET_ABB() {
     double E_jkmb, E_jkmc, E_kima, E_ikmb, E_ikmc, E_jima, E_ijmb, E_ijmc;
     double t_ia, t_jb, t_jc, t_kb, t_kc;
     double D_jkbc, D_ikac, D_ikab, D_ijac, D_ijab;
-    dpdbuf4 T2AB, T2BB, Faints, Fints, Eaints, Eints, Daints, Dints;
-    dpdfile2 T1A, T1B, fIJ, fij, fAB, fab;
+    dpdbuf4<double>T2AB, T2BB, Faints, Fints, Eaints, Eints, Daints, Dints;
+    dpdfile2<double>T1A, T1B, fIJ, fij, fAB, fab;
 
     nirreps = moinfo.nirreps;
     occpi = moinfo.occpi;

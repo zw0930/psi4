@@ -44,8 +44,8 @@ namespace cclambda {
 double pseudoenergy(const struct L_Params& L_params) {
     double LIJAB_energy, Lijab_energy, LIjAb_energy;
     double LIA_energy = 0.0, Lia_energy = 0.0, tval;
-    dpdbuf4 LIJAB, Lijab, LIjAb, D;
-    dpdfile2 Lia, LIA, Fme, FME;
+    dpdbuf4<double>LIJAB, Lijab, LIjAb, D;
+    dpdfile2<double>Lia, LIA, Fme, FME;
     int L_irr;
     L_irr = L_params.irrep;
 

@@ -42,7 +42,7 @@ namespace psi {
 namespace cceom {
 
 void cc2_hbar_extra() {
-    dpdbuf4 W1, W2, W;
+    dpdbuf4<double>W1, W2, W;
 
     if (params.ref == 0) { /** RHF **/
 

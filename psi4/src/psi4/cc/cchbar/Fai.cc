@@ -51,11 +51,11 @@ void Fae_for_Fai();
 void Fmi_for_Fai();
 
 void Fai_build() {
-    dpdfile2 newtIA, newtia, tIA, tia, fIA, fia;
-    dpdfile2 FAE, Fae, FMI, Fmi, FME, Fme;
-    dpdfile2 dIA, dia;
-    dpdbuf4 tIJAB, tijab, tIjAb, tiJaB, T2;
-    dpdbuf4 C, C_anti, D, F_anti, F, E_anti, E, Z;
+    dpdfile2<double>newtIA, newtia, tIA, tia, fIA, fia;
+    dpdfile2<double>FAE, Fae, FMI, Fmi, FME, Fme;
+    dpdfile2<double>dIA, dia;
+    dpdbuf4<double>tIJAB, tijab, tIjAb, tiJaB, T2;
+    dpdbuf4<double>C, C_anti, D, F_anti, F, E_anti, E, Z;
     int Gma, Gmi, Gm, Gi, Ga, ma, m, a, A, nrows, ncols, h, e, nirreps;
     int *occpi, *virtpi, *openpi;
     double dotval;
@@ -418,13 +418,13 @@ void Fae_for_Fai() {
     int h, a, e, nirreps;
     int ma, fe, ef, m, f, M, A, Gm, Ga, Ge, Gf, Gma, nrows, ncols;
     double *X;
-    dpdfile2 tIA, tia;
-    dpdfile2 FME, Fme;
-    dpdfile2 fAB, fab, fIA, fia;
-    dpdfile2 FAE, Fae;
-    dpdfile2 FAEt, Faet;
-    dpdbuf4 F_anti, F, D_anti, D;
-    dpdbuf4 tautIJAB, tautijab, tautIjAb, taut;
+    dpdfile2<double>tIA, tia;
+    dpdfile2<double>FME, Fme;
+    dpdfile2<double>fAB, fab, fIA, fia;
+    dpdfile2<double>FAE, Fae;
+    dpdfile2<double>FAEt, Faet;
+    dpdbuf4<double>F_anti, F, D_anti, D;
+    dpdbuf4<double>tautIJAB, tautijab, tautIjAb, taut;
 
     nirreps = moinfo.nirreps;
 
@@ -700,8 +700,8 @@ void Fae_for_Fai() {
 }
 
 void Fme_for_Fai() {
-    dpdfile2 FME, Fme, fIA, fia, tIA, tia;
-    dpdbuf4 D_anti, D;
+    dpdfile2<double>FME, Fme, fIA, fia, tIA, tia;
+    dpdbuf4<double>D_anti, D;
 
     if (params.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&fIA, PSIF_CC_OEI, 0, 0, 1, "fIA");
@@ -795,10 +795,10 @@ void Fme_for_Fai() {
 
 void Fmi_for_Fai() {
     int h, m, i;
-    dpdfile2 FMI, Fmi, FMIt, Fmit, fIJ, fij, fIA, fia;
-    dpdfile2 tIA, tia, FME, Fme;
-    dpdbuf4 E_anti, E, D_anti, D;
-    dpdbuf4 tautIJAB, tautijab, tautIjAb;
+    dpdfile2<double>FMI, Fmi, FMIt, Fmit, fIJ, fij, fIA, fia;
+    dpdfile2<double>tIA, tia, FME, Fme;
+    dpdbuf4<double>E_anti, E, D_anti, D;
+    dpdbuf4<double>tautIJAB, tautijab, tautIjAb;
 
     if (params.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&fIJ, PSIF_CC_OEI, 0, 0, 0, "fIJ");

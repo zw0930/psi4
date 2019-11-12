@@ -46,8 +46,8 @@ namespace cclambda {
 int CCLambdaWavefunction::converged(int L_irr) {
     int row, col, h, nirreps;
     double rms = 0.0;
-    dpdfile2 L1, L1old;
-    dpdbuf4 L2, L2old;
+    dpdfile2<double>L1, L1old;
+    dpdbuf4<double>L2, L2old;
 
     nirreps = moinfo.nirreps;
 

@@ -38,7 +38,7 @@ namespace psi {
 /* dpd_file2_print(): Prints out data for all irreps of a two-index dpdfile.
 **
 ** Arguments:
-**   struct dpdfile2 *File: A pointer to the dpdfile to be printed.
+**   struct dpdfile2<double>*File: A pointer to the dpdfile to be printed.
 **   std::string out_fname: The formatted output file stream.
 */
 

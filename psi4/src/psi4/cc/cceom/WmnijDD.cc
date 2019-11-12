@@ -45,9 +45,9 @@ namespace cceom {
    from Wmnij*Cmnab to a Sigma vector stored at Sigma plus 'i' */
 
 void WmnijDD(int i, int C_irr) {
-    dpdbuf4 SIJAB, Sijab, SIjAb;
-    dpdbuf4 CMNEF, Cmnef, CMnEf;
-    dpdbuf4 WMNIJ, Wmnij, WMnIj;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf;
+    dpdbuf4<double>WMNIJ, Wmnij, WMnIj;
     char CMNEF_lbl[32], Cmnef_lbl[32], CMnEf_lbl[32];
     char SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32];
 

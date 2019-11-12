@@ -41,9 +41,9 @@ namespace psi {
 namespace cclambda {
 
 void cc2_Gai_build(int L_irr) {
-    dpdbuf4 tIJAB, tijab, tiJaB, tIjAb, tijAB, tIJab, t2;
-    dpdfile2 G, GAI, Gai, L1, LIA, Lia;
-    dpdbuf4 LIJAB, Lijab, LIjAb, LiJaB;
+    dpdbuf4<double>tIJAB, tijab, tiJaB, tIjAb, tijAB, tIJab, t2;
+    dpdfile2<double>G, GAI, Gai, L1, LIA, Lia;
+    dpdbuf4<double>LIJAB, Lijab, LIjAb, LiJaB;
 
     if (params.ref == 0) {
         global_dpd_->file2_init(&G, PSIF_CC_TMP0, L_irr, 1, 0, "CC2 GAI");

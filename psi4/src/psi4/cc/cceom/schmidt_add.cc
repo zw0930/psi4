@@ -46,18 +46,18 @@ namespace cceom {
 numCs C vectors and adds the new vector to the C list if its norm is greater
 than params.residual_tol */
 
-extern double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
+extern double norm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
 
-extern void scm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a);
+extern void scm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf, double a);
 
 /* use for ROHF and UHF */
-void schmidt_add(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, int *numCs, int irrep) {
+void schmidt_add(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, int *numCs, int irrep) {
     double dotval;
     double norm;
     int i, I;
-    dpdfile2 Cme, CME, Cme2, CME2;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, CMNEF2, Cmnef2, CMnEf2;
-    dpdbuf4 CMnEf_buf;
+    dpdfile2<double>Cme, CME, Cme2, CME2;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, CMNEF2, Cmnef2, CMnEf2;
+    dpdbuf4<double>CMnEf_buf;
     char CME_lbl[32], Cme_lbl[32], CMNEF_lbl[32], Cmnef_lbl[32], CMnEf_lbl[32];
 
     for (i = 0; i < *numCs; i++) {
@@ -125,13 +125,13 @@ void schmidt_add(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, d
     return;
 }
 
-void schmidt_add_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, int *numCs, int irrep) {
+void schmidt_add_RHF(dpdfile2<double>*RIA, dpdbuf4<double>*RIjAb, int *numCs, int irrep) {
     double dotval, norm, R0, C0;
     int i, I;
-    dpdfile2 CME;
-    dpdbuf4 CMnEf, CAB1, CAB2;
-    dpdfile2 R1;
-    dpdbuf4 R2a, R2b;
+    dpdfile2<double>CME;
+    dpdbuf4<double>CMnEf, CAB1, CAB2;
+    dpdfile2<double>R1;
+    dpdbuf4<double>R2a, R2b;
     char CME_lbl[32], Cme_lbl[32], CMNEF_lbl[32], Cmnef_lbl[32], CMnEf_lbl[32], C0_lbl[32];
 
     if (params.full_matrix) psio_read_entry(PSIF_EOM_R, "R0", (char *)&R0, sizeof(double));

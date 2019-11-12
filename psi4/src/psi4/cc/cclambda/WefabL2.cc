@@ -109,13 +109,13 @@ namespace cclambda {
 */
 
 void WefabL2(int L_irr) {
-    dpdbuf4 Lijab, LIJAB, LIjAb;
-    dpdbuf4 newLijab, newLIJAB, newLIjAb;
-    dpdbuf4 Tau, T2, Z, Z1, Z2, L, L2, B, D, F, Ltmp;
-    dpdfile2 tIA, tia;
-    dpdbuf4 tau_a, tau_s, tau;
-    dpdbuf4 B_a, B_s;
-    dpdbuf4 S, A;
+    dpdbuf4<double>Lijab, LIJAB, LIjAb;
+    dpdbuf4<double>newLijab, newLIJAB, newLIjAb;
+    dpdbuf4<double>Tau, T2, Z, Z1, Z2, L, L2, B, D, F, Ltmp;
+    dpdfile2<double>tIA, tia;
+    dpdbuf4<double>tau_a, tau_s, tau;
+    dpdbuf4<double>B_a, B_s;
+    dpdbuf4<double>S, A;
     int h;
     double **B_diag, **tau_diag;
     int ij, Gc, C, c, cc;

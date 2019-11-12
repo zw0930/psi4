@@ -66,8 +66,8 @@ double ET_UHF_AAA() {
     double D_jkbc, D_jkac, D_jkba, D_ikbc, D_ikac, D_ikba, D_jibc, D_jiac, D_jiba;
     double t_jkbc, t_jkac, t_jkba, t_ikbc, t_ikac, t_ikba, t_jibc, t_jiac, t_jiba;
     int nrows, ncols, nlinks;
-    dpdbuf4 T2, Fints, Eints, Dints;
-    dpdfile2 fIJ, fAB, fIA, T1;
+    dpdbuf4<double>T2, Fints, Eints, Dints;
+    dpdfile2<double>fIJ, fAB, fIA, T1;
     double ***WABC, ***WBCA, ***WACB, ***VABC;
     int nijk, mijk;
     FILE *ijkfile;

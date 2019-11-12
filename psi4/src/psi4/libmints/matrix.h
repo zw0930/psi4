@@ -210,14 +210,14 @@ class PSI_API Matrix : public std::enable_shared_from_this<Matrix> {
     /**
      * Contructs a Matrix from a dpdfile2
      *
-     * @param inFile dpdfile2 object to replicate (must already be initialized).
+     * @param inFile dpdfile2<double>object to replicate (must already be initialized).
      */
     Matrix(dpdfile2<double>* inFile);
 
     /**
      * Contructs a Matrix from a dpdbuf4
      *
-     * @param inBuf dpdbuf4 object to replicate (must already be initialized).
+     * @param inBuf dpdbuf4<double>object to replicate (must already be initialized).
      */
     Matrix(dpdbuf4<double> *inBuf);
 
@@ -1073,10 +1073,10 @@ class PSI_API Matrix : public std::enable_shared_from_this<Matrix> {
     const double& operator()(int h, int i, int j) const { return matrix_[h][i][j]; }
     /// @}
 
-    /// Writes this to the dpdfile2 given
+    /// Writes this to the dpdfile2<double>given
     void write_to_dpdfile2(dpdfile2<double>* outFile);
 
-    /// Writes this to the dpdbuf4 given
+    /// Writes this to the dpdbuf4<double>given
     void write_to_dpdbuf4(dpdbuf4<double> *outBuf);
 
     /// @{

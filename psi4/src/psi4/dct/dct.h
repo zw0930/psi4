@@ -107,9 +107,10 @@ class DCTSolver : public Wavefunction {
     void dpd_buf4_add(dpdbuf4 *A, dpdbuf4 *B, double alpha);
     void half_transform(dpdbuf4 *A, dpdbuf4 *B, SharedMatrix &C1, SharedMatrix &C2, int *mospi_left, int *mospi_right,
                         int **so_row, int **mo_row, bool backwards, double alpha, double beta);
-    void file2_transform(dpdfile2 *A, dpdfile2 *B, SharedMatrix C, bool backwards);
-    void AO_contribute(dpdbuf4 *tau1_AO, dpdbuf4 *tau2_AO, int p, int q, int r, int s, double value,
-                       dpdfile2 * = nullptr, dpdfile2 * = nullptr, dpdfile2 * = nullptr);
+
+    void file2_transform(dpdfile2<double> *A, dpdfile2<double> *B, SharedMatrix C, bool backwards);
+    void AO_contribute(dpdbuf4<double> *tau1_AO, dpdbuf4<double> *tau2_AO, int p, int q, int r, int s, double value,
+                       dpdfile2<double> * = nullptr, dpdfile2<double> * = nullptr, dpdfile2<double> * = nullptr);
     // void AO_contribute(dpdfile2 *tau1_AO, dpdfile2 *tau2_AO, int p, int q,
     //        int r, int s, double value);
     bool correct_mo_phases(bool dieOnError = true);

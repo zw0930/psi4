@@ -40,9 +40,9 @@ namespace psi {
 ** dpdbuf4's.
 **
 ** Arguments:
-**   dpdbuf4 *FileA: A pointer to the leftmost dpdbuf4.
-**   dpdbuf4 *FileB: A pointer to the rightmost summand dpdbuf4.
-**   dpdbuf4 *FileC: A pointer to the target dpdbuf4.
+**   dpdbuf4<double>*FileA: A pointer to the leftmost dpdbuf4.
+**   dpdbuf4<double>*FileB: A pointer to the rightmost summand dpdbuf4.
+**   dpdbuf4<double>*FileC: A pointer to the target dpdbuf4.
 **   double a, b, c, scalar prefactors
 */
 int DPD::buf4_axpbycz(dpdbuf4<double> *FileA, dpdbuf4<double> *FileB, dpdbuf4<double> *FileC, double a, double b, double c) {

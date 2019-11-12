@@ -52,10 +52,10 @@ namespace cclambda {
 */
 
 void GaeL2(int L_irr) {
-    dpdbuf4 L2, newLijab, newLIJAB, newLIjAb, newL2;
-    dpdbuf4 D, Z;
-    dpdfile2 GAE, Gae, G;
-    dpdbuf4 X1, X2;
+    dpdbuf4<double>L2, newLijab, newLIJAB, newLIjAb, newL2;
+    dpdbuf4<double>D, Z;
+    dpdfile2<double>GAE, Gae, G;
+    dpdbuf4<double>X1, X2;
 
     /* RHS += P(ab)<ij||ae>Gbe */
     if (params.ref == 0) { /** RHF **/
@@ -176,10 +176,10 @@ void GaeL2(int L_irr) {
 */
 
 void GmiL2(int L_irr) {
-    dpdbuf4 L2, newLijab, newLIJAB, newLIjAb, newL2;
-    dpdbuf4 D, Z;
-    dpdfile2 GMI, Gmi, G;
-    dpdbuf4 X1, X2;
+    dpdbuf4<double>L2, newLijab, newLIJAB, newLIjAb, newL2;
+    dpdbuf4<double>D, Z;
+    dpdfile2<double>GMI, Gmi, G;
+    dpdbuf4<double>X1, X2;
 
     /* RHS -= P(ij) * <im||ab> * Gmj */
     if (params.ref == 0) { /** RHF **/

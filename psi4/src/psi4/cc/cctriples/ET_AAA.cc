@@ -62,8 +62,8 @@ double ET_AAA() {
     double E_jkma, E_jkmb, E_jkmc, E_ikma, E_ikmb, E_ikmc, E_jima, E_jimb, E_jimc;
     double t_ia, t_ib, t_ic, t_ja, t_jb, t_jc, t_ka, t_kb, t_kc;
     double D_jkbc, D_jkac, D_jkba, D_ikbc, D_ikac, D_ikba, D_jibc, D_jiac, D_jiba;
-    dpdbuf4 T2, Fints, Eints, Dints;
-    dpdfile2 fIJ, fAB, T1;
+    dpdbuf4<double>T2, Fints, Eints, Dints;
+    dpdfile2<double>fIJ, fAB, T1;
 
     nirreps = moinfo.nirreps;
     occpi = moinfo.occpi;

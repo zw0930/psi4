@@ -44,9 +44,9 @@ namespace psi {
  ** two-index quantity, beta * Z = alpha * X * Y.
  **
  ** Arguments:
- **   dpdbuf4 *X: A pointer to the left four-index file.
- **   dpdbuf4 *Y: A pointer to the four-index buffer.
- **   dpdfile2 *Z: A pointer to the target two-index buffer.
+ **   dpdbuf4<double>*X: A pointer to the left four-index file.
+ **   dpdbuf4<double>*Y: A pointer to the four-index buffer.
+ **   dpdfile2<double>*Z: A pointer to the target two-index buffer.
  **   int target_X: Indicates which index on X is to the target (takes a value of
  **              0, 1, 2, or 3).
  **   int target_Y: Indicates which index on Y is to the target (takes a value of

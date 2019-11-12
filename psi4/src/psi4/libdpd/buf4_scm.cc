@@ -43,7 +43,7 @@ namespace psi {
 /* dpd_buf4_scm(): Multiplies every element of a four-index dpdbuf by a scalar.
 **
 ** Arguments:
-**   dpdbuf4 *InBuf: A pointer to the dpdbuf.
+**   dpdbuf4<double>*InBuf: A pointer to the dpdbuf.
 **   double alpha: The scalar.
 **
 ** NB: This function is sometimes called automatically by the contractXXX

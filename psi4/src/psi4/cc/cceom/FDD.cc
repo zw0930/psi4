@@ -48,9 +48,9 @@ namespace cceom {
    to a Sigma vector stored at Sigma plus 'i' */
 
 void FDD(int i, int C_irr) {
-    dpdfile2 FAE, Fae, FMI, Fmi;
-    dpdbuf4 SIJAB, Sijab, SIjAb, FP, FM;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, X, X2, Z, Z2, Z3;
+    dpdfile2<double>FAE, Fae, FMI, Fmi;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb, FP, FM;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, X, X2, Z, Z2, Z3;
     char CMNEF_lbl[32], Cmnef_lbl[32], CMnEf_lbl[32], CmNeF_lbl[32];
     char SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32];
 

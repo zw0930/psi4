@@ -44,8 +44,8 @@ namespace cchbar {
 /** Wabei intermediates are stored here as (ei,ab) **/
 
 void Wabei_ROHF() {
-    dpdfile2 Fme, T1;
-    dpdbuf4 F, W, T2, B, Z, Z1, Z2, D, T, E, C;
+    dpdfile2<double>Fme, T1;
+    dpdbuf4<double>F, W, T2, B, Z, Z1, Z2, D, T, E, C;
 
     global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 10, 7, 10, 5, 1, "F <ia|bc>");
     /** <EI||AB> **/

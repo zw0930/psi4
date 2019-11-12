@@ -46,12 +46,12 @@ namespace cceom {
    of Wabej to a Sigma vector stored at Sigma plus 'i' */
 
 void WabejDS(int i, int C_irr) {
-    dpdfile2 CME, Cme;
-    dpdbuf4 SIJAB, Sijab, SIjAb;
-    dpdbuf4 WABEI, Wabei, WAbEi, WaBeI, WM, WP, Z;
+    dpdfile2<double>CME, Cme;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb;
+    dpdbuf4<double>WABEI, Wabei, WAbEi, WaBeI, WM, WP, Z;
     char CME_lbl[32], Cme_lbl[32], SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32];
     int Gej, Gab, Gij, Gj, Gi, Ge, nrows, length, E, e, I;
-    dpdbuf4 W;
+    dpdbuf4<double>W;
 
     if (params.eom_ref == 0) { /* RHF */
         sprintf(CME_lbl, "%s %d", "CME", i);

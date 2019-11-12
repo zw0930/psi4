@@ -45,10 +45,10 @@ namespace cceom {
    of Wnmje to a Sigma vector stored at Sigma plus 'i' */
 
 void WnmjeDS(int i, int C_irr) {
-    dpdfile2 CME, Cme, XNJ, Xnj;
-    dpdbuf4 SIJAB, Sijab, SIjAb, Z;
-    dpdbuf4 WMNIE, Wmnie, WMnIe, WmNiE, WM, WP, W;
-    dpdbuf4 TIJAB, TIjAb, Tijab;
+    dpdfile2<double>CME, Cme, XNJ, Xnj;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb, Z;
+    dpdbuf4<double>WMNIE, Wmnie, WMnIe, WmNiE, WM, WP, W;
+    dpdbuf4<double>TIJAB, TIjAb, Tijab;
     char CME_lbl[32], Cme_lbl[32], SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32];
     double tval;
 

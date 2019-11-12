@@ -43,8 +43,8 @@ namespace cceom {
 
 void hbar_norms() {
     double tval;
-    dpdfile2 FAE, Fae, FMI, Fmi, FME, Fme;
-    dpdbuf4 WMBIJ, Wmbij, WMbIj, WmBiJ, W;
+    dpdfile2<double>FAE, Fae, FMI, Fmi, FME, Fme;
+    dpdbuf4<double>WMBIJ, Wmbij, WMbIj, WmBiJ, W;
 
     outfile->Printf("\n");
 

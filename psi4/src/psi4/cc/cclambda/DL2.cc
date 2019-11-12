@@ -42,7 +42,7 @@ namespace psi {
 namespace cclambda {
 
 void DL2(const struct L_Params& L_params) {
-    dpdbuf4 D, Dold, X2;
+    dpdbuf4<double>D, Dold, X2;
     int L_irr;
     L_irr = L_params.irrep;
 

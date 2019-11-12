@@ -56,7 +56,7 @@ namespace ccresponse {
 
 void sort_pert(const char *pert, double **pertints, int irrep) {
     int p, q, Gp, Gq, P, Q, i;
-    dpdfile2 f;
+    dpdfile2<double>f;
     char prefix[32], lbl[32];
 
     sprintf(lbl, "%s_IJ", pert);

@@ -42,7 +42,7 @@ namespace psi {
 ** initialized by dpd_buf4_init().
 **
 ** Arguments:
-**   dpdbuf4 *Buf: A pointer to the dpdbuf4 where the data will
+**   dpdbuf4<double>*Buf: A pointer to the dpdbuf4<double>where the data will
 **                 be stored.
 **   int irrep: The irrep number to be read.
 **

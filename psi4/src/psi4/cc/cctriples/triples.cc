@@ -81,13 +81,13 @@ double T3_grad_UHF_AAB();
 double T3_grad_UHF_BBA();
 
 void T3_UHF_AAA_abc(double ***W, double ***V, int disc, int nirreps, int A, int Ga, int B, int Gb, int C, int Gc,
-                    dpdbuf4 *C2, dpdbuf4 *F, dpdbuf4 *E, dpdfile2 *C1, dpdbuf4 *D, dpdfile2 *fIA, dpdfile2 *fIJ,
-                    dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega);
+                    dpdbuf4<double>*C2, dpdbuf4<double>*F, dpdbuf4<double>*E, dpdfile2<double>*C1, dpdbuf4<double>*D, dpdfile2<double>*fIA, dpdfile2<double>*fIJ,
+                    dpdfile2<double>*fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega);
 
 void T3_UHF_AAB_abc(double ***W, double ***V, int disc, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk,
-                    dpdbuf4 *T2AA, dpdbuf4 *T2AB, dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA, dpdbuf4 *EAA,
-                    dpdbuf4 *EAB, dpdbuf4 *EBA, dpdfile2 *T1A, dpdfile2 *T1B, dpdbuf4 *DAA, dpdbuf4 *DAB, dpdfile2 *fIA,
-                    dpdfile2 *fia, dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB, dpdfile2 *fab, int *aoccpi,
+                    dpdbuf4<double>*T2AA, dpdbuf4<double>*T2AB, dpdbuf4<double>*T2BA, dpdbuf4<double>*FAA, dpdbuf4<double>*FAB, dpdbuf4<double>*FBA, dpdbuf4<double>*EAA,
+                    dpdbuf4<double>*EAB, dpdbuf4<double>*EBA, dpdfile2<double>*T1A, dpdfile2<double>*T1B, dpdbuf4<double>*DAA, dpdbuf4<double>*DAB, dpdfile2<double>*fIA,
+                    dpdfile2<double>*fia, dpdfile2<double>*fIJ, dpdfile2<double>*fij, dpdfile2<double>*fAB, dpdfile2<double>*fab, int *aoccpi,
                     int *aocc_off, int *boccpi, int *bocc_off, int *avirtpi, int *avir_off, int *bvirtpi, int *bvir_off,
                     double omega);
 void transpose_integrals();
@@ -100,7 +100,7 @@ PsiReturnType cctriples(std::shared_ptr<Wavefunction> reference_wavefunction, Op
     double ETAAA, ETAAB, ETABB, ETBBB, ET;
     long int memory;
     int **cachelist, *cachefiles;
-    dpdfile2 T1;
+    dpdfile2<double>T1;
     double **geom, *zvals, value;
     FILE *efile;
     int i, errcod, natom;

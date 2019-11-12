@@ -37,10 +37,10 @@
 
 namespace psi {
 
-/* dpd_buf4_copy(): Copies an existing four-index dpdbuf4 into another file.
+/* dpd_buf4_copy(): Copies an existing four-index dpdbuf4<double>into another file.
 **
 ** Arguments:
-**   dpdbuf4 *InBuf: A pointer to the given dpd buffer.
+**   dpdbuf4<double>*InBuf: A pointer to the given dpd buffer.
 **   int outfilenum: The PSI unit number for the new buffer.
 **   char *label: A string labelling for this buffer.
 **

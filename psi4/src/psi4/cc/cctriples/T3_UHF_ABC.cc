@@ -69,29 +69,29 @@ namespace cctriples {
  *
  *   int Gc: Irrep of C. *
  *
- *   dpdbuf4 *C2: Pointer to dpd buffer for double excitation amps, *
+ *   dpdbuf4<double>*C2: Pointer to dpd buffer for double excitation amps, *
  * ordered (AB, IJ).  N.B. This is transposed relative to the
  * ordering *   used in the T3_UHF_AAA() routine. *
  *
- *   dpdbuf4 *F: Pointer to dpd buffer for three-virtual-index *
+ *   dpdbuf4<double>*F: Pointer to dpd buffer for three-virtual-index *
  * intermediate, ordered (BC,IA). N.B. This is transposed relative *
  * to the ordering used in the T3_UHF_AAA() routine *
  *
- *   dpdbuf4 *E: Pointer to dpd buffer for three-occupied-index *
+ *   dpdbuf4<double>*E: Pointer to dpd buffer for three-occupied-index *
  * intermediate, ordered (IJ,KA). *
  *
  *   dpdfile *C1: If disconnected T3's are requested, pointer to dpd *
  * buffer for single-excitation amps. *
  *
- *   dpdbuf4 *D: If disconnected T3's are requested, pointer to dpd *
+ *   dpdbuf4<double>*D: If disconnected T3's are requested, pointer to dpd *
  * buffer for <IJ||ab> integrals. *
  *
- *   dpdfile2 *fIA: Pointer to the dpd file2 for the occ-vir block of *
+ *   dpdfile2<double>*fIA: Pointer to the dpd file2 for the occ-vir block of *
  * the Fock matrix (or other appropriate one-electron operator). *
  *
- *   dpdfile2 *fIJ: Pointer to the dpd file2 for the occ-occ block of *
+ *   dpdfile2<double>*fIJ: Pointer to the dpd file2 for the occ-occ block of *
  * the Fock matrix (or other appropriate one-electron operator). *   *
- * dpdfile2 *fAB: Pointer to the dpd file2 for the vir-vir block of *
+ * dpdfile2<double>*fAB: Pointer to the dpd file2 for the vir-vir block of *
  * the Fock matrix (or other appropriate one-electron operator). *   *
  * int *occpi: Number of occupied orbitals per irrep lookup array. *
  *
@@ -109,8 +109,8 @@ namespace cctriples {
  * ACS, December 2008. */
 
 void T3_UHF_AAA_abc(double ***W, double ***V, int disc, int nirreps, int A, int Ga, int B, int Gb, int C, int Gc,
-                    dpdbuf4 *C2, dpdbuf4 *F, dpdbuf4 *E, dpdfile2 *C1, dpdbuf4 *D, dpdfile2 *fIA, dpdfile2 *fIJ,
-                    dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega) {
+                    dpdbuf4<double>*C2, dpdbuf4<double>*F, dpdbuf4<double>*E, dpdfile2<double>*C1, dpdbuf4<double>*D, dpdfile2<double>*fIA, dpdfile2<double>*fIJ,
+                    dpdfile2<double>*fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega) {
     int h;
     int i, j, k;
     int ij, ji, ik, ki, jk, kj;
@@ -888,28 +888,28 @@ void T3_UHF_AAA_abc(double ***W, double ***V, int disc, int nirreps, int A, int 
  **
  **   int Gc: Irrep of C.
  **
- **   dpdbuf4 *T2: Pointer to dpd buffer for double excitation amps,
+ **   dpdbuf4<double>*T2: Pointer to dpd buffer for double excitation amps,
  **   ordered (AB,IJ).
  **
- **   dpdbuf4 *F: Pointer to dpd buffer for three-virtual-index
+ **   dpdbuf4<double>*F: Pointer to dpd buffer for three-virtual-index
  **   intermediate, ordered (BC,IA).
  **
- **   dpdbuf4 *E: Pointer to dpd buffer for three-occupied-index
+ **   dpdbuf4<double>*E: Pointer to dpd buffer for three-occupied-index
  **   intermediate, ordered (AK,IJ).
  **
  **   dpdfile *C1: If disconnected T3's are requested, pointer to dpd
  **   buffer for single-excitation amps.
  **
- **   dpdbuf4 *D: If disconnected T3's are requested, pointer to dpd
+ **   dpdbuf4<double>*D: If disconnected T3's are requested, pointer to dpd
  **   buffer for <IJ||ab> integrals.
  **
- **   dpdfile2 *fIA: Pointer to the dpd file2 for the occ-vir block of
+ **   dpdfile2<double>*fIA: Pointer to the dpd file2 for the occ-vir block of
  **   the Fock matrix (or other appropriate one-electron operator).
  **
- **   dpdfile2 *fIJ: Pointer to the dpd file2 for the occ-occ block of
+ **   dpdfile2<double>*fIJ: Pointer to the dpd file2 for the occ-occ block of
  **   the Fock matrix (or other appropriate one-electron operator).
  **
- **   dpdfile2 *fAB: Pointer to the dpd file2 for the vir-vir block of
+ **   dpdfile2<double>*fAB: Pointer to the dpd file2 for the vir-vir block of
  **   the Fock matrix (or other appropriate one-electron operator).
  **
  **   int *occpi: Number of occupied orbitals per irrep lookup array.
@@ -931,9 +931,9 @@ void T3_UHF_AAA_abc(double ***W, double ***V, int disc, int nirreps, int A, int 
  */
 
 void T3_UHF_AAB_abc(double ***W, double ***V, int disc, int nirreps, int A, int Ga, int B, int Gb, int C, int Gc,
-                    dpdbuf4 *T2AA, dpdbuf4 *T2AB, dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA, dpdbuf4 *EAA,
-                    dpdbuf4 *EAB, dpdbuf4 *EBA, dpdfile2 *T1A, dpdfile2 *T1B, dpdbuf4 *DAA, dpdbuf4 *DAB, dpdfile2 *fIA,
-                    dpdfile2 *fia, dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB, dpdfile2 *fab, int *aoccpi,
+                    dpdbuf4<double>*T2AA, dpdbuf4<double>*T2AB, dpdbuf4<double>*T2BA, dpdbuf4<double>*FAA, dpdbuf4<double>*FAB, dpdbuf4<double>*FBA, dpdbuf4<double>*EAA,
+                    dpdbuf4<double>*EAB, dpdbuf4<double>*EBA, dpdfile2<double>*T1A, dpdfile2<double>*T1B, dpdbuf4<double>*DAA, dpdbuf4<double>*DAB, dpdfile2<double>*fIA,
+                    dpdfile2<double>*fia, dpdfile2<double>*fIJ, dpdfile2<double>*fij, dpdfile2<double>*fAB, dpdfile2<double>*fab, int *aoccpi,
                     int *aocc_off, int *boccpi, int *bocc_off, int *avirtpi, int *avir_off, int *bvirtpi, int *bvir_off,
                     double omega) {
     int h;

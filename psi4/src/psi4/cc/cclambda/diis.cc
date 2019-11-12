@@ -69,8 +69,8 @@ void CCLambdaWavefunction::diis(int iter, int L_irr) {
     int diis_cycle;
     int vector_length = 0;
     int errcod, *ipiv;
-    dpdfile2 L1, L1a, L1b;
-    dpdbuf4 L2, L2a, L2b, L2c;
+    dpdfile2<double>L1, L1a, L1b;
+    dpdbuf4<double>L2, L2a, L2b, L2c;
     psio_address start, end, next;
     double **error;
     double **B, *C, **vector;

@@ -62,7 +62,7 @@ void Wabei_RHF_FT2_a() {
     int *virtpi, *vir_off, *occpi, *occ_off;
     double ***W;
     double value;
-    dpdbuf4 F, T2, Z;
+    dpdbuf4<double>F, T2, Z;
 
     nirreps = moinfo.nirreps;
     virtpi = moinfo.virtpi;

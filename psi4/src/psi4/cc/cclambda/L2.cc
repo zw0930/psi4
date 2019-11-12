@@ -61,7 +61,7 @@ void dijabL2(int L_irr);
 void BL2_AO(int L_irr);
 
 void CCLambdaWavefunction::L2_build(const struct L_Params& L_params) {
-    dpdbuf4 L2;
+    dpdbuf4<double>L2;
     int L_irr;
     L_irr = L_params.irrep;
 

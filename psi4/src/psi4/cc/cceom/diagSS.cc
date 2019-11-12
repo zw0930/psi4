@@ -50,20 +50,20 @@ namespace cceom {
 
 void sigmaSS(int index, int C_irr);
 void cc2_sigmaSS(int index, int C_irr);
-void precondition_SS(dpdfile2 *RIA, dpdfile2 *Ria, double eval);
-void schmidt_add_SS(dpdfile2 *RIA, dpdfile2 *Ria, int C_irr, int *numCs);
-void precondition_SS_RHF(dpdfile2 *RIA, double eval);
-void schmidt_add_SS_RHF(dpdfile2 *RIA, int C_irr, int *numCs);
+void precondition_SS(dpdfile2<double>*RIA, dpdfile2<double>*Ria, double eval);
+void schmidt_add_SS(dpdfile2<double>*RIA, dpdfile2<double>*Ria, int C_irr, int *numCs);
+void precondition_SS_RHF(dpdfile2<double>*RIA, double eval);
+void schmidt_add_SS_RHF(dpdfile2<double>*RIA, int C_irr, int *numCs);
 void restart_SS(double **alpha, int L, int num, int C_irr);
 void dgeev_eom(int L, double **G, double *evals, double **alpha);
-double norm_C1(dpdfile2 *C1A, dpdfile2 *C1B);
-double norm_C1_rhf(dpdfile2 *C1A);
-void scm_C1(dpdfile2 *C1A, dpdfile2 *C1B, double a);
+double norm_C1(dpdfile2<double>*C1A, dpdfile2<double>*C1B);
+double norm_C1_rhf(dpdfile2<double>*C1A);
+void scm_C1(dpdfile2<double>*C1A, dpdfile2<double>*C1B, double a);
 
 void diagSS(int C_irr) {
-    dpdfile2 Fmi, FMI, Fae, FAE, Fme, FME;
-    dpdfile2 CME, Cme, C, SIA, Sia, RIA, Ria;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, W;
+    dpdfile2<double>Fmi, FMI, Fae, FAE, Fme, FME;
+    dpdfile2<double>CME, Cme, C, SIA, Sia, RIA, Ria;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, W;
     char lbl[32], lbl2[32];
     int lwork, info, get_right_ev = 1, get_left_ev = 0;
     int L, h, i, j, k, a, C_index, errcod, keep_going = 1, numCs, iter = 0;
@@ -497,8 +497,8 @@ void diagSS(int C_irr) {
     return;
 }
 
-void precondition_SS(dpdfile2 *RIA, dpdfile2 *Ria, double eval) {
-    dpdfile2 DIA, Dia;
+void precondition_SS(dpdfile2<double>*RIA, dpdfile2<double>*Ria, double eval) {
+    dpdfile2<double>DIA, Dia;
     int h, nirreps, i, j, a, b, ij, ab, C_irr;
     double tval;
 
@@ -542,8 +542,8 @@ void precondition_SS(dpdfile2 *RIA, dpdfile2 *Ria, double eval) {
     return;
 }
 
-void precondition_SS_RHF(dpdfile2 *RIA, double eval) {
-    dpdfile2 DIA;
+void precondition_SS_RHF(dpdfile2<double>*RIA, double eval) {
+    dpdfile2<double>DIA;
     int C_irr, h, nirreps, i, j, a, b, ij, ii, ab;
     double tval;
     psio_address next;
@@ -665,10 +665,10 @@ void precondition_SS_RHF(dpdfile2 *RIA, double eval) {
     return;
 }
 
-void schmidt_add_SS(dpdfile2 *RIA, dpdfile2 *Ria, int C_irr, int *numCs) {
+void schmidt_add_SS(dpdfile2<double>*RIA, dpdfile2<double>*Ria, int C_irr, int *numCs) {
     double dotval, norm;
     int i, I;
-    dpdfile2 Cme, CME;
+    dpdfile2<double>Cme, CME;
     char CME_lbl[32], Cme_lbl[32], CMNEF_lbl[32], Cmnef_lbl[32], CMnEf_lbl[32];
 
     for (i = 0; i < *numCs; i++) {
@@ -702,10 +702,10 @@ void schmidt_add_SS(dpdfile2 *RIA, dpdfile2 *Ria, int C_irr, int *numCs) {
     return;
 }
 
-void schmidt_add_SS_RHF(dpdfile2 *RIA, int C_irr, int *numCs) {
+void schmidt_add_SS_RHF(dpdfile2<double>*RIA, int C_irr, int *numCs) {
     double dotval, norm;
     int i, I;
-    dpdfile2 CME;
+    dpdfile2<double>CME;
     char CME_lbl[32], Cme_lbl[32];
 
     for (i = 0; i < *numCs; i++) {
@@ -732,8 +732,8 @@ void schmidt_add_SS_RHF(dpdfile2 *RIA, int C_irr, int *numCs) {
 void restart_SS(double **alpha, int L, int num, int C_irr) {
     int i, j, I;
     char lbl[20];
-    dpdfile2 C1, CME, Cme, CME2, Cme2;
-    dpdbuf4 C2, CMNEF, Cmnef, CMnEf;
+    dpdfile2<double>C1, CME, Cme, CME2, Cme2;
+    dpdbuf4<double>C2, CMNEF, Cmnef, CMnEf;
     double norm, dotval;
 
     for (I = 1; I < num; ++I) {

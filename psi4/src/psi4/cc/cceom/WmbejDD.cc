@@ -45,10 +45,10 @@ namespace cceom {
    from P(ij)P(ab) Wmbej*Cimae to a Sigma vector stored at Sigma plus 'i' */
 
 void WmbejDD(int i, int C_irr) {
-    dpdbuf4 S2, S2temp, D;
-    dpdbuf4 C2, C2temp;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, CmNeF, TIJAB, Tijab, TIjAb;
-    dpdbuf4 SIJAB, Sijab, SIjAb, W, W1, W2, Z;
+    dpdbuf4<double>S2, S2temp, D;
+    dpdbuf4<double>C2, C2temp;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, CmNeF, TIJAB, Tijab, TIjAb;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb, W, W1, W2, Z;
     char CMNEF_lbl[32], Cmnef_lbl[32], CMnEf_lbl[32];
     char SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32];
 

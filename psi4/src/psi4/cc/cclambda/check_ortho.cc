@@ -103,8 +103,8 @@ void check_ortho(struct L_Params *pL_params) {
 
 double LR_overlap_ROHF(int IRR, int L_index, int R_index) {
     double overlap;
-    dpdfile2 R1, L1;
-    dpdbuf4 R2, L2;
+    dpdfile2<double>R1, L1;
+    dpdbuf4<double>R2, L2;
     char R1A_lbl[32], R1B_lbl[32], R2AA_lbl[32], R2BB_lbl[32], R2AB_lbl[32];
     char L1A_lbl[32], L1B_lbl[32], L2AA_lbl[32], L2BB_lbl[32], L2AB_lbl[32];
 
@@ -154,8 +154,8 @@ double LR_overlap_ROHF(int IRR, int L_index, int R_index) {
 }
 
 double LR_overlap_RHF(int IRR, int L_index, int R_index) {
-    dpdfile2 R1, L1;
-    dpdbuf4 R2, L2;
+    dpdfile2<double>R1, L1;
+    dpdbuf4<double>R2, L2;
     double overlap, overlap2, overlap3;
     char L1A_lbl[32], R1A_lbl[32], lbl[32];
 

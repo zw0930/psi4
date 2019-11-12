@@ -43,7 +43,7 @@ namespace psi {
 namespace ccresponse {
 
 void cc2_sort_X(const char *pert, int irrep, double omega) {
-    dpdbuf4 X;
+    dpdbuf4<double>X;
     char lbl[32];
 
     sprintf(lbl, "X_%s_IjAb (%5.3f)", pert, omega);

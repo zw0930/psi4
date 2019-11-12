@@ -43,8 +43,8 @@ namespace cclambda {
 
 void CCLambdaWavefunction::init_amps(const struct L_Params& L_params) {
     double norm;
-    dpdfile2 T1, R1, LIA, Lia, dIA, dia, XIA, Xia;
-    dpdbuf4 T2, R2, LIJAB, Lijab, LIjAb, dIJAB, dijab, dIjAb, XIJAB, Xijab, XIjAb;
+    dpdfile2<double>T1, R1, LIA, Lia, dIA, dia, XIA, Xia;
+    dpdbuf4<double>T2, R2, LIJAB, Lijab, LIjAb, dIJAB, dijab, dIjAb, XIJAB, Xijab, XIjAb;
     char R1A_lbl[32], R1B_lbl[32], R2AA_lbl[32], R2BB_lbl[32], R2AB_lbl[32];
     int L_irr;
     L_irr = L_params.irrep;

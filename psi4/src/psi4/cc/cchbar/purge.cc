@@ -42,7 +42,7 @@ namespace psi {
 namespace cchbar {
 
 void purge() {
-    dpdfile2 FAE, Fmi, FME, Fme;
+    dpdfile2<double>FAE, Fmi, FME, Fme;
     dpdfile4 W;
     int *occpi, *virtpi;
     int h, a, b, e, f, i, j, m, n;

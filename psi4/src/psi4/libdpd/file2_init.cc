@@ -42,7 +42,7 @@ namespace psi {
 ** or writing data.
 **
 ** Arguments:
-**   dpdfile2 *File: A pointer to the two-index dpdfile.
+**   dpdfile2<double>*File: A pointer to the two-index dpdfile.
 **   int filenum: The PSI unit number for this file.
 **   int irrep: The symmetry of the data (=0 for totally-symmetric)
 **   int pnum: The orbital subspace number for the left index [see

@@ -43,8 +43,8 @@ namespace cceom {
 
 void norm_HC1(int i, int C_irr) {
     double dot;
-    dpdfile2 F;
-    dpdbuf4 W;
+    dpdfile2<double>F;
+    dpdbuf4<double>W;
 
     if (params.eom_ref == 0) { /* RHF */
 

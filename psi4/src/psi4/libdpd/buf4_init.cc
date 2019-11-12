@@ -41,7 +41,7 @@ namespace psi {
 **   data.
 **
 ** Arguments:
-**   dpdbuf4 *Buf: A pointer to the dpdbuf to be initialized.
+**   dpdbuf4<double>*Buf: A pointer to the dpdbuf to be initialized.
 **   int inputfile: The PSI unit number for the data on disk.
 **   int pqnum: The index combination for the bra indices for the
 **              data as it will be used in memory.

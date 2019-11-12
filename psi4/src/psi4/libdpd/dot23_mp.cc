@@ -41,9 +41,9 @@ namespace psi {
  ** latter are summed.
  **
  ** Arguments:
- **   dpdfile2 *T: A pointer to the two-index-electron factor.
- **   dpdbuf4 *I: A pointer to the four-index factor.
- **   dpdfile2 *Z: A pointer to the two-index target.
+ **   dpdfile2<double>*T: A pointer to the two-index-electron factor.
+ **   dpdbuf4<double>*I: A pointer to the four-index factor.
+ **   dpdfile2<double>*Z: A pointer to the two-index target.
  **   int transt: A boolean indicating whether the T-factor should be
  **               transposed.
  **   int transz: A boolean indicating whether the Z-product should be

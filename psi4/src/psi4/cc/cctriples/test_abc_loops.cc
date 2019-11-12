@@ -46,21 +46,21 @@ namespace psi {
 namespace cctriples {
 
 extern void T3_UHF_AAA_abc(double ***W, double ***V, int disc, int nirreps, int A, int Ga, int B, int Gb, int C, int Gc,
-                           dpdbuf4 *C2, dpdbuf4 *F, dpdbuf4 *E, dpdfile2 *C1, dpdbuf4 *D, dpdfile2 *fIA, dpdfile2 *fIJ,
-                           dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega);
+                           dpdbuf4<double>*C2, dpdbuf4<double>*F, dpdbuf4<double>*E, dpdfile2<double>*C1, dpdbuf4<double>*D, dpdfile2<double>*fIA, dpdfile2<double>*fIJ,
+                           dpdfile2<double>*fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega);
 
 extern void T3_UHF_AAB_abc(double ***W, double ***V, int disc, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk,
-                           dpdbuf4 *T2AA, dpdbuf4 *T2AB, dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA,
-                           dpdbuf4 *EAA, dpdbuf4 *EAB, dpdbuf4 *EBA, dpdfile2 *T1A, dpdfile2 *T1B, dpdbuf4 *DAA,
-                           dpdbuf4 *DAB, dpdfile2 *fIA, dpdfile2 *fia, dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB,
-                           dpdfile2 *fab, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off, int *avirtpi,
+                           dpdbuf4<double>*T2AA, dpdbuf4<double>*T2AB, dpdbuf4<double>*T2BA, dpdbuf4<double>*FAA, dpdbuf4<double>*FAB, dpdbuf4<double>*FBA,
+                           dpdbuf4<double>*EAA, dpdbuf4<double>*EAB, dpdbuf4<double>*EBA, dpdfile2<double>*T1A, dpdfile2<double>*T1B, dpdbuf4<double>*DAA,
+                           dpdbuf4<double>*DAB, dpdfile2<double>*fIA, dpdfile2<double>*fia, dpdfile2<double>*fIJ, dpdfile2<double>*fij, dpdfile2<double>*fAB,
+                           dpdfile2<double>*fab, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off, int *avirtpi,
                            int *avir_off, int *bvirtpi, int *bvir_off, double omega);
 
 void test_abc_loops_AAA() {
     int i, j, k, a, b, c, ij, I, J, K;
     int A, B, C;
     int Ga, Gb, Gc, Gi, Gj, Gij, Gk;
-    dpdfile2 fIJ, fAB, fIA, T1;
+    dpdfile2<double>fIJ, fAB, fIA, T1;
 
     double denom, ET;
     int nirreps = moinfo.nirreps;
@@ -76,13 +76,13 @@ void test_abc_loops_AAA() {
     global_dpd_->file2_init(&fIA, PSIF_CC_OEI, 0, 0, 1, "fIA");
     global_dpd_->file2_init(&T1, PSIF_CC_OEI, 0, 0, 1, "tIA");
 
-    dpdbuf4 EAAints;
+    dpdbuf4<double>EAAints;
     global_dpd_->buf4_init(&EAAints, PSIF_CC_EINTS, 0, 21, 0, 21, 2, 0, "E <AK||IJ> (AK, I>J)");
-    dpdbuf4 FAAints;
+    dpdbuf4<double>FAAints;
     global_dpd_->buf4_init(&FAAints, PSIF_CC_FINTS, 0, 5, 20, 7, 20, 0, "F <BC||IA>");
-    dpdbuf4 T2AA;
+    dpdbuf4<double>T2AA;
     global_dpd_->buf4_init(&T2AA, PSIF_CC_TAMPS, 0, 5, 0, 7, 2, 0, "tABIJ");
-    dpdbuf4 DAAints;
+    dpdbuf4<double>DAAints;
     global_dpd_->buf4_init(&DAAints, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <IJ||AB>");
 
     int Gabc;
@@ -169,7 +169,7 @@ void test_abc_loops_BBB() {
     int i, j, k, a, b, c, ij, I, J, K;
     int A, B, C;
     int Ga, Gb, Gc, Gi, Gj, Gij, Gk;
-    dpdfile2 fij, fab, fia, T1;
+    dpdfile2<double>fij, fab, fia, T1;
 
     double denom, ET;
     int nirreps = moinfo.nirreps;
@@ -185,13 +185,13 @@ void test_abc_loops_BBB() {
     global_dpd_->file2_init(&fia, PSIF_CC_OEI, 0, 2, 3, "fia");
     global_dpd_->file2_init(&T1, PSIF_CC_OEI, 0, 2, 3, "tia");
 
-    dpdbuf4 EBBints;
+    dpdbuf4<double>EBBints;
     global_dpd_->buf4_init(&EBBints, PSIF_CC_EINTS, 0, 31, 10, 31, 12, 0, "E <ak||ij> (ak, i>j)");
-    dpdbuf4 FBBints;
+    dpdbuf4<double>FBBints;
     global_dpd_->buf4_init(&FBBints, PSIF_CC_FINTS, 0, 15, 30, 17, 30, 0, "F <bc||ia>");
-    dpdbuf4 T2BB;
+    dpdbuf4<double>T2BB;
     global_dpd_->buf4_init(&T2BB, PSIF_CC_TAMPS, 0, 15, 10, 17, 12, 0, "tabij");
-    dpdbuf4 DBBints;
+    dpdbuf4<double>DBBints;
     global_dpd_->buf4_init(&DBBints, PSIF_CC_DINTS, 0, 10, 15, 10, 15, 0, "D <ij||ab>");
 
     int Gabc;
@@ -278,7 +278,7 @@ void test_abc_loops_AAB() {
     int i, j, k, a, b, c, ij, I, J, K;
     int A, B, C;
     int Ga, Gb, Gc, Gi, Gj, Gij, Gk;
-    dpdfile2 fij, fIJ, fab, fAB, fia, fIA, T1A, T1B;
+    dpdfile2<double>fij, fIJ, fab, fAB, fia, fIA, T1A, T1B;
 
     double denom, ET;
     int nirreps = moinfo.nirreps;
@@ -302,17 +302,17 @@ void test_abc_loops_AAB() {
     global_dpd_->file2_init(&T1B, PSIF_CC_OEI, 0, 2, 3, "tia");
     global_dpd_->file2_init(&T1A, PSIF_CC_OEI, 0, 0, 1, "tIA");
 
-    dpdbuf4 EAAints;
-    dpdbuf4 EABints;
-    dpdbuf4 EBAints;
-    dpdbuf4 DAAints;
-    dpdbuf4 DABints;
-    dpdbuf4 FAAints;
-    dpdbuf4 FABints;
-    dpdbuf4 FBAints;
-    dpdbuf4 T2AA;
-    dpdbuf4 T2BA;
-    dpdbuf4 T2AB;
+    dpdbuf4<double>EAAints;
+    dpdbuf4<double>EABints;
+    dpdbuf4<double>EBAints;
+    dpdbuf4<double>DAAints;
+    dpdbuf4<double>DABints;
+    dpdbuf4<double>FAAints;
+    dpdbuf4<double>FABints;
+    dpdbuf4<double>FBAints;
+    dpdbuf4<double>T2AA;
+    dpdbuf4<double>T2BA;
+    dpdbuf4<double>T2AB;
     global_dpd_->buf4_init(&T2AA, PSIF_CC_TAMPS, 0, 5, 0, 7, 2, 0, "tABIJ");
     global_dpd_->buf4_init(&T2AB, PSIF_CC_TAMPS, 0, 28, 22, 28, 22, 0, "tAbIj");
     global_dpd_->buf4_init(&T2BA, PSIF_CC_TAMPS, 0, 29, 23, 29, 23, 0, "taBiJ");
@@ -424,7 +424,7 @@ void test_abc_loops_BBA() {
     int i, j, k, a, b, c, ij, I, J, K;
     int A, B, C;
     int Ga, Gb, Gc, Gi, Gj, Gij, Gk;
-    dpdfile2 fij, fIJ, fab, fAB, fia, fIA, T1A, T1B;
+    dpdfile2<double>fij, fIJ, fab, fAB, fia, fIA, T1A, T1B;
 
     double denom, ET;
     int nirreps = moinfo.nirreps;
@@ -448,17 +448,17 @@ void test_abc_loops_BBA() {
     global_dpd_->file2_init(&T1B, PSIF_CC_OEI, 0, 2, 3, "tia");
     global_dpd_->file2_init(&T1A, PSIF_CC_OEI, 0, 0, 1, "tIA");
 
-    dpdbuf4 EBBints;
-    dpdbuf4 EABints;
-    dpdbuf4 EBAints;
-    dpdbuf4 DBBints;
-    dpdbuf4 DBAints;
-    dpdbuf4 FBBints;
-    dpdbuf4 FABints;
-    dpdbuf4 FBAints;
-    dpdbuf4 T2BB;
-    dpdbuf4 T2BA;
-    dpdbuf4 T2AB;
+    dpdbuf4<double>EBBints;
+    dpdbuf4<double>EABints;
+    dpdbuf4<double>EBAints;
+    dpdbuf4<double>DBBints;
+    dpdbuf4<double>DBAints;
+    dpdbuf4<double>FBBints;
+    dpdbuf4<double>FABints;
+    dpdbuf4<double>FBAints;
+    dpdbuf4<double>T2BB;
+    dpdbuf4<double>T2BA;
+    dpdbuf4<double>T2AB;
     global_dpd_->buf4_init(&T2BB, PSIF_CC_TAMPS, 0, 15, 10, 17, 12, 0, "tabij");
     global_dpd_->buf4_init(&T2AB, PSIF_CC_TAMPS, 0, 28, 22, 28, 22, 0, "tAbIj");
     global_dpd_->buf4_init(&T2BA, PSIF_CC_TAMPS, 0, 29, 23, 29, 23, 0, "taBiJ");

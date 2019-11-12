@@ -47,7 +47,7 @@ namespace psi {
 namespace cchbar {
 
 void build_Z1();
-void ZFW(dpdbuf4 *Z, dpdbuf4 *F, dpdbuf4 *W, double alpha, double beta);
+void ZFW(dpdbuf4<double>*Z, dpdbuf4<double>*F, dpdbuf4<double>*W, double alpha, double beta);
 
 /* Wabei_RHF(): Builds the Wabei HBAR matrix elements for CCSD for
 ** spin-adapted, closed-shell cases.  (Numbering of individual terms
@@ -60,8 +60,8 @@ void ZFW(dpdbuf4 *Z, dpdbuf4 *F, dpdbuf4 *W, double alpha, double beta);
 */
 
 void Wabei_RHF() {
-    dpdfile2 Fme, T1;
-    dpdbuf4 F, W, T2, B, Z, Z1, Z2, D, T, C, F1, F2, W1, W2, Tau;
+    dpdfile2<double>Fme, T1;
+    dpdbuf4<double>F, W, T2, B, Z, Z1, Z2, D, T, C, F1, F2, W1, W2, Tau;
     double value;
     int Gef, Gei, Gab, Ge, Gi, Gf, Gmi, Gm, nrows, ncols, nlinks, EE, e, row, Gnm;
     int Gma, ma, m, a, Ga, Gb, I, i, mi, E, ei, ab, ba, b, BB, fb, bf, fe, ef, mb, am;
@@ -549,8 +549,8 @@ void Wabei_RHF() {
 ** TDC, 7/10/05
 */
 void build_Z1() {
-    dpdbuf4 T2, Z1;
-    dpdfile2 T1;
+    dpdbuf4<double>T2, Z1;
+    dpdfile2<double>T1;
     int h, row, col, p, q, r, s, P, Q, R, S, psym, qsym, rsym, ssym;
 
     global_dpd_->buf4_init(&T2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "2 tIAjb - tIBja");
@@ -609,7 +609,7 @@ void build_Z1() {
 ** TDC, 8/05
 **
 */
-void ZFW(dpdbuf4 *Z, dpdbuf4 *F, dpdbuf4 *W, double alpha, double beta) {
+void ZFW(dpdbuf4<double>*Z, dpdbuf4<double>*F, dpdbuf4<double>*W, double alpha, double beta) {
     int Gib, Gea, Gmf;
     int m, n;
     int rows_per_bucket, nbuckets, rows_left;

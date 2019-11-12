@@ -50,17 +50,17 @@
 namespace psi {
 namespace cclambda {
 
-void halftrans(dpdbuf4 *Buf1, int dpdnum1, dpdbuf4 *Buf2, int dpdnum2, double ***C, int nirreps, int **mo_row,
+void halftrans(dpdbuf4<double>*Buf1, int dpdnum1, dpdbuf4<double>*Buf2, int dpdnum2, double ***C, int nirreps, int **mo_row,
                int **so_row, int *mospi, int *sospi, int type, double alpha, double beta);
 
-void AO_contribute(int p, int q, int r, int s, double value, dpdbuf4 *tau1_AO, dpdbuf4 *tau2_AO, int anti);
+void AO_contribute(int p, int q, int r, int s, double value, dpdbuf4<double>*tau1_AO, dpdbuf4<double>*tau2_AO, int anti);
 
 void BL2_AO(int L_irr) {
     int h, nirreps, i, Gc, Gd, Ga, Gb, ij;
     double ***C, **X;
     int *orbspi, *virtpi;
     int **T2_cd_row_start, **T2_pq_row_start, offset, cd, pq;
-    dpdbuf4 tau, t2, tau1_AO, tau2_AO;
+    dpdbuf4<double>tau, t2, tau1_AO, tau2_AO;
     psio_address next;
     struct iwlbuf InBuf;
     int idx, p, q, r, s, filenum;
@@ -342,7 +342,7 @@ void BL2_AO(int L_irr) {
     dpd_set_default(0);
 }
 
-void AO_contribute(int p, int q, int r, int s, double value, dpdbuf4 *tau1_AO, dpdbuf4 *tau2_AO, int anti) {
+void AO_contribute(int p, int q, int r, int s, double value, dpdbuf4<double>*tau1_AO, dpdbuf4<double>*tau2_AO, int anti) {
     int Gp, Gq, Gr, Gs, Gpr, Gps, Gqr, Gqs, Grp, Gsp, Grq, Gsq;
     int pr, ps, qr, qs, rp, rq, sp, sq, pq, rs;
     int row;

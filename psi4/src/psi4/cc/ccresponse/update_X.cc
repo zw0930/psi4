@@ -43,8 +43,8 @@ namespace psi {
 namespace ccresponse {
 
 void update_X(const char *pert, int irrep, double omega) {
-    dpdfile2 X1new, X1;
-    dpdbuf4 X2new, X2;
+    dpdfile2<double>X1new, X1;
+    dpdbuf4<double>X2new, X2;
     char lbl[32];
 
     sprintf(lbl, "New X_%s_IA (%5.3f)", pert, omega);

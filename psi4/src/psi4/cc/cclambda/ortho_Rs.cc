@@ -82,8 +82,8 @@ void ortho_Rs(struct L_Params *pL_params, int current_L) {
 }
 
 double LRi_dot(int IRR, int R_index) {
-    dpdfile2 R1, L1;
-    dpdbuf4 R2, L2;
+    dpdfile2<double>R1, L1;
+    dpdbuf4<double>R2, L2;
     double overlap;
     char R1A_lbl[32], lbl[32];
 
@@ -105,8 +105,8 @@ double LRi_dot(int IRR, int R_index) {
 }
 
 void LRi_minus(int IRR, int R_index, double overlap, double R0) {
-    dpdfile2 R1, L1;
-    dpdbuf4 R2, L2;
+    dpdfile2<double>R1, L1;
+    dpdbuf4<double>R2, L2;
     char L1A_lbl[32], R1A_lbl[32], lbl[32];
 
     sprintf(R1A_lbl, "RIA %d %d", IRR, R_index);

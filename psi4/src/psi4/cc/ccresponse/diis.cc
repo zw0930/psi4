@@ -71,8 +71,8 @@ void diis(int iter, const char *pert, int irrep, double omega) {
     int diis_cycle;
     int vector_length = 0;
     int errcod, *ipiv;
-    dpdfile2 T1, T1a, T1b;
-    dpdbuf4 T2, T2a, T2b, T2c;
+    dpdfile2<double>T1, T1a, T1b;
+    dpdbuf4<double>T2, T2a, T2b, T2c;
     psio_address start, end, next;
     double **error;
     double **B, *C, **vector;

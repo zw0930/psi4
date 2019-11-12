@@ -62,9 +62,9 @@ void cc3_HET1() {
 }
 
 void HET1_Wmbej() {
-    dpdbuf4 WMBEJ, Wmbej, WMbEj, WmBeJ, WmBEj, WMbeJ;
-    dpdbuf4 D, C, F, E, X, Y, t2, W, Z;
-    dpdfile2 tIA, tia;
+    dpdbuf4<double>WMBEJ, Wmbej, WMbEj, WmBeJ, WmBEj, WMbeJ;
+    dpdbuf4<double>D, C, F, E, X, Y, t2, W, Z;
+    dpdfile2<double>tIA, tia;
     int i;
 
     if (params.ref == 0) { /** RHF **/

@@ -55,8 +55,8 @@ void L1FL2(int L_irr) {
     int h, nirreps;
     int row, col;
     int i, j, a, b, I, J, A, B, Isym, Jsym, Asym, Bsym;
-    dpdfile2 LIA, Lia, FJB, Fjb, L, F;
-    dpdbuf4 newL2;
+    dpdfile2<double>LIA, Lia, FJB, Fjb, L, F;
+    dpdbuf4<double>newL2;
 
     nirreps = moinfo.nirreps;
 

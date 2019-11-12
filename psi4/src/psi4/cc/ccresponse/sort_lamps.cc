@@ -41,7 +41,7 @@ namespace psi {
 namespace ccresponse {
 
 void sort_lamps() {
-    dpdbuf4 L;
+    dpdbuf4<double>L;
 
     /* RAK fixing this for new cclambda, assuming A1 ground lambda? */
     global_dpd_->buf4_init(&L, PSIF_CC_LAMPS, 0, 0, 5, 0, 5, 0, "LIjAb 0 -1");

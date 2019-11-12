@@ -42,13 +42,13 @@
 namespace psi {
 namespace cclambda {
 
-double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
+double norm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
 
-double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE);
+double norm_C_rhf(dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE);
 
 void check_sum(char *term_lbl, int irrep) {
-    dpdfile2 Lia, LIA;
-    dpdbuf4 LIJAB, Lijab, LIjAb, LIjbA;
+    dpdfile2<double>Lia, LIA;
+    dpdbuf4<double>LIJAB, Lijab, LIjAb, LIjbA;
     static double old_norm = 0;
     double norm = 0;
     double dotval;
@@ -96,7 +96,7 @@ void check_sum(char *term_lbl, int irrep) {
     return;
 }
 
-double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf) {
+double norm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf) {
     double norm = 0.0;
     norm += global_dpd_->file2_dot_self(CME);
     norm += global_dpd_->file2_dot_self(Cme);
@@ -107,7 +107,7 @@ double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdb
     return norm;
 }
 
-double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE) {
+double norm_C_rhf(dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE) {
     double norm = 0.0;
     norm = 2.0 * global_dpd_->file2_dot_self(CME);
     norm += 2.0 * global_dpd_->buf4_dot_self(CMnEf);

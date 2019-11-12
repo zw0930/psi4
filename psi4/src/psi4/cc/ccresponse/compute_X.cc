@@ -71,7 +71,7 @@ void compute_X(const char *pert, int irrep, double omega) {
     int i, iter = 0, done = 0;
     double rms, polar, X2_norm;
     char lbl[32];
-    dpdbuf4 X2;
+    dpdbuf4<double>X2;
 
     timer_on("compute_X");
 

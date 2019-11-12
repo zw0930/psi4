@@ -67,14 +67,14 @@ namespace cchbar {
 
 void F_build() {
     int h, e, a, m;
-    dpdfile2 Faet, FAEt, Fmit, FMIt;
-    dpdfile2 Fae, FAE, FMI, Fmi;
-    dpdfile2 fab, fAB, fij, fIJ;
-    dpdfile2 FME, Fme;
-    dpdfile2 fIA, fia;
-    dpdfile2 tIA, tia;
-    dpdbuf4 F_anti, F, E_anti, E, D_anti, D;
-    dpdbuf4 tautIJAB, tautijab, tautIjAb, taut;
+    dpdfile2<double>Faet, FAEt, Fmit, FMIt;
+    dpdfile2<double>Fae, FAE, FMI, Fmi;
+    dpdfile2<double>fab, fAB, fij, fIJ;
+    dpdfile2<double>FME, Fme;
+    dpdfile2<double>fIA, fia;
+    dpdfile2<double>tIA, tia;
+    dpdbuf4<double>F_anti, F, E_anti, E, D_anti, D;
+    dpdbuf4<double>tautIJAB, tautijab, tautIjAb, taut;
     int Gma, Gm, Ga, Gf, Ge, ma, M, A, fe, ef, f, nrows, ncols;
     double *X;
 

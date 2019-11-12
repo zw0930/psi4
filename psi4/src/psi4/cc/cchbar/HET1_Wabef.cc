@@ -72,8 +72,8 @@ namespace cchbar {
  */
 
 void HET1_Wabef() {
-    dpdbuf4 Bints, Fints, Z, D, W;
-    dpdfile2 T1;
+    dpdbuf4<double>Bints, Fints, Z, D, W;
+    dpdfile2<double>T1;
     int Gab, nirreps, ab, ba, A, B, Ga, Gb, a, b;
     int Gn, Gan, an, Gbn, bn;
     int ef, fe, E, F;

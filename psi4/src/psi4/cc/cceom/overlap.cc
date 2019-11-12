@@ -48,10 +48,10 @@ namespace psi {
 namespace cceom {
 
 void overlap(int C_irr, int current) {
-    dpdfile2 R1, R1A, R1B;
-    dpdfile2 R1_old, R1A_old, R1B_old;
-    dpdbuf4 R2, R2AA, R2BB, R2AB;
-    dpdbuf4 R2_old, R2AA_old, R2BB_old, R2AB_old;
+    dpdfile2<double>R1, R1A, R1B;
+    dpdfile2<double>R1_old, R1A_old, R1B_old;
+    dpdbuf4<double>R2, R2AA, R2BB, R2AB;
+    dpdbuf4<double>R2_old, R2AA_old, R2BB_old, R2AB_old;
     char lbl[32];
 
     outfile->Printf("Overlap of EOM state %d with saved wfns:\n",current);
@@ -160,8 +160,8 @@ void overlap(int C_irr, int current) {
 }
 
 void overlap_stash(int C_irr) {
-    dpdfile2 R1, R1A, R1B;
-    dpdbuf4 R2, R2AA, R2BB, R2AB;
+    dpdfile2<double>R1, R1A, R1B;
+    dpdbuf4<double>R2, R2AA, R2BB, R2AB;
     char lbl[32];
 
     for (int i = 0; i < eom_params.cs_per_irrep[C_irr]; i++) {

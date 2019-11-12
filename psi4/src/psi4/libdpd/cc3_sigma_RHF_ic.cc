@@ -87,8 +87,8 @@ void DPD::cc3_sigma_RHF_ic(dpdbuf4<double> *CIjAb, dpdbuf4<double> *WAbEi, dpdbu
     double value, F_val, t_val, E_val;
     double dijk, denom, *tvect, **Z;
     double value_ia, value_ka, denom_ia, denom_ka;
-    dpdfile2 fIJ, fAB, *SIA_local;
-    dpdbuf4 buf4_tmp, *SIjAb_local;
+    dpdfile2<double>fIJ, fAB, *SIA_local;
+    dpdbuf4<double>buf4_tmp, *SIjAb_local;
     char lbl[32];
 
     std::vector<thread_data> thread_data_array(nthreads);
@@ -147,8 +147,8 @@ void DPD::cc3_sigma_RHF_ic(dpdbuf4<double> *CIjAb, dpdbuf4<double> *WAbEi, dpdbu
         }
     }
 
-    SIA_local = (dpdfile2 *)malloc(nthreads * sizeof(dpdfile2));
-    SIjAb_local = (dpdbuf4 *)malloc(nthreads * sizeof(dpdbuf4));
+    SIA_local = (dpdfile2<double>*)malloc(nthreads * sizeof(dpdfile2));
+    SIjAb_local = (dpdbuf4<double>*)malloc(nthreads * sizeof(dpdbuf4));
 
     for (i = 0; i < nthreads; ++i) {
         if (do_singles) {
@@ -312,15 +312,15 @@ void cc3_sigma_RHF_ic_thread(thread_data &data) {
     int ij, ji, ik, ki, jk, kj, lc, li, il, lk, kl, id, jd, kd;
     int a, b, c, d, A, B, C, D, ab, ba, bc, ad, da, cnt;
     double **Z, *tvect, ***W3, ***W3a, ***W, ***V, ***Wa, ***Va;
-    dpdbuf4 *SIjAb, SIjAb_local;
-    dpdfile2 *SIA, SIA_local;
+    dpdbuf4<double>*SIjAb, SIjAb_local;
+    dpdfile2<double>*SIA, SIA_local;
     char lbl[32];
 
     int do_singles, do_doubles, *occpi, *occ_off, *virtpi, *vir_off;
     int Gi, Gj, Gk, thr_id, first_ijk, last_ijk;
     double omega;
-    dpdfile2 *FME, *fIJ, *fAB;
-    dpdbuf4 *CIjAb, *WAbEi, *WMbIj, *Dints, *WmAEf, *WMnIe;
+    dpdfile2<double>*FME, *fIJ, *fAB;
+    dpdbuf4<double>*CIjAb, *WAbEi, *WMbIj, *Dints, *WmAEf, *WMnIe;
     std::string out_fname;
     int newtrips;
     int Gcb, Gac, cb, ac;

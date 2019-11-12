@@ -46,21 +46,21 @@
 namespace psi {
 namespace cceom {
 
-void c_clean(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
+void c_clean(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
 
 /* This function computes the H-bar doubles-doubles block contribution
    from Wabef to a Sigma vector stored at Sigma plus 'i' */
 
 void WabefDD(int i, int C_irr) {
-    dpdfile2 tIA, tia, SIA, Sia;
-    dpdbuf4 SIJAB, Sijab, SIjAb, B;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, X, F, tau, D, WM, WP, Z;
+    dpdfile2<double>tIA, tia, SIA, Sia;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb, B;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, X, F, tau, D, WM, WP, Z;
     char CMNEF_lbl[32], Cmnef_lbl[32], CMnEf_lbl[32];
     char SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32], SIA_lbl[32], Sia_lbl[32];
     char lbl_a[32], lbl_s[32];
-    dpdbuf4 tau_a, tau_s;
-    dpdbuf4 B_a, B_s;
-    dpdbuf4 S, A;
+    dpdbuf4<double>tau_a, tau_s;
+    dpdbuf4<double>B_a, B_s;
+    dpdbuf4<double>S, A;
     double **B_diag, **tau_diag;
     int ij, Gc, C, c, cc;
     int nbuckets, rows_per_bucket, rows_left, m, row_start, ab, cd, dc, d;

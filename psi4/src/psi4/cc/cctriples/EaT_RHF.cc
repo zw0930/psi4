@@ -54,15 +54,15 @@ namespace psi {
 namespace cctriples {
 
 struct EaT_RHF_thread_data {
-    dpdfile2 *fIJ;
-    dpdfile2 *fAB;
-    dpdfile2 *fIA;
-    dpdfile2 *L1;
-    dpdbuf4 *L2;
-    dpdbuf4 *T2;
-    dpdbuf4 *Eints;
-    dpdbuf4 *Dints;
-    dpdbuf4 *Fints_local;
+    dpdfile2<double>*fIJ;
+    dpdfile2<double>*fAB;
+    dpdfile2<double>*fIA;
+    dpdfile2<double>*L1;
+    dpdbuf4<double>*L2;
+    dpdbuf4<double>*T2;
+    dpdbuf4<double>*Eints;
+    dpdbuf4<double>*Dints;
+    dpdbuf4<double>*Fints_local;
     double *ET_local;
     int Gi;
     int Gj;
@@ -78,8 +78,8 @@ double EaT_RHF() {
     int nijk, nthreads, thread, *ijk_part;
     int *occpi, *virtpi, *occ_off, *vir_off;
     double ET, *ET_array;
-    dpdfile2 fIJ, fAB, fIA, L1;
-    dpdbuf4 T2, L2, Eints, Dints, *Fints_array;
+    dpdfile2<double>fIJ, fAB, fIA, L1;
+    dpdbuf4<double>T2, L2, Eints, Dints, *Fints_array;
     FILE *ijkfile;
 
     timer_on("ET_RHF");
@@ -135,7 +135,7 @@ double EaT_RHF() {
 
     /* each thread gets its own F buffer to assign memory and read blocks
        into and its own energy double - all else shared */
-    Fints_array = (dpdbuf4 *)malloc(nthreads * sizeof(dpdbuf4));
+    Fints_array = (dpdbuf4<double>*)malloc(nthreads * sizeof(dpdbuf4));
     for (thread = 0; thread < nthreads; ++thread)
         global_dpd_->buf4_init(&(Fints_array[thread]), PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc>");
     ET_array = (double *)malloc(nthreads * sizeof(double));
@@ -285,8 +285,8 @@ void EaT_RHF_thread(EaT_RHF_thread_data *data) {
     double f_ia, f_jb, f_kc, t_jkbc, t_ikac, t_ijab;
     double dijk, value1, value2, value3, value4, value5, value6, denom, *ET_local;
     double ***W0, ***W1, ***W2, ***W3, ***V;
-    dpdbuf4 *L2, *T2, *Eints, *Dints, *Fints;
-    dpdfile2 *fIJ, *fAB, *fIA, *L1;
+    dpdbuf4<double>*L2, *T2, *Eints, *Dints, *Fints;
+    dpdfile2<double>*fIJ, *fAB, *fIA, *L1;
     int nijk, nthreads, first_ijk, last_ijk, thr_id;
 
     nirreps = moinfo.nirreps;

@@ -54,8 +54,8 @@ double cc2_LHX1Y1(const char *pert_x, int irrep_x, double omega_x, const char *p
     int ab, mb, colx, colz, rowz, rowx;
     int ncols, nrows, nlinks;
     double *Xt;
-    dpdfile2 F, X1, Y1, Zmi, Zae, ZIA, L1, t1;
-    dpdbuf4 Z1, Z2, I, W1, ZIjAb, L2, Z, X, W, B;
+    dpdfile2<double>F, X1, Y1, Zmi, Zae, ZIA, L1, t1;
+    dpdbuf4<double>Z1, Z2, I, W1, ZIjAb, L2, Z, X, W, B;
     double polar;
     char lbl[32];
 

@@ -80,7 +80,7 @@ void CCTransform::read_tei_mo_integrals_mrpt2(IntegralTransform *ints) {
     // and store them in a in-core block-matrix
     //   CCIndex* mo_indexing = blas->get_index("[n>=n]");
 
-    dpdbuf4 I;
+    dpdbuf4<double>I;
 
     dpd_set_default(ints->get_dpd_id());
     std::shared_ptr<PSIO> psio(_default_psio_lib_);

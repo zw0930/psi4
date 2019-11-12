@@ -69,7 +69,7 @@ void local_init() {
     int i, ij, a;
     int nso, nocc, nvir;
     double **X, **Y;
-    dpdfile2 FMI, FAE;
+    dpdfile2<double>FMI, FAE;
     psio_address next;
 
     local.nso = moinfo.nso;
@@ -174,7 +174,7 @@ void local_init() {
 
 void local_done() { outfile->Printf("\tLocal parameters free.\n"); }
 
-void local_filter_T1(dpdfile2 *T1) {
+void local_filter_T1(dpdfile2<double>*T1) {
     int i, a, ij, ii;
     int nocc, nvir;
     double *T1tilde, *T1bar;
@@ -268,7 +268,7 @@ void local_filter_T1(dpdfile2 *T1) {
     free(local.pairdom_nrlen);
 }
 
-void local_filter_T2(dpdbuf4 *T2) {
+void local_filter_T2(dpdbuf4<double>*T2) {
     int ij, i, j, a, b;
     int nso, nocc, nvir;
     double **X1, **X2, **T2tilde, **T2bar;

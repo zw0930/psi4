@@ -84,7 +84,7 @@ void Wabei_build() {
 }
 
 void Wabei_UHF_sort_ints() {
-    dpdbuf4 F, B;
+    dpdbuf4<double>F, B;
     // required in WABEI
     global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 21, 5, 21, 5, 1, "F <AI|BC>");
     global_dpd_->buf4_sort(&F, PSIF_CC_FINTS, prqs, 5, 20, "F <AI||BC> (AB,IC)");

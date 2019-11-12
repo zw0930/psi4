@@ -63,9 +63,9 @@ void cc2_Wabei_build() {
     int e, E;
     int Gef, Gab, Gei, Ge, Gf, Gi;
     int nrows, ncols, nlinks;
-    dpdfile2 t1, tIA, tia;
-    dpdbuf4 Z, Z1, Z2, Z3;
-    dpdbuf4 B, C, D, F, W;
+    dpdfile2<double>t1, tIA, tia;
+    dpdbuf4<double>Z, Z1, Z2, Z3;
+    dpdbuf4<double>B, C, D, F, W;
 
     timer_on("F->Wabei");
     if (params.ref == 0) { /** RHF **/

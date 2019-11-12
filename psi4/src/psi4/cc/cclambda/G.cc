@@ -41,9 +41,9 @@ namespace psi {
 namespace cclambda {
 
 void G_build(int L_irr) {
-    dpdbuf4 LIJAB, Lijab, LiJaB, LIjAb, LijAB, LIJab;
-    dpdbuf4 tIJAB, tijab, tiJaB, tIjAb, tijAB, tIJab;
-    dpdfile2 GAE, Gae, GMI, Gmi;
+    dpdbuf4<double>LIJAB, Lijab, LiJaB, LIjAb, LijAB, LIJab;
+    dpdbuf4<double>tIJAB, tijab, tiJaB, tIjAb, tijAB, tIJab;
+    dpdfile2<double>GAE, Gae, GMI, Gmi;
 
     if (params.ref == 0) {
         global_dpd_->file2_init(&GMI, PSIF_CC_LAMBDA, L_irr, 0, 0, "GMI");

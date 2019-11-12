@@ -44,12 +44,12 @@ namespace psi {
 namespace cctriples {
 
 extern void T3_UHF_AAA(double ***W, double ***V, int disc, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk,
-                       dpdbuf4 *C2, dpdbuf4 *F, dpdbuf4 *E, dpdfile2 *C1, dpdbuf4 *D, dpdfile2 *fIA, dpdfile2 *fIJ,
-                       dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega);
+                       dpdbuf4<double>*C2, dpdbuf4<double>*F, dpdbuf4<double>*E, dpdfile2<double>*C1, dpdbuf4<double>*D, dpdfile2<double>*fIA, dpdfile2<double>*fIJ,
+                       dpdfile2<double>*fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega);
 
 extern void T3_UHF_AAA_abc(double ***W, double ***V, int disc, int nirreps, int A, int Ga, int B, int Gb, int C, int Gc,
-                           dpdbuf4 *C2, dpdbuf4 *F, dpdbuf4 *E, dpdfile2 *C1, dpdbuf4 *D, dpdfile2 *fIA, dpdfile2 *fIJ,
-                           dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega);
+                           dpdbuf4<double>*C2, dpdbuf4<double>*F, dpdbuf4<double>*E, dpdfile2<double>*C1, dpdbuf4<double>*D, dpdfile2<double>*fIA, dpdfile2<double>*fIJ,
+                           dpdfile2<double>*fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega);
 
 double T3_grad_UHF_BBB() {
     int h, nirreps;
@@ -72,9 +72,9 @@ double T3_grad_UHF_BBB() {
     double f_ia, f_ib, f_ic, f_ja, f_jb, f_jc, f_ka, f_kb, f_kc;
     double D_jkbc, D_jkac, D_jkba, D_ikbc, D_ikac, D_ikba, D_jibc, D_jiac, D_jiba;
     double t_jkbc, t_jkac, t_jkba, t_ikbc, t_ikac, t_ikba, t_jibc, t_jiac, t_jiba;
-    dpdbuf4 T2, Fints, Eints, Dints, S2, Gijab, Gijka, Gidab;
-    dpdfile2 fIJ, fAB, fIA, T1, S1, Dab, Dij;
-    dpdfile2 fij, fab, fia;
+    dpdbuf4<double>T2, Fints, Eints, Dints, S2, Gijab, Gijka, Gidab;
+    dpdfile2<double>fIJ, fAB, fIA, T1, S1, Dab, Dij;
+    dpdfile2<double>fij, fab, fia;
     double ***WABC, ***VABC, ***XABC, ***Y;
     double **Z;
 
@@ -494,13 +494,13 @@ double T3_grad_UHF_BBB() {
     global_dpd_->file2_init(&fia, PSIF_CC_OEI, 0, 2, 3, "fia");
     global_dpd_->file2_init(&T1, PSIF_CC_OEI, 0, 2, 3, "tia");
 
-    dpdbuf4 EBBints;
+    dpdbuf4<double>EBBints;
     global_dpd_->buf4_init(&EBBints, PSIF_CC_EINTS, 0, 31, 10, 31, 12, 0, "E <ak||ij> (ak, i>j)");
-    dpdbuf4 FBBints;
+    dpdbuf4<double>FBBints;
     global_dpd_->buf4_init(&FBBints, PSIF_CC_FINTS, 0, 15, 30, 17, 30, 0, "F <bc||ia>");
-    dpdbuf4 T2BB;
+    dpdbuf4<double>T2BB;
     global_dpd_->buf4_init(&T2BB, PSIF_CC_TAMPS, 0, 15, 10, 17, 12, 0, "tabij");
-    dpdbuf4 DBBints;
+    dpdbuf4<double>DBBints;
     global_dpd_->buf4_init(&DBBints, PSIF_CC_DINTS, 0, 10, 15, 10, 15, 0, "D <ij||ab>");
 
     global_dpd_->file2_init(&Dij, PSIF_CC_OEI, 0, 2, 2, "Dij");

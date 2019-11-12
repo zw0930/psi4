@@ -39,7 +39,7 @@ namespace psi {
 ** given dpdbuf4.
 **
 ** Arguments:
-**   dpdbuf4 *BufX: A pointer to the dpdbuf4.
+**   dpdbuf4<double>*BufX: A pointer to the dpdbuf4.
 */
 
 double DPD::buf4_dot_self(dpdbuf4<double> *BufX) {

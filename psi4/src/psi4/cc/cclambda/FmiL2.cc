@@ -43,11 +43,11 @@ namespace cclambda {
 /** The RHF/ROHF contractions can be improved here **/
 
 void FmiL2(int L_irr) {
-    dpdbuf4 Lijab, LIJAB, LIjAb;
-    dpdbuf4 newLijab, newLIJAB, newLIjAb;
-    dpdfile2 LFmit2, LFMIt2, F;
-    dpdbuf4 X, X1, X2;
-    dpdbuf4 L2, newL2;
+    dpdbuf4<double>Lijab, LIJAB, LIjAb;
+    dpdbuf4<double>newLijab, newLIJAB, newLIjAb;
+    dpdfile2<double>LFmit2, LFMIt2, F;
+    dpdbuf4<double>X, X1, X2;
+    dpdbuf4<double>L2, newL2;
 
     /* RHS -= P(ij)*Limab*Fjm */
     if (params.ref == 0) { /** RHF **/

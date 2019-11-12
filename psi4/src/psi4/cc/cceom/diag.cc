@@ -67,25 +67,25 @@ void init_C0(int i);
 void init_S0(int i);
 void init_C2(int index, int irrep);
 extern void write_Rs(int C_irr, double *energies, int *converged);
-extern double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
-extern double norm_C_full(double C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
-extern double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE);
-extern double norm_C_rhf_full(double C0, dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE);
-extern void scm_C1(dpdfile2 *CME, dpdfile2 *Cme, double a);
-extern void scm_C1_full(double C0, dpdfile2 *CME, dpdfile2 *Cme, double a);
-extern void scm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a);
-extern void scm_C_full(double C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf,
+extern double norm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
+extern double norm_C_full(double C0, dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
+extern double norm_C_rhf(dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE);
+extern double norm_C_rhf_full(double C0, dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE);
+extern void scm_C1(dpdfile2<double>*CME, dpdfile2<double>*Cme, double a);
+extern void scm_C1_full(double C0, dpdfile2<double>*CME, dpdfile2<double>*Cme, double a);
+extern void scm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf, double a);
+extern void scm_C_full(double C0, dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf,
                        double a);
-extern void scm_C2(dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a);
+extern void scm_C2(dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf, double a);
 extern void restart(double **alpha, int L, int num, int irrep, int ortho, double **alpha_old, int L_old,
                     int use_alpha_old);
-extern void precondition(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, double eval);
-extern void precondition_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, double eval);
+extern void precondition(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, double eval);
+extern void precondition_RHF(dpdfile2<double>*RIA, dpdbuf4<double>*RIjAb, double eval);
 void form_diagonal(int irrep);
-extern void schmidt_add(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, int *numCs,
+extern void schmidt_add(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, int *numCs,
                         int irrep);
-extern void schmidt_add_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, int *numCs, int irrep);
-void c_clean(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
+extern void schmidt_add_RHF(dpdfile2<double>*RIA, dpdbuf4<double>*RIjAb, int *numCs, int irrep);
+void c_clean(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
 void sigmaSS(int index, int irrep);
 void sigmaSD(int index, int irrep);
 void sigmaDS(int index, int irrep);
@@ -106,15 +106,15 @@ extern void sort_C(int index, int irrep);
 
 void dgeev_eom(int L, double **G, double *evals, double **alpha);
 
-double local_G1_dot(dpdfile2 *, dpdfile2 *);
-double local_G2_dot(dpdbuf4 *, dpdbuf4 *);
-void local_filter_T1_nodenom(dpdfile2 *);
-void local_filter_T2_nodenom(dpdbuf4 *);
+double local_G1_dot(dpdfile2<double>*, dpdfile2<double>*);
+double local_G2_dot(dpdbuf4<double>*, dpdbuf4<double>*);
+void local_filter_T1_nodenom(dpdfile2<double>*);
+void local_filter_T2_nodenom(dpdbuf4<double>*);
 void local_guess();
 
 void read_guess(int);
 void read_guess_init();
-extern double norm_C1_rhf(dpdfile2 *C1A);
+extern double norm_C1_rhf(dpdfile2<double>*C1A);
 void cc3_HC1(int i, int C_irr); /* compute [H,C1] */
 void cc3_HC1ET1(int i, int C_irr);
 void norm_HC1(int i, int C_irr); /* compute norms for [H,C1] */
@@ -124,17 +124,17 @@ extern int follow_root(int L, double **alpha, int C_irr);
 
 void cc2_hbar_extra();
 void cc2_sigma(int index, int irrep);
-void amp_write_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, int length);
-void amp_write_UHF(dpdfile2 *, dpdfile2 *, dpdbuf4 *, dpdbuf4 *, dpdbuf4 *, int length);
-void amp_write_ROHF(dpdfile2 *, dpdfile2 *, dpdbuf4 *, dpdbuf4 *, dpdbuf4 *, int length);
+void amp_write_RHF(dpdfile2<double>*RIA, dpdbuf4<double>*RIjAb, int length);
+void amp_write_UHF(dpdfile2<double>*, dpdfile2<double>*, dpdbuf4<double>*, dpdbuf4<double>*, dpdbuf4<double>*, int length);
+void amp_write_ROHF(dpdfile2<double>*, dpdfile2<double>*, dpdbuf4<double>*, dpdbuf4<double>*, dpdbuf4<double>*, int length);
 
 void overlap(int C_irr, int current);
 void overlap_stash(int C_irr);
 
 void diag() {
-    dpdfile2 CME, CME2, Cme, SIA, Sia, RIA, Ria, DIA, Dia, tIA, tia, LIA, Lia;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, SIJAB, Sijab, SIjAb, RIJAB, Rijab, RIjAb, RIjbA;
-    dpdbuf4 CMnEf1, CMnfE1, CMnfE, CMneF, C2;
+    dpdfile2<double>CME, CME2, Cme, SIA, Sia, RIA, Ria, DIA, Dia, tIA, tia, LIA, Lia;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, SIJAB, Sijab, SIjAb, RIJAB, Rijab, RIjAb, RIjbA;
+    dpdbuf4<double>CMnEf1, CMnfE1, CMnfE, CMneF, C2;
     char lbl[32];
     int num_converged, num_converged_index = 0, *converged, keep_going, already_sigma;
     int irrep, numCs, iter, lwork, info, vectors_per_root, nsigma_evaluations = 0;
@@ -1082,7 +1082,7 @@ void init_S0(int i) {
 
 /* zeroes ith CME (and Cme) vectors on disk */
 void init_C1(int i, int C_irr) {
-    dpdfile2 CME, Cme;
+    dpdfile2<double>CME, Cme;
     char lbl[32];
     double zip = 0.0;
     if (params.eom_ref == 0) {
@@ -1110,7 +1110,7 @@ void init_C1(int i, int C_irr) {
 
 /* zeroes ith SIA (and Sia) vectors on disk */
 void init_S1(int i, int C_irr) {
-    dpdfile2 SIA, Sia;
+    dpdfile2<double>SIA, Sia;
     char lbl[32];
     double zip = 0.0;
     if (params.eom_ref == 0) {
@@ -1138,7 +1138,7 @@ void init_S1(int i, int C_irr) {
 
 /* zeroes ith CMnEf (+ CMNEF + Cmnef) on disk */
 void init_C2(int i, int C_irr) {
-    dpdbuf4 CMNEF, Cmnef, CMnEf;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf;
     char lbl[32];
     if (params.eom_ref == 0) {
         sprintf(lbl, "%s %d", "CMnEf", i);
@@ -1173,7 +1173,7 @@ void init_C2(int i, int C_irr) {
 }
 
 void init_S2(int i, int C_irr) {
-    dpdbuf4 SIJAB, Sijab, SIjAb;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb;
     char lbl[32];
     if (params.eom_ref == 0) {
         sprintf(lbl, "%s %d", "SIjAb", i);

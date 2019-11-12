@@ -47,8 +47,8 @@ namespace ccresponse {
 
 double HXY(const char *pert_x, int irrep_x, double omega_x, const char *pert_y, int irrep_y, double omega_y) {
     double polar;
-    dpdfile2 X1, Y1, z;
-    dpdbuf4 I;
+    dpdfile2<double>X1, Y1, z;
+    dpdbuf4<double>I;
     char lbl[32];
 
     sprintf(lbl, "Z_%s_IA", pert_y);

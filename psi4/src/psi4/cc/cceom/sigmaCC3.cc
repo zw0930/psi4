@@ -63,12 +63,12 @@ namespace cceom {
  * */
 
 void sigmaCC3(int i, int C_irr, double omega) {
-    dpdfile2 CME, Cme, SIA, Sia, FME, Fme;
-    dpdbuf4 CMNEF, CMnEf, Cmnef, CmNeF, SIJAB, Sijab, SIjAb;
-    dpdbuf4 WAMEF, WMNIE, WABEI, WMBIJ, DIJAB_anti, TIJAB;
-    dpdbuf4 Wamef, Wmnie, Wabei, Wmbij, Dijab_anti, Tijab;
-    dpdbuf4 WAmEf, WMnIe, WAbEi, WMbIj, DIjAb, TIjAb, tIjAb;
-    dpdbuf4 WmAEf, WaMeF, WmNiE, WaBeI, WmBiJ, DiJaB, TiJaB, Dints;
+    dpdfile2<double>CME, Cme, SIA, Sia, FME, Fme;
+    dpdbuf4<double>CMNEF, CMnEf, Cmnef, CmNeF, SIJAB, Sijab, SIjAb;
+    dpdbuf4<double>WAMEF, WMNIE, WABEI, WMBIJ, DIJAB_anti, TIJAB;
+    dpdbuf4<double>Wamef, Wmnie, Wabei, Wmbij, Dijab_anti, Tijab;
+    dpdbuf4<double>WAmEf, WMnIe, WAbEi, WMbIj, DIjAb, TIjAb, tIjAb;
+    dpdbuf4<double>WmAEf, WaMeF, WmNiE, WaBeI, WmBiJ, DiJaB, TiJaB, Dints;
     char lbl[32];
 
     if (params.eom_ref == 0) { /* RHF */

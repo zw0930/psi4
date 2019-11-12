@@ -42,7 +42,7 @@ namespace psi {
 namespace cceom {
 
 void hbar_extra() {
-    dpdbuf4 W, W1, W2, WAmEf, WmBeJ, WmBEj, WmNIe, WMnIe;
+    dpdbuf4<double>W, W1, W2, WAmEf, WmBeJ, WmBEj, WmNIe, WMnIe;
 
     if (params.eom_ref == 2) {
         global_dpd_->buf4_init(&W, PSIF_CC_HBAR, H_IRR, 20, 20, 20, 20, 0, "WMBEJ");

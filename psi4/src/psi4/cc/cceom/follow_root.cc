@@ -48,8 +48,8 @@ namespace psi {
 namespace cceom {
 
 int follow_root(int L, double **alpha, int C_irr) {
-    dpdfile2 CME, Cme, RME, Rme;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, RMNEF, Rmnef, RMnEf;
+    dpdfile2<double>CME, Cme, RME, Rme;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, RMNEF, Rmnef, RMnEf;
     char lbl[32];
     double *CR_overlap, tval;
     int i, j;

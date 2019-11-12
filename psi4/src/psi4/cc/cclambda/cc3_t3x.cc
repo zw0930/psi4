@@ -53,10 +53,10 @@ void cc3_t3x() {
         int a, b, c, A, B, C;
         int ab;
         double ***W1;
-        dpdbuf4 T2, E, F, T2AA, T2AB, T2BA, EAA, EAB, EBA, FAA, FAB, FBA;
-        dpdfile2 fIJ, fAB, fij, fab;
-        dpdfile2 XLD;
-        dpdbuf4 L2, L2AB;
+        dpdbuf4<double>T2, E, F, T2AA, T2AB, T2BA, EAA, EAB, EBA, FAA, FAB, FBA;
+        dpdfile2<double>fIJ, fAB, fij, fab;
+        dpdfile2<double>XLD;
+        dpdbuf4<double>L2, L2AB;
         int Gij, ij, Gbc, bc, Gjk, jk;
         int nrows, ncols;
         int **W_offset, offset;

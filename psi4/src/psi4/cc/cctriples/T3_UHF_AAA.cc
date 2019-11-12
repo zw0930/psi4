@@ -62,28 +62,28 @@
 **
 **   int Gk: Irrep of K.
 **
-**   dpdbuf4 *C2: Pointer to dpd buffer for double excitation amps,
+**   dpdbuf4<double>*C2: Pointer to dpd buffer for double excitation amps,
 **   ordered (IJ,AB).
 **
-**   dpdbuf4 *F: Pointer to dpd buffer for three-virtual-index
+**   dpdbuf4<double>*F: Pointer to dpd buffer for three-virtual-index
 **   intermediate, ordered (IA,BC).
 **
-**   dpdbuf4 *E: Pointer to dpd buffer for three-occupied-index
+**   dpdbuf4<double>*E: Pointer to dpd buffer for three-occupied-index
 **   intermediate, ordered (IJ,KA).
 **
 **   dpdfile *C1: If disconnected T3's are requested, pointer to dpd
 **   buffer for single-excitation amps.
 **
-**   dpdbuf4 *D: If disconnected T3's are requested, pointer to dpd
+**   dpdbuf4<double>*D: If disconnected T3's are requested, pointer to dpd
 **   buffer for <IJ||ab> integrals.
 **
-**   dpdfile2 *fIA: Pointer to the dpd file2 for the occ-vir block of
+**   dpdfile2<double>*fIA: Pointer to the dpd file2 for the occ-vir block of
 **   the Fock matrix (or other appropriate one-electron operator).
 **
-**   dpdfile2 *fIJ: Pointer to the dpd file2 for the occ-occ block of
+**   dpdfile2<double>*fIJ: Pointer to the dpd file2 for the occ-occ block of
 **   the Fock matrix (or other appropriate one-electron operator).
 **
-**   dpdfile2 *fAB: Pointer to the dpd file2 for the vir-vir block of
+**   dpdfile2<double>*fAB: Pointer to the dpd file2 for the vir-vir block of
 **   the Fock matrix (or other appropriate one-electron operator).
 **
 **   int *occpi: Number of occupied orbitals per irrep lookup array.
@@ -115,8 +115,8 @@ namespace psi {
 namespace cctriples {
 
 void T3_UHF_AAA(double ***W, double ***V, int disc, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk,
-                dpdbuf4 *C2, dpdbuf4 *F, dpdbuf4 *E, dpdfile2 *C1, dpdbuf4 *D, dpdfile2 *fIA, dpdfile2 *fIJ,
-                dpdfile2 *fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega) {
+                dpdbuf4<double>*C2, dpdbuf4<double>*F, dpdbuf4<double>*E, dpdfile2<double>*C1, dpdbuf4<double>*D, dpdfile2<double>*fIA, dpdfile2<double>*fIJ,
+                dpdfile2<double>*fAB, int *occpi, int *occ_off, int *virtpi, int *vir_off, double omega) {
     int h;
     int i, j, k;
     int ij, ji, ik, ki, jk, kj;

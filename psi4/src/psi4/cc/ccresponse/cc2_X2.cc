@@ -42,12 +42,12 @@
 namespace psi {
 namespace ccresponse {
 
-void denom2(dpdbuf4 *X2, double omega);
-void local_filter_T2(dpdbuf4 *T2);
+void denom2(dpdbuf4<double>*X2, double omega);
+void local_filter_T2(dpdbuf4<double>*T2);
 
 void cc2_X2_build(const char *pert, int irrep, double omega) {
-    dpdfile2 X1, z, F, t1;
-    dpdbuf4 X2, X2new, Z, Z1, Z2, W, I;
+    dpdfile2<double>X1, z, F, t1;
+    dpdbuf4<double>X2, X2new, Z, Z1, Z2, W, I;
     char lbl[32];
 
     sprintf(lbl, "%sBAR_IjAb", pert);

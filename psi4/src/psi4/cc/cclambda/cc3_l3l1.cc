@@ -41,8 +41,8 @@ namespace psi {
 namespace cclambda {
 
 void cc3_l3l1() {
-    dpdfile2 L1, D1, L1new;
-    dpdbuf4 Z, W;
+    dpdfile2<double>L1, D1, L1new;
+    dpdbuf4<double>Z, W;
     int nirreps, Gde, Gg, Gi, Ga;
     int de, ig, ag;
     int nrows, ncols, nlinks;

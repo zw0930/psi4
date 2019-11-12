@@ -41,7 +41,7 @@ namespace psi {
 ** matrix for a single irrep of a dpd four-index buffer.
 **
 ** Arguments:
-**   dpdbuf4 *Buf: A pointer to the input dpdbuf.
+**   dpdbuf4<double>*Buf: A pointer to the input dpdbuf.
 **   int irrep: The irrep number to be prepared.
 */
 int DPD::buf4_mat_irrep_init_sp(dpdbuf4<float> *Buf, int irrep) {

@@ -35,7 +35,7 @@
 
 namespace psi {
 
-/* dpd_buf4_symm(): Symmetrizes a dpdbuf4 by taking,
+/* dpd_buf4_symm(): Symmetrizes a dpdbuf4<double>by taking,
  ** I'(pq,rs) = 1/2 [I(pq,rs) + I(rs,pq)].  Users should keep in mind
  ** that the original buffer will be overwritten when this function is
  ** called.  Also note that this routine will NOT check to see if the
@@ -43,7 +43,7 @@ namespace psi {
  ** is necessary for this to work.
  **
  ** Arguments:
- **   dpdbuf4 *Buf: A pointer to the dpdbuf4 to be symmetrized.
+ **   dpdbuf4<double>*Buf: A pointer to the dpdbuf4<double>to be symmetrized.
  */
 
 int DPD::buf4_symm(dpdbuf4<double> *Buf) {

@@ -42,7 +42,7 @@ namespace psi {
 namespace cclambda {
 
 void cc2_hbar_extra() {
-    dpdbuf4 W1, W2, W;
+    dpdbuf4<double>W1, W2, W;
 
     /* CC2 W(ME,jb) + W(Me,Jb) is constructed in CCEOM for EOM_CC2 */
 

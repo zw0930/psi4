@@ -40,7 +40,7 @@ namespace psi {
 /* dpd_buf4_close(): Closes a dpd four-index buffer.
 **
 ** Arguments:
-**   dpdbuf4 *Buf: A pointer to the dpdbuf4 to be closed.
+**   dpdbuf4<double>*Buf: A pointer to the dpdbuf4<double>to be closed.
 */
 
 int DPD::buf4_close_sp(dpdbuf4<float> *Buf) {

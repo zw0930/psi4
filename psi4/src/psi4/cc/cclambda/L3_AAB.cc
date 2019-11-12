@@ -55,19 +55,19 @@
 **
 **   int Gk: Irrep of K.
 **
-**   dpdbuf4 *T2: Pointer to dpd buffer for double excitation amps,
+**   dpdbuf4<double>*T2: Pointer to dpd buffer for double excitation amps,
 **   ordered (IJ,AB).
 **
-**   dpdbuf4 *F: Pointer to dpd buffer for three-virtual-index
+**   dpdbuf4<double>*F: Pointer to dpd buffer for three-virtual-index
 **   intermediate, ordered (IA,BC).
 **
-**   dpdbuf4 *E: Pointer to dpd buffer for three-occupied-index
+**   dpdbuf4<double>*E: Pointer to dpd buffer for three-occupied-index
 **   intermediate, ordered (IJ,KA).
 **
-**   dpdfile2 *fIJ: Pointer to the dpd file2 for the occ-occ block of
+**   dpdfile2<double>*fIJ: Pointer to the dpd file2 for the occ-occ block of
 **   the Fock matrix (or other appropriate one-electron operator).
 **
-**   dpdfile2 *fAB: Pointer to the dpd file2 for the vir-vir block of
+**   dpdfile2<double>*fAB: Pointer to the dpd file2 for the vir-vir block of
 **   the Fock matrix (or other appropriate one-electron operator).
 **
 **   int *occpi: Number of occupied orbitals per irrep lookup array.
@@ -94,10 +94,10 @@
 namespace psi {
 namespace cclambda {
 
-void L3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2AA, dpdbuf4 *T2AB,
-            dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA, dpdbuf4 *EAA, dpdbuf4 *EAB, dpdbuf4 *EBA,
-            dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB, dpdfile2 *fab, dpdbuf4 *DAA, dpdbuf4 *DAB, dpdbuf4 *LIJAB,
-            dpdbuf4 *LIjAb, dpdfile2 *LIA, dpdfile2 *Lia, dpdfile2 *FME, dpdfile2 *Fme, int *aoccpi, int *aocc_off,
+void L3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double>*T2AA, dpdbuf4<double>*T2AB,
+            dpdbuf4<double>*T2BA, dpdbuf4<double>*FAA, dpdbuf4<double>*FAB, dpdbuf4<double>*FBA, dpdbuf4<double>*EAA, dpdbuf4<double>*EAB, dpdbuf4<double>*EBA,
+            dpdfile2<double>*fIJ, dpdfile2<double>*fij, dpdfile2<double>*fAB, dpdfile2<double>*fab, dpdbuf4<double>*DAA, dpdbuf4<double>*DAB, dpdbuf4<double>*LIJAB,
+            dpdbuf4<double>*LIjAb, dpdfile2<double>*LIA, dpdfile2<double>*Lia, dpdfile2<double>*FME, dpdfile2<double>*Fme, int *aoccpi, int *aocc_off,
             int *boccpi, int *bocc_off, int *avirtpi, int *avir_off, int *bvirtpi, int *bvir_off) {
     int h;
     int i, j, k;

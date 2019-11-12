@@ -41,7 +41,7 @@
 namespace psi {
 namespace cceom {
 
-double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf) {
+double norm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf) {
     double norm = 0.0;
     norm += global_dpd_->file2_dot_self(CME);
     norm += global_dpd_->file2_dot_self(Cme);
@@ -52,7 +52,7 @@ double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdb
     return norm;
 }
 
-double norm_C_full(double C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf) {
+double norm_C_full(double C0, dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf) {
     double norm = 0.0;
     norm += C0 * C0;
     norm += global_dpd_->file2_dot_self(CME);
@@ -64,7 +64,7 @@ double norm_C_full(double C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdb
     return norm;
 }
 
-double dot_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf) {
+double dot_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf) {
     double norm = 0.0;
     norm += global_dpd_->file2_dot_self(CME);
     norm += global_dpd_->file2_dot_self(Cme);
@@ -74,7 +74,7 @@ double dot_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbu
     return norm;
 }
 
-double dot_C_full(double C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf) {
+double dot_C_full(double C0, dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf) {
     double norm = 0.0;
     norm += C0 * C0;
     norm += global_dpd_->file2_dot_self(CME);
@@ -85,7 +85,7 @@ double dot_C_full(double C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbu
     return norm;
 }
 
-double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE) {
+double norm_C_rhf(dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE) {
     double norm = 0.0;
     norm = 2.0 * global_dpd_->file2_dot_self(CME);
     norm += 2.0 * global_dpd_->buf4_dot_self(CMnEf);
@@ -94,7 +94,7 @@ double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE) {
     return norm;
 }
 
-double norm_C_rhf_full(double C0, dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE) {
+double norm_C_rhf_full(double C0, dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE) {
     double norm = 0.0;
     norm = C0 * C0;
     norm += 2.0 * global_dpd_->file2_dot_self(CME);
@@ -104,7 +104,7 @@ double norm_C_rhf_full(double C0, dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE)
     return norm;
 }
 
-double norm_C1(dpdfile2 *CME, dpdfile2 *Cme) {
+double norm_C1(dpdfile2<double>*CME, dpdfile2<double>*Cme) {
     double norm = 0.0;
     norm += global_dpd_->file2_dot_self(CME);
     norm += global_dpd_->file2_dot_self(Cme);
@@ -112,7 +112,7 @@ double norm_C1(dpdfile2 *CME, dpdfile2 *Cme) {
     return norm;
 }
 
-double norm_C1_full(double C0, dpdfile2 *CME, dpdfile2 *Cme) {
+double norm_C1_full(double C0, dpdfile2<double>*CME, dpdfile2<double>*Cme) {
     double norm = 0.0;
     norm += C0 * C0;
     norm += global_dpd_->file2_dot_self(CME);
@@ -121,14 +121,14 @@ double norm_C1_full(double C0, dpdfile2 *CME, dpdfile2 *Cme) {
     return norm;
 }
 
-double norm_C1_rhf(dpdfile2 *CME) {
+double norm_C1_rhf(dpdfile2<double>*CME) {
     double norm = 0.0;
     norm = 2 * global_dpd_->file2_dot_self(CME);
     norm = sqrt(norm);
     return norm;
 }
 
-double norm_C1_rhf_full(double C0, dpdfile2 *CME) {
+double norm_C1_rhf_full(double C0, dpdfile2<double>*CME) {
     double norm = 0.0;
     norm += C0 * C0;
     norm += 2 * global_dpd_->file2_dot_self(CME);
@@ -136,7 +136,7 @@ double norm_C1_rhf_full(double C0, dpdfile2 *CME) {
     return norm;
 }
 
-void scm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a) {
+void scm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf, double a) {
     global_dpd_->file2_scm(CME, a);
     global_dpd_->file2_scm(Cme, a);
     global_dpd_->buf4_scm(CMNEF, a);
@@ -145,7 +145,7 @@ void scm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4
     return;
 }
 
-void scm_C_full(double *C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a) {
+void scm_C_full(double *C0, dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf, double a) {
     (*C0) *= a;
     global_dpd_->file2_scm(CME, a);
     global_dpd_->file2_scm(Cme, a);
@@ -155,20 +155,20 @@ void scm_C_full(double *C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf
     return;
 }
 
-void scm_C2(dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a) {
+void scm_C2(dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf, double a) {
     global_dpd_->buf4_scm(CMNEF, a);
     global_dpd_->buf4_scm(Cmnef, a);
     global_dpd_->buf4_scm(CMnEf, a);
     return;
 }
 
-void scm_C1(dpdfile2 *CME, dpdfile2 *Cme, double a) {
+void scm_C1(dpdfile2<double>*CME, dpdfile2<double>*Cme, double a) {
     global_dpd_->file2_scm(CME, a);
     global_dpd_->file2_scm(Cme, a);
     return;
 }
 
-void scm_C1_full(double *C0, dpdfile2 *CME, dpdfile2 *Cme, double a) {
+void scm_C1_full(double *C0, dpdfile2<double>*CME, dpdfile2<double>*Cme, double a) {
     (*C0) *= a;
     global_dpd_->file2_scm(CME, a);
     global_dpd_->file2_scm(Cme, a);

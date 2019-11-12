@@ -45,8 +45,8 @@ namespace cclambda {
 extern double pseudoenergy(const struct L_Params& L_params);
 
 void Lnorm(const struct L_Params& L_params) {
-    dpdfile2 R1, L1, LIA, Lia, RIA, Ria;
-    dpdbuf4 R2, L2, LIJAB, Lijab, LIjAb, RIJAB, Rijab, RIjAb;
+    dpdfile2<double>R1, L1, LIA, Lia, RIA, Ria;
+    dpdbuf4<double>R2, L2, LIJAB, Lijab, LIjAb, RIJAB, Rijab, RIjAb;
     double tval, overlap, overlap0, overlap1, overlap2, L0;
     char R1A_lbl[32], R1B_lbl[32], R2AA_lbl[32], R2BB_lbl[32], R2AB_lbl[32];
     int L_irr;

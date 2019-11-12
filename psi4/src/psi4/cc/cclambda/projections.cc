@@ -68,8 +68,8 @@ void projections(struct L_Params *pL_params) {
     double dot_L2R2 = 0;
     char R1A_lbl[32], R1B_lbl[32], R2AA_lbl[32], R2BB_lbl[32], R2AB_lbl[32];
     char L1A_lbl[32], L1B_lbl[32], L2AA_lbl[32], L2BB_lbl[32], L2AB_lbl[32], L2AB_lbl2[32];
-    dpdfile2 L1A, L1B, T1A, T1B, I1, R1A, R1B;
-    dpdbuf4 T2, L2, R2;
+    dpdfile2<double>L1A, L1B, T1A, T1B, I1, R1A, R1B;
+    dpdbuf4<double>T2, L2, R2;
     /* assumes that the excited-Rs are available */
 
     if (params.ref == 0) {

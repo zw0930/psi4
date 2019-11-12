@@ -46,7 +46,7 @@ namespace cceom {
  *** specification of open-shell orbitals as both occupied    ***
  *** and virtual orbitals.                                    ***/
 
-void c_clean(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf) {
+void c_clean(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf) {
     int *occpi, *virtpi, *occ_off, *vir_off, *openpi, C_irr;
     int nirreps, *occ_sym, *vir_sym;
     int mn, ef, m, n, e, f, h, M, N, E, F;
@@ -138,7 +138,7 @@ void c_clean(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbu
     return;
 }
 
-void c_cleanSS(dpdfile2 *CME, dpdfile2 *Cme) {
+void c_cleanSS(dpdfile2<double>*CME, dpdfile2<double>*Cme) {
     int *occpi, *virtpi, *occ_off, *vir_off, *openpi;
     int nirreps, *occ_sym, *vir_sym;
     int mn, ef, m, n, e, f;

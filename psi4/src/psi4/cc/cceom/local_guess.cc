@@ -63,7 +63,7 @@ void local_guess() {
     struct onestack *stack;
 
     char lbl[32];
-    dpdfile2 CME;
+    dpdfile2<double>CME;
 
     nso = local.nso;
     nocc = local.nocc;

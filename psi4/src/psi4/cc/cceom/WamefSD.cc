@@ -46,11 +46,11 @@ namespace cceom {
    of Wamef to a Sigma vector stored at Sigma plus 'i' */
 
 void WamefSD(int i, int C_irr) {
-    dpdfile2 SIA, Sia;
-    dpdbuf4 WAMEF, Wamef, WAmEf, WaMeF;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, CmNeF;
-    dpdbuf4 C, W;
-    dpdfile2 S;
+    dpdfile2<double>SIA, Sia;
+    dpdbuf4<double>WAMEF, Wamef, WAmEf, WaMeF;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, CmNeF;
+    dpdbuf4<double>C, W;
+    dpdfile2<double>S;
     char lbl[32];
     int Gam, Gef, Gim, Gi, Ga, Gm, nrows, ncols, A, a, am;
 

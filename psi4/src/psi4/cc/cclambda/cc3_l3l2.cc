@@ -46,14 +46,14 @@ namespace cclambda {
 void cc3_l3l2_RHF_AAA();
 void cc3_l3l2_RHF_AAB();
 
-void L3_AAA(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2, dpdbuf4 *F, dpdbuf4 *E,
-            dpdfile2 *fIJ, dpdfile2 *fAB, dpdbuf4 *D, dpdbuf4 *LIJAB, dpdfile2 *LIA, dpdfile2 *FME, int *occpi,
+void L3_AAA(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double>*T2, dpdbuf4<double>*F, dpdbuf4<double>*E,
+            dpdfile2<double>*fIJ, dpdfile2<double>*fAB, dpdbuf4<double>*D, dpdbuf4<double>*LIJAB, dpdfile2<double>*LIA, dpdfile2<double>*FME, int *occpi,
             int *occ_off, int *virtpi, int *vir_off);
 
-void L3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4 *T2AA, dpdbuf4 *T2AB,
-            dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA, dpdbuf4 *EAA, dpdbuf4 *EAB, dpdbuf4 *EBA,
-            dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB, dpdfile2 *fab, dpdbuf4 *DAA, dpdbuf4 *DAB, dpdbuf4 *LIJAB,
-            dpdbuf4 *LIjAb, dpdfile2 *LIA, dpdfile2 *Lia, dpdfile2 *FME, dpdfile2 *Fme, int *aoccpi, int *aocc_off,
+void L3_AAB(double ***W1, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk, dpdbuf4<double>*T2AA, dpdbuf4<double>*T2AB,
+            dpdbuf4<double>*T2BA, dpdbuf4<double>*FAA, dpdbuf4<double>*FAB, dpdbuf4<double>*FBA, dpdbuf4<double>*EAA, dpdbuf4<double>*EAB, dpdbuf4<double>*EBA,
+            dpdfile2<double>*fIJ, dpdfile2<double>*fij, dpdfile2<double>*fAB, dpdfile2<double>*fab, dpdbuf4<double>*DAA, dpdbuf4<double>*DAB, dpdbuf4<double>*LIJAB,
+            dpdbuf4<double>*LIjAb, dpdfile2<double>*LIA, dpdfile2<double>*Lia, dpdfile2<double>*FME, dpdfile2<double>*Fme, int *aoccpi, int *aocc_off,
             int *boccpi, int *bocc_off, int *avirtpi, int *avir_off, int *bvirtpi, int *bvir_off);
 
 void cc3_l3l2() {
@@ -74,16 +74,16 @@ void cc3_l3l2_RHF_AAA() {
     int i, j, k, I, J, K;
     int a, b, c, A, B, C;
     double ***W1, ***W2;
-    dpdbuf4 L, E, F;
-    dpdfile2 fIJ, fAB;
-    dpdfile2 FME, LIA;
-    dpdbuf4 Dints, LIJAB;
-    dpdbuf4 WMAFE, WMNIE;
-    dpdbuf4 ZIGDE, T2;
-    dpdbuf4 ZDMAE;
-    dpdbuf4 ZLMAO;
-    dpdbuf4 ZIMLE;
-    dpdbuf4 L2new, L2, D2;
+    dpdbuf4<double>L, E, F;
+    dpdfile2<double>fIJ, fAB;
+    dpdfile2<double>FME, LIA;
+    dpdbuf4<double>Dints, LIJAB;
+    dpdbuf4<double>WMAFE, WMNIE;
+    dpdbuf4<double>ZIGDE, T2;
+    dpdbuf4<double>ZDMAE;
+    dpdbuf4<double>ZLMAO;
+    dpdbuf4<double>ZIMLE;
+    dpdbuf4<double>L2new, L2, D2;
     int Gjk, jk, Gid, id, Gik, ik;
     int Gd, d, DD;
     int cd, dc;
@@ -440,16 +440,16 @@ void cc3_l3l2_RHF_AAB() {
     int a, b, c, A, B, C;
     int ab;
     double ***W1, ***W2;
-    dpdbuf4 L2AA, L2AB, L2BA, EAA, EAB, EBA, FAA, FAB, FBA;
-    dpdfile2 fIJ, fAB, fij, fab;
-    dpdbuf4 DAAints, DABints, LIJAB, LIjAb;
-    dpdfile2 LIA, Lia, FME, Fme;
-    dpdbuf4 L2AAnew, L2ABnew, L2, D2;
-    dpdbuf4 WmAfE, WMnIe, WMAFE, WMaFe, WMNIE, WmNiE;
-    dpdbuf4 ZIGDE, T2AB, T2AA, ZIgDe;
-    dpdbuf4 ZDMAE, ZDmAe, ZdMAe;
-    dpdbuf4 ZLMAO, ZLmAo;
-    dpdbuf4 ZIMLE, ZImLe, ZImlE;
+    dpdbuf4<double>L2AA, L2AB, L2BA, EAA, EAB, EBA, FAA, FAB, FBA;
+    dpdfile2<double>fIJ, fAB, fij, fab;
+    dpdbuf4<double>DAAints, DABints, LIJAB, LIjAb;
+    dpdfile2<double>LIA, Lia, FME, Fme;
+    dpdbuf4<double>L2AAnew, L2ABnew, L2, D2;
+    dpdbuf4<double>WmAfE, WMnIe, WMAFE, WMaFe, WMNIE, WmNiE;
+    dpdbuf4<double>ZIGDE, T2AB, T2AA, ZIgDe;
+    dpdbuf4<double>ZDMAE, ZDmAe, ZdMAe;
+    dpdbuf4<double>ZLMAO, ZLmAo;
+    dpdbuf4<double>ZIMLE, ZImLe, ZImlE;
     int nrows, ncols, nlinks;
     int Gcb, cb;
     int Gij, ij, Gji, ji, Gjk, jk, kj, Gkj;

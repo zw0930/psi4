@@ -48,7 +48,7 @@ namespace cceom {
 */
 
 void sort_amps() {
-    dpdbuf4 R2;
+    dpdbuf4<double>R2;
     int R_irr;
 
     /* calculate irrep of R, the irrep for root of interest. */

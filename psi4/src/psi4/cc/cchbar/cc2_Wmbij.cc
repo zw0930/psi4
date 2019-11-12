@@ -46,11 +46,11 @@ namespace cchbar {
 void purge_cc2_Wmbij();
 
 void cc2_Wmbij_build() {
-    dpdfile2 t1, tIA, tia;
-    dpdbuf4 E, D, C, F;
-    dpdbuf4 W, W1;
-    dpdbuf4 Z, Z1;
-    dpdbuf4 X;
+    dpdfile2<double>t1, tIA, tia;
+    dpdbuf4<double>E, D, C, F;
+    dpdbuf4<double>W, W1;
+    dpdbuf4<double>Z, Z1;
+    dpdbuf4<double>X;
 
     if (params.ref == 0) { /** RHF **/
         /* W(Mb,Ij) <-- <Mb|Ij> */

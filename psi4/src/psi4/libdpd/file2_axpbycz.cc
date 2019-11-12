@@ -40,9 +40,9 @@ namespace psi {
 ** dpdfile2's.
 **
 ** Arguments:
-**   dpdfile2 *FileA: A pointer to the leftmost dpdfile2.
-**   dpdfile2 *FileB: A pointer to the rightmost summand dpdfile2.
-**   dpdfile2 *FileC: A pointer to the target dpdfile2.
+**   dpdfile2<double>*FileA: A pointer to the leftmost dpdfile2.
+**   dpdfile2<double>*FileB: A pointer to the rightmost summand dpdfile2.
+**   dpdfile2<double>*FileC: A pointer to the target dpdfile2.
 **   double a, b, c, scalar prefactors
 */
 

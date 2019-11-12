@@ -55,8 +55,8 @@ namespace ccresponse {
 */
 
 void lambda_residuals() {
-    dpdbuf4 L2, Z, W;
-    dpdfile2 L1, F;
+    dpdbuf4<double>L2, Z, W;
+    dpdfile2<double>L1, F;
     int h, i, e, m, a, I, E, M, A, Isym, Esym, Msym, Asym;
     int row, col;
 

@@ -44,9 +44,9 @@ namespace psi {
 ** four-index quantity, beta * Z = alpha * X * Y.
 **
 ** Arguments:
-**   dpdfile2 *X: A pointer to the two-index file.
-**   dpdbuf4 *Y: A pointer to the four-index buffer.
-**   dpdbuf4 *Z: A pointer to the target four-index buffer.
+**   dpdfile2<double>*X: A pointer to the two-index file.
+**   dpdbuf4<double>*Y: A pointer to the four-index buffer.
+**   dpdbuf4<double>*Z: A pointer to the target four-index buffer.
 **   int sum_X: Indicates which index on X is to be summed (takes a value of
 **              0 or 1).
 **   int sum_Y: Indicates which index on Y is to be summed (takes a value of

@@ -42,8 +42,8 @@ namespace psi {
 namespace cclambda {
 
 void Lmag(int L_irr) {
-    dpdfile2 R1, L1, LIA, Lia, RIA, Ria;
-    dpdbuf4 R2, L2, LIJAB, Lijab, LIjAb, RIJAB, Rijab, RIjAb;
+    dpdfile2<double>R1, L1, LIA, Lia, RIA, Ria;
+    dpdbuf4<double>R2, L2, LIJAB, Lijab, LIjAb, RIJAB, Rijab, RIjAb;
     double norm;
 
     if (params.ref == 0 || params.ref == 1) { /** RHF/ROHF **/

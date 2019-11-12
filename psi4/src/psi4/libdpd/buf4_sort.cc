@@ -51,7 +51,7 @@ namespace psi {
 ** target buffers can be stored in core.
 **
 ** Arguments:
-**   dpdbuf4 *InBuf: A pointer to the alread-initialized input
+**   dpdbuf4<double>*InBuf: A pointer to the alread-initialized input
 **     buffer.
 **   int outfilenum: The PSI unit number for the target data.
 **   enum indices index: The desired sorting pattern (see dpd.h).

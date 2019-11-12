@@ -43,8 +43,8 @@ namespace ccresponse {
 
 double LCX(const char *pert_c, int irrep_c, const char *pert_x, int irrep_x, double omega) {
     double polar = 0.0;
-    dpdfile2 X1, mu1, z1, l1, mu, lt, xc;
-    dpdbuf4 X2, mu2, z2, l2, Z;
+    dpdfile2<double>X1, mu1, z1, l1, mu, lt, xc;
+    dpdbuf4<double>X2, mu2, z2, l2, Z;
     char lbl[32];
 
     /*** Mu * X1 ***/

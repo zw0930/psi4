@@ -42,7 +42,7 @@ namespace psi {
 namespace cclambda {
 
 void CCLambdaWavefunction::sort_amps(int L_irr) {
-    dpdbuf4 L2;
+    dpdbuf4<double>L2;
 
     if (params.ref == 0) {
         global_dpd_->buf4_init(&L2, PSIF_CC_LAMBDA, L_irr, 0, 5, 0, 5, 0, "LIjAb");

@@ -45,9 +45,9 @@ namespace cceom {
    of Wmaij to a Sigma vector stored at Sigma plus 'i' */
 
 void WmaijDS(int i, int C_irr) {
-    dpdfile2 CME, Cme;
-    dpdbuf4 SIJAB, Sijab, SIjAb, Z;
-    dpdbuf4 W, WP, WM, WMBIJ, Wmbij, WMbIj, WmBiJ;
+    dpdfile2<double>CME, Cme;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb, Z;
+    dpdbuf4<double>W, WP, WM, WMBIJ, Wmbij, WMbIj, WmBiJ;
     char CME_lbl[32], Cme_lbl[32], SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32];
 
     if (params.eom_ref == 0) { /* RHF */

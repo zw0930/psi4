@@ -42,11 +42,11 @@
 namespace psi {
 namespace ccresponse {
 
-void denom1(dpdfile2 *X1, double omega) {
+void denom1(dpdfile2<double>*X1, double omega) {
     int nirreps, h, irrep;
     int i, a;
     int *occpi, *virtpi;
-    dpdfile2 FAE, FMI;
+    dpdfile2<double>FAE, FMI;
 
     nirreps = moinfo.nirreps;
     occpi = moinfo.occpi;
@@ -88,10 +88,10 @@ void denom1(dpdfile2 *X1, double omega) {
     global_dpd_->file2_close(&FMI);
 }
 
-void denom2(dpdbuf4 *X2, double omega) {
+void denom2(dpdbuf4<double>*X2, double omega) {
     int nirreps, h, row, col, irrep;
     int i, j, I, J, a, b, A, B, isym, jsym, asym, bsym;
-    dpdfile2 FAE, FMI;
+    dpdfile2<double>FAE, FMI;
 
     nirreps = moinfo.nirreps;
     irrep = X2->file.my_irrep;

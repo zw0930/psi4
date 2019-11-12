@@ -40,7 +40,7 @@ namespace psi {
 /* dpd_file2_close(): Closes a two-index dpd file.
 **
 ** Arguments:
-**   dpdfile2 *File: A pointer to the file to be closed.
+**   dpdfile2<double>*File: A pointer to the file to be closed.
 */
 
 int DPD::file2_close_sp(dpdfile2<float> *File) {

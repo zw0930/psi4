@@ -72,8 +72,8 @@ void cc3_HC1(int i, int C_irr) {
 /* constructs matrix elements of [H, C1] for CC3 EOM code */
 
 void HC1_F(int i, int C_irr) {
-    dpdfile2 FME, Fme, Cme, CME;
-    dpdbuf4 D_anti, D;
+    dpdfile2<double>FME, Fme, Cme, CME;
+    dpdbuf4<double>D_anti, D;
     char CME_lbl[32], Cme_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
     sprintf(Cme_lbl, "%s %d", "Cme", i);
@@ -151,8 +151,8 @@ void HC1_F(int i, int C_irr) {
 }
 
 void HC1_Wamef(int i, int C_irr) {
-    dpdbuf4 Wamef, WAMEF, WAmEf, WaMeF, W, D_a, D;
-    dpdfile2 Cme, CME;
+    dpdbuf4<double>Wamef, WAMEF, WAmEf, WaMeF, W, D_a, D;
+    dpdfile2<double>Cme, CME;
     char CME_lbl[32], Cme_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
     sprintf(Cme_lbl, "%s %d", "Cme", i);
@@ -272,9 +272,9 @@ void HC1_Wamef(int i, int C_irr) {
 }
 
 void HC1_Wmnie(int i, int C_irr) {
-    dpdbuf4 W, Wmnie, WMNIE, WMnIe, WmNiE, WMniE, WmNIe;
-    dpdbuf4 D, D_a, Z;
-    dpdfile2 Cme, CME;
+    dpdbuf4<double>W, Wmnie, WMNIE, WMnIe, WmNiE, WMniE, WmNIe;
+    dpdbuf4<double>D, D_a, Z;
+    dpdfile2<double>Cme, CME;
     char CME_lbl[32], Cme_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
     sprintf(Cme_lbl, "%s %d", "Cme", i);
@@ -410,9 +410,9 @@ void HC1_Wmnie(int i, int C_irr) {
 }
 
 void HC1_Wmnij(int i, int C_irr) {
-    dpdbuf4 WMNIJ, Wmnij, WMnIj, W;
-    dpdbuf4 Eijka, Eijka_anti, Eaijk, Eaijk_anti;
-    dpdfile2 Cme, CME;
+    dpdbuf4<double>WMNIJ, Wmnij, WMnIj, W;
+    dpdbuf4<double>Eijka, Eijka_anti, Eaijk, Eaijk_anti;
+    dpdfile2<double>Cme, CME;
     char CME_lbl[32], Cme_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
     sprintf(Cme_lbl, "%s %d", "Cme", i);
@@ -509,8 +509,8 @@ void HC1_Wmnij(int i, int C_irr) {
 }
 
 void HC1_Wmbij(int i, int C_irr) {
-    dpdbuf4 W, Wmnij, I, Z, Z1, Z2, C, D;
-    dpdfile2 Cme, CME;
+    dpdbuf4<double>W, Wmnij, I, Z, Z1, Z2, C, D;
+    dpdfile2<double>Cme, CME;
     char CME_lbl[32], Cme_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
     sprintf(Cme_lbl, "%s %d", "Cme", i);
@@ -770,9 +770,9 @@ void HC1_Wmbij(int i, int C_irr) {
 }
 
 void HC1_Wmbej(int i, int C_irr) {
-    dpdbuf4 WMBEJ, Wmbej, WMbEj, WmBeJ, WmBEj, WMbeJ;
-    dpdbuf4 D, C, F, E, X, Y, W, Z;
-    dpdfile2 Cme, CME;
+    dpdbuf4<double>WMBEJ, Wmbej, WMbEj, WmBeJ, WmBEj, WMbeJ;
+    dpdbuf4<double>D, C, F, E, X, Y, W, Z;
+    dpdfile2<double>Cme, CME;
     char CME_lbl[32], Cme_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
     sprintf(Cme_lbl, "%s %d", "Cme", i);
@@ -1021,9 +1021,9 @@ void HC1_Wmbej(int i, int C_irr) {
 }
 
 void HC1_Wabei(int i, int C_irr) {
-    dpdbuf4 Z, Z1, Z2, Z3;
-    dpdbuf4 B, C, D, E, F, W;
-    dpdfile2 Cme, CME, T1;
+    dpdbuf4<double>Z, Z1, Z2, Z3;
+    dpdbuf4<double>B, C, D, E, F, W;
+    dpdfile2<double>Cme, CME, T1;
     char CME_lbl[32], Cme_lbl[32];
     int Gef, Gei, Gab, Ge, Gf, Gi;
     int EE, e;
@@ -1442,7 +1442,7 @@ void HC1_Wabei(int i, int C_irr) {
 }
 
 void purge_HC1(int C_irr) {
-    dpdfile2 FAE, Fmi, FME, Fme;
+    dpdfile2<double>FAE, Fmi, FME, Fme;
     dpdfile4 W;
     int *occpi, *virtpi;
     int h, a, b, e, f, i, j, m, n;

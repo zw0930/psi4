@@ -46,23 +46,23 @@ namespace cceom {
 void cc2_sigmaSS(int i, int C_irr);
 
 void cc2_sigma(int i, int C_irr) {
-    dpdfile2 SIA;
-    dpdbuf4 SIjAb;
-    dpdfile2 CME;
-    dpdbuf4 CMnEf;
-    dpdfile2 FAE;
-    dpdfile2 FMI;
-    dpdfile2 FME;
-    dpdbuf4 W;
-    dpdbuf4 C;
-    dpdfile2 S;
-    dpdbuf4 WMbEj;
-    dpdbuf4 WAmEf;
-    dpdbuf4 WMnIe;
-    dpdbuf4 WAbEi;
-    dpdbuf4 WMbIj;
-    dpdbuf4 Z;
-    dpdbuf4 Z2;
+    dpdfile2<double>SIA;
+    dpdbuf4<double>SIjAb;
+    dpdfile2<double>CME;
+    dpdbuf4<double>CMnEf;
+    dpdfile2<double>FAE;
+    dpdfile2<double>FMI;
+    dpdfile2<double>FME;
+    dpdbuf4<double>W;
+    dpdbuf4<double>C;
+    dpdfile2<double>S;
+    dpdbuf4<double>WMbEj;
+    dpdbuf4<double>WAmEf;
+    dpdbuf4<double>WMnIe;
+    dpdbuf4<double>WAbEi;
+    dpdbuf4<double>WMbIj;
+    dpdbuf4<double>Z;
+    dpdbuf4<double>Z2;
     char lbl[32];
     char CME_lbl[32];
     char CMnEf_lbl[32];
@@ -274,14 +274,14 @@ void cc2_sigma(int i, int C_irr) {
 }
 
 void cc2_sigmaSS(int i, int C_irr) {
-    dpdfile2 SIA;
-    dpdfile2 CME;
-    dpdfile2 FAE;
-    dpdfile2 FMI;
-    dpdbuf4 WMbEj;
-    dpdfile2 Xme;
-    dpdbuf4 T2;
-    dpdbuf4 D;
+    dpdfile2<double>SIA;
+    dpdfile2<double>CME;
+    dpdfile2<double>FAE;
+    dpdfile2<double>FMI;
+    dpdbuf4<double>WMbEj;
+    dpdfile2<double>Xme;
+    dpdbuf4<double>T2;
+    dpdbuf4<double>D;
     char lbl[32];
 
     if (params.eom_ref == 0) { /* RHF */

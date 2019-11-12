@@ -68,10 +68,10 @@ class R1_amp {
         i = a = Gi = Ga = 0;
         value = 0.0;
     }
-    friend void amp_write_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, int namps);
-    friend void amp_write_UHF(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, int namps);
-    friend void amp_write_ROHF(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, int namps);
-    friend void get_largest_R1_amps(dpdfile2 *R1, int namps, vector<R1_amp> &R1_stack);
+    friend void amp_write_RHF(dpdfile2<double>*RIA, dpdbuf4<double>*RIjAb, int namps);
+    friend void amp_write_UHF(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, int namps);
+    friend void amp_write_ROHF(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, int namps);
+    friend void get_largest_R1_amps(dpdfile2<double>*R1, int namps, vector<R1_amp> &R1_stack);
 };
 
 class R2_amp {
@@ -88,16 +88,16 @@ class R2_amp {
         value = 0.0;
     }
 
-    friend void amp_write_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, int namps);
-    friend void amp_write_UHF(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, int namps);
-    friend void amp_write_ROHF(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, int namps);
-    friend void get_largest_R2_amps(dpdbuf4 *R2, int namps, vector<R2_amp> &R2_stack);
+    friend void amp_write_RHF(dpdfile2<double>*RIA, dpdbuf4<double>*RIjAb, int namps);
+    friend void amp_write_UHF(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, int namps);
+    friend void amp_write_ROHF(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, int namps);
+    friend void get_largest_R2_amps(dpdbuf4<double>*R2, int namps, vector<R2_amp> &R2_stack);
 };
 
-void get_largest_R1_amps(dpdfile2 *R1, int namps, vector<R1_amp> &R1s);
-void get_largest_R2_amps(dpdbuf4 *R2, int namps, vector<R2_amp> &R2_stack);
+void get_largest_R1_amps(dpdfile2<double>*R1, int namps, vector<R1_amp> &R1s);
+void get_largest_R2_amps(dpdbuf4<double>*R2, int namps, vector<R2_amp> &R2_stack);
 
-void amp_write_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, int namps) {
+void amp_write_RHF(dpdfile2<double>*RIA, dpdbuf4<double>*RIjAb, int namps) {
     int m, i, j, a, b, Gi, Gj, Ga, Gb, *frdocc, *clsdpi;
     char lbli[10], lblj[10], lbla[10], lblb[10];
     frdocc = moinfo.frdocc;
@@ -151,7 +151,7 @@ void amp_write_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, int namps) {
 }
 
 // ** amp_write_UHF()
-void amp_write_UHF(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, int namps) {
+void amp_write_UHF(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, int namps) {
     int m, i, j, a, b, Gi, Gj, Ga, Gb, *frdocc, *clsdpi, *openpi;
     char lbli[10], lblj[10], lbla[10], lblb[10];
 
@@ -277,7 +277,7 @@ void amp_write_UHF(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab,
 }
 
 // ** amp_write_ROHF()
-void amp_write_ROHF(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, int namps) {
+void amp_write_ROHF(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, int namps) {
     int m, i, j, a, b, Gi, Gj, Ga, Gb, *virtpi, *clsdpi, *openpi, *frdocc;
     char lbli[10], lblj[10], lbla[10], lblb[10];
 
@@ -420,7 +420,7 @@ void amp_write_ROHF(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab
 }
 
 /* builds std::vector of R1_amps of largest magnitude for dpd_file2 structures */
-void get_largest_R1_amps(dpdfile2 *R1, int namps, vector<R1_amp> &R1_stack) {
+void get_largest_R1_amps(dpdfile2<double>*R1, int namps, vector<R1_amp> &R1_stack) {
     int h, m, i, a, Gia, nirreps;
     R1_amp one_R1;
 
@@ -453,7 +453,7 @@ void get_largest_R1_amps(dpdfile2 *R1, int namps, vector<R1_amp> &R1_stack) {
 }
 
 /* builds std::vector of R2_amps of largest magnitude for dpd_file2 structures */
-void get_largest_R2_amps(dpdbuf4 *R2, int namps, vector<R2_amp> &R2_stack) {
+void get_largest_R2_amps(dpdbuf4<double>*R2, int namps, vector<R2_amp> &R2_stack) {
     int a, b, i, j, h, ij, ab, m, nirreps, Gijab;
     R2_amp one_R2;
 

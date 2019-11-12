@@ -44,8 +44,8 @@ namespace psi {
 **         B(q,s) = alpha * \Sum_{p==r} A(pq,rs) + beta * B(q,s)
 **
 ** Arguments:
-**   dpdbuf4 *A: Pointer to the input four-index buffer.
-**   dpdfile2 *B: Pointer to the target two-index file.
+**   dpdbuf4<double>*A: Pointer to the input four-index buffer.
+**   dpdfile2<double>*B: Pointer to the target two-index file.
 **   int transb: Boolean to indicate whether B should be transposed to match the
 **               target index ordering of A.
 **   double alpha: Prefactor for A.

@@ -43,10 +43,10 @@
 namespace psi {
 namespace cceom {
 
-extern double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
-extern double dot_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
-extern double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE);
-extern void scm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf, double a);
+extern double norm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
+extern double dot_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
+extern double norm_C_rhf(dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE);
+extern void scm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf, double a);
 
 /* this function determines R0, properly normalizes R, and checks orthogonality
  * with the ground state left eigenvector (1+lambda) */
@@ -55,9 +55,9 @@ extern void scm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, 
 void rzero(int C_irr, int *converged) {
     double rzero = 0.0, energy, norm, dotval;
     double dot_IA, dot_ia, dot_IJAB, dot_ijab, dot_IjAb;
-    dpdfile2 RIA, Ria, RIA2, Ria2, FIA, Fia, LIA, Lia;
-    dpdbuf4 RIJAB, Rijab, RIjAb, D, R2, LIJAB, Lijab, LIjAb;
-    dpdbuf4 fRIJAB, fRijab, fRIjAb;
+    dpdfile2<double>RIA, Ria, RIA2, Ria2, FIA, Fia, LIA, Lia;
+    dpdbuf4<double>RIJAB, Rijab, RIjAb, D, R2, LIJAB, Lijab, LIjAb;
+    dpdbuf4<double>fRIJAB, fRijab, fRIjAb;
     int L_irr, i;
     int A_OCC, B_OCC, A_VIR, B_VIR;
     int AA_OCC, AA_VIR, BB_OCC, BB_VIR, AB_OCC, AB_VIR;
@@ -289,9 +289,9 @@ void rzero(int C_irr, int *converged) {
 void rzero_rhf(int C_irr, int *converged) {
     double r1, r2, rzero = 0.0, energy, norm, dotval;
     double dot_IA, dot_ia, dot_IJAB, dot_ijab, dot_IjAb;
-    dpdfile2 RIA, FIA, LIA, Lia, Ria;
-    dpdbuf4 RIjAb, RIjbA, RIjAb1, RIjbA1, D, R2, LIjAb, RIJAB, Rijab;
-    dpdbuf4 LIJAB, Lijab;
+    dpdfile2<double>RIA, FIA, LIA, Lia, Ria;
+    dpdbuf4<double>RIjAb, RIjbA, RIjAb1, RIjbA1, D, R2, LIjAb, RIJAB, Rijab;
+    dpdbuf4<double>LIJAB, Lijab;
     int L_irr, i;
     char lbl[32], E_lbl[32], R1A_lbl[32], R1B_lbl[32], *blank;
     char R2AA_lbl[32], R2BB_lbl[32], R2AB_lbl[32];

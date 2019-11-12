@@ -49,8 +49,8 @@ namespace cceom {
 
 void write_Rs(int C_irr, double *evals, int *converged) {
     int i;
-    dpdfile2 CME, Cme;
-    dpdbuf4 CMNEF, Cmnef, CMnEf;
+    dpdfile2<double>CME, Cme;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf;
     int R_index = -1;
     char C_lbl[32], R_lbl[32], E_lbl[32];
     double etot, expectation_val, C0;

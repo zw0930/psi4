@@ -48,13 +48,13 @@ namespace cceom {
    of Wbmfe to a Sigma vector stored at Sigma plus 'i' */
 
 void WbmfeDS(int i, int C_irr) {
-    dpdfile2 CME, Cme, XBF, Xbf;
-    dpdbuf4 SIJAB, Sijab, SIjAb;
-    dpdbuf4 WAMEF, Wamef, WAmEf, WaMeF, WM, WP, W, Z;
-    dpdbuf4 TIJAB, TIjAb, Tijab;
+    dpdfile2<double>CME, Cme, XBF, Xbf;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb;
+    dpdbuf4<double>WAMEF, Wamef, WAmEf, WaMeF, WM, WP, W, Z;
+    dpdbuf4<double>TIJAB, TIjAb, Tijab;
     char CME_lbl[32], Cme_lbl[32], SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32];
     int Gbm, Gfe, bm, b, m, Gb, Gm, Ge, Gf, B, M, f, e, fe, ef, nrows, ncols;
-    dpdfile2 C;
+    dpdfile2<double>C;
     double *X;
 
     if (params.eom_ref == 0) { /* RHF */

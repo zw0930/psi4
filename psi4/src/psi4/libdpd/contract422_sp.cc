@@ -43,9 +43,9 @@ namespace psi {
 ** the four-index buffer.
 **
 ** Arguments:
-**   dpdbuf4 *X: A pointer to the four-index buffer.
-**   dpdfile2 *Y: A pointer to the two-index factor file.
-**   dpdfile2 *Z: A pointer to the two-index target file.
+**   dpdbuf4<double>*X: A pointer to the four-index buffer.
+**   dpdfile2<double>*Y: A pointer to the two-index factor file.
+**   dpdfile2<double>*Z: A pointer to the two-index target file.
 **   int trans_Y: A boolean to indicate whether the indices in Y are
 **                transposed relative to those in the ket of X.
 **   int trans_Z: A boolean to indicate whether the indices in Z are

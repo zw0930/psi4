@@ -56,10 +56,10 @@ void CCLambdaWavefunction::denom(const struct L_Params& L_params) {
 }
 
 void denom_rhf(const struct L_Params& L_params) {
-    dpdfile2 FAE, FMI;
-    dpdfile2 dIA;
+    dpdfile2<double>FAE, FMI;
+    dpdfile2<double>dIA;
     dpdfile4 dIjAb;
-    dpdbuf4 d, bdIJAB, bdijab, bdIjAb;
+    dpdbuf4<double>d, bdIJAB, bdijab, bdIjAb;
     double tval;
     int nirreps, L_irr;
     int h, i, j, a, b, ij, ab;
@@ -153,9 +153,9 @@ void denom_uhf(const struct L_Params& L_params) {
     int nirreps, h, i, j, a, b, ij, ab, I, J, A, B, isym, jsym, asym, bsym, m, e;
     int *aoccpi, *boccpi, *avirtpi, *bvirtpi;
     int *aocc_off, *bocc_off, *avir_off, *bvir_off, L_irr;
-    dpdfile2 LFMIt, LFmit, LFaet, LFAEt;
-    dpdfile2 FMI, Fmi, FAE, Fae;
-    dpdfile2 dIA, dia;
+    dpdfile2<double>LFMIt, LFmit, LFaet, LFAEt;
+    dpdfile2<double>FMI, Fmi, FAE, Fae;
+    dpdfile2<double>dIA, dia;
     dpdfile4 dIJAB, dijab, dIjAb;
     double Fii, Fjj, Faa, Fbb;
 
@@ -391,10 +391,10 @@ void denom_uhf(const struct L_Params& L_params) {
 }
 
 void denom_rohf(const struct L_Params& L_params) {
-    dpdfile2 LFAEt, LFaet, LFMIt, LFmit;
-    dpdfile2 dIA, dia;
+    dpdfile2<double>LFAEt, LFaet, LFMIt, LFmit;
+    dpdfile2<double>dIA, dia;
     dpdfile4 dIJAB, dijab, dIjAb;
-    dpdbuf4 d, bdIJAB, bdijab, bdIjAb;
+    dpdbuf4<double>d, bdIJAB, bdijab, bdIjAb;
     double tval;
     int nirreps, L_irr;
     int h, i, j, a, b, ij, ab;

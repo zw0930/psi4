@@ -65,10 +65,10 @@ namespace cclambda {
 */
 
 void WijmbL2(int L_irr) {
-    dpdfile2 LIA, Lia;
-    dpdbuf4 L2, newLijab, newLIJAB, newLIjAb;
-    dpdbuf4 W, WMNIE, Wmnie, WMnIe, WmNiE;
-    dpdbuf4 X1, X2, Z, Z1, Z2;
+    dpdfile2<double>LIA, Lia;
+    dpdbuf4<double>L2, newLijab, newLIJAB, newLIjAb;
+    dpdbuf4<double>W, WMNIE, Wmnie, WMnIe, WmNiE;
+    dpdbuf4<double>X1, X2, Z, Z1, Z2;
 
     /* RHS += -P(ab) Lma * Wijmb */
     if (params.ref == 0) { /** RHF **/

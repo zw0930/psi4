@@ -62,8 +62,8 @@ namespace ccresponse {
 void build_XY(const char *, int, double, const char *, int, double);
 
 double LHX1Y1(const char *pert_x, int irrep_x, double omega_x, const char *pert_y, int irrep_y, double omega_y) {
-    dpdfile2 F, X1, Y1, Zmi, Zae_1, Zae_2, Zfb, Znj, ZIA, L1, t1, z;
-    dpdbuf4 Z1, Z2, I, tau, W1, W2, ZIjAb, L2, T2, W, Z;
+    dpdfile2<double>F, X1, Y1, Zmi, Zae_1, Zae_2, Zfb, Znj, ZIA, L1, t1, z;
+    dpdbuf4<double>Z1, Z2, I, tau, W1, W2, ZIjAb, L2, T2, W, Z;
     double polar, polar_I, polar_II;
     char lbl[32];
     int Gbm, Gfe, bm, b, m, Gb, Gm, Ge, Gf, B, M, fe, f, e, ef, nrows, ncols;
@@ -104,8 +104,8 @@ void build_XY(const char *pert_x, int irrep_x, double omega_x, const char *pert_
     int h, row, col, i, j, m, e, f, a, I, J, M, E, F, A, ij, ef;
     int Isym, Jsym, Msym, Esym, Fsym, Asym;
     int nirreps;
-    dpdbuf4 Z, Z1;
-    dpdfile2 X1, Y1;
+    dpdbuf4<double>Z, Z1;
+    dpdfile2<double>X1, Y1;
     char lbl[32];
 
     nirreps = moinfo.nirreps;

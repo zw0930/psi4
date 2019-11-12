@@ -47,17 +47,17 @@
 namespace psi {
 namespace ccresponse {
 
-void denom2(dpdbuf4 *X2, double omega);
-void local_filter_T2(dpdbuf4 *T2);
+void denom2(dpdbuf4<double>*X2, double omega);
+void local_filter_T2(dpdbuf4<double>*T2);
 
 void X2_build(const char *pert, int irrep, double omega) {
-    dpdfile2 X1, z, F, t1;
-    dpdbuf4 X2, X2new, Z, Z1, Z2, W, T2, I;
+    dpdfile2<double>X1, z, F, t1;
+    dpdbuf4<double>X2, X2new, Z, Z1, Z2, W, T2, I;
     char lbl[32];
     int Gej, Gab, Gij, Ge, Gj, Gi, nrows, length, E, e, II;
     int Gbm, Gfe, bm, b, m, Gb, Gm, Gf, B, M, fe, f, ef, ncols;
     double *X;
-    dpdbuf4 S, A, B_s;
+    dpdbuf4<double>S, A, B_s;
     int ij, Gc, C, c, cc;
     int rows_per_bucket, nbuckets, row_start, rows_left, nlinks;
     psio_address next;

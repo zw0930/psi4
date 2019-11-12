@@ -42,7 +42,7 @@ namespace psi {
 namespace cchbar {
 
 void sort_amps() {
-    dpdbuf4 t2;
+    dpdbuf4<double>t2;
 
     if (params.ref == 0 || params.ref == 1) { /** RHF or ROHF **/
         /* T(iJ,aB) */

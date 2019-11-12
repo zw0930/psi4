@@ -41,8 +41,8 @@ namespace psi {
 namespace cclambda {
 
 void Lsave(int L_irr) {
-    dpdfile2 L1;
-    dpdbuf4 L2;
+    dpdfile2<double>L1;
+    dpdbuf4<double>L2;
 
     if (params.ref == 0 || params.ref == 1) { /** ROHF **/
 

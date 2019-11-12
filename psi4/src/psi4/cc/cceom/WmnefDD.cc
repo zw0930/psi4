@@ -46,10 +46,10 @@ namespace cceom {
    Sigma vector stored at Sigma plus 'i' */
 
 void WmnefDD(int i, int C_irr) {
-    dpdbuf4 C2, T2, S2, D;
-    dpdfile2 X;
-    dpdbuf4 SIJAB, Sijab, SIjAb, B;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, F, tau, Z;
+    dpdbuf4<double>C2, T2, S2, D;
+    dpdfile2<double>X;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb, B;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, F, tau, Z;
     char CMNEF_lbl[32], Cmnef_lbl[32], CMnEf_lbl[32];
     char SIJAB_lbl[32], Sijab_lbl[32], SIjAb_lbl[32];
     int l, I, a, f, h, nC_irrs, *occpi, *virtpi, *openpi;

@@ -45,11 +45,11 @@ namespace cclambda {
 
 void cc2_faeL2(int L_irr) {
     int h, e;
-    dpdbuf4 Lijab, LIJAB, LIjAb;
-    dpdbuf4 newLIJAB, newLijab, newLIjAb;
-    dpdfile2 fab, fAB, F;
-    dpdbuf4 X, X1, X2;
-    dpdbuf4 L2, newL2;
+    dpdbuf4<double>Lijab, LIJAB, LIjAb;
+    dpdbuf4<double>newLIJAB, newLijab, newLIjAb;
+    dpdfile2<double>fab, fAB, F;
+    dpdbuf4<double>X, X1, X2;
+    dpdbuf4<double>L2, newL2;
 
     /* RHS += P(ab)*Lijae*Feb */
 

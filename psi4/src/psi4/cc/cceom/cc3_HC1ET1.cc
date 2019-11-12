@@ -73,8 +73,8 @@ void cc3_HC1ET1(int i, int C_irr) {
 
 void HC1ET1_Wmbij(int i, int C_irr) {
     double dot;
-    dpdbuf4 C, D, E, F, Ht, W, W1, X, Z;
-    dpdfile2 CME, Cme;
+    dpdbuf4<double>C, D, E, F, Ht, W, W1, X, Z;
+    dpdfile2<double>CME, Cme;
     char CME_lbl[32], Cme_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
     sprintf(Cme_lbl, "%s %d", "Cme", i);
@@ -237,8 +237,8 @@ void HC1ET1_Wmbij(int i, int C_irr) {
 
 void HC1ET1_Wabei(int i, int C_irr) {
     double dot;
-    dpdfile2 CME, Cme, tIA, tia;
-    dpdbuf4 Ht, Z, Z1, Z2, Z3, B, C, D, E, F, W, X;
+    dpdfile2<double>CME, Cme, tIA, tia;
+    dpdbuf4<double>Ht, Z, Z1, Z2, Z3, B, C, D, E, F, W, X;
 
     char CME_lbl[32], Cme_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
@@ -566,8 +566,8 @@ void HC1ET1_Wabei(int i, int C_irr) {
 
 void HC1ET1_Wmbij_rhf(int i, int C_irr) {
     double dot;
-    dpdbuf4 C, D, E, F, Ht, W, W1, X, Z;
-    dpdfile2 CME;
+    dpdbuf4<double>C, D, E, F, Ht, W, W1, X, Z;
+    dpdfile2<double>CME;
     char CME_lbl[32];
     sprintf(CME_lbl, "%s %d", "CME", i);
 
@@ -607,8 +607,8 @@ void HC1ET1_Wmbij_rhf(int i, int C_irr) {
 
 void HC1ET1_Wabei_rhf(int i, int C_irr) {
     double dot;
-    dpdfile2 CME, tIA, T1;
-    dpdbuf4 Ht, Z, Z1, Z2, Z3, B, C, D, E, F, W, X;
+    dpdfile2<double>CME, tIA, T1;
+    dpdbuf4<double>Ht, Z, Z1, Z2, Z3, B, C, D, E, F, W, X;
     char CME_lbl[32];
     int Gef, Gei, Gab, Ge, Gf, Gi;
     int EE, e;

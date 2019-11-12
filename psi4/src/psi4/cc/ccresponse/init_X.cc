@@ -43,15 +43,15 @@
 namespace psi {
 namespace ccresponse {
 
-void denom1(dpdfile2 *X1, double omega);
-void denom2(dpdbuf4 *X2, double omega);
-void local_filter_T1(dpdfile2 *T1);
-void local_filter_T2(dpdbuf4 *T2);
+void denom1(dpdfile2<double>*X1, double omega);
+void denom2(dpdbuf4<double>*X2, double omega);
+void local_filter_T1(dpdfile2<double>*T1);
+void local_filter_T2(dpdbuf4<double>*T2);
 
 void init_X(const char *pert, int irrep, double omega) {
     char lbl[32];
-    dpdfile2 mu1, X1, FAE, FMI;
-    dpdbuf4 X2, mu2;
+    dpdfile2<double>mu1, X1, FAE, FMI;
+    dpdbuf4<double>X2, mu2;
 
     sprintf(lbl, "%sBAR_IA", pert);
     global_dpd_->file2_init(&mu1, PSIF_CC_OEI, irrep, 0, 1, lbl);

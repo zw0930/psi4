@@ -43,9 +43,9 @@ namespace psi {
 ** give a product four-index quantity.
 **
 ** Arguments:
-**   dpdbuf4 *X: A pointer to the leftmost dpd four-index
+**   dpdbuf4<double>*X: A pointer to the leftmost dpd four-index
 **               buffer in the product.
-**   dpdbuf4 *Y: A pointer to the rightmost dpd four-index
+**   dpdbuf4<double>*Y: A pointer to the rightmost dpd four-index
 **               buffer in the product.
 **   int target_X: Indicates which pair of indices (0 = bra, 1 =
 **                 ket) of X is the target pair.

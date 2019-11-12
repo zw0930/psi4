@@ -65,8 +65,8 @@ void build_Z1A_ABAB();
 void build_Z1B_ABAB();
 
 void WAbEi_UHF() {
-    dpdfile2 Fme, T1;
-    dpdbuf4 F, W, T2, B, Z, Z1, Z2, D, T, E, C;
+    dpdfile2<double>Fme, T1;
+    dpdbuf4<double>F, W, T2, B, Z, Z1, Z2, D, T, E, C;
 
     /**** Term I ****/
 
@@ -299,8 +299,8 @@ void WAbEi_UHF() {
 }
 
 void build_Z1A_ABAB() {
-    dpdfile2 Tif, TMA;
-    dpdbuf4 Z, T2;
+    dpdfile2<double>Tif, TMA;
+    dpdbuf4<double>Z, T2;
     int i, f, M, A, iorb, forb, Aorb, Morb, Gi, GM, GA, Gf;
     int h, row, col;
 
@@ -350,8 +350,8 @@ void build_Z1A_ABAB() {
 }
 
 void build_Z1B_ABAB() {
-    dpdfile2 T1;
-    dpdbuf4 Z, T2;
+    dpdfile2<double>T1;
+    dpdbuf4<double>Z, T2;
     int i, f, b, m, iorb, forb, borb, morb, Gi, Gm, Gb, Gf;
     int h, row, col;
 

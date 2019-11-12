@@ -43,8 +43,8 @@ namespace psi {
 namespace ccresponse {
 
 double pseudopolar(const char *pert, int irrep, double omega) {
-    dpdfile2 X1, mubar1;
-    dpdbuf4 X2, mubar2;
+    dpdfile2<double>X1, mubar1;
+    dpdbuf4<double>X2, mubar2;
     char lbl[32];
     double polar1, polar2;
 

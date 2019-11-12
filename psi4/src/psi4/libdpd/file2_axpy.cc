@@ -40,8 +40,8 @@ namespace psi {
  ** dpdfile2's.
  **
  ** Arguments:
- **   dpdfile2 *FileA: A pointer to the leftmost dpdfile2.
- **   dpdfile2 *FileB: A pointer to the rightmost (and target) dpdfile2.
+ **   dpdfile2<double>*FileA: A pointer to the leftmost dpdfile2.
+ **   dpdfile2<double>*FileB: A pointer to the rightmost (and target) dpdfile2.
  **   double alpha: The scalar prefactor in the multiplication.
  **   int transA: A boolean indicating that we should use the transpose of
  **               FileA

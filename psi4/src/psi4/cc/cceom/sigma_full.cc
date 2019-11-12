@@ -46,9 +46,9 @@ namespace cceom {
    to a Sigma vector stored at Sigma plus 'i' */
 
 void sigma0S(int i, int C_irr) {
-    dpdfile2 FME, Fme;
-    dpdfile2 CME, Cme;
-    dpdbuf4 W;
+    dpdfile2<double>FME, Fme;
+    dpdfile2<double>CME, Cme;
+    dpdbuf4<double>W;
     char lbl[32];
     double S0, S0_old;
 
@@ -101,8 +101,8 @@ void sigma00(int i, int C_irr) {
    to a Sigma vector stored at Sigma plus 'i' */
 
 void sigma0D(int i, int C_irr) {
-    dpdbuf4 D;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, CmNeF;
+    dpdbuf4<double>D;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, CmNeF;
     char lbl[32];
     double S0, S0_old;
 
@@ -134,7 +134,7 @@ void sigma0D(int i, int C_irr) {
 block contributions to a sigma vector stored at Sigma plus 'i' */
 
 void sigmaSS_full(int i, int C_irr) {
-    dpdfile2 CME, SIA;
+    dpdfile2<double>CME, SIA;
     char lbl[32];
     double reference_expectation_value;
 
@@ -162,7 +162,7 @@ void sigmaSS_full(int i, int C_irr) {
 block contributions to a sigma vector stored at Sigma plus 'i' */
 
 void sigmaDD_full(int i, int C_irr) {
-    dpdbuf4 CMnEf, SIjAb;
+    dpdbuf4<double>CMnEf, SIjAb;
     char lbl[32];
     double reference_expectation_value;
 
@@ -188,7 +188,7 @@ void sigmaDD_full(int i, int C_irr) {
 /* This function computes the unconnected terms to the <S|Hbar|0> contributions
 to the sigma vector stored at sigma i */
 void sigmaS0(int i, int C_irr) {
-    dpdfile2 FAI, SIA;
+    dpdfile2<double>FAI, SIA;
     double reference_expectation_value;
     char lbl[32];
 
@@ -212,7 +212,7 @@ void sigmaS0(int i, int C_irr) {
 /* This function computes the unconnected terms to the <D|Hbar|0> contributions
 to the sigma vector stored at sigma i */
 void sigmaD0(int i, int C_irr) {
-    dpdbuf4 WAbIj, SIjAb;
+    dpdbuf4<double>WAbIj, SIjAb;
     double reference_expectation_value;
     char lbl[32];
 
@@ -238,8 +238,8 @@ the sigma vector stored at sigma i */
 /* Sijab += P(ij) P(ab) Cia Fbj, that is, [<Phi_j^b|Hbar|0>] */
 
 void sigmaDS_full(int i_root, int C_irr) {
-    dpdbuf4 SIjAb;
-    dpdfile2 FBJ, CIA;
+    dpdbuf4<double>SIjAb;
+    dpdfile2<double>FBJ, CIA;
     int h, nirreps;
     int row, col;
     int i, j, a, b, I, J, A, B, Isym, Jsym, Asym, Bsym;

@@ -55,8 +55,8 @@ namespace cchbar {
  */
 
 void Wmbij_build() {
-    dpdfile2 Fme, T1;
-    dpdbuf4 W, E, T2, Wmnij, I, Tau, Z, Z1, Z2, C, D;
+    dpdfile2<double>Fme, T1;
+    dpdbuf4<double>W, E, T2, Wmnij, I, Tau, Z, Z1, Z2, C, D;
 
     if (params.ref == 0) { /** RHF **/
 

@@ -64,8 +64,8 @@ namespace cchbar {
 void build_Z1A_BABA();
 
 void WaBeI_UHF() {
-    dpdfile2 Fme, T1;
-    dpdbuf4 F, W, T2, B, Z, Z1, Z2, D, T, E, C;
+    dpdfile2<double>Fme, T1;
+    dpdbuf4<double>F, W, T2, B, Z, Z1, Z2, D, T, E, C;
 
     /** W(eI,aB) <--- <eI|aB> **/
     global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 25, 29, 25, 29, 0, "F <aI|bC>");
@@ -283,8 +283,8 @@ void WaBeI_UHF() {
 }
 
 void build_Z1A_BABA() {
-    dpdfile2 TIF, Tma;
-    dpdbuf4 Z, T2;
+    dpdfile2<double>TIF, Tma;
+    dpdbuf4<double>Z, T2;
     int I, F, m, a, Iorb, Forb, aorb, morb, GI, Gm, Ga, GF;
     int h, row, col;
 

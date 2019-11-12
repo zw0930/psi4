@@ -50,8 +50,8 @@ double **Build_U();
 
 void analyze(const char *pert, int irrep, double omega) {
     FILE *efile;
-    dpdbuf4 T2;
-    dpdfile2 T1;
+    dpdbuf4<double>T2;
+    dpdfile2<double>T1;
     char lbl[32];
 
     int num_div = 500;

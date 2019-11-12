@@ -68,11 +68,11 @@ double ET_UHF_AAB() {
     double D_jkbc, D_jkac, D_ikbc, D_ikac, D_jiab;
     double t_jkbc, t_jkac, t_ikbc, t_ikac, t_jiab;
     int nrows, ncols, nlinks;
-    dpdbuf4 T2AB, T2AA, T2BA;
-    dpdbuf4 FAAints, FABints, FBAints;
-    dpdbuf4 EAAints, EABints, EBAints;
-    dpdbuf4 DAAints, DABints;
-    dpdfile2 T1A, T1B, fIJ, fij, fAB, fab, fIA, fia;
+    dpdbuf4<double>T2AB, T2AA, T2BA;
+    dpdbuf4<double>FAAints, FABints, FBAints;
+    dpdbuf4<double>EAAints, EABints, EBAints;
+    dpdbuf4<double>DAAints, DABints;
+    dpdfile2<double>T1A, T1B, fIJ, fij, fAB, fab, fIA, fia;
     double ***WABc, ***WBcA, ***WAcB, ***WcAB, ***WcBA, ***VABc;
     int nijk, mijk;
 

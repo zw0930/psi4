@@ -44,8 +44,8 @@ namespace psi {
 namespace ccresponse {
 
 double converged(const char *pert, int irrep, double omega) {
-    dpdfile2 X1, X1new;
-    dpdbuf4 X2, X2new;
+    dpdfile2<double>X1, X1new;
+    dpdbuf4<double>X2, X2new;
     double rms = 0.0, value;
     int row, col, h, nirreps;
     char lbl[32];

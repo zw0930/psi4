@@ -42,10 +42,10 @@ namespace psi {
 namespace ccresponse {
 
 void cc2_hbar_extra() {
-    dpdfile2 t1, lt;
-    dpdbuf4 A, D, E, Z, Z1;
-    dpdbuf4 W1, W;
-    dpdbuf4 t2, l2;
+    dpdfile2<double>t1, lt;
+    dpdbuf4<double>A, D, E, Z, Z1;
+    dpdbuf4<double>W1, W;
+    dpdbuf4<double>t2, l2;
 
     /* LIjAb * TIjAb */
     global_dpd_->file2_init(&lt, PSIF_CC_OEI, 0, 0, 0, "Lt_IJ");

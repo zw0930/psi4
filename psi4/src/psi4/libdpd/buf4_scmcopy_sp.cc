@@ -38,11 +38,11 @@
 
 namespace psi {
 
-/* dpd_buf4_scmcopy(): Copies an existing four-index dpdbuf4 into another
+/* dpd_buf4_scmcopy(): Copies an existing four-index dpdbuf4<double>into another
 ** file and multiplies it by a scalar at the same time.
 **
 ** Arguments:
-**   dpdbuf4 *InBuf: A pointer to the given dpd buffer.
+**   dpdbuf4<double>*InBuf: A pointer to the given dpd buffer.
 **   int outfilenum: The PSI unit number for the new buffer.
 **   char *label: A string labelling for this buffer.
 **   double alpha: A scalar.

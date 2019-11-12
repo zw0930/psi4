@@ -65,10 +65,10 @@ namespace cchbar {
 */
 
 void cc2_Zmbej_build() {
-    dpdbuf4 ZMBEJ, Zmbej, ZMbEj, ZmBeJ, ZmBEj, ZMbeJ;
-    dpdbuf4 tIAJB, tjAIb, tiajb, tIAjb, tiaJB, tIbjA;
-    dpdbuf4 D, C, F, E, X, Y, Y1, t2, W, Z;
-    dpdfile2 tIA, tia;
+    dpdbuf4<double>ZMBEJ, Zmbej, ZMbEj, ZmBeJ, ZmBEj, ZMbeJ;
+    dpdbuf4<double>tIAJB, tjAIb, tiajb, tIAjb, tiaJB, tIbjA;
+    dpdbuf4<double>D, C, F, E, X, Y, Y1, t2, W, Z;
+    dpdfile2<double>tIA, tia;
 
     if (params.ref == 0) { /** RHF **/
 

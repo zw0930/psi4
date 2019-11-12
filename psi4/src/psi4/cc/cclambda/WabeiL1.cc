@@ -41,8 +41,8 @@ namespace psi {
 namespace cclambda {
 
 void WabeiL1(int L_irr) {
-    dpdfile2 newL1;
-    dpdbuf4 W, L2;
+    dpdfile2<double>newL1;
+    dpdbuf4<double>W, L2;
 
     global_dpd_->file2_init(&newL1, PSIF_CC_LAMBDA, L_irr, 0, 1, "New L(I,A)");
     global_dpd_->buf4_init(&W, PSIF_CC_HBAR, 0, 11, 7, 11, 7, 0, "W(AM,EF)");

@@ -44,15 +44,15 @@
 namespace psi {
 namespace cceom {
 
-extern double norm_C(dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
-extern double norm_C_full(double C0, dpdfile2 *CME, dpdfile2 *Cme, dpdbuf4 *CMNEF, dpdbuf4 *Cmnef, dpdbuf4 *CMnEf);
-extern double norm_C_rhf(dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE);
-extern double norm_C_rhf_full(double C0, dpdfile2 *CME, dpdbuf4 *CMnEf, dpdbuf4 *CMnfE);
+extern double norm_C(dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
+extern double norm_C_full(double C0, dpdfile2<double>*CME, dpdfile2<double>*Cme, dpdbuf4<double>*CMNEF, dpdbuf4<double>*Cmnef, dpdbuf4<double>*CMnEf);
+extern double norm_C_rhf(dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE);
+extern double norm_C_rhf_full(double C0, dpdfile2<double>*CME, dpdbuf4<double>*CMnEf, dpdbuf4<double>*CMnfE);
 
 void check_sum(const char *term_lbl, int index, int irrep) {
     int save_params_ref;
-    dpdfile2 Sia, SIA;
-    dpdbuf4 SIJAB, Sijab, SIjAb, SIjbA;
+    dpdfile2<double>Sia, SIA;
+    dpdbuf4<double>SIJAB, Sijab, SIjAb, SIjbA;
     static double old_norm = 0;
     double norm = 0;
     double dotval, S0;

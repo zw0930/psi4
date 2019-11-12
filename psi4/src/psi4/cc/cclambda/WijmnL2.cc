@@ -41,9 +41,9 @@ namespace psi {
 namespace cclambda {
 
 void WijmnL2(int L_irr) {
-    dpdbuf4 Lijab, LIJAB, LIjAb;
-    dpdbuf4 newLijab, newLIJAB, newLIjAb;
-    dpdbuf4 WMNIJ, Wmnij, WMnIj;
+    dpdbuf4<double>Lijab, LIJAB, LIjAb;
+    dpdbuf4<double>newLijab, newLIJAB, newLIjAb;
+    dpdbuf4<double>WMNIJ, Wmnij, WMnIj;
 
     /* RHS += Lmnab*Wijmn */
     if (params.ref == 0) { /** RHF **/

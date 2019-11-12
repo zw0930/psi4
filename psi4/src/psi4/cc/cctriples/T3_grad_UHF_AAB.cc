@@ -45,17 +45,17 @@ namespace psi {
 namespace cctriples {
 
 extern void T3_UHF_AAB(double ***W, double ***V, int disc, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk,
-                       dpdbuf4 *T2AA, dpdbuf4 *T2AB, dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA,
-                       dpdbuf4 *EAA, dpdbuf4 *EAB, dpdbuf4 *EBA, dpdfile2 *T1A, dpdfile2 *T1B, dpdbuf4 *DAA,
-                       dpdbuf4 *DAB, dpdfile2 *fIA, dpdfile2 *fia, dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB,
-                       dpdfile2 *fab, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off, int *avirtpi,
+                       dpdbuf4<double>*T2AA, dpdbuf4<double>*T2AB, dpdbuf4<double>*T2BA, dpdbuf4<double>*FAA, dpdbuf4<double>*FAB, dpdbuf4<double>*FBA,
+                       dpdbuf4<double>*EAA, dpdbuf4<double>*EAB, dpdbuf4<double>*EBA, dpdfile2<double>*T1A, dpdfile2<double>*T1B, dpdbuf4<double>*DAA,
+                       dpdbuf4<double>*DAB, dpdfile2<double>*fIA, dpdfile2<double>*fia, dpdfile2<double>*fIJ, dpdfile2<double>*fij, dpdfile2<double>*fAB,
+                       dpdfile2<double>*fab, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off, int *avirtpi,
                        int *avir_off, int *bvirtpi, int *bvir_off, double omega);
 
 extern void T3_UHF_AAB_abc(double ***W, double ***V, int disc, int nirreps, int I, int Gi, int J, int Gj, int K, int Gk,
-                           dpdbuf4 *T2AA, dpdbuf4 *T2AB, dpdbuf4 *T2BA, dpdbuf4 *FAA, dpdbuf4 *FAB, dpdbuf4 *FBA,
-                           dpdbuf4 *EAA, dpdbuf4 *EAB, dpdbuf4 *EBA, dpdfile2 *T1A, dpdfile2 *T1B, dpdbuf4 *DAA,
-                           dpdbuf4 *DAB, dpdfile2 *fIA, dpdfile2 *fia, dpdfile2 *fIJ, dpdfile2 *fij, dpdfile2 *fAB,
-                           dpdfile2 *fab, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off, int *avirtpi,
+                           dpdbuf4<double>*T2AA, dpdbuf4<double>*T2AB, dpdbuf4<double>*T2BA, dpdbuf4<double>*FAA, dpdbuf4<double>*FAB, dpdbuf4<double>*FBA,
+                           dpdbuf4<double>*EAA, dpdbuf4<double>*EAB, dpdbuf4<double>*EBA, dpdfile2<double>*T1A, dpdfile2<double>*T1B, dpdbuf4<double>*DAA,
+                           dpdbuf4<double>*DAB, dpdfile2<double>*fIA, dpdfile2<double>*fia, dpdfile2<double>*fIJ, dpdfile2<double>*fij, dpdfile2<double>*fAB,
+                           dpdfile2<double>*fab, int *aoccpi, int *aocc_off, int *boccpi, int *bocc_off, int *avirtpi,
                            int *avir_off, int *bvirtpi, int *bvir_off, double omega);
 
 double T3_grad_UHF_AAB() {
@@ -78,13 +78,13 @@ double T3_grad_UHF_AAB() {
     int *boccpi, *bvirtpi, *bocc_off, *bvir_off;
     double value_c, value_d, dijk, denom, ET;
     int nrows, ncols, nlinks;
-    dpdbuf4 T2AB, T2AA, T2BA;
-    dpdbuf4 FAAints, FABints, FBAints;
-    dpdbuf4 EAAints, EABints, EBAints;
-    dpdbuf4 DAAints, DABints;
-    dpdfile2 T1A, T1B, fIJ, fij, fAB, fab, fIA, fia;
-    dpdfile2 S1A, S1B, DAB, Dab, DIJ, Dij;
-    dpdbuf4 S2AA, S2AB, GIJAB, GIjAb, GIJKA, GIjKa, GiJkA, GIDAB, GIdAb, GiDaB;
+    dpdbuf4<double>T2AB, T2AA, T2BA;
+    dpdbuf4<double>FAAints, FABints, FBAints;
+    dpdbuf4<double>EAAints, EABints, EBAints;
+    dpdbuf4<double>DAAints, DABints;
+    dpdfile2<double>T1A, T1B, fIJ, fij, fAB, fab, fIA, fia;
+    dpdfile2<double>S1A, S1B, DAB, Dab, DIJ, Dij;
+    dpdbuf4<double>S2AA, S2AB, GIJAB, GIjAb, GIJKA, GIjKa, GiJkA, GIDAB, GIdAb, GiDaB;
     double ***WABc, ***VABc;
     double ***XABc, ***Y1, ***Y2;
     double **Z;

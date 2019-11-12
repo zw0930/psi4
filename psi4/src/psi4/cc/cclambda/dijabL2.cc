@@ -40,12 +40,12 @@
 namespace psi {
 namespace cclambda {
 
-void local_filter_T1(dpdfile2 *T1);
-void local_filter_T2(dpdbuf4 *T2);
+void local_filter_T1(dpdfile2<double>*T1);
+void local_filter_T2(dpdbuf4<double>*T2);
 
 void dijabL2(int L_irr) {
-    dpdbuf4 L2, newLIJAB, newLijab, newLIjAb;
-    dpdbuf4 d2, dIJAB, dijab, dIjAb;
+    dpdbuf4<double>L2, newLIJAB, newLijab, newLIjAb;
+    dpdbuf4<double>d2, dIJAB, dijab, dIjAb;
 
     if (params.ref == 0) { /** RHF **/
         global_dpd_->buf4_init(&newLIjAb, PSIF_CC_LAMBDA, L_irr, 0, 5, 0, 5, 0, "New LIjAb");

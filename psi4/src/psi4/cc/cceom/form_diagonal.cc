@@ -42,8 +42,8 @@ namespace psi {
 namespace cceom {
 
 void form_diagonal(int C_irr) {
-    dpdfile2 DIA, Dia, FAE, FMI, Fae, Fmi;
-    dpdbuf4 DIJAB, Dijab, DIjAb, Cmnef, CMnEf;
+    dpdfile2<double>DIA, Dia, FAE, FMI, Fae, Fmi;
+    dpdbuf4<double>DIJAB, Dijab, DIjAb, Cmnef, CMnEf;
     int *openpi, nirreps;
     int *occpi, *virtpi, *occ_off, *vir_off, *occ_sym, *vir_sym;
     int *aoccpi, *avirtpi, *aocc_off, *avir_off, *aocc_sym, *avir_sym;

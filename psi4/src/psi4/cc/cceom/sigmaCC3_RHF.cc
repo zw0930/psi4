@@ -66,16 +66,16 @@ namespace cceom {
  * - RHF case modifed from ccenergy cc3 code, RAK 2006
  * */
 
-/* extern void cc3_sigma_RHF(dpdbuf4 *CIjAb, dpdbuf4 *WAbEi, dpdbuf4 *WMbIj,
-    int do_singles, dpdbuf4 *Dints, dpdfile2 *SIA,
-    int do_doubles, dpdfile2 *FME, dpdbuf4 *WAmEf, dpdbuf4 *WMnIe,
-    dpdbuf4 *SIjAb, double energy); */
+/* extern void cc3_sigma_RHF(dpdbuf4<double>*CIjAb, dpdbuf4<double>*WAbEi, dpdbuf4<double>*WMbIj,
+    int do_singles, dpdbuf4<double>*Dints, dpdfile2<double>*SIA,
+    int do_doubles, dpdfile2<double>*FME, dpdbuf4<double>*WAmEf, dpdbuf4<double>*WMnIe,
+    dpdbuf4<double>*SIjAb, double energy); */
 
 void sigmaCC3_RHF_obsolete(int i, int C_irr, double omega) {
     int ii, j, a, b, A, B, Ga, Gb, Gij = 0, ab, ab0, ab1;
-    dpdfile2 SIA, FME;
-    dpdbuf4 CMnEf, WAbEi, WMbIj, Dints, WmAEf, WMnIe, SIjAb;
-    dpdbuf4 tIjAb;
+    dpdfile2<double>SIA, FME;
+    dpdbuf4<double>CMnEf, WAbEi, WMbIj, Dints, WmAEf, WMnIe, SIjAb;
+    dpdbuf4<double>tIjAb;
     char lbl[32];
 
     sprintf(lbl, "%s %d", "SIA", i);

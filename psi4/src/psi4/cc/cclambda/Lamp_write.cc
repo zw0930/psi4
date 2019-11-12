@@ -59,13 +59,13 @@ struct twostack {
 
 void onestack_insert(struct onestack *stack, double value, int i, int a, int level, int stacklen);
 void twostack_insert(struct twostack *stack, double value, int i, int j, int a, int b, int level, int stacklen);
-void amp_write_L1(dpdfile2 *L1, int length, const char *label, std::string out);
-void amp_write_L2(dpdbuf4 *L2, int length, const char *label, std::string out);
+void amp_write_L1(dpdfile2<double>*L1, int length, const char *label, std::string out);
+void amp_write_L2(dpdbuf4<double>*L2, int length, const char *label, std::string out);
 
 /* print largest elements in CC_LAMBDA */
 void Lamp_write(const struct L_Params& L_params) {
-    dpdfile2 L1;
-    dpdbuf4 L2;
+    dpdfile2<double>L1;
+    dpdbuf4<double>L2;
     int L_irr;
     L_irr = L_params.irrep;
 
@@ -115,7 +115,7 @@ void Lamp_write(const struct L_Params& L_params) {
     }
 }
 
-void amp_write_L1(dpdfile2 *L1, int length, const char *label, std::string out) {
+void amp_write_L1(dpdfile2<double>*L1, int length, const char *label, std::string out) {
     int m, h, nirreps, Gia;
     int i, I, a, A, numt1;
     int num2print = 0;
@@ -195,7 +195,7 @@ void onestack_insert(struct onestack *stack, double value, int i, int a, int lev
     }
 }
 
-void amp_write_L2(dpdbuf4 *L2, int length, const char *label, std::string out) {
+void amp_write_L2(dpdbuf4<double>*L2, int length, const char *label, std::string out) {
     int m, h, nirreps, Gijab, numt2;
     int ij, ab, i, j, a, b;
     int num2print = 0;

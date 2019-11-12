@@ -77,10 +77,10 @@ namespace cchbar {
 void purge_Wmnie();
 
 void Wmnie_build() {
-    dpdbuf4 W, Wmnie, WMNIE, WMnIe, WmNiE, WMniE, WmNIe;
-    dpdbuf4 E, Z;
-    dpdbuf4 D, D_a;
-    dpdfile2 t1, tIA, tia;
+    dpdbuf4<double>W, Wmnie, WMNIE, WMnIe, WmNiE, WMniE, WmNIe;
+    dpdbuf4<double>E, Z;
+    dpdbuf4<double>D, D_a;
+    dpdfile2<double>t1, tIA, tia;
 
     if (params.ref == 0) { /** RHF **/
 

@@ -52,7 +52,7 @@ void read_guess_init() {
     int num_vectors, vector_len, this_irrep, useit;
     char lbl[32];
     double norm, value;
-    dpdfile2 CME;
+    dpdfile2<double>CME;
 
     for (i = 0; i < moinfo.nirreps; ++i) {
         eom_params.cs_per_irrep[i] = 0;
@@ -133,7 +133,7 @@ void read_guess(int C_irr) {
     int num_vectors, vector_len, this_irrep;
     char lbl[32];
     double norm, value;
-    dpdfile2 CME, Cme;
+    dpdfile2<double>CME, Cme;
 
     errcod = ip_count("EOM_GUESS_VECTORS", &num_vectors, 0);
     if (errcod != IPE_OK) {

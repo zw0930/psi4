@@ -41,7 +41,7 @@ namespace psi {
 namespace cclambda {
 
 void hbar_extra() {
-    dpdbuf4 W1, W2, W;
+    dpdbuf4<double>W1, W2, W;
 
     if (params.ref == 0) {
         /* 2 W(ME,jb) + W(Me,Jb) */

@@ -45,9 +45,9 @@ namespace cceom {
    to a Sigma vector stored at Sigma plus 'i' */
 
 void sigmaSS(int i, int C_irr) {
-    dpdfile2 FMI, Fmi, FAE, Fae, Cjunk;
-    dpdfile2 CME, Cme, SIA, Sia;
-    dpdbuf4 W;
+    dpdfile2<double>FMI, Fmi, FAE, Fae, Cjunk;
+    dpdfile2<double>CME, Cme, SIA, Sia;
+    dpdbuf4<double>W;
     char lbl[32];
 
     if (params.eom_ref == 0) { /* RHF */

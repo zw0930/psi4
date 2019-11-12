@@ -45,13 +45,13 @@ namespace psi {
 
 /*
 ** dpd_buf4_sort_axpy(): A general DPD buffer sorting function that also adds
-** the result to a target dpdbuf4 that already exists.  Like buf4_sort(), this will
+** the result to a target dpdbuf4<double>that already exists.  Like buf4_sort(), this will
 ** (eventually) handle all 24 possible permutations of four-index
 ** buffers.  This code assumes that all symmetry-blocks of both source and
 ** target buffers can be stored in core.
 **
 ** Arguments:
-**   dpdbuf4 *InBuf: A pointer to the alread-initialized input
+**   dpdbuf4<double>*InBuf: A pointer to the alread-initialized input
 **     buffer.
 **   int outfilenum: The PSI unit number for the target data.
 **   enum indices index: The desired sorting pattern (see dpd.h).
@@ -78,7 +78,7 @@ namespace psi {
 **
 ** -Daniel, June 2002
 **
-** NB: Because the output dpdbuf4 is initialized within this code, one SHOULD NOT
+** NB: Because the output dpdbuf4<double>is initialized within this code, one SHOULD NOT
 ** use this function to sort a buffer into itself.
 **
 ** Added fully out-of-core (multipass) sorting algorithms to a number

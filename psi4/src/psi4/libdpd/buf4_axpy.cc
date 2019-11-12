@@ -41,8 +41,8 @@ namespace psi {
 ** four-index buffers.
 **
 ** Arguments:
-**   dpdbuf4 *BufX: A pointer to the leftmost dpdbuf4.
-**   dpdbuf4 *BufY: A pointer to the rightmost (and target)
+**   dpdbuf4<double>*BufX: A pointer to the leftmost dpdbuf4.
+**   dpdbuf4<double>*BufY: A pointer to the rightmost (and target)
 **                        dpdbuf4.
 **   double alpha: The scalar prefactor in the multiplication.
 */

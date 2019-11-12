@@ -42,23 +42,23 @@
 namespace psi {
 namespace cclambda {
 
-void local_filter_T1(dpdfile2 *T1);
+void local_filter_T1(dpdfile2<double>*T1);
 
 void cc2_L1_build(const struct L_Params& L_params) {
     int GW, GL1, GL2, Gab, Gij, Gei, Gi, Ga, Gm;
     int a, A, i, I, ab, nlinks, nrows, ncols;
-    dpdfile2 newLIA, newLia, LIA, Lia;
-    dpdfile2 dIA, dia, Fme, FME;
-    dpdfile2 Fae, FAE, Fmi, FMI;
-    dpdfile2 GMI, Gmi, Gae, XIA, Xia;
-    dpdfile2 GAE, G, GAI, Gai;
-    dpdbuf4 WMBEJ, Wmbej, WMbEj, WmBeJ;
-    dpdbuf4 WMBIJ, Wmbij, WMbIj, WmBiJ;
-    dpdbuf4 LIJAB, Lijab, LIjAb, LiJaB, L2;
-    dpdbuf4 WMNIE, Wmnie, WMnIe, WmNiE;
-    dpdbuf4 WAMEF, Wamef, WAmEf, WaMeF, W;
-    dpdbuf4 Z, D, E;
-    dpdfile2 XLD;
+    dpdfile2<double>newLIA, newLia, LIA, Lia;
+    dpdfile2<double>dIA, dia, Fme, FME;
+    dpdfile2<double>Fae, FAE, Fmi, FMI;
+    dpdfile2<double>GMI, Gmi, Gae, XIA, Xia;
+    dpdfile2<double>GAE, G, GAI, Gai;
+    dpdbuf4<double>WMBEJ, Wmbej, WMbEj, WmBeJ;
+    dpdbuf4<double>WMBIJ, Wmbij, WMbIj, WmBiJ;
+    dpdbuf4<double>LIJAB, Lijab, LIjAb, LiJaB, L2;
+    dpdbuf4<double>WMNIE, Wmnie, WMnIe, WmNiE;
+    dpdbuf4<double>WAMEF, Wamef, WAmEf, WaMeF, W;
+    dpdbuf4<double>Z, D, E;
+    dpdfile2<double>XLD;
     int L_irr;
     L_irr = L_params.irrep;
 

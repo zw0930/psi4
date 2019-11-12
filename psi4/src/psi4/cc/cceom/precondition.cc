@@ -47,9 +47,9 @@ namespace psi {
 namespace cceom {
 
 /* for ROHF and UHF */
-void precondition(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, dpdbuf4 *RIjAb, double eval) {
-    dpdfile2 DIA, Dia;
-    dpdbuf4 DIJAB, Dijab, DIjAb;
+void precondition(dpdfile2<double>*RIA, dpdfile2<double>*Ria, dpdbuf4<double>*RIJAB, dpdbuf4<double>*Rijab, dpdbuf4<double>*RIjAb, double eval) {
+    dpdfile2<double>DIA, Dia;
+    dpdbuf4<double>DIJAB, Dijab, DIjAb;
     int h, nirreps, i, j, a, b, ij, ab, C_irr;
     double tval;
 
@@ -151,9 +151,9 @@ void precondition(dpdfile2 *RIA, dpdfile2 *Ria, dpdbuf4 *RIJAB, dpdbuf4 *Rijab, 
     return;
 }
 
-void precondition_RHF(dpdfile2 *RIA, dpdbuf4 *RIjAb, double eval) {
-    dpdfile2 DIA;
-    dpdbuf4 DIjAb;
+void precondition_RHF(dpdfile2<double>*RIA, dpdbuf4<double>*RIjAb, double eval) {
+    dpdfile2<double>DIA;
+    dpdbuf4<double>DIjAb;
     int h, nirreps, i, j, a, b, ij, ab, ii, C_irr;
     double tval;
 

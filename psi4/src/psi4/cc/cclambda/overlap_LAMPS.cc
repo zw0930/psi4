@@ -44,8 +44,8 @@ void overlap_LAMPS(const struct L_Params& L_params) {
     int h, nirreps, L_irr;
     int row, col;
     int i, j, a, b, I, J, A, B, Isym, Jsym, Asym, Bsym;
-    dpdfile2 T1, L1, T1A, T1B;
-    dpdbuf4 T2, L2;
+    dpdfile2<double>T1, L1, T1A, T1B;
+    dpdbuf4<double>T2, L2;
     double value = 1.0;
     double ST1A, ST1B, ST2AA, ST2BB, ST2AB, ST12AA, ST12BB, ST12AB;
     char lbl[32];

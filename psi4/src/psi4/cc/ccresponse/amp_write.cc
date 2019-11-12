@@ -62,12 +62,12 @@ struct twostack {
 
 void onestack_insert(struct onestack *stack, double value, int i, int a, int level, int stacklen);
 void twostack_insert(struct twostack *stack, double value, int i, int j, int a, int b, int level, int stacklen);
-void amp_write_T1(dpdfile2 *T1, int length, const char *label, std::string out_fname);
-void amp_write_T2(dpdbuf4 *T2, int length, const char *label, std::string out_fname);
+void amp_write_T1(dpdfile2<double>*T1, int length, const char *label, std::string out_fname);
+void amp_write_T2(dpdbuf4<double>*T2, int length, const char *label, std::string out_fname);
 
 void amp_write(const char *pert, int irrep, double omega) {
-    dpdfile2 T1;
-    dpdbuf4 T2;
+    dpdfile2<double>T1;
+    dpdbuf4<double>T2;
     char lbl[32];
 
     if (params.ref == 0) { /** RHF **/
@@ -83,7 +83,7 @@ void amp_write(const char *pert, int irrep, double omega) {
     }
 }
 
-void amp_write_T1(dpdfile2 *T1, int length, const char *label, std::string out) {
+void amp_write_T1(dpdfile2<double>*T1, int length, const char *label, std::string out) {
     int m, h, nirreps, Gia;
     int i, I, a, A, numt1;
     int num2print = 0;
@@ -163,7 +163,7 @@ void onestack_insert(struct onestack *stack, double value, int i, int a, int lev
     }
 }
 
-void amp_write_T2(dpdbuf4 *T2, int length, const char *label, std::string out) {
+void amp_write_T2(dpdbuf4<double>*T2, int length, const char *label, std::string out) {
     int m, h, nirreps, Gijab, numt2;
     int ij, ab, i, j, a, b;
     int num2print = 0;

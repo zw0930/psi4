@@ -89,7 +89,7 @@ namespace cclambda {
 */
 
 void WmbejL2(int L_irr) {
-    dpdbuf4 newL2, L2, W, Z, Z2;
+    dpdbuf4<double>newL2, L2, W, Z, Z2;
 
     /* RHS += P(ij)P(ab)Limae * Wjebm */
     if (params.ref == 0) { /** RHF **/

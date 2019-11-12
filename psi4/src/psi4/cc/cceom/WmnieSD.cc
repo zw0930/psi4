@@ -45,9 +45,9 @@ namespace cceom {
    of Wmnie to a Sigma vector stored at Sigma plus 'i' */
 
 void WmnieSD(int i, int C_irr) {
-    dpdfile2 SIA, Sia;
-    dpdbuf4 CMNEF, Cmnef, CMnEf, CmNeF;
-    dpdbuf4 WMNIE, Wmnie, WMnIe, WmNiE;
+    dpdfile2<double>SIA, Sia;
+    dpdbuf4<double>CMNEF, Cmnef, CMnEf, CmNeF;
+    dpdbuf4<double>WMNIE, Wmnie, WMnIe, WmNiE;
     char lbl[32];
 
     if (params.eom_ref == 0) { /* RHF */

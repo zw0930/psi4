@@ -40,7 +40,7 @@ namespace psi {
 ** files.
 **
 ** Arguments:
-**   dpdfile2 *FileA, *FileB: Pointers to the two-index dpd files.
+**   dpdfile2<double>*FileA, *FileB: Pointers to the two-index dpd files.
 **  The result is written to FileB.
 */
 

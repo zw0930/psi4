@@ -40,7 +40,7 @@ namespace psi {
 ** four-index buffer.
 **
 ** Arguments:
-**   dpdbuf4 *Buf: A pointer to the dpdbuf to be printed.
+**   dpdbuf4<double>*Buf: A pointer to the dpdbuf to be printed.
 **   std::string out_fname: The formatted output file stream.
 **   int print_data: 0 = print buf4 parameters only; 1 = print matrices
 */

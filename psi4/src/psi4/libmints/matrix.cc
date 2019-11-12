@@ -251,7 +251,7 @@ Matrix::Matrix(dpdfile2<double> *inFile)
 
 Matrix::Matrix(dpdbuf4<double> *inBuf) : name_(inBuf->file.label), rowspi_(1), colspi_(1) {
     if (inBuf->params->nirreps != 1) {
-        throw PSIEXCEPTION("dpdbuf4 <-> matrix is only allowed for C1");
+        throw PSIEXCEPTION("dpdbuf4<double><-> matrix is only allowed for C1");
     }
     matrix_ = NULL;
     symmetry_ = 0;
@@ -2690,7 +2690,7 @@ void Matrix::write_to_dpdfile2(dpdfile2<double> *outFile) {
 
     if (outFile->params->nirreps != nirrep_) {
         std::stringstream msg;
-        msg << "Irrep count mismatch. Matrix class has " << nirrep_ << " irreps and dpdfile2 has "
+        msg << "Irrep count mismatch. Matrix class has " << nirrep_ << " irreps and dpdfile2<double>has "
             << outFile->params->nirreps << ".";
         throw SanityCheckError(msg.str().c_str(), __FILE__, __LINE__);
     }
@@ -2704,13 +2704,13 @@ void Matrix::write_to_dpdfile2(dpdfile2<double> *outFile) {
         if (outFile->params->rowtot[h] != rowspi_[h]) {
             std::stringstream msg;
             msg << "Row count mismatch for irrep block " << h << ". Matrix has " << rowspi_[h]
-                << " rows  and dpdfile2 has " << outFile->params->rowtot[h] << ".";
+                << " rows  and dpdfile2<double>has " << outFile->params->rowtot[h] << ".";
             throw SanityCheckError(msg.str().c_str(), __FILE__, __LINE__);
         }
         if (outFile->params->coltot[h] != colspi_[h]) {
             char *str = new char[100];
             std::stringstream msg;
-            msg << "Column count mismatch for irrep " << h << ". Matrix has " << colspi_[h] << " cols and dpdfile2 has "
+            msg << "Column count mismatch for irrep " << h << ". Matrix has " << colspi_[h] << " cols and dpdfile2<double>has "
                 << outFile->params->coltot[h] << ".";
             throw SanityCheckError(msg.str().c_str(), __FILE__, __LINE__);
         }
@@ -2727,7 +2727,7 @@ void Matrix::write_to_dpdfile2(dpdfile2<double> *outFile) {
 void Matrix::write_to_dpdbuf4(dpdbuf4<double> *outBuf) {
     if (outBuf->params->nirreps != nirrep_) {
         char *str = new char[100];
-        sprintf(str, "Irrep count mismatch.  Matrix class has %d irreps, but dpdbuf4 has %d.", nirrep_,
+        sprintf(str, "Irrep count mismatch.  Matrix class has %d irreps, but dpdbuf4<double>has %d.", nirrep_,
                 outBuf->params->nirreps);
         throw SanityCheckError(str, __FILE__, __LINE__);
     }
@@ -2737,13 +2737,13 @@ void Matrix::write_to_dpdbuf4(dpdbuf4<double> *outBuf) {
 
         if (outBuf->params->rowtot[h] != rowspi_[h]) {
             char *str = new char[100];
-            sprintf(str, "Row count mismatch for irrep %d.  Matrix class has %d rows, but dpdbuf4 has %d.", h,
+            sprintf(str, "Row count mismatch for irrep %d.  Matrix class has %d rows, but dpdbuf4<double>has %d.", h,
                     rowspi_[h], outBuf->params->rowtot[h]);
             throw SanityCheckError(str, __FILE__, __LINE__);
         }
         if (outBuf->params->coltot[h] != colspi_[h]) {
             char *str = new char[100];
-            sprintf(str, "Column count mismatch for irrep %d.  Matrix class has %d columns, but dpdbuf4 has %d.", h,
+            sprintf(str, "Column count mismatch for irrep %d.  Matrix class has %d columns, but dpdbuf4<double>has %d.", h,
                     colspi_[h], outBuf->params->coltot[h]);
             throw SanityCheckError(str, __FILE__, __LINE__);
         }

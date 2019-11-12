@@ -40,7 +40,7 @@ namespace psi {
 ** buffers.
 **
 ** Arguments:
-**   dpdbuf4 *BufA, *BufB: Pointers to the dpd four-index buffers.
+**   dpdbuf4<double>*BufA, *BufB: Pointers to the dpd four-index buffers.
 **  The results is written to FileB.
 */
 

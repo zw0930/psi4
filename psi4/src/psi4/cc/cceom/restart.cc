@@ -50,9 +50,9 @@ void restart(double **alpha, int L, int num, int C_irr, int ortho, double **alph
     int i, I, j, h, A_OCC, B_OCC, A_VIR, B_VIR, cnt, L_tot;
     int AA_OCC, AA_VIR, BB_OCC, BB_VIR, AB_OCC, AB_VIR;
     char lbl[20];
-    dpdfile2 C1, CME, Cme, SIA, Sia;
+    dpdfile2<double>C1, CME, Cme, SIA, Sia;
     double C10, CME0, S0, **alpha_tot;
-    dpdbuf4 C2, CMNEF, Cmnef, CMnEf, SIJAB, Sijab, SIjAb;
+    dpdbuf4<double>C2, CMNEF, Cmnef, CMnEf, SIJAB, Sijab, SIjAb;
     double dotval, norm;
 
     timer_on("RESTART");

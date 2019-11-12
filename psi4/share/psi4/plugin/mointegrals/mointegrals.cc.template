@@ -85,7 +85,7 @@ SharedWavefunction @plugin@(SharedWavefunction ref_wfn, Options& options)
     /*
      * Now, loop over the DPD buffer, printing the integrals
      */
-    dpdbuf4 K;
+    dpdbuf4<double>K;
     psio->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
     // To only process the permutationally unique integrals, change the ID("[A,A]") to ID("[A>=A]+")
     global_dpd_->buf4_init(&K, PSIF_LIBTRANS_DPD, 0, ID("[A,A]"), ID("[A,A]"),

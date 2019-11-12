@@ -74,7 +74,7 @@ void Lamp_write(const struct L_Params& L_params);
 void check_ortho(struct L_Params *pL_params);
 void projections(struct L_Params *pL_params);
 void L_zero(int irrep);
-void c_clean(dpdfile2 *LIA, dpdfile2 *Lia, dpdbuf4 *LIJAB, dpdbuf4 *Lijab, dpdbuf4 *LIjAb);
+void c_clean(dpdfile2<double>*LIA, dpdfile2<double>*Lia, dpdbuf4<double>*LIJAB, dpdbuf4<double>*Lijab, dpdbuf4<double>*LIjAb);
 void L_clean(const struct L_Params& pL_params);
 void zeta_norm(const struct L_Params& pL_params);
 void spinad_amps();
@@ -384,8 +384,8 @@ void CCLambdaWavefunction::exit_io() {
 /* put copies of L for excited states in LAMPS with irrep and index label */
 void Lsave_index(const struct L_Params& L_params) {
     int L_irr;
-    dpdfile2 L1;
-    dpdbuf4 L2, LIjAb, LIjbA;
+    dpdfile2<double>L1;
+    dpdbuf4<double>L2, LIjAb, LIjbA;
     const char *L1A_lbl = L_params.L1A_lbl;
     const char *L1B_lbl = L_params.L1B_lbl;
     const char *L2AA_lbl = L_params.L2AA_lbl;
@@ -445,8 +445,8 @@ void Lsave_index(const struct L_Params& L_params) {
 }
 
 void L_zero(int L_irr) {
-    dpdfile2 LIA, Lia;
-    dpdbuf4 LIJAB, Lijab, LIjAb;
+    dpdfile2<double>LIA, Lia;
+    dpdbuf4<double>LIJAB, Lijab, LIjAb;
 
     if (params.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&LIA, PSIF_CC_LAMBDA, L_irr, 0, 1, "New LIA");
@@ -498,8 +498,8 @@ void L_zero(int L_irr) {
 /* Cleaning out L vectors for open-shell cases  */
 void L_clean(const struct L_Params& L_params) {
     int L_irr, i;
-    dpdfile2 LIA, Lia;
-    dpdbuf4 LIJAB, Lijab, LIjAb;
+    dpdfile2<double>LIA, Lia;
+    dpdbuf4<double>LIJAB, Lijab, LIjAb;
     char lbl[80];
 
     L_irr = L_params.irrep;
@@ -521,8 +521,8 @@ void L_clean(const struct L_Params& L_params) {
 
 void zeta_norm(const struct L_Params& L_params) {
     int Z_irr, i;
-    dpdfile2 ZIA, Zia;
-    dpdbuf4 ZIJAB, Zijab, ZIjAb;
+    dpdfile2<double>ZIA, Zia;
+    dpdbuf4<double>ZIJAB, Zijab, ZIjAb;
     double tval;
     Z_irr = L_params.irrep;
 

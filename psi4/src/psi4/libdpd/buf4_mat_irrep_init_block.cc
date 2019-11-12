@@ -41,7 +41,7 @@ namespace psi {
 ** buffer.
 **
 ** Arguments:
-**   dpdbuf4 *Buf: A pointer to the input dpdbuf.
+**   dpdbuf4<double>*Buf: A pointer to the input dpdbuf.
 **   int irrep: The irrep number to be prepared.
 **   int num_pq: The number of rows needed.
 **

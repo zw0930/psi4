@@ -43,11 +43,11 @@ namespace psi {
  ** give a product four-index quantity.
  **
  ** Arguments:
- **   dpdbuf4 *X: A pointer to the leftmost dpd four-index
+ **   dpdbuf4<double>*X: A pointer to the leftmost dpd four-index
  **               buffer in the product.
- **   dpdfile2 *Y: A pointer to the rightmost dpd two-index
+ **   dpdfile2<double>*Y: A pointer to the rightmost dpd two-index
  **                file in the product.
- **   dpdbuf4 *Z: A pointer to the dpd four-index buffer target.
+ **   dpdbuf4<double>*Z: A pointer to the dpd four-index buffer target.
  **   int sum_X: Indicates which index (values of 0, 1, 2, and 3) of X
  **              is to be summed.
  **   int sum_Y: Indicates which index (values of 0 and 1) of Y is to be summed.

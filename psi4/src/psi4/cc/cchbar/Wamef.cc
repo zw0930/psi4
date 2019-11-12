@@ -77,9 +77,9 @@ namespace cchbar {
 */
 
 void Wamef_build() {
-    dpdbuf4 Wamef, WAMEF, WAmEf, WaMeF, W;
-    dpdbuf4 F, D;
-    dpdfile2 tia, tIA;
+    dpdbuf4<double>Wamef, WAMEF, WAmEf, WaMeF, W;
+    dpdbuf4<double>F, D;
+    dpdfile2<double>tia, tIA;
     int h, Ga, Gn, Gm, A, a, row, nrows, ncols;
 
     if (params.ref == 0) {

@@ -43,12 +43,12 @@
 namespace psi {
 namespace ccresponse {
 
-void denom1(dpdfile2 *X1, double omega);
-void local_filter_T1(dpdfile2 *T1);
+void denom1(dpdfile2<double>*X1, double omega);
+void local_filter_T1(dpdfile2<double>*T1);
 
 void X1_build(const char *pert, int irrep, double omega) {
-    dpdfile2 F, X1, X1new;
-    dpdbuf4 W, X2;
+    dpdfile2<double>F, X1, X1new;
+    dpdbuf4<double>W, X2;
     char lbl[32];
     int Gam, Gef, Gim, Gi, Ga, Gm, nrows, ncols, A, a, am;
 
