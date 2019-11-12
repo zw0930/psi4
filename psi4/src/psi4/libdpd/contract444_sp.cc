@@ -145,7 +145,7 @@ int DPD::contract444_sp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z,
 
             if (!rows_per_bucket) dpd_error("contract444: Not enough memory for one row", "outfile");
 
-            nbuckets = (int)ceil((U)X->params->rowtot[Hx] / (U)rows_per_bucket);
+            nbuckets = (int)ceil((double)X->params->rowtot[Hx] / (double)rows_per_bucket);
 
             rows_left = X->params->rowtot[Hx] % rows_per_bucket;
 

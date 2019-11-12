@@ -74,8 +74,8 @@ int DPD::contract442_sp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<float> *Z
     GY = Y->file.my_irrep;
     GZ = Z->my_irrep;
 
-    if ((target_X == 1) || (target_X == 2)) trans4_init(&Xt, X);
-    if ((target_Y == 1) || (target_Y == 2)) trans4_init(&Yt, Y);
+    if ((target_X == 1) || (target_X == 2)) trans4_init_sp(&Xt, X);
+    if ((target_Y == 1) || (target_Y == 2)) trans4_init_sp(&Yt, Y);
 
     /*  if(std::fabs(beta) > 0.0) dpd_file2_scm(Z, beta); */
     file2_scm_sp(Z, beta);
@@ -116,7 +116,7 @@ int DPD::contract442_sp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<float> *Z
             xrow = Xt.shift.coltot[hxbuf];
             xcol = Xt.shift.rowtot[hxbuf];
 #endif
-        } else if (target_X == 2) {_sp
+        } else if (target_X == 2) {
             buf4_mat_irrep_init_sp(X, hxbuf);
             buf4_mat_irrep_rd_sp(X, hxbuf);
             trans4_mat_irrep_init_sp(&Xt, hxbuf);
@@ -321,8 +321,8 @@ int DPD::contract442_sp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<float> *Z
             buf4_mat_irrep_close_sp(Y, hybuf);
     }
 
-    if ((target_X == 1) || (target_X == 2)) trans4_close(&Xt);
-    if ((target_Y == 1) || (target_Y == 2)) trans4_close(&Yt);
+    if ((target_X == 1) || (target_X == 2)) trans4_close_sp(&Xt);
+    if ((target_Y == 1) || (target_Y == 2)) trans4_close_sp(&Yt);
 
     file2_mat_wrt_sp(Z);
     file2_mat_close_sp(Z);
