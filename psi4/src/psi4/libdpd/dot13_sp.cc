@@ -124,7 +124,7 @@ int DPD::dot13_sp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<float> *Z, int
                     Z->matrix[Zblock][q][s] += value;
                 }
             }
-            if (T->params->ppi[Gp] && T->params->qpi[Gr]) free_dpd_block(X, T->params->ppi[Gp], T->params->qpi[Gr]);
+            if (T->params->ppi[Gp] && T->params->qpi[Gr]) free_dpd_block_sp(X, T->params->ppi[Gp], T->params->qpi[Gr]);
         }
         buf4_mat_irrep_close_sp(I, h);
     }
