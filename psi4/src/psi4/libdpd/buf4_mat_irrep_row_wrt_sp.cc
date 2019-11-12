@@ -118,10 +118,10 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
         case 12: /* No change in pq or rs */
 
             if (Buf->file.incore) {
-                for (rs = 0; rs < rowtot; rs++) Buf->file.matrix[irrep][pq][rs] = Buf->matrix[irrep][0][rs];
+                for (rs = 0; rs < rowtot; rs++) Buf->file_sp.matrix[irrep][pq][rs] = Buf->matrix[irrep][0][rs];
                 file4_cache_dirty(&(Buf->file));
             } else {
-                Buf->file.matrix[irrep] = Buf->matrix[irrep];
+                Buf->file_sp.matrix[irrep] = Buf->matrix[irrep];
                 file4_mat_irrep_row_wrt(&(Buf->file), irrep, pq);
             }
 
@@ -143,7 +143,7 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
                 value = Buf->matrix[irrep][0][bufrs];
 
                 /* Assign the value */
-                Buf->file.matrix[irrep][filerow][rs] = value;
+                Buf->file_sp.matrix[irrep][filerow][rs] = value;
             }
 
             /* Write out the row */
@@ -174,7 +174,7 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
                 value = Buf->matrix[irrep][0][bufrs];
 
                 /* Assign the value */
-                Buf->file.matrix[irrep][filerow][rs] = value;
+                Buf->file_sp.matrix[irrep][filerow][rs] = value;
             }
 
             /* Write out the row */
@@ -209,7 +209,7 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
                 value = Buf->matrix[irrep][0][bufrs];
 
                 /* Assign the value */
-                Buf->file.matrix[irrep][filerow][rs] = value;
+                Buf->file_sp.matrix[irrep][filerow][rs] = value;
             }
 
             /* Write out the row */
