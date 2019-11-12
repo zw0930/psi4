@@ -50,6 +50,9 @@
 #define F_SCOPY FC_GLOBAL(scopy, SCOPY)
 #define F_DROT FC_GLOBAL(drot, DROT)
 #define F_DSCAL FC_GLOBAL(dscal, DSCAL)
+//
+#define F_SSCAL FC_GLOBAL(sscal, SSCAL)
+
 #define F_DDOT FC_GLOBAL(ddot, DDOT)
 #define F_DASUM FC_GLOBAL(dasum, DASUM)
 #define F_DNRM2 FC_GLOBAL(dnrm2, DNRM2)
@@ -63,6 +66,9 @@
 #define F_SCOPY scopy_
 #define F_DROT drot_
 #define F_DSCAL dscal_
+//
+#define F_SSCAL sscal_
+
 #define F_DDOT ddot_
 #define F_DASUM dasum_
 #define F_DNRM2 dnrm2_
@@ -76,6 +82,8 @@
 #define F_SCOPY scopy
 #define F_DROT drot
 #define F_DSCAL dscal
+//
+#define F_SSCAL sscal
 #define F_DDOT ddot
 #define F_DASUM dasum
 #define F_DNRM2 dnrm2
@@ -88,6 +96,9 @@
 #define F_SCOPY SCOPY
 #define F_DROT DROT
 #define F_DSCAL DSCAL
+//
+#define F_SSCAL SSCAL
+
 #define F_DDOT DDOT
 #define F_DASUM DASUM
 #define F_DNRM2 DNRM2
@@ -100,6 +111,9 @@
 #define F_SCOPY SCOPY_
 #define F_DROT DROT_
 #define F_DSCAL DSCAL_
+//
+#define F_SSCAL SSCAL_
+
 #define F_DDOT DDOT_
 #define F_DASUM DASUM_
 #define F_DNRM2 DNRM2_

@@ -210,6 +210,17 @@ void PSI_API C_DSCAL(size_t length, double alpha, double *vec, int inc) {
     }
 }
 
+void PSI_API C_SSCAL(size_t length, float alpha, float *vec, int inc) {
+    int big_blocks = (int)(length / INT_MAX);
+    int small_size = (int)(length % INT_MAX);
+    for (int block = 0; block <= big_blocks; block++) {
+        float *vec_s = &vec[static_cast<size_t>(block) * inc * INT_MAX];
+        signed int length_s = (block == big_blocks) ? small_size : INT_MAX;
+        ::F_SSCAL(&length_s, &alpha, vec_s, &inc);
+    }
+}
+
+
 /*!
  *Calculates a plane Givens rotation for vectors x, y and
  * angle theta.  x = x*cos + y*sin, y = -x*sin + y*cos.
