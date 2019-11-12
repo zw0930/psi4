@@ -394,6 +394,7 @@ class PSI_API DPD {
     double file2_dot_self(dpdfile2<double> *BufX);
     double file2_trace(dpdfile2<double> *InFile);
     int file2_axpy(dpdfile2<double> *FileA, dpdfile2<double> *FileB, double alpha, int transA);
+    int file2_axpy_sp(dpdfile2<float> *FileA, dpdfile2<float> *FileB, float alpha, int transA);
     int file2_axpbycz(dpdfile2<double> *FileA, dpdfile2<double> *FileB, dpdfile2<double> *FileC, double a, double b, double c);
     int file2_axpbycz_sp(dpdfile2<float> *FileA, dpdfile2<float> *FileB, dpdfile2<float> *FileC, float a, float b, float c);
 
