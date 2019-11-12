@@ -611,7 +611,7 @@ void CCEnergyWavefunction::t1_build_sp() {
 
     dpdfile2<float> newtIA_sp, tIA_sp, fIA_sp;
     dpdfile2<float> FAE_sp, FMI_sp, FME_sp;
-    dpdbuf4<float> tIjAb_sp. T2_sp;
+    dpdbuf4<float> tIjAb_sp, T2_sp;
     dpdbuf4<float> C_anti_sp, D_sp, F_sp, E_sp;
     int Gmi, Gm, Gi, Ga, m, a, A, nrows, ncols;
    

@@ -397,13 +397,13 @@ void CCEnergyWavefunction::tau_build_sp() {
         global_dpd_->buf4_cast_copy_dtof(&tauIjAb, PSIF_CC_TAMPS, "tauIjAb_sp");
         /* This will generate the tauIjbA file from tauIjAb */
         global_dpd_->buf4_sort(&tauIjAb, PSIF_CC_TAMPS, pqsr, 0, 5, "tauIjbA");
-        global_dpd_->buf4_init(&tauIjbA, PSIF_CC_TAMPS, pqsr, 0, 5, "tauIjbA");
+        global_dpd_->buf4_init(&tauIjbA, PSIF_CC_TAMPS, pqsr, 0, 0, 5, 0, 5, 0, "tauIjbA");
         global_dpd_->buf4_cast_copy_dtof(&tauIjbA, PSIF_CC_TAMPS, "tauIjbA_sp");
         global_dpd_->buf4_close(&tauIjbA);
         global_dpd_->buf4_close(&tauIjAb);
         global_dpd_->file2_mat_close(&tIA);
         global_dpd_->file2_close(&tIA);
     } 
-
+}
 }  // namespace ccenergy
 }  // namespace psi
