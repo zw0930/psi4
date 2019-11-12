@@ -1961,7 +1961,7 @@ int DPD::buf4_sort_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices index,
         }
     }
 
-    buf4_close(&OutBuf);
+    buf4_close_sp(&OutBuf);
 
 #ifdef DPD_TIMER
     timer_off("buf4_sort");
