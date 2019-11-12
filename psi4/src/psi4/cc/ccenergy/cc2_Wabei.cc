@@ -313,7 +313,7 @@ void CCEnergyWavefunction::cc2_Wabei_build() {
 }
 
 void CCEnergyWavefunction::purge_cc2_Wabei() {
-    dpdfile4i<double> W;
+    dpdfile4 W;
     int *occpi, *virtpi;
     int a, b, e, i;
     int A, B, E, I;
