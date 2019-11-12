@@ -209,7 +209,7 @@ int DPD::contract424_sp(dpdbuf4<float> *X, dpdfile2<float> *Y, dpdbuf4<float> *Z
             }
 
             if (sum_X == 0) {
-                buf4_mat_irrep_init(X, hxbuf);
+                buf4_mat_irrep_init_sp(X, hxbuf);
                 buf4_mat_irrep_rd_sp(X, hxbuf);
                 buf4_mat_irrep_shift13_sp(X, hxbuf);
                 Xmat = X->shift.matrix[hxbuf];
