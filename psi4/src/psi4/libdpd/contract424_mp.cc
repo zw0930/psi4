@@ -102,7 +102,7 @@ int DPD::contract424_mp(dpdbuf4<float> *X, dpdfile2<float> *Y, dpdbuf4<double> *
 
     if ((sum_X == 1) || (sum_X == 2)) trans4_init_sp(&Xt, X);
 
-    if (Ztrans) trans4_init_sp(&Zt, Z);
+    if (Ztrans) trans4_init(&Zt, Z);
 
     /*  if(std::fabs(beta) > 0.0) dpd_buf4_scm(Z, beta); */
     buf4_scm(Z, beta);

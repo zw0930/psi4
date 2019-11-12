@@ -77,8 +77,8 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
     GY = Y->file.my_irrep;
     GZ = Z->my_irrep;
 
-    if ((target_X == 1) || (target_X == 2)) trans4_init(&Xt, X);
-    if ((target_Y == 1) || (target_Y == 2)) trans4_init(&Yt, Y);
+    if ((target_X == 1) || (target_X == 2)) trans4_init_sp(&Xt, X);
+    if ((target_Y == 1) || (target_Y == 2)) trans4_init_sp(&Yt, Y);
 
     /*  if(std::fabs(beta) > 0.0) dpd_file2_scm(Z, beta); */
     file2_scm(Z, beta);
@@ -119,7 +119,7 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
             xrow = Xt.shift.coltot[hxbuf];
             xcol = Xt.shift.rowtot[hxbuf];
 #endif
-        } else if (target_X == 2) {_sp
+        } else if (target_X == 2) {
             buf4_mat_irrep_init_sp(X, hxbuf);
             buf4_mat_irrep_rd_sp(X, hxbuf);
             trans4_mat_irrep_init_sp(&Xt, hxbuf);
@@ -238,7 +238,7 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                     Hy = Hx ^ GY;
                     Hz = Hx ^ GX;
                 }
-                TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ Gz]);
+                TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
                 /*
         if (!Xtrans && !Ytrans) {
     outfile->Printf("rows[%d]=%d links[%d]=%d cols[%d]=%d\n",
@@ -254,11 +254,11 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                             Z->params->coltot[Hz ^ GZ], alpha, 0);
             }
             for (row = 0; row < Z->params->rowtot[Hz]){
-                 for (col = 0; col < Z->params->coltot[Hz ^ Gz]){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
-            free_dpd_block_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ Gz]);
+            free_dpd_block_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
         else
             for (Hx = 0; Hx < nirreps; Hx++) {
 #ifdef DPD_DEBUG
@@ -283,7 +283,7 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                 }
                 /* outfile->Printf(stdout,"rows %d links %d cols %d\n",
        Z->params->rowtot[Hz], numlinks[Hx], Z->params->coltot[Hz]); */
-                TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ Gz]);
+                TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
                 if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx]) {
                     if (!Xtrans && !Ytrans) {
                         C_SGEMM('n', 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
@@ -304,11 +304,11 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                     }
                 }
                for (row = 0; row < Z->params->rowtot[Hz]){
-                 for (col = 0; col < Z->params->coltot[Hz ^ Gz]){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
-            free_dpd_block_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ Gz]);
+            free_dpd_block_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
 
                 /*
         newmm(Xmat[Hx], Xtrans, Ymat[Hy], Ytrans,
@@ -337,8 +337,8 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
             buf4_mat_irrep_close_sp(Y, hybuf);
     }
 
-    if ((target_X == 1) || (target_X == 2)) trans4_close(&Xt);
-    if ((target_Y == 1) || (target_Y == 2)) trans4_close(&Yt);
+    if ((target_X == 1) || (target_X == 2)) trans4_close_sp(&Xt);
+    if ((target_Y == 1) || (target_Y == 2)) trans4_close_sp(&Yt);
 
     file2_mat_wrt(Z);
     file2_mat_close(Z);

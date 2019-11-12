@@ -143,7 +143,7 @@ void CCEnergyWavefunction::form_df_ints(Options &options, int **cachelist, int *
      *   UHF
      * Q,D 94
      */
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     if (params_.ref == 2) {
         throw PSIEXCEPTION("UHF Density fitting NYI");
@@ -185,7 +185,7 @@ void CCEnergyWavefunction::form_df_ints(Options &options, int **cachelist, int *
 
 #if 1
         // (OV|Q)
-        dpdbuf4 OV;
+        dpdbuf4<double> OV;
         global_dpd_->buf4_init(&OV, PSIF_CC_OEI, 0, 43, 27, 43, 27, 0, "B(Q|OV)");
         for (int h = 0; h < nirrep_; ++h) {
             global_dpd_->buf4_mat_irrep_init(&OV, h);
@@ -224,7 +224,7 @@ void CCEnergyWavefunction::form_df_ints(Options &options, int **cachelist, int *
         global_dpd_->buf4_close(&OV);
 
         // This could be done using the half-transformed intermediate above, but with extra memory cost
-        dpdbuf4 VV;
+        dpdbuf4<double> VV;
         global_dpd_->buf4_init(&VV, PSIF_CC_OEI, 0, 43, 10, 43, 13, 0, "B(Q|VV)");
         for (int h = 0; h < nirrep_; ++h) {
             global_dpd_->buf4_mat_irrep_init(&VV, h);
@@ -266,7 +266,7 @@ void CCEnergyWavefunction::form_df_ints(Options &options, int **cachelist, int *
 
 #else
         // (OV|Q)
-        dpdbuf4 VV, OV;
+        dpdbuf4<double> VV, OV;
         global_dpd_->buf4_init(&VV, PSIF_CC_OEI, 0, 43, 10, 43, 13, 0, "B(Q|VV)");
         global_dpd_->buf4_init(&OV, PSIF_CC_OEI, 0, 43, 27, 43, 27, 0, "B(Q|OV)");
         for (int h = 0; h < nirreps; ++h) {
@@ -325,7 +325,7 @@ void CCEnergyWavefunction::form_df_ints(Options &options, int **cachelist, int *
     }
 #if 0
     // Test the resulting integrals
-    dpdbuf4 Q1, Q2;
+    dpdbuf4<double> Q1, Q2;
     global_dpd_->buf4_init(&I, PSIF_CC_OEI, 0, uSO, uSO, pSO, pSO, 0 , "DF (pq|rs)");
     global_dpd_->buf4_init(&Q1, PSIF_CC_OEI, 0, QD, uSO, QD, pSO, 0, "B(Q|pq)");
     global_dpd_->buf4_init(&Q2, PSIF_CC_OEI, 0, QD, uSO, QD, pSO, 0, "B(Q|pq)");

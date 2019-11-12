@@ -41,16 +41,16 @@ namespace ccenergy {
 /* halftrans(): Routine to transform the last two indices of a dpdbuf4
 ** between the MO and SO bases.
 **
-** dpdbuf4 *Buf1:    Pointer to the MO dpdbuf4 (already initialized)
-** dpdbuf4 *Buf2:    Pointer to the SO dpdbuf4 (already initialized).
+** dpdbuf4<double> *Buf1:    Pointer to the MO dpdbuf4<double> (already initialized)
+** dpdbuf4<double> *Buf2:    Pointer to the SO dpdbuf4<double> (already initialized).
 ** double ***C1:     Pointer to the left transformation matrix (symmetry blocked, SO x MO)
 ** double ***C2:     Pointer to the right transformation matrix (symmetry blocked, SO x MO)
 ** int nirreps:      The number of irreps in the point group
-** int **mo_row:     A lookup array.  For a dpdbuf4 with MO indices (ij,ab),
+** int **mo_row:     A lookup array.  For a dpdbuf4<double> with MO indices (ij,ab),
 **                   given the irrep h of ij (= ab) and the irrep of orbital a, the
 **                   array returns the offset of the start of the set of b molecular
 **                   orbitals.
-** int **so_row:     Like mo_row, but for a dpdbuf4 with the last two
+** int **so_row:     Like mo_row, but for a dpdbuf4<double> with the last two
 **                   indices in the SO basis.
 ** int *mospi_left:  The number of MO's per irrep for the left upper index.
 ** int *mospi_right: The number of MO's per irrep for the right upper index.
