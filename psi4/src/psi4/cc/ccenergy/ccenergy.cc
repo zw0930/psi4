@@ -732,8 +732,8 @@ void CCEnergyWavefunction::checkpoint() {
 
 /* just use T's on disk and don't iterate */
 void CCEnergyWavefunction::one_step() {
-    dpdfile2 t1;
-    dpdbuf4 t2;
+    dpdfile2<double> t1;
+    dpdbuf4<double> t2;
     double tval;
 
     moinfo_.ecc = energy();
