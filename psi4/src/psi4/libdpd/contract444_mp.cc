@@ -197,12 +197,12 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
                         numlinks[Hx ^ symlink], alpha, &(X->matrix[Hx][0][0]), X->params->coltot[Hx ^ GX],
                         &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], 0, &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
             }
-            for (row = 0, row < Z->params->rowtot[Hz]; row++){
-  		for (col = 0, col < Z->params->coltot[Hz ^ GZ]){
+            for (row = 0; row < Z->params->rowtot[Hz]; row++){
+  		for (col = 0; col < Z->params->coltot[Hz ^ GZ]; col++){
 			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
 		}
 	    }
-            free_dpd_block_matrix_sp(TMP,Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+            free_dpd_block_sp(TMP,Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
 
             buf4_mat_irrep_close_sp(X, Hx);
 
@@ -257,7 +257,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
                     if (nrows && ncols && nlinks)
                         C_SGEMM('t', 'n', nrows, ncols, nlinks, alpha, &(X->matrix[Hx][0][0]),
                                 X->params->coltot[Hx ^ GX], &(Y->matrix[Hy][n * rows_per_bucket][0]),
-                                Y->params->coltot[Hy ^ GY], (n == 0 ? beta : 1.0), &(Z->matrix[Hz][0][0]), 
+                                Y->params->coltot[Hy ^ GY], (n == 0 ? beta : 1.0), &(TMP[0][0]), 
                                 Z->params->coltot[Hz ^ GZ]);
                      for (row = 0; row < nrows; row++){
   			for (col = 0; col < ncols; col++){

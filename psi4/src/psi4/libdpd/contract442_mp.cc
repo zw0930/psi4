@@ -225,7 +225,7 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                     dpd_error("dpd_contract442", "outfile");
                 }
 #endif
-		                if ((!Xtrans) && (!Ytrans)) {
+                if ((!Xtrans) && (!Ytrans)) {
                     Hy = Hx ^ GX;
                     Hz = Hx;
                 } else if ((!Xtrans) && (Ytrans)) {

@@ -128,7 +128,7 @@ int DPD::dot24_mp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<double> *Z, in
             }
             if (T->params->ppi[Gq] && T->params->qpi[Gs]) free_dpd_block_sp(X, T->params->ppi[Gq], T->params->qpi[Gs]);
         }
-        buf4_mat_irrep_close(I, h);
+        buf4_mat_irrep_close_sp(I, h);
     }
 
 #ifdef DPD_TIMER
