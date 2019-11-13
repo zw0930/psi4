@@ -58,7 +58,7 @@ namespace psi {
 **      the labels currently used in in filenum and is quite useful for debugging.
 */
 
-int DPD::file2_init(dpdfile2<float> *File, int filenum, int irrep, int pnum, int qnum, const char *label) {
+int DPD::file2_init_sp(dpdfile2<float> *File, int filenum, int irrep, int pnum, int qnum, const char *label) {
     int i, q, rs, nirreps;
     dpd_file2_cache_entry *this_entry;
 
