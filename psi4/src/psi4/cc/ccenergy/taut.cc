@@ -391,5 +391,6 @@ void CCEnergyWavefunction::taut_build_sp() {
         global_dpd_->file2_close(&tIA);
 
     } 
+}
 }  // namespace ccenergy
 }  // namespace psi

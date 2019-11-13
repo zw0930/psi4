@@ -388,6 +388,8 @@ class PSI_API DPD {
 
 
     int file2_dirprd(dpdfile2<double> *FileA, dpdfile2<double> *FileB);
+    int file2_dirprd_sp(dpdfile2<float> *FileA, dpdfile2<float> *FileB);
+
     double file2_dot(dpdfile2<double> *FileA, dpdfile2<double> *FileB);
     int file2_scm(dpdfile2<double> *InFile, double alpha);
 //**   
@@ -619,7 +621,7 @@ class PSI_API DPD {
     // int file2_mat_print(dpdfile2<float> *File, std::string out_fname);
     //int file2_copy(dpdfile2<U> *InFile, int outfilenum, const char *label);
    // int file2_dirprd(dpdfile2<U> *FileA, dpdfile2<U> *FileB);
-    double file2_dot_sp(dpdfile2<float> *FileA, dpdfile2<float> *FileB);
+    float file2_dot_sp(dpdfile2<float> *FileA, dpdfile2<float> *FileB);
     int file2_scm_sp(dpdfile2<float> *InFile, float alpha);
 //**   
     double file2_dot_self_sp(dpdfile2<float> *BufX);
