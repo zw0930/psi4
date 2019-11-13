@@ -290,8 +290,8 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                         C_SGEMM('n', 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
                                 &(Xmat[Hx][0][0]), numlinks[Hx], &(Ymat[Hy][0][0]), Z->params->coltot[Hz ^ GZ], 0,
                                 &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
-                        for (row = 0; row < Z->params->rowtot[Hz]){
-                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
+                        for (row = 0; row < Z->params->rowtot[Hz]; row++){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]; col++){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
@@ -301,8 +301,8 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                         C_SGEMM('t', 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
                                 &(Xmat[Hx][0][0]), Z->params->rowtot[Hz], &(Ymat[Hy][0][0]), Z->params->coltot[Hz ^ GZ],
                                 0, &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
-                        for (row = 0; row < Z->params->rowtot[Hz]){
-                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
+                        for (row = 0; row < Z->params->rowtot[Hz]; row++){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]; col++){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
@@ -312,8 +312,8 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                         C_SGEMM('n', 't', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
                                 &(Xmat[Hx][0][0]), numlinks[Hx], &(Ymat[Hy][0][0]), numlinks[Hx], 0,
                                 &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
-                        for (row = 0; row < Z->params->rowtot[Hz]){
-                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
+                        for (row = 0; row < Z->params->rowtot[Hz]; row++){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]; col++){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
@@ -323,8 +323,8 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                         C_SGEMM('t', 't', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
                                 &(Xmat[Hx][0][0]), Z->params->rowtot[Hz], &(Ymat[Hy][0][0]), numlinks[Hx], 0,
                                 &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
-                        for (row = 0; row < Z->params->rowtot[Hz]){
-                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
+                        for (row = 0; row < Z->params->rowtot[Hz]; row++){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]; col++){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
