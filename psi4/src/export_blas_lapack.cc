@@ -35,10 +35,7 @@ namespace py = pybind11;
 
 void export_blas_lapack(py::module& m) {
     // BLAS Static Wrappers
-   
-    m.def("SGEMM", &psi::PSI_SGEMM, "docstring");
-    m.def("SGEMV", &psi::PSI_SGEMV, "docstring");
-    
+
 
     m.def("DGBMV", &psi::PSI_DGBMV, "docstring");
     m.def("DGEMM", &psi::PSI_DGEMM, "docstring");
@@ -66,6 +63,36 @@ void export_blas_lapack(py::module& m) {
     m.def("DNRM2", &psi::PSI_DNRM2, "docstring");
     m.def("DASUM", &psi::PSI_DASUM, "docstring");
     m.def("IDAMAX", &psi::PSI_IDAMAX, "docstring");
+   
+    // BLAS Single-routines
+    
+    m.def("SGBMV", &psi::PSI_SGBMV, "docstring");
+    m.def("SGEMM", &psi::PSI_SGEMM, "docstring");
+    m.def("SGEMV", &psi::PSI_SGEMV, "docstring");
+    m.def("SGER", &psi::PSI_SGER, "docstring");
+    m.def("SSBMV", &psi::PSI_SSBMV, "docstring");
+    m.def("SSYMM", &psi::PSI_SSYMM, "docstring");
+    m.def("SSYMV", &psi::PSI_SSYMV, "docstring");
+    m.def("SSYR", &psi::PSI_SSYR, "docstring");
+    m.def("SSYR2", &psi::PSI_SSYR2, "docstring");
+    m.def("SSYR2K", &psi::PSI_SSYR2K, "docstring");
+    m.def("SSYRK", &psi::PSI_SSYRK, "docstring");
+    m.def("STBMV", &psi::PSI_STBMV, "docstring");
+    m.def("STBSV", &psi::PSI_STBSV, "docstring");
+    m.def("STRMM", &psi::PSI_STRMM, "docstring");
+    m.def("STRMV", &psi::PSI_STRMV, "docstring");
+    m.def("STRSM", &psi::PSI_STRSM, "docstring");
+    m.def("STRSV", &psi::PSI_STRSV, "docstring");
+    m.def("SROT", &psi::PSI_SROT, "docstring");
+    m.def("SSWAP", &psi::PSI_SSWAP, "docstring");
+    m.def("SSCAL", &psi::PSI_SSCAL, "docstring");
+    m.def("SAXPY", &psi::PSI_SAXPY, "docstring");
+    m.def("SCOPY", &psi::PSI_SCOPY, "docstring");
+    m.def("SDOT", &psi::PSI_SDOT, "docstring");
+    m.def("SNRM2", &psi::PSI_SNRM2, "docstring");
+    m.def("SASUM", &psi::PSI_SASUM, "docstring");
+    m.def("ISAMAX", &psi::PSI_ISAMAX, "docstring");
+
 
     // LAPACK static wrappers
 
@@ -78,6 +105,19 @@ void export_blas_lapack(py::module& m) {
     m.def("DPOTRF", &psi::PSI_DPOTRF, "docstring");
     m.def("DPOTRS", &psi::PSI_DPOTRS, "docstring");
     m.def("DPOTRI", &psi::PSI_DPOTRI, "docstring");
+    
+    // LAPACK Single-routines
+  
+    m.def("SGEEV", &psi::PSI_SGEEV, "docstring");
+    m.def("SSYEV", &psi::PSI_SSYEV, "docstring");
+    m.def("SSYSV", &psi::PSI_SSYSV, "docstring");
+    m.def("SGETRF", &psi::PSI_SGETRF, "docstring");
+    m.def("SGETRS", &psi::PSI_SGETRS, "docstring");
+    m.def("SGETRI", &psi::PSI_SGETRI, "docstring");
+    m.def("SPOTRF", &psi::PSI_SPOTRF, "docstring");
+    m.def("SPOTRS", &psi::PSI_SPOTRS, "docstring");
+    m.def("SPOTRI", &psi::PSI_SPOTRI, "docstring");
+
     /**
     def("DBDSDC", &psi::PSI_DBDSDC);
     def("DBDSQR", &psi::PSI_DBDSQR);
