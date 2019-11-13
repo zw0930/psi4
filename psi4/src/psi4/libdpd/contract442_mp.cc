@@ -252,13 +252,14 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
    
                 newmm_rking_sp(Xmat[Hx], Xtrans, Ymat[Hy], Ytrans, TMP, Z->params->rowtot[Hz], numlinks[Hx],
                             Z->params->coltot[Hz ^ GZ], alpha, 0);
-            }
+            
             for (row = 0; row < Z->params->rowtot[Hz]; row++){
                  for (col = 0; col < Z->params->coltot[Hz ^ GZ]; col++){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
             free_dpd_block_sp(TMP, Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+        }
         else
             for (Hx = 0; Hx < nirreps; Hx++) {
 #ifdef DPD_DEBUG
@@ -289,34 +290,56 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
                         C_SGEMM('n', 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
                                 &(Xmat[Hx][0][0]), numlinks[Hx], &(Ymat[Hy][0][0]), Z->params->coltot[Hz ^ GZ], 0,
                                 &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
-                    } else if (Xtrans && !Ytrans) {
-                        C_SGEMM('t', 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
-                                &(Xmat[Hx][0][0]), Z->params->rowtot[Hz], &(Ymat[Hy][0][0]), Z->params->coltot[Hz ^ GZ],
-                                0, &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
-                    } else if (!Xtrans && Ytrans) {
-                        C_SGEMM('n', 't', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
-                                &(Xmat[Hx][0][0]), numlinks[Hx], &(Ymat[Hy][0][0]), numlinks[Hx], 0,
-                                &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
-                    } else {
-                        C_SGEMM('t', 't', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
-                                &(Xmat[Hx][0][0]), Z->params->rowtot[Hz], &(Ymat[Hy][0][0]), numlinks[Hx], 0,
-                                &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
-                    }
-                }
-               for (row = 0; row < Z->params->rowtot[Hz]){
+                        for (row = 0; row < Z->params->rowtot[Hz]){
                  for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
   			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
                  }
             }
             free_dpd_block_sp(TMP, Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
 
+                    } else if (Xtrans && !Ytrans) {
+                        C_SGEMM('t', 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
+                                &(Xmat[Hx][0][0]), Z->params->rowtot[Hz], &(Ymat[Hy][0][0]), Z->params->coltot[Hz ^ GZ],
+                                0, &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
+                        for (row = 0; row < Z->params->rowtot[Hz]){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
+  			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
+                 }
+            }
+            free_dpd_block_sp(TMP, Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+
+                    } else if (!Xtrans && Ytrans) {
+                        C_SGEMM('n', 't', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
+                                &(Xmat[Hx][0][0]), numlinks[Hx], &(Ymat[Hy][0][0]), numlinks[Hx], 0,
+                                &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
+                        for (row = 0; row < Z->params->rowtot[Hz]){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
+  			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
+                 }
+            }
+            free_dpd_block_sp(TMP, Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+
+                    } else {
+                        C_SGEMM('t', 't', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ], numlinks[Hx], alpha,
+                                &(Xmat[Hx][0][0]), Z->params->rowtot[Hz], &(Ymat[Hy][0][0]), numlinks[Hx], 0,
+                                &(TMP[0][0]), Z->params->coltot[Hz ^ GZ]);
+                        for (row = 0; row < Z->params->rowtot[Hz]){
+                 for (col = 0; col < Z->params->coltot[Hz ^ GZ]){
+  			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
+                 }
+            }
+            free_dpd_block_sp(TMP, Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+
+                    }
+                } 
+              
                 /*
         newmm(Xmat[Hx], Xtrans, Ymat[Hy], Ytrans,
             Z->matrix[Hz], Z->params->rowtot[Hz],
             numlinks[Hx], Z->params->coltot[Hz^GZ],
             alpha, 1.0);
         */
-            }
+            } // For loop over Hx 
 
         if (target_X == 0)
             buf4_mat_irrep_close_sp(X, hxbuf);
