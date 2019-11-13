@@ -117,7 +117,7 @@ struct dpdshift4 {
 };
 
 template <typename U> 
-struct dpdbuf4<double>{
+struct dpdbuf4 {
     int dpdnum; /* dpd structure reference */
     int anti;   /* Is this buffer antisymmetric? */
     dpdparams4 *params;
@@ -160,7 +160,7 @@ struct dpdparams2 {
 };
 
 template <typename U> 
-struct dpdfile2<double>{
+struct dpdfile2 {
     int dpdnum; /* dpd structure reference */
     char label[PSIO_KEYLEN];
     int filenum;
