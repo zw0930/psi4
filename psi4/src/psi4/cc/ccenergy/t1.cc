@@ -693,7 +693,8 @@ void CCEnergyWavefunction::t1_build_sp() {
                 ncols = F_sp.params->coltot[Gma];
 
                 if (nrows && ncols && moinfo_.virtpi[Ga])
-                    C_SGEMV('n', nrows, ncols, 1.0, T2_sp.matrix[Gmi][T2.row_offset[Gmi][m]], ncols, F_sp.matrix[Gma][0], 1,
+                    C_SGEMV('n', nrows, ncols, 1.0, T2_sp.matrix[Gmi][T2_sp.row_offset[Gmi][m]], ncols, F_sp.matrix[Gma][0], 1,
+
                             1.0, &newtIA_sp.matrix[Gi][0][A], moinfo_.virtpi[Ga]);
             }
 

@@ -57,7 +57,7 @@ int DPD::file2_scm_sp(dpdfile2<float> *InFile, float alpha) {
         length = InFile->params->rowtot[h] * InFile->params->coltot[h ^ my_irrep];
         if (length) {
             X = &(InFile->matrix[h][0][0]);
-            C_DSCAL(length, alpha, X, 1);
+            C_SSCAL(length, alpha, X, 1);
         }
     }
 

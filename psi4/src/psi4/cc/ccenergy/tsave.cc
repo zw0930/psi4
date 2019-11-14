@@ -108,9 +108,9 @@ void CCEnergyWavefunction::tsave_sp() {
 
         global_dpd_->buf4_init(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
         global_dpd_->buf4_copy(&t2, PSIF_CC_TAMPS, "tIjAb");
-        global_dpd_->buf4_cast_copy_dtof(&t2, PSIF_CC_TAMPS, "tIjAb_sp")
+        global_dpd_->buf4_cast_copy_dtof(&t2, PSIF_CC_TAMPS, "tIjAb_sp");
         global_dpd_->buf4_close(&t2);
     }
-
+}
 }  // namespace ccenergy
 }  // namespace psi

@@ -34,7 +34,7 @@
 #include "dpd.h"
 
 namespace psi {
-int DPD::file2_mat_wrt(dpdfile2<float> *File) {
+int DPD::file2_mat_wrt_sp(dpdfile2<float> *File) {
     int h, my_irrep, rowtot, coltot;
     psio_address irrep_ptr, next_address;
 
