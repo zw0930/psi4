@@ -38,8 +38,8 @@ namespace psi {
 int DPD::trans4_mat_irrep_rd_sp(dpdtrans4<float> *Trans, int irrep) {
     int pq, rs, all_buf_irrep;
     int rows, cols;
-    dpdbuf4<double> *Buf;
-    double *A, *B;
+    dpdbuf4<float> *Buf;
+    float *A, *B;
 
     Buf = &(Trans->buf);
     all_buf_irrep = Buf->file.my_irrep;
