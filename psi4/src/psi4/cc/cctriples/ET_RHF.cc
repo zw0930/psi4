@@ -157,7 +157,7 @@ double ET_RHF() {
 
     /* each thread gets its own F buffer to assign memory and read blocks
        into and its own energy double - all else shared */
-    Fints_array = (dpdbuf4<double>*)malloc(nthreads * sizeof(dpdbuf4));
+    Fints_array = (dpdbuf4<double>*)malloc(nthreads * sizeof(dpdbuf4<double>));
     for (thread = 0; thread < nthreads; ++thread)
         global_dpd_->buf4_init(&(Fints_array[thread]), PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc>");
     ET_array = (double *)malloc(nthreads * sizeof(double));

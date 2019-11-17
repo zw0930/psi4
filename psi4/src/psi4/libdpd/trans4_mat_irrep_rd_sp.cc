@@ -64,7 +64,7 @@ int DPD::trans4_mat_irrep_rd_sp(dpdtrans4<float> *Trans, int irrep) {
         for (rs = 0; rs < cols; rs++) {
             A = &(Buf->matrix[irrep][0][rs]);
             B = &(Trans->matrix[irrep][rs][0]);
-            C_DCOPY(rows, A, cols, B, 1);
+            C_SCOPY(rows, A, cols, B, 1);
         }
     }
 

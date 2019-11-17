@@ -147,8 +147,8 @@ void DPD::cc3_sigma_RHF_ic(dpdbuf4<double> *CIjAb, dpdbuf4<double> *WAbEi, dpdbu
         }
     }
 
-    SIA_local = (dpdfile2<double>*)malloc(nthreads * sizeof(dpdfile2));
-    SIjAb_local = (dpdbuf4<double>*)malloc(nthreads * sizeof(dpdbuf4));
+    SIA_local = (dpdfile2<double>*)malloc(nthreads * sizeof(dpdfile2<double>));
+    SIjAb_local = (dpdbuf4<double>*)malloc(nthreads * sizeof(dpdbuf4<double>));
 
     for (i = 0; i < nthreads; ++i) {
         if (do_singles) {
