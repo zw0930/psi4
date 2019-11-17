@@ -40,10 +40,10 @@ int DPD::file2_mat_wrt_sp(dpdfile2<float> *File) {
 
     my_irrep = File->my_irrep;
 
-    if (File->incore) {
-        file2_cache_dirty(File); /* Flag this cache entry for writing */
-        return 0;                /* We're keeping this data in core */
-    }
+  //  if (File->incore) {
+  //      file2_cache_dirty(File); /* Flag this cache entry for writing */
+  //      return 0;                /* We're keeping this data in core */
+  //  }
 
     for (h = 0; h < File->params->nirreps; h++) {
         irrep_ptr = File->lfiles[h];

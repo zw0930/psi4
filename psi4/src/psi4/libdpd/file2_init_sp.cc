@@ -73,7 +73,9 @@ int DPD::file2_init_sp(dpdfile2<float> *File, int filenum, int irrep, int pnum, 
     this_entry = file2_cache_scan(filenum, irrep, pnum, qnum, label, dpd_default);
     if (this_entry != nullptr) {
         File->incore = 1;
-        File->matrix = this_entry->matrix;
+       // File->matrix = this_entry->matrix;
+        File->matrix = (float ***)malloc(File->params->nirreps * sizeof(float **));
+
     } else {
         File->incore = 0;
         File->matrix = (float ***)malloc(File->params->nirreps * sizeof(float **));

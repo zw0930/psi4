@@ -39,7 +39,7 @@ int DPD::file2_mat_init_sp(dpdfile2<float> *File) {
 
     my_irrep = File->my_irrep;
 
-    if (File->incore) return 0; /* We've already got the memory */
+  //  if (File->incore) return 0; /* We've already got the memory */
 
     for (h = 0; h < File->params->nirreps; h++)
         File->matrix[h] = dpd_block_matrix_sp(File->params->rowtot[h], File->params->coltot[h ^ my_irrep]);

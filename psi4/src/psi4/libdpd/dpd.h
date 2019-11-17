@@ -201,6 +201,7 @@ struct dpd_file2_cache_entry {
     int qnum;                    /* dpd q value */
     char label[PSIO_KEYLEN];     /* libpsio TOC keyword */
     double ***matrix;            /* pointer to irrep blocks */
+    float ***matrix_sp           /*pointer to irrep blocks in single-precision */
     int size;                    /* size of entry in double words */
     int clean;                   /* has this file2 changed? */
     dpd_file2_cache_entry *next; /* pointer to next cache entry */

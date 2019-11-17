@@ -41,7 +41,7 @@ int DPD::file2_mat_rd_sp(dpdfile2<float> *File) {
 
     my_irrep = File->my_irrep;
 
-    if (File->incore) return 0; /* We already have this data in core */
+   // if (File->incore) return 0; /* We already have this data in core */
 
     /* If data doesn't actually exist on disk, we just leave */
     if (psio_tocscan(File->filenum, File->label) == nullptr) return 1;

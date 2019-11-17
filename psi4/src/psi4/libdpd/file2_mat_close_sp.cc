@@ -38,7 +38,7 @@ int DPD::file2_mat_close_sp(dpdfile2<float> *File) {
 
     my_irrep = File->my_irrep;
 
-    if (File->incore) return 0; /* We need to keep the memory */
+   // if (File->incore) return 0; /* We need to keep the memory */
 
     for (h = 0; h < File->params->nirreps; h++)
         if (File->params->rowtot[h] && File->params->coltot[h ^ my_irrep])
