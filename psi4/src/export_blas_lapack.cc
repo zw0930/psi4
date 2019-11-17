@@ -64,7 +64,7 @@ void export_blas_lapack(py::module& m) {
     m.def("DASUM", &psi::PSI_DASUM, "docstring");
     m.def("IDAMAX", &psi::PSI_IDAMAX, "docstring");
    
-    // BLAS Single-routines
+    /* BLAS Single-routines
     
     m.def("SGBMV", &psi::PSI_SGBMV, "docstring");
     m.def("SGEMM", &psi::PSI_SGEMM, "docstring");
@@ -92,7 +92,7 @@ void export_blas_lapack(py::module& m) {
     m.def("SNRM2", &psi::PSI_SNRM2, "docstring");
     m.def("SASUM", &psi::PSI_SASUM, "docstring");
     m.def("ISAMAX", &psi::PSI_ISAMAX, "docstring");
-
+*/
 
     // LAPACK static wrappers
 
@@ -106,7 +106,7 @@ void export_blas_lapack(py::module& m) {
     m.def("DPOTRS", &psi::PSI_DPOTRS, "docstring");
     m.def("DPOTRI", &psi::PSI_DPOTRI, "docstring");
     
-    // LAPACK Single-routines
+    /* LAPACK Single-routines
   
     m.def("SGEEV", &psi::PSI_SGEEV, "docstring");
     m.def("SSYEV", &psi::PSI_SSYEV, "docstring");
@@ -117,7 +117,7 @@ void export_blas_lapack(py::module& m) {
     m.def("SPOTRF", &psi::PSI_SPOTRF, "docstring");
     m.def("SPOTRS", &psi::PSI_SPOTRS, "docstring");
     m.def("SPOTRI", &psi::PSI_SPOTRI, "docstring");
-
+*/
     /**
     def("DBDSDC", &psi::PSI_DBDSDC);
     def("DBDSQR", &psi::PSI_DBDSQR);
