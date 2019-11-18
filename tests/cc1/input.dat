@@ -8,6 +8,8 @@ molecule h2o {
 
 set {
     basis 6-31G**
+    e-convergence 5
+    precision mixed-precision
 }
 
 optimize('ccsd')
@@ -20,4 +22,4 @@ reftotal = -76.2311784355056  #TEST
 compare_values(refnuc,   h2o.nuclear_repulsion_energy(),          3, "Nuclear repulsion energy") #TEST
 compare_values(refscf,   variable("SCF total energy"),        5, "SCF energy")               #TEST
 compare_values(refccsd,  variable("CCSD correlation energy"), 4, "CCSD contribution")        #TEST
-compare_values(reftotal, variable("Current energy"),          7, "Total energy")             #TEST
+compare_values(reftotal, variable("Current energy"),          5, "Total energy")             #TEST
