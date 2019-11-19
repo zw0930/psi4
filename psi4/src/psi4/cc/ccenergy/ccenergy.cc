@@ -258,6 +258,8 @@ double CCEnergyWavefunction::compute_energy() {
         if (!params_.just_residuals) denom(); /* apply denominators to T1 and T2 */
 
         if (converged(last_energy - moinfo_.ecc)) {
+            // Test for the option of precision
+            outfile->Printf("\n ***Precision*** \n", params_.precision, "\n");
             done = 1;
 
             tsave();
