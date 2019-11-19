@@ -86,8 +86,9 @@ void CCEnergyWavefunction::get_params(Options &options) {
         throw PsiException("Invalid value of input keyword REFERENCE", __FILE__, __LINE__);
     
     // Edited by ZW 10/2019 
-    // Precision 
-    junk = options.get_str("PRECISION");
+    // Precision
+    if (options["PRECISION"].has_changed()) {
+     junk = options.get_str("PRECISION");
     if (junk == "DOUBLE-PRECISION")
          params_.precision = 0;
     else if (junk == "SINGLE-PRECISION")
@@ -96,7 +97,7 @@ void CCEnergyWavefunction::get_params(Options &options) {
          params_.precision = 2;
     else
         throw PsiException("Invalid value of input keyword PRECISION", __FILE__, __LINE__);
-
+    }
     // Allow user to force semicanonical
     if (options["SEMICANONICAL"].has_changed()) {
         params_.semicanonical = options.get_bool("SEMICANONICAL");
