@@ -5,6 +5,7 @@ list(APPEND sources
   cc_excited.cc
   david.cc
   dirprd_block.cc
+  dirprd_block_sp.cc
   dot_block.cc
   dot_block_sp.cc
   dx_read.cc
