@@ -1,6 +1,10 @@
 list(APPEND sources
   3d_sort.cc
   4mat_irrep_print.cc
+  T3_AAA.cc
+  T3_AAB.cc
+  T3_RHF.cc
+  T3_RHF_ic.cc
   block_matrix.cc
   buf4_axpbycz.cc
   buf4_axpy.cc
@@ -35,6 +39,9 @@ list(APPEND sources
   buf4_symm.cc
   buf4_symm2.cc
   buf4_trace.cc
+  cc3_sigma_RHF.cc
+  cc3_sigma_RHF_ic.cc
+  cc3_sigma_UHF.cc
   close.cc
   contract222.cc
   contract244.cc
@@ -169,6 +176,7 @@ list(APPEND sources
   trans4_mat_irrep_shift31_sp.cc
   trans4_mat_irrep_wrt_sp.cc
 
-
+  buf4_cast_copy.cc
+  file2_cast_copy.cc
   )
 psi4_add_module(lib dpd sources)
