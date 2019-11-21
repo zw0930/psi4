@@ -103,6 +103,7 @@ list(APPEND sources
   trans4_mat_irrep_shift31.cc
   trans4_mat_irrep_wrt.cc
 
+  4mat_irrep_print_sp.cc
   block_matrix_sp.cc
   buf4_axpbycz_sp.cc
   buf4_axpy_sp.cc
