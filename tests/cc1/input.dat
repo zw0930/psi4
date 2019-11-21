@@ -8,8 +8,6 @@ molecule h2o {
 
 set {
     basis 6-31G**
-    e-convergence 5
-    precision mixed-precision
 }
 
 optimize('ccsd')
