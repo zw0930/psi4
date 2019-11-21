@@ -64,7 +64,7 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
     buf4_init_sp(&OutBuf, outfilenum, InBuf->file.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
               InBuf->params->pqnum, InBuf->params->rsnum, 0, label);
     
-    tmp_matrix = (float ***)malloc(OutBuf.params->nirreps * sizeof(**float));
+    tmp_matrix = (float ***)malloc(OutBuf.params->nirreps * sizeof(float **));
 
     for (h = 0; h < InBuf->params->nirreps; h++) {
         memoryd = dpd_memfree() / 2; /* use half the memory for each buf4 */
@@ -173,7 +173,7 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
     buf4_init(&OutBuf, outfilenum, InBuf->file.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
               InBuf->params->pqnum, InBuf->params->rsnum, 0, label);
     
-    tmp_matrix = (double ***)malloc(OutBuf.params->nirreps * sizeof(**double));
+    tmp_matrix = (double ***)malloc(OutBuf.params->nirreps * sizeof(double **));
 
     for (h = 0; h < InBuf->params->nirreps; h++) {
         memoryd = dpd_memfree() / 2; /* use half the memory for each buf4 */
