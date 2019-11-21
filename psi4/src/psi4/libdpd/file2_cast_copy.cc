@@ -56,7 +56,7 @@ int DPD::file2_cast_copy_dtof(dpdfile2<double> *InFile, int outfilenum, const ch
     file2_mat_rd(InFile);
     file2_mat_init_sp(&OutFile);
     
-    tmp_matrix = (float ***)malloc(OutFile.param->nirreps * sizeof(float **));
+    tmp_matrix = (float ***)malloc(OutFile.params->nirreps * sizeof(float **));
 
     for (h = 0; h < OutFile.params->nirreps; h++) {
         rowtot = OutFile.params->rowtot[h];
@@ -97,7 +97,7 @@ int DPD::file2_cast_copy_ftod(dpdfile2<float> *InFile, int outfilenum, const cha
     file2_mat_rd_sp(InFile);
     file2_mat_init(&OutFile);
     
-    tmp_matrix = (double ***)malloc(OutFile.param->nirreps * sizeof(double **));
+    tmp_matrix = (double ***)malloc(OutFile.params->nirreps * sizeof(double **));
 
     for (h = 0; h < OutFile.params->nirreps; h++) {
         rowtot = OutFile.params->rowtot[h];
