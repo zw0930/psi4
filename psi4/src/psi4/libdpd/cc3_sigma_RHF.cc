@@ -54,8 +54,8 @@ namespace psi {
     CIjAb, WAbEi, WMbIj, fIJ2, fAB2, omega
 */
 
-void DPD::cc3_sigma_RHF(dpdbuf4<double> *CIjAb, dpdbuf4<double>*WAbEi, dpdbuf4<double>*WMbIj, int do_singles, dpdbuf4<double>*Dints, dpdfile2<double>*SIA,
-                        int do_doubles, dpdfile2<double>*FME, dpdbuf4<double>*WmAEf, dpdbuf4<double>*WMnIe, dpdbuf4<double>*SIjAb, int *occpi,
+void DPD::cc3_sigma_RHF(dpdbuf4<double> *CIjAb, dpdbuf4<double> *WAbEi, dpdbuf4<double> *WMbIj, int do_singles, dpdbuf4<double> *Dints, dpdfile2<double> *SIA,
+                        int do_doubles, dpdfile2<double> *FME, dpdbuf4<double> *WmAEf, dpdbuf4<double> *WMnIe, dpdbuf4<double> *SIjAb, int *occpi,
                         int *occ_off, int *virtpi, int *vir_off, double omega, std::string out, int newtrips) {
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));
     int h, nirreps;
@@ -75,8 +75,8 @@ void DPD::cc3_sigma_RHF(dpdbuf4<double> *CIjAb, dpdbuf4<double>*WAbEi, dpdbuf4<d
     double value, F_val, t_val, E_val;
     double dijk, denom, *tvect, **Z;
     double value_ia, value_ka, denom_ia, denom_ka;
-    dpdfile2<double>fIJ, fIJ2, fAB, fAB2, SIA_inc;
-    dpdbuf4<double>SIjAb_inc, buf4_tmp;
+    dpdfile2<double> fIJ, fIJ2, fAB, fAB2, SIA_inc;
+    dpdbuf4<double> SIjAb_inc, buf4_tmp;
     double ***W3, ***W3a;
     double ***W, ***V, ***Wa, ***Va;
 

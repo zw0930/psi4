@@ -87,8 +87,8 @@ void DPD::cc3_sigma_RHF_ic(dpdbuf4<double> *CIjAb, dpdbuf4<double> *WAbEi, dpdbu
     double value, F_val, t_val, E_val;
     double dijk, denom, *tvect, **Z;
     double value_ia, value_ka, denom_ia, denom_ka;
-    dpdfile2<double>fIJ, fAB, *SIA_local;
-    dpdbuf4<double>buf4_tmp, *SIjAb_local;
+    dpdfile2<double> fIJ, fAB, *SIA_local;
+    dpdbuf4<double> buf4_tmp, *SIjAb_local;
     char lbl[32];
 
     std::vector<thread_data> thread_data_array(nthreads);
