@@ -69,7 +69,7 @@ namespace psi {
 ** \ingroup QT
 */
 
-void newmm_rking(float **A, int transa, float **B, int transb, float **C, int num_rows, int num_links, int num_cols,
+void newmm_rking_sp(float **A, int transa, float **B, int transb, float **C, int num_rows, int num_links, int num_cols,
                  float alpha, float beta) {
     int i, j, k;
     float sum11, sum12, sum13, sum21, sum22, sum23, sum31, sum32, sum33;
