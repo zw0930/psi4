@@ -81,5 +81,8 @@ void CCEnergyWavefunction::DT2_sp() {
         global_dpd_->buf4_close_sp(&D);
     } 
 }
+
+
+
 }  // namespace ccenergy
 }  // namespace psi

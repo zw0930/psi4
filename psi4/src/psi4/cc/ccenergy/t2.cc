@@ -89,7 +89,7 @@ void CCEnergyWavefunction::t2_build() {
 }
 
 void CCEnergyWavefunction::t2_build_mp() {
-    DT2_mp();
+    DT2();
     if (params_.print & 2) status("<ij||ab> -> T2", "outfile");
 
     if (params_.wfn != "CC2" || params_.wfn != "EOM_CC2") { /* skip all this is wfn=CC2 */
