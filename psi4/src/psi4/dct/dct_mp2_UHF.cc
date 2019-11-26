@@ -51,7 +51,7 @@ namespace dct {
 void DCTSolver::mp2_guess() {
     dct_timer_on("DCTSolver::mp2_guess()");
 
-    dpdbuf4<double> I, D;
+    dpdbuf4 I, D;
 
     // Initialize the integral transformation object
     std::vector<std::shared_ptr<MOSpace> > spaces;
@@ -120,7 +120,7 @@ void DCTSolver::mp2_guess() {
          *        +L_IjAb <Ij|Ab>
          *    +1/4 L_ijab <ij||ab>
          */
-        dpdbuf4<double> L;
+        dpdbuf4 L;
         // Alpha - Alpha
         global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 1,
                                "MO Ints <OO|VV>");
@@ -163,7 +163,7 @@ void DCTSolver::mp2_guess() {
     } else if (guess == "CC" || guess == "BCC") {
         outfile->Printf("\tReading existing coupled cluster amplitudes\n\n");
         psio_->open(PSIF_CC_TAMPS, PSIO_OPEN_OLD);
-        dpdbuf4<double> T2;
+        dpdbuf4 T2;
         // Copy the AA amplitudes from CCEnergy
         global_dpd_->buf4_init(&T2, PSIF_CC_TAMPS, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
                                "tIJAB");

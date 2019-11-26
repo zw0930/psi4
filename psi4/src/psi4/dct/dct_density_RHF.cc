@@ -40,7 +40,7 @@ namespace dct {
 void DCTSolver::compute_unrelaxed_density_OOOO_RHF() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> LLab, Lab, Gab;
+    dpdbuf4 LLab, Lab, Gab;
 
     // Compute the N^6 terms for Gamma OOOO
 
@@ -110,7 +110,7 @@ void DCTSolver::compute_unrelaxed_density_OOOO_RHF() {
 void DCTSolver::compute_unrelaxed_density_OOVV_RHF() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> Lab, Gab;
+    dpdbuf4 Lab, Gab;
 
     /*
      * The OOVV and VVOO blocks
@@ -134,7 +134,7 @@ void DCTSolver::compute_unrelaxed_density_OOVV_RHF() {
 
     // Form alpha-alpha case
     // Gamma_IJAB = Gamma_IjAb - Gamma_JiAb
-    dpdbuf4<double> Gaa, T;
+    dpdbuf4 Gaa, T;
 
     global_dpd_->buf4_init(&Gaa, PSIF_DCT_DENSITY, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 1,
                            "Gamma SF <OO|VV>");
@@ -148,7 +148,7 @@ void DCTSolver::compute_unrelaxed_density_OOVV_RHF() {
 void DCTSolver::compute_unrelaxed_density_OVOV_RHF() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> LLaa, LLab, LLbb, Laa, Lab, Lbb, Gaa, Gab, Gba, Gbb, Tab;
+    dpdbuf4 LLaa, LLab, LLbb, Laa, Lab, Lbb, Gaa, Gab, Gba, Gbb, Tab;
 
     /*
      * The OVOV block
@@ -292,7 +292,7 @@ void DCTSolver::compute_unrelaxed_density_OVOV_RHF() {
 void DCTSolver::compute_unrelaxed_density_VVVV_RHF() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> LLaa, Laa, Gaa, Gab;
+    dpdbuf4 LLaa, Laa, Gaa, Gab;
 
     /*
      * The VVVV block

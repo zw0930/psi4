@@ -258,7 +258,7 @@ void DCTSolver::gradient_init() {
     avir_ptau_ = std::make_shared<Matrix>("MO basis Perturbed Tau (Alpha Virtual)", nirrep_, navirpi_, navirpi_);
     bvir_ptau_ = std::make_shared<Matrix>("MO basis Perturbed Tau (Beta Virtual)", nirrep_, nbvirpi_, nbvirpi_);
 
-    dpdbuf4<double> I;
+    dpdbuf4 I;
 
     // Transform the two-electron integrals to the (VO|OO) and (OV|VV) subspaces in chemists' notation
 
@@ -371,11 +371,11 @@ void DCTSolver::compute_lagrangian_OV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> G, I;
-    dpdbuf4<double> L, W, U, Z;
-    dpdfile2<double> X, H, pT;
-    dpdfile2<double> T_VV, T_vv, dT_VV, dT_vv, pT_VV, pT_vv;
-    dpdfile2<double> Y1_OV, Y1_ov, Y2_OV, Y2_ov;
+    dpdbuf4 G, I;
+    dpdbuf4 L, W, U, Z;
+    dpdfile2 X, H, pT;
+    dpdfile2 T_VV, T_vv, dT_VV, dT_vv, pT_VV, pT_vv;
+    dpdfile2 Y1_OV, Y1_ov, Y2_OV, Y2_ov;
 
     // X_OV: One-electron contributions
 
@@ -846,8 +846,8 @@ void DCTSolver::compute_lagrangian_VO() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> G, I;
-    dpdfile2<double> X, H, pT;
+    dpdbuf4 G, I;
+    dpdfile2 X, H, pT;
 
     // X_VO: One-electron contributions
 
@@ -1160,7 +1160,6 @@ void DCTSolver::iterate_orbital_response() {
     if (!converged) throw PSIEXCEPTION("DCT orbital response equations did not converge");
 }
 
-
 void DCTSolver::orbital_response_guess() {
     dpdfile2<double> Xia, Xai, zia;
 
@@ -1352,7 +1351,6 @@ void DCTSolver::compute_orbital_response_intermediates() {
 
 double DCTSolver::update_orbital_response() {
     dpdfile2<double> X_ia, X_ai, z_ia, zI_ai, zI_ia, r_ia;
-
     auto a_ria = std::make_shared<Matrix>("MO basis Orbital Response Residual (Alpha)", nirrep_, naoccpi_, navirpi_);
     auto b_ria = std::make_shared<Matrix>("MO basis Orbital Response Residual (Beta)", nirrep_, nboccpi_, nbvirpi_);
 
@@ -2246,8 +2244,8 @@ void DCTSolver::build_perturbed_tau() {
 void DCTSolver::compute_cumulant_response_intermediates() {
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdfile2<double> F_OO, F_oo, F_VV, F_vv, Y_OO, Y_oo, Y_VV, Y_vv, T_OO, T_oo, T_VV, T_vv, tmp;
-    dpdbuf4<double> I, Z, G, T, F, Taa, Tab, Tbb, Laa, Lab, Lbb, Zaa, Zab, Zbb;
+    dpdfile2 F_OO, F_oo, F_VV, F_vv, Y_OO, Y_oo, Y_VV, Y_vv, T_OO, T_oo, T_VV, T_vv, tmp;
+    dpdbuf4 I, Z, G, T, F, Taa, Tab, Tbb, Laa, Lab, Lbb, Zaa, Zab, Zbb;
 
     //
     // Compute G intermediates
@@ -3051,10 +3049,8 @@ double DCTSolver::compute_cumulant_response_residual() {
     return std::sqrt(sumSQ / nElements);
 }
 
-
 void DCTSolver::update_cumulant_response() {
     dpdbuf4<double> Z, D, R;
-
 
     /*
      * Z_ijab += R_ijab / D_ijab
@@ -3098,8 +3094,8 @@ void DCTSolver::compute_lagrangian_OO() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> G, I;
-    dpdfile2<double> X, H, pT;
+    dpdbuf4 G, I;
+    dpdfile2 X, H, pT;
 
     // X_OO: One-electron contributions
 
@@ -3399,8 +3395,8 @@ void DCTSolver::compute_lagrangian_VV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> G, I;
-    dpdfile2<double> X, H, pT;
+    dpdbuf4 G, I;
+    dpdfile2 X, H, pT;
 
     // X_VV: One-electron contributions
 
@@ -3954,7 +3950,7 @@ void DCTSolver::compute_ewdm_dc() {
         offset += nmopi_[h];
     }
 
-    dpdbuf4<double> G;
+    dpdbuf4 G;
 
     struct iwlbuf AA, AB, BB;
     iwl_buf_init(&AA, PSIF_MO_AA_TPDM, 1.0E-15, 0, 0);
@@ -4827,7 +4823,7 @@ void DCTSolver::compute_ewdm_odc() {
         offset += nmopi_[h];
     }
 
-    dpdbuf4<double> G;
+    dpdbuf4 G;
 
     struct iwlbuf AA, AB, BB;
     iwl_buf_init(&AA, PSIF_MO_AA_TPDM, 1.0E-15, 0, 0);

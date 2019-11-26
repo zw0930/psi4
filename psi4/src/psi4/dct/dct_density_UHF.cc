@@ -46,8 +46,10 @@ namespace psi {
 namespace dct {
 
 
+
 void DCTSolver::compute_unrelaxed_density_OOOO() {
     dpdbuf4<double> Iaa, Iab, Ibb, Gaa, Gab, Gbb;
+
 
 
     // Compute the N^6 terms for Gamma OOOO
@@ -222,9 +224,9 @@ void DCTSolver::compute_unrelaxed_density_OOOO() {
 void DCTSolver::compute_unrelaxed_density_OOVV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> Laa, Lab, Lbb, Gaa, Gab, Gbb;
-    dpdbuf4<double> L, G, T, II, Taa, Tab, Tbb, Kaa, Kab, Kbb;
-    dpdfile2<double> T_OO, T_oo, T_VV, T_vv;
+    dpdbuf4 Laa, Lab, Lbb, Gaa, Gab, Gbb;
+    dpdbuf4 L, G, T, II, Taa, Tab, Tbb, Kaa, Kab, Kbb;
+    dpdfile2 T_OO, T_oo, T_VV, T_vv;
 
     /*
      * The OOVV and VVOO blocks
@@ -783,7 +785,7 @@ void DCTSolver::compute_unrelaxed_density_OVOV() {
      * The OVOV block
      */
 
-    dpdbuf4<double> Kaa, Kab, Kba, Kbb, Gaa, Gab, Gba, Gbb;
+    dpdbuf4 Kaa, Kab, Kba, Kbb, Gaa, Gab, Gba, Gbb;
 
     if (options_.get_str("DCT_FUNCTIONAL") != "ODC-13") {
         compute_K_intermediate();
@@ -996,7 +998,7 @@ void DCTSolver::compute_unrelaxed_density_OVOV() {
 void DCTSolver::compute_unrelaxed_density_VVVV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> LLaa, LLab, LLbb, Laa, Lab, Lbb, Gaa, Gab, Gbb;
+    dpdbuf4 LLaa, LLab, LLbb, Laa, Lab, Lbb, Gaa, Gab, Gbb;
 
     /*
      * The VVVV block
@@ -1141,7 +1143,7 @@ void DCTSolver::compute_unrelaxed_density_VVVV() {
 void DCTSolver::compute_relaxed_density_OOOO() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> Zaa, Zab, Zbb, Laa, Lab, Lbb, Gaa, Gab, Gbb;
+    dpdbuf4 Zaa, Zab, Zbb, Laa, Lab, Lbb, Gaa, Gab, Gbb;
 
     // Compute the N^6 terms for Gamma OOOO
 
@@ -1323,7 +1325,7 @@ void DCTSolver::compute_relaxed_density_OOOO() {
 void DCTSolver::compute_relaxed_density_OOVV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> Zaa, Zab, Zbb, Laa, Lab, Lbb, Gaa, Gab, Gbb;
+    dpdbuf4 Zaa, Zab, Zbb, Laa, Lab, Lbb, Gaa, Gab, Gbb;
 
     /*
      * The OOVV and VVOO blocks
@@ -1385,7 +1387,7 @@ void DCTSolver::compute_relaxed_density_OOVV() {
 void DCTSolver::compute_relaxed_density_OVOV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> Zaa, Zab, Zbb, Laa, Lab, Lbb, Gaa, Gab, Gba, Gbb, Tab;
+    dpdbuf4 Zaa, Zab, Zbb, Laa, Lab, Lbb, Gaa, Gab, Gba, Gbb, Tab;
 
     /*
      * The OVOV block
@@ -1674,7 +1676,7 @@ void DCTSolver::compute_relaxed_density_OVOV() {
 void DCTSolver::compute_relaxed_density_VVVV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> Zaa, Zab, Zbb, Laa, Lab, Lbb, Gaa, Gab, Gbb;
+    dpdbuf4 Zaa, Zab, Zbb, Laa, Lab, Lbb, Gaa, Gab, Gbb;
 
     /*
      * The VVVV block
@@ -1832,8 +1834,10 @@ void DCTSolver::compute_relaxed_density_VVVV() {
 }
 
 
+
 void DCTSolver::compute_TPDM_trace() {
     dpdbuf4<double> G;
+
 
 
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);

@@ -99,8 +99,8 @@ void DCTSolver::compute_lagrangian_OO_RHF() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> G, I;
-    dpdfile2<double> X, H, pT;
+    dpdbuf4 G, I;
+    dpdfile2 X, H, pT;
 
     // X_OO: One-electron contributions
 
@@ -293,8 +293,8 @@ void DCTSolver::compute_lagrangian_VV_RHF() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> G, I;
-    dpdfile2<double> X, H, pT;
+    dpdbuf4 G, I;
+    dpdfile2 X, H, pT;
 
     // X_VV: One-electron contributions
 
@@ -594,7 +594,7 @@ void DCTSolver::compute_ewdm_odc_RHF() {
         offset += nmopi_[h];
     }
 
-    dpdbuf4<double> G;
+    dpdbuf4 G;
 
     struct iwlbuf AA, AB;
 

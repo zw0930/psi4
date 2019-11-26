@@ -45,7 +45,7 @@ void DCTSolver::compute_dct_energy_RHF() {
      */
     dct_timer_on("DCTSolver::compute_dct_energy()");
 
-    dpdbuf4<double> L, G, M, temp;
+    dpdbuf4 L, G, M, temp;
     double E_test;
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 

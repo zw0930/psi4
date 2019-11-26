@@ -50,6 +50,7 @@ namespace dct {
  * to the SO basis.
  */
 
+
 void DCTSolver::build_tau() {
     dct_timer_on("DCTSolver::build_tau()");
     dpdbuf4<double> L1, L2;
@@ -60,6 +61,7 @@ void DCTSolver::build_tau() {
     global_dpd_->file2_init(&T_oo, PSIF_DCT_DPD, 0, ID('o'), ID('o'), "Tau <o|o>");
     global_dpd_->file2_init(&T_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "Tau <V|V>");
     global_dpd_->file2_init(&T_vv, PSIF_DCT_DPD, 0, ID('v'), ID('v'), "Tau <v|v>");
+
 
     global_dpd_->buf4_init(&L1, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O>O]-"), ID("[V>V]-"), 0,
                            "Lambda <OO|VV>");
@@ -171,9 +173,11 @@ void DCTSolver::build_tau() {
 }
 
 
+
 void DCTSolver::build_tau_fourth_order() {
     dpdbuf4<double> I, K, II, KK, Temp, L, O;
     dpdfile2<double> T_OO, T_oo, T_VV, T_vv, TT_OO, TT_oo, TT_VV, TT_vv, Tau_OO, Tau_oo, Tau_VV, Tau_vv;
+
 
 
     // Prepare T intermediates
@@ -596,7 +600,7 @@ void DCTSolver::build_tau_fourth_order() {
 void DCTSolver::transform_tau() {
     dct_timer_on("DCTSolver::transform_tau()");
 
-    dpdfile2<double> T_OO, T_oo, T_VV, T_vv;
+    dpdfile2 T_OO, T_oo, T_VV, T_vv;
 
     global_dpd_->file2_init(&T_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Tau <O|O>");
     global_dpd_->file2_init(&T_oo, PSIF_DCT_DPD, 0, ID('o'), ID('o'), "Tau <o|o>");
@@ -771,7 +775,7 @@ void DCTSolver::print_opdm() {
 
 void DCTSolver::refine_tau() {
     // Read MO-basis Tau from disk into the memory
-    dpdfile2<double> T_OO, T_oo, T_VV, T_vv;
+    dpdfile2 T_OO, T_oo, T_VV, T_vv;
 
     // Iteratively compute the exact Tau
 

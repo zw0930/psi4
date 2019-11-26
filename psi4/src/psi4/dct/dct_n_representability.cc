@@ -46,8 +46,8 @@ void DCTSolver::dump_density() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> Laa, Lab, Lbb, Gaa, Gab, Gba, Gbb, I, L;
-    dpdfile2<double> T_OO, T_oo, T_VV, T_vv;
+    dpdbuf4 Laa, Lab, Lbb, Gaa, Gab, Gba, Gbb, I, L;
+    dpdfile2 T_OO, T_oo, T_VV, T_vv;
 
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O>O]-"), ID("[V>V]-"), 0,
                            "Lambda <OO|VV>");
@@ -355,7 +355,7 @@ void DCTSolver::dump_density() {
     /*
      * The OVOV block
      */
-    dpdbuf4<double> Laaaa, Laabb, Labba, Lbaab, Lbbbb, Taa, Tab, Tba, Tbb, Gaa2, Laa2, Lab2, Lbb2;
+    dpdbuf4 Laaaa, Laabb, Labba, Lbaab, Lbbbb, Taa, Tab, Tba, Tbb, Gaa2, Laa2, Lab2, Lbb2;
 
     global_dpd_->buf4_init(&Gaa, PSIF_DCT_DENSITY, 0, ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), 0,
                            "Gamma (OV|OV)");
@@ -768,8 +768,10 @@ void DCTSolver::check_n_representability() {
     // This shouldn't be used!  Just some experimentation...
     return;
 
+
     dpdbuf4<double> Laa, Lab, Lbb, D, Q, G;
     dpdfile2<double> T_OO, T_oo, T_VV, T_vv;
+
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O>O]-"), ID("[V>V]-"), 0,
                            "Lambda <OO|VV>");
     global_dpd_->buf4_init(&Lab, PSIF_DCT_DPD, 0, ID("[O,o]"), ID("[V,v]"), ID("[O,o]"), ID("[V,v]"), 0,

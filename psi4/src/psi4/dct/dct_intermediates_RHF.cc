@@ -44,7 +44,7 @@ void DCTSolver::build_cumulant_intermediates_RHF() {
     dct_timer_on("DCTSolver::build_intermediates()");
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
-    dpdbuf4<double> I, L, G, T;
+    dpdbuf4 I, L, G, T;
 
     /*
      * G_IjAb = <Ij||Ab>
@@ -102,9 +102,8 @@ void DCTSolver::build_cumulant_intermediates_RHF() {
      * G_ijab -= P(ij)P(ab) Sum_kc gbar_jckb lambda_ikac
      */
 
+
     dct_timer_on("DCTSolver::g_JcKb lambda_IkAc (4 times)") dpdbuf4<double> Laa, Lbb, Lab, Tab;
-
-
 
     global_dpd_->buf4_init(&Tab, PSIF_DCT_DPD, 0, ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), 0,
                            "Temp SF (OV|OV):(Ov|oV)");
@@ -218,9 +217,11 @@ void DCTSolver::build_cumulant_intermediates_RHF() {
 }
 
 
+
 void DCTSolver::compute_F_intermediate_RHF() {
     dpdfile2<double> F_OO, F_oo, F_VV, F_vv;
     dpdbuf4<double> F, Lab;
+
 
 
     /*
@@ -252,10 +253,9 @@ void DCTSolver::compute_F_intermediate_RHF() {
 }
 
 
+
 void DCTSolver::form_density_weighted_fock_RHF() {
     dpdfile2<double> T_OO, T_VV, F_OO, F_VV;
-
-
 
     global_dpd_->file2_init(&T_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Tau <O|O>");
     global_dpd_->file2_init(&T_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "Tau <V|V>");

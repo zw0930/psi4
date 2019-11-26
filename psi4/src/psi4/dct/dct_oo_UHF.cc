@@ -59,8 +59,10 @@ void DCTSolver::run_simult_dct_oo() {
 
     // Set up the DIIS manager
 
+
     DIISManager diisManager(maxdiis_, "DCT DIIS vectors");
     dpdbuf4<double> Laa, Lab, Lbb;
+
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
                            "Lambda <OO|VV>");
     global_dpd_->buf4_init(&Lab, PSIF_DCT_DPD, 0, ID("[O,o]"), ID("[V,v]"), ID("[O,o]"), ID("[V,v]"), 0,
@@ -146,7 +148,9 @@ void DCTSolver::run_simult_dct_oo() {
         if (orbitals_convergence_ < diis_start_thresh_ && cumulant_convergence_ < diis_start_thresh_) {
             // Store the DIIS vectors
 
+
             dpdbuf4<double> Laa, Lab, Lbb, Raa, Rab, Rbb;
+
             global_dpd_->buf4_init(&Raa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
                                    "R <OO|VV>");
             global_dpd_->buf4_init(&Rab, PSIF_DCT_DPD, 0, ID("[O,o]"), ID("[V,v]"), ID("[O,o]"), ID("[V,v]"), 0,
@@ -231,7 +235,7 @@ void DCTSolver::run_simult_dc_guess() {
 double DCTSolver::compute_orbital_residual() {
     dct_timer_on("DCTSolver::compute_orbital_residual()");
 
-    dpdfile2<double> Xai, Xia;
+    dpdfile2 Xai, Xia;
 
     // Compute the unrelaxed densities for the orbital gradient
     compute_unrelaxed_density_OOOO();
@@ -300,11 +304,11 @@ void DCTSolver::compute_orbital_gradient_OV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> G, I;
-    dpdbuf4<double> L, W, LL;
-    dpdfile2<double> X, H, T;
-    dpdfile2<double> T_VV, T_vv;
-    dpdfile2<double> Y2_OV, Y2_ov;
+    dpdbuf4 G, I;
+    dpdbuf4 L, W, LL;
+    dpdfile2 X, H, T;
+    dpdfile2 T_VV, T_vv;
+    dpdfile2 Y2_OV, Y2_ov;
 
     // X_OV: One-electron contributions
 
@@ -623,8 +627,8 @@ void DCTSolver::compute_orbital_gradient_VO() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4<double> G, I;
-    dpdfile2<double> X, H, T;
+    dpdbuf4 G, I;
+    dpdfile2 X, H, T;
 
     // X_VO: One-electron contributions
 
