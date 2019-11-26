@@ -183,6 +183,9 @@ double CCEnergyWavefunction::compute_energy() {
     outfile->Printf("                ------------------------------\n");
     outfile->Printf("  Iter             Energy              RMS        T1Diag      D1Diag    New D1Diag    D2Diag\n");
     outfile->Printf("  ----     ---------------------    ---------   ----------  ----------  ----------   --------\n");
+   
+    outfile->Printf(" !!test!!\n");
+ 
     moinfo_.ecc = energy();
     pair_energies(&emp2_aa, &emp2_ab);
     double last_energy = 0;
@@ -195,6 +198,7 @@ double CCEnergyWavefunction::compute_energy() {
     update();
     checkpoint();
     if (params_.precision == 0){
+    outfile->Printf(" !!test!!\n");
     for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps();
 
