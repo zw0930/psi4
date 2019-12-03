@@ -1092,7 +1092,9 @@ int read_options(const std::string &name, Options &options, bool suppress_printi
         options.add("LOCAL_IBO_STARS", new ArrayType());
     }
     if (name == "DCT" || options.read_globals()) {
+
         /*-MODULEDESCRIPTION Performs density cumulant (functional) theory
+
         computations -*/
 
         /*- Reference wavefunction type -*/
@@ -1120,7 +1122,9 @@ int read_options(const std::string &name, Options &options, bool suppress_printi
         different calculation types. -*/
         options.add_double("E_CONVERGENCE", 1e-10);
         /*- Convergence criterion for the density cumulant and orbital guess for the
+
         variationally orbital-optimized DFT methods. Currently only available for ALGORITHM = SIMULTANEOUS. -*/
+
         options.add_double("GUESS_R_CONVERGENCE", 1e-3);
         /*- Maximum number of macro- or micro-iterations for both energy and response equations -*/
         options.add_int("MAXITER", 40);
@@ -1155,7 +1159,9 @@ int read_options(const std::string &name, Options &options, bool suppress_printi
         /*- Schwarz screening threshold. Mininum absolute value below which TEI are neglected. !expert -*/
         options.add_double("INTS_TOLERANCE", 1e-14);
         /*- Whether to read the orbitals from a previous computation, or to compute
+
             an MP2 guess. !expert -*/
+
         options.add_str("DCT_GUESS", "MP2", "CC BCC MP2 DCT");
         /*- Whether to perform a guess DC-06 or DC-12 computation for ODC-06 or ODC-12 methods, respectively.
             Currently only available for ALGORITHM = SIMULTANEOUS. -*/
