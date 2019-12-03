@@ -294,8 +294,10 @@
 
 #define PSIF_SAD                 300  /*- A SAD file (File for SAD related quantities -*/
 
-#define PSIF_DCT_DPD             400 /*- DCT DPD handle -*/
-#define PSIF_DCT_DENSITY         401 /*- DCT density -*/
+
+#define PSIF_DCT_DPD            400 /*- DCT DPD handle -*/
+#define PSIF_DCT_DENSITY        401 /*- DCT density -*/
+
 
 // All of these one-electron quantities have been moved into PSIF_OEI Most integrals are real Hermitian hence only lower
 //  triangle of the matrix is written out
