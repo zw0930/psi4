@@ -155,10 +155,10 @@ void DCTSolver::dump_semicanonical() {
 
 
     dpdfile2<double> U_OO, U_VV, U_oo, U_vv;
-    global_dpd_->file2_init(&U_OO, PSIF_DCFT_DPD, 0, ID('O'), ID('O'), "U <O|O>");
-    global_dpd_->file2_init(&U_oo, PSIF_DCFT_DPD, 0, ID('o'), ID('o'), "U <o|o>");
-    global_dpd_->file2_init(&U_VV, PSIF_DCFT_DPD, 0, ID('V'), ID('V'), "U <V|V>");
-    global_dpd_->file2_init(&U_vv, PSIF_DCFT_DPD, 0, ID('v'), ID('v'), "U <v|v>");
+    global_dpd_->file2_init(&U_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "U <O|O>");
+    global_dpd_->file2_init(&U_oo, PSIF_DCT_DPD, 0, ID('o'), ID('o'), "U <o|o>");
+    global_dpd_->file2_init(&U_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "U <V|V>");
+    global_dpd_->file2_init(&U_vv, PSIF_DCT_DPD, 0, ID('v'), ID('v'), "U <v|v>");
 
 
     global_dpd_->file2_mat_init(&U_OO);
