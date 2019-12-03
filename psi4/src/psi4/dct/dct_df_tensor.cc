@@ -825,7 +825,7 @@ void DCTSolver::form_df_g_ovov() {
 #endif
 
     // Alpha-Alpha
-    dpdbuf4 I;
+    dpdbuf4<double> I;
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), ID("[O,V]"), 0,
                            "MO Ints (OV|OV)");
     for (int h = 0; h < nirrep_; ++h) {
@@ -890,7 +890,7 @@ void DCTSolver::form_df_g_oooo() {
 #endif
 
     // Alpha-Alpha
-    dpdbuf4 I;
+    dpdbuf4<double> I;
     global_dpd_->buf4_init(&I, PSIF_LIBTRANS_DPD, 0, ID("[O,O]"), ID("[O,O]"), ID("[O>=O]+"), ID("[O>=O]+"), 0,
                            "MO Ints (OO|OO)");
     for (int h = 0; h < nirrep_; ++h) {
@@ -954,7 +954,7 @@ void DCTSolver::form_df_g_vvoo() {
     nthreads = Process::environment.get_n_threads();
 #endif
 
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     if (options_.get_str("REFERENCE") == "RHF") {
         // g(AB|IJ) = Sum_Q b(AB|Q) b(Q|IJ)
@@ -1062,7 +1062,7 @@ void DCTSolver::form_df_g_vooo() {
     nthreads = Process::environment.get_n_threads();
 #endif
 
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     /*** Form b(Q|AI) ***/
 
@@ -1252,7 +1252,7 @@ void DCTSolver::form_df_g_ovvv() {
     nthreads = Process::environment.get_n_threads();
 #endif
 
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     // g(ia|bc) = Sum_Q b(ia|Q) (Q|bc)
 
@@ -1343,7 +1343,7 @@ void DCTSolver::form_df_g_vvvv() {
     nthreads = Process::environment.get_n_threads();
 #endif
 
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     // g(ab|cd) = Sum_Q b(ab|Q) b(Q|cd)
     // Alpha-Alpha
@@ -1467,7 +1467,7 @@ void DCTSolver::build_gbarlambda_RHF_v3mem() {
      * Intermediate G_SF_<IJ|AB> = lambda_SF_<IJ|CD> g<AB|CD>
      */
 
-    dpdbuf4 Laa, Gaa;
+    dpdbuf4<double> Laa, Gaa;
 
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O,O]"), ID("[V,V]"), 0,
                            "Lambda SF <OO|VV>");
@@ -1881,7 +1881,7 @@ void DCTSolver::build_gbarlambda_UHF_v3mem() {
      *                        = lambda<IJ|CD> g(AC|BD)
      */
 
-    dpdbuf4 Laa, Gaa;
+    dpdbuf4<double> Laa, Gaa;
 
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O,O]"), ID("[V,V]"), ID("[O>O]-"), ID("[V>V]-"), 0,
                            "Lambda <OO|VV>");
@@ -2004,7 +2004,7 @@ void DCTSolver::build_gbarlambda_UHF_v3mem() {
      *                        = lambda<ij|cd> g(ac|bd)
      */
 
-    dpdbuf4 Lbb, Gbb;
+    dpdbuf4<double> Lbb, Gbb;
 
     global_dpd_->buf4_init(&Lbb, PSIF_DCT_DPD, 0, ID("[o,o]"), ID("[v,v]"), ID("[o>o]-"), ID("[v>v]-"), 0,
                            "Lambda <oo|vv>");
@@ -2127,7 +2127,7 @@ void DCTSolver::build_gbarlambda_UHF_v3mem() {
      *                       = lambda<Ij|Cd> g(AC|bd)
      */
 
-    dpdbuf4 Lab, Gab;
+    dpdbuf4<double> Lab, Gab;
 
     global_dpd_->buf4_init(&Lab, PSIF_DCT_DPD, 0, ID("[O,o]"), ID("[V,v]"), ID("[O,o]"), ID("[V,v]"), 0,
                            "Lambda <Oo|Vv>");

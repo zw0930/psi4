@@ -258,7 +258,7 @@ void DCTSolver::gradient_init() {
     avir_ptau_ = std::make_shared<Matrix>("MO basis Perturbed Tau (Alpha Virtual)", nirrep_, navirpi_, navirpi_);
     bvir_ptau_ = std::make_shared<Matrix>("MO basis Perturbed Tau (Beta Virtual)", nirrep_, nbvirpi_, nbvirpi_);
 
-    dpdbuf4 I;
+    dpdbuf4<double> I;
 
     // Transform the two-electron integrals to the (VO|OO) and (OV|VV) subspaces in chemists' notation
 
@@ -326,8 +326,6 @@ void DCTSolver::gradient_init() {
 void DCTSolver::response_guess() {
     dpdbuf4<double> L;
     dpdfile2<double> T;
-
-
     // Copy the converged cumulant as a guess for the cumulant response
 
     // Z_IJAB = L_IJAB
@@ -371,11 +369,11 @@ void DCTSolver::compute_lagrangian_OV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdbuf4 L, W, U, Z;
-    dpdfile2 X, H, pT;
-    dpdfile2 T_VV, T_vv, dT_VV, dT_vv, pT_VV, pT_vv;
-    dpdfile2 Y1_OV, Y1_ov, Y2_OV, Y2_ov;
+    dpdbuf4<double> G, I;
+    dpdbuf4<double> L, W, U, Z;
+    dpdfile2<double> X, H, pT;
+    dpdfile2<double> T_VV, T_vv, dT_VV, dT_vv, pT_VV, pT_vv;
+    dpdfile2<double> Y1_OV, Y1_ov, Y2_OV, Y2_ov;
 
     // X_OV: One-electron contributions
 
@@ -846,8 +844,8 @@ void DCTSolver::compute_lagrangian_VO() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdfile2 X, H, pT;
+    dpdbuf4<double> G, I;
+    dpdfile2<double> X, H, pT;
 
     // X_VO: One-electron contributions
 
@@ -2244,8 +2242,8 @@ void DCTSolver::build_perturbed_tau() {
 void DCTSolver::compute_cumulant_response_intermediates() {
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdfile2 F_OO, F_oo, F_VV, F_vv, Y_OO, Y_oo, Y_VV, Y_vv, T_OO, T_oo, T_VV, T_vv, tmp;
-    dpdbuf4 I, Z, G, T, F, Taa, Tab, Tbb, Laa, Lab, Lbb, Zaa, Zab, Zbb;
+    dpdfile2<double> F_OO, F_oo, F_VV, F_vv, Y_OO, Y_oo, Y_VV, Y_vv, T_OO, T_oo, T_VV, T_vv, tmp;
+    dpdbuf4<double> I, Z, G, T, F, Taa, Tab, Tbb, Laa, Lab, Lbb, Zaa, Zab, Zbb;
 
     //
     // Compute G intermediates
@@ -3094,8 +3092,8 @@ void DCTSolver::compute_lagrangian_OO() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdfile2 X, H, pT;
+    dpdbuf4<double> G, I;
+    dpdfile2<double> X, H, pT;
 
     // X_OO: One-electron contributions
 
@@ -3395,8 +3393,8 @@ void DCTSolver::compute_lagrangian_VV() {
     psio_->open(PSIF_DCT_DENSITY, PSIO_OPEN_OLD);
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 G, I;
-    dpdfile2 X, H, pT;
+    dpdbuf4<double> G, I;
+    dpdfile2<double> X, H, pT;
 
     // X_VV: One-electron contributions
 
@@ -3950,7 +3948,7 @@ void DCTSolver::compute_ewdm_dc() {
         offset += nmopi_[h];
     }
 
-    dpdbuf4 G;
+    dpdbuf4<double> G;
 
     struct iwlbuf AA, AB, BB;
     iwl_buf_init(&AA, PSIF_MO_AA_TPDM, 1.0E-15, 0, 0);
@@ -4823,7 +4821,7 @@ void DCTSolver::compute_ewdm_odc() {
         offset += nmopi_[h];
     }
 
-    dpdbuf4 G;
+    dpdbuf4<double> G;
 
     struct iwlbuf AA, AB, BB;
     iwl_buf_init(&AA, PSIF_MO_AA_TPDM, 1.0E-15, 0, 0);

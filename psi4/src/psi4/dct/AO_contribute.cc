@@ -37,8 +37,8 @@
 namespace psi {
 namespace dct {
 
-void DCTSolver::AO_contribute(dpdbuf4 *tau1_AO, dpdbuf4 *tau2_AO, int p, int q, int r, int s, double value,
-                               dpdfile2 *s1, dpdfile2 *s1b, dpdfile2 *s2) {
+void DCTSolver::AO_contribute(dpdbuf4<double> *tau1_AO, dpdbuf4<double> *tau2_AO, int p, int q, int r, int s, double value,
+                               dpdfile2<double> *s1, dpdfile2<double> *s1b, dpdfile2<double> *s2) {
     int Gp, Gq, Gr, Gs, Gpr, Grp, Gps, Gsp, Gsq, Gqs, Gqr, Grq, Gpq, Gqp, Grs, Gsr;
     int prel, qrel, rrel, srel;
     int pq, rs, pr, rp, ps, sp, qr, rq, qs, sq;

@@ -65,7 +65,7 @@ void DCTSolver::build_cumulant_intermediates() {
 void DCTSolver::compute_G_intermediate() {
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
-    dpdbuf4 I, L, G, T, Taa, Tab, Tbb, Laa, Lab, Lbb;
+    dpdbuf4<double> I, L, G, T, Taa, Tab, Tbb, Laa, Lab, Lbb;
 
     /*
      * G_ijab = 1/2 Sum_cd gbar_cdab lambda_ijcd
@@ -399,7 +399,6 @@ void DCTSolver::compute_G_intermediate() {
 void DCTSolver::compute_F_intermediate() {
     dpdfile2<double> F_OO, F_oo, F_VV, F_vv;
     dpdbuf4<double> F, T, Laa, Lab, Lbb;
-
 
 
     /*
@@ -1703,7 +1702,6 @@ void DCTSolver::compute_H_intermediate() {
     dpdfile2<double> H_OO, H_oo, H_VV, H_vv, HH_OO, HH_oo, HH_VV, HH_vv;
 
 
-
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
     global_dpd_->file2_init(&H_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "H <O|O>");
@@ -1802,7 +1800,6 @@ void DCTSolver::compute_I_intermediate() {
     dpdbuf4<double> LLaa, LLab, LLbb, Laa, Lab, Lbb, Iaa, Iab, Ibb;
 
 
-
     // I_ijkl = Lambda_ijab * Lambda_klab
     global_dpd_->buf4_init(&Iaa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[O>O]-"), ID("[O>O]-"), ID("[O>O]-"), 0,
                            "I <OO|OO>");
@@ -1862,7 +1859,6 @@ void DCTSolver::compute_J_intermediate() {
     dpdbuf4<double> Iaa, Iab, Ibb, Laa, Lab, Lbb, Jaa, Jab, Jbb;
 
 
-
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
 
     // J_ijkl = Lambda_ijab * gbar_klab + gbar_ijab * lambda_klab
@@ -1920,7 +1916,6 @@ void DCTSolver::compute_J_intermediate() {
 
 void DCTSolver::compute_K_intermediate() {
     dpdbuf4<double> LLaa, LLab, LLbb, Laa, Lab, Lbb, Kaa, Kab, Kba, Kbb, K;
-
 
 
     // There are five unique spin cases: K<IAJB>, K<iajb>, K<IaJb>, K<iAjB>, K<IajB>
@@ -2082,7 +2077,6 @@ void DCTSolver::compute_K_intermediate() {
 
 void DCTSolver::compute_L_intermediate() {
     dpdbuf4<double> I, Iaa, Iab, Ibb, Lambda_aa, Lambda_ab, Lambda_bb, Laa, Lab, Lba, Lbb;
-
 
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
@@ -2272,6 +2266,7 @@ void DCTSolver::compute_L_intermediate() {
 
 void DCTSolver::compute_O_intermediate() {
 
+
     dpdbuf4<double> O, L, I;
 
 
@@ -2316,6 +2311,7 @@ void DCTSolver::compute_O_intermediate() {
 }
 
 void DCTSolver::compute_W_intermediate() {
+
 
     dpdbuf4<double> I, Laa, Lab, Lbb, W, T, TT, N, M, K, O, L, Kaa, Kab, Kbb;
     dpdfile2<double> T_OO, T_oo, T_VV, T_vv, F_OO, F_oo, F_VV, F_vv, Temp_OO, Temp_oo, Temp_VV, Temp_vv;
@@ -3482,6 +3478,7 @@ void DCTSolver::compute_M_intermediate() {
 }
 
 void DCTSolver::compute_N_intermediate() {
+
 
     dpdbuf4<double> N, Laa, Lab, Lbb;
     dpdfile2<double> F_OO, F_oo;

@@ -233,7 +233,6 @@ void DCTSolver::run_twostep_dct() {
 int DCTSolver::run_twostep_dct_cumulant_updates() {
     // Set up DIIS
 
-
     dpdbuf4<double> Laa, Lab, Lbb;
 
     global_dpd_->buf4_init(&Laa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
@@ -292,9 +291,8 @@ int DCTSolver::run_twostep_dct_cumulant_updates() {
         update_cumulant_jacobi();
         if (cumulant_convergence_ < diis_start_thresh_ && (nalpha_ + nbeta_) > 1) {
             // Store the DIIS vectors
-
-
             dpdbuf4<double> Laa, Lab, Lbb, Raa, Rab, Rbb;
+
 
             global_dpd_->buf4_init(&Raa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
                                    "R <OO|VV>");
@@ -536,9 +534,8 @@ void DCTSolver::run_simult_dct() {
         energyConverged_ = std::fabs(old_total_energy_ - new_total_energy_) < energy_threshold_;
         if (orbitals_convergence_ < diis_start_thresh_ && cumulant_convergence_ < diis_start_thresh_) {
             // Store the DIIS vectors
-
-
             dpdbuf4<double> Laa, Lab, Lbb, Raa, Rab, Rbb;
+
 
             global_dpd_->buf4_init(&Raa, PSIF_DCT_DPD, 0, ID("[O>O]-"), ID("[V>V]-"), ID("[O>O]-"), ID("[V>V]-"), 0,
                                    "R <OO|VV>");

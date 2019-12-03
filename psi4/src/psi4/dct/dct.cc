@@ -95,7 +95,7 @@ DCTSolver::DCTSolver(SharedWavefunction ref_wfn, Options &options) : Wavefunctio
 /**
  * Computes A = A + alpha * B, writing the result back to A
  */
-void DCTSolver::dpd_buf4_add(dpdbuf4 *A, dpdbuf4 *B, double alpha) {
+void DCTSolver::dpd_buf4_add(dpdbuf4<double> *A, dpdbuf4<double> *B, double alpha) {
     for (int h = 0; h < nirrep_; ++h) {
         global_dpd_->buf4_mat_irrep_init(A, h);
         global_dpd_->buf4_mat_irrep_init(B, h);

@@ -44,7 +44,7 @@ void DCTSolver::build_cumulant_intermediates_RHF() {
     dct_timer_on("DCTSolver::build_intermediates()");
 
     psio_->open(PSIF_LIBTRANS_DPD, PSIO_OPEN_OLD);
-    dpdbuf4 I, L, G, T;
+    dpdbuf4<double> I, L, G, T;
 
     /*
      * G_IjAb = <Ij||Ab>
@@ -101,7 +101,6 @@ void DCTSolver::build_cumulant_intermediates_RHF() {
     /*
      * G_ijab -= P(ij)P(ab) Sum_kc gbar_jckb lambda_ikac
      */
-
 
     dct_timer_on("DCTSolver::g_JcKb lambda_IkAc (4 times)") dpdbuf4<double> Laa, Lbb, Lab, Tab;
 
@@ -221,7 +220,6 @@ void DCTSolver::build_cumulant_intermediates_RHF() {
 void DCTSolver::compute_F_intermediate_RHF() {
     dpdfile2<double> F_OO, F_oo, F_VV, F_vv;
     dpdbuf4<double> F, Lab;
-
 
 
     /*

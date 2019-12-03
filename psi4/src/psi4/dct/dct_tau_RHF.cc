@@ -55,7 +55,6 @@ void DCTSolver::build_tau_RHF() {
     dpdfile2<double> T_OO, T_VV;
 
 
-
     /*
      * The following 4 lines are not able to dump Tau <O|O>'s onto PSIF_DCT_DPD
      * T_OO's are assigned zero at the first time but it has correct symmetry blocks (correct size)
@@ -119,7 +118,7 @@ void DCTSolver::refine_tau_RHF() {
     dct_timer_on("DCTSolver::refine_tau()");
 
     // Read MO-basis Tau from disk into the memory
-    dpdfile2 T_OO, T_VV;
+    dpdfile2<double> T_OO, T_VV;
 
     // Iteratively compute the exact Tau
 
@@ -233,7 +232,7 @@ void DCTSolver::refine_tau_RHF() {
 void DCTSolver::transform_tau_RHF() {
     dct_timer_on("DCTSolver::transform_tau()");
 
-    dpdfile2 T_OO, T_VV;
+    dpdfile2<double> T_OO, T_VV;
 
     global_dpd_->file2_init(&T_OO, PSIF_DCT_DPD, 0, ID('O'), ID('O'), "Tau <O|O>");
     global_dpd_->file2_init(&T_VV, PSIF_DCT_DPD, 0, ID('V'), ID('V'), "Tau <V|V>");

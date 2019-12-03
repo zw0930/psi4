@@ -39,15 +39,15 @@ namespace dct {
  * Based on code originally written by Daniel Crawford in ccenergy/halftrans.cc
  *
  *
- * dpdbuf4 *SO:        Pointer to the (possibly half)-SO basis dpdbuf4 which has already been initialized
- * dpdbuf4 *MO:        Pointer to the (possibly half)-MO basis dpdbuf4 which has already been initialized
+ * dpdbuf4<double> *SO:        Pointer to the (possibly half)-SO basis dpdbuf4<double> which has already been initialized
+ * dpdbuf4<double> *MO:        Pointer to the (possibly half)-MO basis dpdbuf4<double> which has already been initialized
  * int *mospi_left:    The number of MO's per irrep for the left upper index
  * int *mospi_right:   The number of MO's per irrep for the right upper index.
- * int **mo_row:       A lookup array.  For a dpdbuf4 with MO indices (ij,ab),
+ * int **mo_row:       A lookup array.  For a dpdbuf4<double> with MO indices (ij,ab),
  *                     given the irrep h of ij (= ab) and the irrep of orbital a, the
  *                     array returns the offset of the start of the set of b molecular
  *                     orbitals.
- * int **so_row:       Like mo_row, but for a dpdbuf4 with the last two
+ * int **so_row:       Like mo_row, but for a dpdbuf4<double> with the last two
  *                     indices in the SO basis.
  * bool backwards:     MO --> SO if true, SO --> MO if false
  * double alpha:       Multiplicative factor for the transformation
@@ -55,8 +55,10 @@ namespace dct {
  */
 
 
+
 void DCTSolver::half_transform(dpdbuf4<double> *SO, dpdbuf4<double> *MO, SharedMatrix &C1, SharedMatrix &C2, int *mospi_left,
 int *mospi_right, int **so_row, int **mo_row, bool backwards, double alpha, double beta) {
+
 
     dct_timer_on("DCTSolver::half_transform");
 
@@ -129,8 +131,8 @@ int *mospi_right, int **so_row, int **mo_row, bool backwards, double alpha, doub
  * Based on code originally written by Daniel Crawford in ccenergy/halftrans.cc
  *
  *
- * dpdfile2 *SO:       Pointer to the SO basis dpdfile2 which has already been initialized
- * dpdfile2 *MO:       Pointer to the MO basis dpdfile2 which has already been initialized
+ * dpdfile2<double> *SO:       Pointer to the SO basis dpdfile2<double> which has already been initialized
+ * dpdfile2<double> *MO:       Pointer to the MO basis dpdfile2<double> which has already been initialized
  * Matrix *C:          Pointer to the transformation Matrix object.
  * bool backwards:     MO --> SO if true, SO --> MO if false
  */
