@@ -56,7 +56,7 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
     long int rowtot, coltot;
     int nbuckets, incore, n;
     long int memoryd, rows_per_bucket, rows_left, size;
-    float ***tmp_matrix;
+    //float ***tmp_matrix;
     dpdbuf4<float> OutBuf;
     
     my_irrep = InBuf->file.my_irrep;
@@ -64,7 +64,7 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
     buf4_init_sp(&OutBuf, outfilenum, InBuf->file.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
               InBuf->params->pqnum, InBuf->params->rsnum, 0, label);
     
-    tmp_matrix = (float ***)malloc(OutBuf.params->nirreps * sizeof(float **));
+    //tmp_matrix = (float ***)malloc(OutBuf.params->nirreps * sizeof(float **));
 
     for (h = 0; h < InBuf->params->nirreps; h++) {
         memoryd = dpd_memfree() / 2; /* use half the memory for each buf4 */
@@ -105,11 +105,12 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
                 if (rowtot && coltot){
                     for (i=0; i < rowtot; i++){
                         for (j=0; j< coltot; j++){
-                            tmp_matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
+                            //tmp_matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
+                            OutBuf.matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
                         }
                     }
-                    memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
-                           sizeof(float) * rowtot * coltot);
+                   // memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
+                     //      sizeof(float) * rowtot * coltot);
                 }
                 buf4_mat_irrep_wrt_sp(&OutBuf, h);
 
@@ -126,11 +127,12 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
                     buf4_mat_irrep_rd_block(InBuf, h, n * rows_per_bucket, rows_per_bucket);
                     for (i=0; i < rows_per_bucket; i++){
                         for (j=0; j< coltot; j++){
-                            tmp_matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
+                            //tmp_matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
+                            OutBuf.matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
                         }
                     }
-                    memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
-                           ((long)sizeof(float)) * size);
+                   // memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
+                     //      ((long)sizeof(float)) * size);
 
                     buf4_mat_irrep_wrt_block_sp(&OutBuf, h, n * rows_per_bucket, rows_per_bucket);
                 }
@@ -140,11 +142,12 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
                     buf4_mat_irrep_rd_block(InBuf, h, n * rows_per_bucket, rows_left);
                     for (i=0; i < rows_left; i++){
                         for (j=0; j< coltot; j++){
-                            tmp_matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
+                            //tmp_matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
+                            OutBuf.matrix[h][i][j] = static_cast<float>(InBuf->matrix[h][i][j]);
                         }
                     }
-                    memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
-                           ((long)sizeof(float)) * size);
+                   // memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
+                     //      ((long)sizeof(float)) * size);
 
                     buf4_mat_irrep_wrt_block_sp(&OutBuf, h, n * rows_per_bucket, rows_left);
                 }
@@ -154,7 +157,7 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
             }
         }
     }
-    free(tmp_matrix);
+   // free(tmp_matrix);
     buf4_close_sp(&OutBuf);
 
     return 0;
@@ -165,7 +168,7 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
     long int rowtot, coltot;
     int nbuckets, incore, n;
     long int memoryd, rows_per_bucket, rows_left, size;
-    double ***tmp_matrix;
+    //double ***tmp_matrix;
     dpdbuf4<double> OutBuf;
     
     my_irrep = InBuf->file.my_irrep;
@@ -173,7 +176,7 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
     buf4_init(&OutBuf, outfilenum, InBuf->file.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
               InBuf->params->pqnum, InBuf->params->rsnum, 0, label);
     
-    tmp_matrix = (double ***)malloc(OutBuf.params->nirreps * sizeof(double **));
+   // tmp_matrix = (double ***)malloc(OutBuf.params->nirreps * sizeof(double **));
 
     for (h = 0; h < InBuf->params->nirreps; h++) {
         memoryd = dpd_memfree() / 2; /* use half the memory for each buf4 */
@@ -214,11 +217,12 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
                 if (rowtot && coltot){
                     for (i=0; i < rowtot; i++){
                         for (j=0; j< coltot; j++){
-                            tmp_matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
+                            //tmp_matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
+                            OutBuf.matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
                         }
                     }
-                    memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
-                           sizeof(double) * rowtot * coltot);
+                    //memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
+                      //     sizeof(double) * rowtot * coltot);
                 }
                 buf4_mat_irrep_wrt(&OutBuf, h);
 
@@ -235,11 +239,12 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
                     buf4_mat_irrep_rd_block_sp(InBuf, h, n * rows_per_bucket, rows_per_bucket);
                     for (i=0; i < rows_per_bucket; i++){
                         for (j=0; j< coltot; j++){
-                            tmp_matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
+                           // tmp_matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
+                            OutBuf.matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
                         }
                     }
-                    memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
-                           ((long)sizeof(double)) * size);
+                    //memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
+                      //     ((long)sizeof(double)) * size);
 
                     buf4_mat_irrep_wrt_block(&OutBuf, h, n * rows_per_bucket, rows_per_bucket);
                 }
@@ -249,11 +254,12 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
                     buf4_mat_irrep_rd_block_sp(InBuf, h, n * rows_per_bucket, rows_left);
                     for (i=0; i < rows_left; i++){
                         for (j=0; j< coltot; j++){
-                            tmp_matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
+                            //tmp_matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
+                            OutBuf.matrix[h][i][j] = static_cast<double>(InBuf->matrix[h][i][j]);
                         }
                     }
-                    memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
-                           ((long)sizeof(double)) * size);
+                    //memcpy((void *)&(OutBuf.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
+                      //     ((long)sizeof(double)) * size);
 
                     buf4_mat_irrep_wrt_block(&OutBuf, h, n * rows_per_bucket, rows_left);
                 }
@@ -263,7 +269,7 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
             }
         }
     }
-    free(tmp_matrix);
+    //free(tmp_matrix);
     buf4_close(&OutBuf);
 
     return 0;

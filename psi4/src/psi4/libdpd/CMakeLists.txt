@@ -177,6 +177,21 @@ list(APPEND sources
   trans4_mat_irrep_shift31_sp.cc
   trans4_mat_irrep_wrt_sp.cc
 
+  
+  file4_close_sp.cc
+  file4_init_sp.cc
+  file4_mat_irrep_close_sp.cc
+  file4_mat_irrep_init_sp.cc
+  file4_mat_irrep_rd_sp.cc
+  file4_mat_irrep_rd_block_sp.cc
+  file4_mat_irrep_row_close_sp.cc
+  file4_mat_irrep_row_init_sp.cc
+  file4_mat_irrep_row_rd_sp.cc
+  file4_mat_irrep_row_wrt_sp.cc
+  file4_mat_irrep_wrt_sp.cc
+  file4_mat_irrep_wrt_block_sp.cc
+  
+  
   buf4_cast_copy.cc
   file2_cast_copy.cc
   )

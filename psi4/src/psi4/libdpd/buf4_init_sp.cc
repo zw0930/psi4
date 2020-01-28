@@ -72,7 +72,7 @@ int DPD::buf4_init_sp(dpdbuf4<float> *Buf, int inputfile, int irrep, int pqnum, 
 
     Buf->anti = anti;
 
-    file4_init(&(Buf->file), inputfile, irrep, file_pqnum, file_rsnum, label);
+    file4_init_sp(&(Buf->file_sp), inputfile, irrep, file_pqnum, file_rsnum, label);
 
     Buf->matrix = (float ***)malloc(Buf->params->nirreps * sizeof(float **));
 
@@ -109,7 +109,7 @@ int DPD::buf4_init_sp(dpdbuf4<float> *Buf, int inputfile, int irrep, int pqnum, 
     for (h = 0; h < nirreps; h++) {
         for (Gr = 0, offset = 0; Gr < nirreps; Gr++) {
             Buf->col_offset[h][Gr] = offset;
-            offset += Buf->params->rpi[Gr] * Buf->params->spi[Gr ^ h ^ Buf->file.my_irrep];
+            offset += Buf->params->rpi[Gr] * Buf->params->spi[Gr ^ h ^ Buf->file_sp.my_irrep];
         }
     }
 

@@ -45,7 +45,7 @@ namespace psi {
 int DPD::file2_cast_copy_dtof(dpdfile2<double> *InFile, int outfilenum, const char *label) {
     int h, i, j, row, col, my_irrep, rowtot, coltot;
     double ***matrix;
-    float ***tmp_matrix;
+    //float ***tmp_matrix;
     dpdfile2<float> OutFile;
 
     my_irrep = InFile->my_irrep;
@@ -56,19 +56,20 @@ int DPD::file2_cast_copy_dtof(dpdfile2<double> *InFile, int outfilenum, const ch
     file2_mat_rd(InFile);
     file2_mat_init_sp(&OutFile);
     
-    tmp_matrix = (float ***)malloc(OutFile.params->nirreps * sizeof(float **));
+    //tmp_matrix = (float ***)malloc(OutFile.params->nirreps * sizeof(float **));
 
     for (h = 0; h < OutFile.params->nirreps; h++) {
         rowtot = OutFile.params->rowtot[h];
         coltot = OutFile.params->coltot[h ^ my_irrep]; 
-        for (i=0; i < rowtot; i++){
-            for (j=0; j < coltot; j++){
-            tmp_matrix[h][i][j] = static_cast<float>(InFile->matrix[h][i][j]);
+        if (rowtot && coltot){
+            for (i=0; i < rowtot; i++){
+                for (j=0; j < coltot; j++){
+                    OutFile.matrix[h][i][j] = static_cast<float>(InFile->matrix[h][i][j]);
+                }
             }
-        }
-        if (rowtot && coltot)
-            memcpy((void *)&(OutFile.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
-                   sizeof(float) * rowtot * coltot);
+          //  memcpy((void *)&(OutFile.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
+            //       sizeof(float) * rowtot * coltot);
+       }
     }
     
     file2_mat_wrt_sp(&OutFile);
@@ -76,7 +77,7 @@ int DPD::file2_cast_copy_dtof(dpdfile2<double> *InFile, int outfilenum, const ch
     file2_mat_close(InFile);
     file2_close_sp(&OutFile);
 
-    free(tmp_matrix);
+ //   free(tmp_matrix);
 
     return 0;
 }
@@ -86,7 +87,7 @@ int DPD::file2_cast_copy_dtof(dpdfile2<double> *InFile, int outfilenum, const ch
 int DPD::file2_cast_copy_ftod(dpdfile2<float> *InFile, int outfilenum, const char *label) {
     int h, i, j, row, col, my_irrep, rowtot, coltot;
     float ***matrix;
-    double ***tmp_matrix;
+    //double ***tmp_matrix;
     dpdfile2<double> OutFile;
 
     my_irrep = InFile->my_irrep;
@@ -97,19 +98,20 @@ int DPD::file2_cast_copy_ftod(dpdfile2<float> *InFile, int outfilenum, const cha
     file2_mat_rd_sp(InFile);
     file2_mat_init(&OutFile);
     
-    tmp_matrix = (double ***)malloc(OutFile.params->nirreps * sizeof(double **));
+    //tmp_matrix = (double ***)malloc(OutFile.params->nirreps * sizeof(double **));
 
     for (h = 0; h < OutFile.params->nirreps; h++) {
         rowtot = OutFile.params->rowtot[h];
         coltot = OutFile.params->coltot[h ^ my_irrep]; 
-        for (i=0; i < rowtot; i++){
-            for (j=0; j < coltot; j++){
-            tmp_matrix[h][i][j] = static_cast<double>(InFile->matrix[h][i][j]);
+        if (rowtot && coltot){
+            for (i=0; i < rowtot; i++){
+                for (j=0; j < coltot; j++){
+                    OutFile.matrix[h][i][j] = static_cast<double>(InFile->matrix[h][i][j]);
+                }
             }
+            //memcpy((void *)&(OutFile.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
+              //     sizeof(double) * rowtot * coltot);
         }
-        if (rowtot && coltot)
-            memcpy((void *)&(OutFile.matrix[h][0][0]), (const void *)&(tmp_matrix[h][0][0]),
-                   sizeof(double) * rowtot * coltot);
     }
     
     file2_mat_wrt(&OutFile);
@@ -117,7 +119,7 @@ int DPD::file2_cast_copy_ftod(dpdfile2<float> *InFile, int outfilenum, const cha
     file2_mat_close_sp(InFile);
     file2_close(&OutFile);
 
-    free(tmp_matrix);
+   // free(tmp_matrix);
 
     return 0;
 }
