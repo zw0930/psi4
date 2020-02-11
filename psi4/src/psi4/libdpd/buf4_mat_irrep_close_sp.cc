@@ -50,7 +50,7 @@ int DPD::buf4_mat_irrep_close_sp(dpdbuf4<float> *Buf, int irrep) {
     int h, nirreps, rowtot, coltot, my_irrep;
     long int size;
 
-    my_irrep = Buf->file.my_irrep;
+    my_irrep = Buf->file_sp.my_irrep;
     rowtot = Buf->params->rowtot[irrep];
     coltot = Buf->params->coltot[irrep ^ my_irrep];
 
@@ -76,8 +76,8 @@ int DPD::buf4_mat_irrep_close_sp(dpdbuf4<float> *Buf, int irrep) {
         //          0;
         //      else
         //          dpd_free_block(Buf->matrix[irrep], rowtot, coltot);
-        if (!(Buf->file.incore && !(Buf->anti) && (Buf->params->pqnum == Buf->file.params->pqnum) &&
-              (Buf->params->rsnum == Buf->file.params->rsnum)))
+        if (!(Buf->file_sp.incore && !(Buf->anti) && (Buf->params->pqnum == Buf->file_sp.params->pqnum) &&
+              (Buf->params->rsnum == Buf->file_sp.params->rsnum)))
             free_dpd_block_sp(Buf->matrix[irrep], rowtot, coltot);
     }
 

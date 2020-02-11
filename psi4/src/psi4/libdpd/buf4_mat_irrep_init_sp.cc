@@ -48,7 +48,7 @@ int DPD::buf4_mat_irrep_init_sp(dpdbuf4<float> *Buf, int irrep) {
     int rowtot, coltot, all_buf_irrep;
     long int size;
 
-    all_buf_irrep = Buf->file.my_irrep;
+    all_buf_irrep = Buf->file_sp.my_irrep;
     rowtot = Buf->params->rowtot[irrep];
     coltot = Buf->params->coltot[irrep ^ all_buf_irrep];
 

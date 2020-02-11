@@ -48,7 +48,7 @@ int DPD::buf4_close_sp(dpdbuf4<float> *Buf) {
 
     nirreps = Buf->params->nirreps;
 
-    file4_close(&(Buf->file));
+    file4_close_sp(&(Buf->file_sp));
 
     free(Buf->matrix);
 
