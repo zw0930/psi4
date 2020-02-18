@@ -185,6 +185,7 @@ double CCEnergyWavefunction::compute_energy() {
     outfile->Printf("  ----     ---------------------    ---------   ----------  ----------  ----------   --------\n");
    
     outfile->Printf(" !!test!!\n");
+    outfile->Printf("Precision: %d \n", params_.precision);
  
     moinfo_.ecc = energy();
     pair_energies(&emp2_aa, &emp2_ab);
@@ -198,7 +199,7 @@ double CCEnergyWavefunction::compute_energy() {
     update();
     checkpoint();
     if (params_.precision == 0){
-    outfile->Printf(" !!test!!\n");
+  //  outfile->Printf(" !!test!!\n");
     for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps();
 
@@ -263,7 +264,8 @@ double CCEnergyWavefunction::compute_energy() {
 
         if (converged(last_energy - moinfo_.ecc)) {
             // Test for the option of precision
-            outfile->Printf("\n ***Precision*** \n", params_.precision, "\n");
+         //   outfile->Printf("\n ***Precision*** \n", params_.precision, "\n");
+            
             done = 1;
 
             tsave();

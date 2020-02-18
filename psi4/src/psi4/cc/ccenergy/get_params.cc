@@ -87,17 +87,18 @@ void CCEnergyWavefunction::get_params(Options &options) {
     
     // Edited by ZW 10/2019 
     // Precision
-    if (options["PRECISION"].has_changed()) {
-     junk = options.get_str("PRECISION");
+  //  if (options["PRECISION"].has_changed()) {
+    params_.precision = 0;
+    junk = options.get_str("PRECISION");
     if (junk == "DOUBLE-PRECISION")
          params_.precision = 0;
     else if (junk == "SINGLE-PRECISION")
          params_.precision = 1;
-    else if (junk == "	MIXED-PRECISION")
+    else if (junk == "MIXED-PRECISION")
          params_.precision = 2;
     else
         throw PsiException("Invalid value of input keyword PRECISION", __FILE__, __LINE__);
-    }
+//    }
     // Allow user to force semicanonical
     if (options["SEMICANONICAL"].has_changed()) {
         params_.semicanonical = options.get_bool("SEMICANONICAL");
