@@ -36,22 +36,16 @@
 
 namespace psi {
 
-/* dpd_buf4_mat_irrep_init_block(): Allocates and initializes memory
-** for a subblock of a matrix for a single irrep of a dpd four-index
-** buffer.
-**
-** Arguments:
-**   dpdbuf4<double>*Buf: A pointer to the input dpdbuf.
-**   int irrep: The irrep number to be prepared.
-**   int num_pq: The number of rows needed.
-**
-*/
+int DPD::file4_mat_irrep_row_zero_sp(dpdfile4_sp *File, int irrep, int row) {
+    int coltot, my_irrep;
 
-int DPD::buf4_mat_irrep_init_block_sp(dpdbuf4<float> *Buf, int irrep, int num_pq) {
-    int all_buf_irrep;
-    all_buf_irrep = Buf->file_sp.my_irrep;
+    if (File->incore) return 0; /* Don't do this if the file is in core */
 
-    Buf->matrix[irrep] = dpd_block_matrix_sp(num_pq, Buf->params->coltot[irrep ^ all_buf_irrep]);
+    my_irrep = File->my_irrep;
+
+    coltot = File->params->coltot[irrep ^ my_irrep];
+
+    if (coltot) zero_arr_sp(File->matrix[irrep][0], coltot);
 
     return 0;
 }

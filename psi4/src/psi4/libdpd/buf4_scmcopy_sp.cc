@@ -58,9 +58,9 @@ int DPD::buf4_scmcopy_sp(dpdbuf4<float> *InBuf, int outfilenum, const char *labe
     long int size, memoryd, rows_per_bucket, rows_left;
     dpdbuf4<float> OutBuf;
 
-    all_buf_irrep = InBuf->file.my_irrep;
+    all_buf_irrep = InBuf->file_sp.my_irrep;
 
-    buf4_init_sp(&OutBuf, outfilenum, InBuf->file.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
+    buf4_init_sp(&OutBuf, outfilenum, InBuf->file_sp.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
               InBuf->params->pqnum, InBuf->params->rsnum, 0, label);
 
     for (h = 0; h < InBuf->params->nirreps; h++) {

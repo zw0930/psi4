@@ -52,7 +52,7 @@ int DPD::buf4_mat_irrep_close_block_sp(dpdbuf4<float> *Buf, int irrep, int num_p
     int h, nirreps, all_buf_irrep;
 
     nirreps = Buf->params->nirreps;
-    all_buf_irrep = Buf->file.my_irrep;
+    all_buf_irrep = Buf->file_sp.my_irrep;
 
     /* Free the shift structure for this irrep if used */
     if (Buf->shift.shift_type) {

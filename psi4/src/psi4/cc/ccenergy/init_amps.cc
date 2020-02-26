@@ -44,6 +44,8 @@
 namespace psi {
 namespace ccenergy {
 
+// Modified by ZW 
+// Make single-precision copies when initiate T-amps (only RHF: tIA_sp, tIjAb_sp)
 void CCEnergyWavefunction::init_amps() {
     dpdfile2<double> tIA, tia, fIA, fia, dIA, dia;
     dpdbuf4<double> tIJAB, tijab, tIjAb, D, dIJAB, dijab, dIjAb;
@@ -55,11 +57,13 @@ void CCEnergyWavefunction::init_amps() {
             global_dpd_->file2_scm(&tIA, 0);
         else
             outfile->Printf("    Using old T1 amplitudes.\n");
+        global_dpd_->file2_cast_copy_dtof(&tIA, PSIF_CC_OEI, "tIA_sp");
         global_dpd_->file2_close(&tIA);
 
         if (!params_.restart || !psio_tocscan(PSIF_CC_TAMPS, "tIjAb")) {
             global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab>");
             global_dpd_->buf4_copy(&D, PSIF_CC_TAMPS, "tIjAb");
+           // global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_TAMPS, "tIjAb_sp");
             global_dpd_->buf4_close(&D);
 
             global_dpd_->buf4_init(&tIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb");
@@ -70,6 +74,7 @@ void CCEnergyWavefunction::init_amps() {
                 global_dpd_->buf4_dirprd(&dIjAb, &tIjAb);
                 global_dpd_->buf4_close(&dIjAb);
             }
+            global_dpd_->buf4_cast_copy_dtof(&tIjAb, PSIF_CC_TAMPS, "tIjAb_sp");
             global_dpd_->buf4_close(&tIjAb);
         } else
             outfile->Printf("    Using old T2 amplitudes.\n\n");
@@ -196,6 +201,6 @@ void CCEnergyWavefunction::init_amps() {
             outfile->Printf("    Using old T2 amplitudes.\n");
     } else { /*** RHF/ROHF ***/
     }
-}
+}  // init_amps()
 }  // namespace ccenergy
 }  // namespace psi

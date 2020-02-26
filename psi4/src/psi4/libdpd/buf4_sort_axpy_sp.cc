@@ -108,7 +108,7 @@ int DPD::buf4_sort_axpy_sp(dpdbuf4<float> *InBuf, int outfilenum, enum indices i
     int rows_per_bucket, nbuckets, rows_left, row_start;
 
     nirreps = InBuf->params->nirreps;
-    my_irrep = InBuf->file.my_irrep;
+    my_irrep = InBuf->file_sp.my_irrep;
 
 #ifdef DPD_TIMER
     timer_on("buf4_sort");

@@ -102,12 +102,12 @@ void CCEnergyWavefunction::tsave_sp() {
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&t1, PSIF_CC_OEI, 0, 0, 1, "New tIA");
-        global_dpd_->file2_copy(&t1, PSIF_CC_OEI, "tIA");
+        //global_dpd_->file2_copy(&t1, PSIF_CC_OEI, "tIA");
         global_dpd_->file2_cast_copy_dtof(&t1, PSIF_CC_OEI, "tIA_sp");
         global_dpd_->file2_close(&t1);
 
         global_dpd_->buf4_init(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
-        global_dpd_->buf4_copy(&t2, PSIF_CC_TAMPS, "tIjAb");
+        //global_dpd_->buf4_copy(&t2, PSIF_CC_TAMPS, "tIjAb");
         global_dpd_->buf4_cast_copy_dtof(&t2, PSIF_CC_TAMPS, "tIjAb_sp");
         global_dpd_->buf4_close(&t2);
     }

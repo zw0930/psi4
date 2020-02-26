@@ -89,7 +89,7 @@ int DPD::file4_init_sp(dpdfile4_sp *File, int filenum, int irrep, int pqnum, int
             maxrows = DPD_BIGNUM / (coltot * sizeof(float));
             if (maxrows < 1) {
                 outfile->Printf("\nLIBDPD Error: each row of %s is too long to compute an address.\n", File->label);
-                dpd_error("dpd_file4_init", "outfile");
+                dpd_error("dpd_file4_init_sp", "outfile");
             }
         } else
             maxrows = DPD_BIGNUM;

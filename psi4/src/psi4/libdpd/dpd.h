@@ -429,7 +429,7 @@ class PSI_API DPD {
     int file4_mat_irrep_row_close_sp(dpdfile4_sp *File, int irrep);
     int file4_mat_irrep_row_rd_sp(dpdfile4_sp *File, int irrep, int row);
     int file4_mat_irrep_row_wrt_sp(dpdfile4_sp *File, int irrep, int row);
-   // int file4_mat_irrep_row_zero(dpdfile4 *File, int irrep, int row);
+    int file4_mat_irrep_row_zero_sp(dpdfile4_sp *File, int irrep, int row);
   //  int file4_print(dpdfile4 *File, std::string out_fname);
     int file4_mat_irrep_rd_block_sp(dpdfile4_sp *File, int irrep, int start_pq, int num_pq);
     int file4_mat_irrep_wrt_block_sp(dpdfile4_sp *File, int irrep, int start_pq, int num_pq);

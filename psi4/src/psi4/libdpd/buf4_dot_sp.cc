@@ -44,7 +44,7 @@ double DPD::buf4_dot_sp(dpdbuf4<float> *BufA, dpdbuf4<float> *BufB) {
     long int memoryd, rows_per_bucket, rows_left;
 
     nirreps = BufA->params->nirreps;
-    my_irrep = BufA->file.my_irrep;
+    my_irrep = BufA->file_sp.my_irrep;
 
     dot = 0.0;
 

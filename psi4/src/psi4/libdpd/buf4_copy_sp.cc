@@ -58,9 +58,9 @@ int DPD::buf4_copy_sp(dpdbuf4<float> *InBuf, int outfilenum, const char *label) 
     long int memoryd, rows_per_bucket, rows_left, size;
     dpdbuf4<float> OutBuf;
 
-    my_irrep = InBuf->file.my_irrep;
+    my_irrep = InBuf->file_sp.my_irrep;
 
-    buf4_init_sp(&OutBuf, outfilenum, InBuf->file.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
+    buf4_init_sp(&OutBuf, outfilenum, InBuf->file_sp.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
               InBuf->params->pqnum, InBuf->params->rsnum, 0, label);
 
     for (h = 0; h < InBuf->params->nirreps; h++) {

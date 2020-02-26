@@ -50,10 +50,10 @@ int DPD::buf4_print_sp(dpdbuf4<float> *Buf, std::string out, int print_data) {
     int h, i, all_buf_irrep;
     dpdparams4 *Params;
 
-    all_buf_irrep = Buf->file.my_irrep;
+    all_buf_irrep = Buf->file_sp.my_irrep;
     Params = Buf->params;
 
-    outfile->Printf("\n\tDPD Buf4 for file4: %s\n", Buf->file.label);
+    outfile->Printf("\n\tDPD Buf4 for file4: %s\n", Buf->file_sp.label);
     outfile->Printf("\n\tDPD Parameters:\n");
     outfile->Printf("\t---------------\n");
     outfile->Printf("\tpqnum = %d   rsnum = %d\n", Params->pqnum, Params->rsnum);
@@ -65,7 +65,7 @@ int DPD::buf4_print_sp(dpdbuf4<float> *Buf, std::string out, int print_data) {
 
     if (print_data) {
         for (h = 0; h < Buf->params->nirreps; h++) {
-            outfile->Printf("\n\tFile %3d DPD Buf4: %s\n", Buf->file.filenum, Buf->file.label);
+            outfile->Printf("\n\tFile %3d DPD Buf4: %s\n", Buf->file_sp.filenum, Buf->file_sp.label);
             outfile->Printf("\tMatrix for Irrep %1d\n", h);
             outfile->Printf("\t----------------------------------------\n");
             buf4_mat_irrep_init_sp(Buf, h);

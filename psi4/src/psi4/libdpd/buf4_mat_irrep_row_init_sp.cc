@@ -38,7 +38,7 @@
 namespace psi {
 int DPD::buf4_mat_irrep_row_init_sp(dpdbuf4<float> *Buf, int irrep) {
     int all_buf_irrep;
-    all_buf_irrep = Buf->file.my_irrep;
+    all_buf_irrep = Buf->file_sp.my_irrep;
 #ifdef DPD_TIMER
     timer_on("b4_rowinit");
 #endif

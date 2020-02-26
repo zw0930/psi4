@@ -190,7 +190,7 @@ list(APPEND sources
   file4_mat_irrep_row_wrt_sp.cc
   file4_mat_irrep_wrt_sp.cc
   file4_mat_irrep_wrt_block_sp.cc
-  
+  file4_mat_irrep_row_zero_sp.cc
   
   buf4_cast_copy.cc
   file2_cast_copy.cc

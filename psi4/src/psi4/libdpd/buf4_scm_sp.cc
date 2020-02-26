@@ -70,14 +70,14 @@ int DPD::buf4_scm_sp(dpdbuf4<float> *InBuf, float alpha) {
     float *X;
 
     nirreps = InBuf->params->nirreps;
-    all_buf_irrep = InBuf->file.my_irrep;
+    all_buf_irrep = InBuf->file_sp.my_irrep;
 
 #ifdef DPD_TIMER
     timer_on("buf4_scm");
 #endif
 
     /* Look first for the TOC entry on disk */
-    if (psio_tocscan(InBuf->file.filenum, InBuf->file.label) == nullptr)
+    if (psio_tocscan(InBuf->file_sp.filenum, InBuf->file_sp.label) == nullptr)
         new_buf4 = 1;
     else
         new_buf4 = 0;

@@ -53,7 +53,7 @@ int DPD::buf4_mat_irrep_shift13_sp(dpdbuf4<float> *Buf, int buf_block) {
     timer_on("shift");
 #endif
 
-    all_buf_irrep = Buf->file.my_irrep;
+    all_buf_irrep = Buf->file_sp.my_irrep;
 
     if (Buf->shift.shift_type) {
         outfile->Printf("\n\tShift is already on! %d\n", Buf->shift.shift_type);

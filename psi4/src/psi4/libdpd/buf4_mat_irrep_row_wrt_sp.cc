@@ -52,20 +52,20 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
     int permute;
     float value;
 
-    all_buf_irrep = Buf->file.my_irrep;
+    all_buf_irrep = Buf->file_sp.my_irrep;
     /* Row and column dimensions in the DPD file */
-    rowtot = Buf->file.params->rowtot[irrep];
-    coltot = Buf->file.params->coltot[irrep ^ all_buf_irrep];
+    rowtot = Buf->file_sp.params->rowtot[irrep];
+    coltot = Buf->file_sp.params->coltot[irrep ^ all_buf_irrep];
 
     /* Index packing information */
     b_perm_pq = Buf->params->perm_pq;
     b_perm_rs = Buf->params->perm_rs;
-    f_perm_pq = Buf->file.params->perm_pq;
-    f_perm_rs = Buf->file.params->perm_rs;
+    f_perm_pq = Buf->file_sp.params->perm_pq;
+    f_perm_rs = Buf->file_sp.params->perm_rs;
     b_peq = Buf->params->peq;
     b_res = Buf->params->res;
-    f_peq = Buf->file.params->peq;
-    f_res = Buf->file.params->res;
+    f_peq = Buf->file_sp.params->peq;
+    f_res = Buf->file_sp.params->res;
 
     /* Exit if buffer is antisymmetrized */
     if (Buf->anti) {
@@ -117,24 +117,24 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
     switch (method) {
         case 12: /* No change in pq or rs */
 
-            if (Buf->file.incore) {
+            if (Buf->file_sp.incore) {
                 for (rs = 0; rs < rowtot; rs++) Buf->file_sp.matrix[irrep][pq][rs] = Buf->matrix[irrep][0][rs];
                 file4_cache_dirty(&(Buf->file));
             } else {
                 Buf->file_sp.matrix[irrep] = Buf->matrix[irrep];
-                file4_mat_irrep_row_wrt(&(Buf->file), irrep, pq);
+                file4_mat_irrep_row_wrt_sp(&(Buf->file_sp), irrep, pq);
             }
 
             break;
         case 21: /* Pack pq; no change in rs */
             /* Prepare the output buffer for the output DPD file */
-            file4_mat_irrep_row_init(&(Buf->file), irrep);
+            file4_mat_irrep_row_init_sp(&(Buf->file_sp), irrep);
 
-            p = Buf->file.params->roworb[irrep][pq][0];
-            q = Buf->file.params->roworb[irrep][pq][1];
-            filepq = Buf->file.params->rowidx[p][q];
+            p = Buf->file_sp.params->roworb[irrep][pq][0];
+            q = Buf->file_sp.params->roworb[irrep][pq][1];
+            filepq = Buf->file_sp.params->rowidx[p][q];
 
-            filerow = Buf->file.incore ? filepq : 0;
+            filerow = Buf->file_sp.incore ? filepq : 0;
 
             /* Loop over the columns in the dpdbuf */
             for (rs = 0; rs < coltot; rs++) {
@@ -147,10 +147,10 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
             }
 
             /* Write out the row */
-            file4_mat_irrep_row_wrt(&(Buf->file), irrep, filepq);
+            file4_mat_irrep_row_wrt_sp(&(Buf->file_sp), irrep, filepq);
 
             /* Close the input buffer */
-            file4_mat_irrep_row_close(&(Buf->file), irrep);
+            file4_mat_irrep_row_close_sp(&(Buf->file_sp), irrep);
 
             break;
         case 23: /* Unpack pq; no change in rs */
@@ -161,14 +161,14 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
             break;
         case 31: /* No change in pq; pack rs */
             /* Prepare the output buffer for the output DPD file */
-            file4_mat_irrep_row_init(&(Buf->file), irrep);
+            file4_mat_irrep_row_init_sp(&(Buf->file_sp), irrep);
 
-            filerow = Buf->file.incore ? pq : 0;
+            filerow = Buf->file_sp.incore ? pq : 0;
 
             /* Loop over the columns in the dpdfile */
             for (rs = 0; rs < coltot; rs++) {
-                r = Buf->file.params->colorb[irrep ^ all_buf_irrep][rs][0];
-                s = Buf->file.params->colorb[irrep ^ all_buf_irrep][rs][1];
+                r = Buf->file_sp.params->colorb[irrep ^ all_buf_irrep][rs][0];
+                s = Buf->file_sp.params->colorb[irrep ^ all_buf_irrep][rs][1];
                 bufrs = Buf->params->colidx[r][s];
 
                 value = Buf->matrix[irrep][0][bufrs];
@@ -178,10 +178,10 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
             }
 
             /* Write out the row */
-            file4_mat_irrep_row_wrt(&(Buf->file), irrep, pq);
+            file4_mat_irrep_row_wrt_sp(&(Buf->file_sp), irrep, pq);
 
             /* Close the input buffer */
-            file4_mat_irrep_row_close(&(Buf->file), irrep);
+            file4_mat_irrep_row_close_sp(&(Buf->file_sp), irrep);
 
             break;
         case 33: /* No change in pq; unpack rs */
@@ -192,18 +192,18 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
             break;
         case 41: /* Pack pq and rs */
             /* Prepare the output buffer for the output DPD file */
-            file4_mat_irrep_row_init(&(Buf->file), irrep);
+            file4_mat_irrep_row_init_sp(&(Buf->file_sp), irrep);
 
-            p = Buf->file.params->roworb[irrep][pq][0];
-            q = Buf->file.params->roworb[irrep][pq][1];
-            filepq = Buf->file.params->rowidx[p][q];
+            p = Buf->file_sp.params->roworb[irrep][pq][0];
+            q = Buf->file_sp.params->roworb[irrep][pq][1];
+            filepq = Buf->file_sp.params->rowidx[p][q];
 
-            filerow = Buf->file.incore ? filepq : 0;
+            filerow = Buf->file_sp.incore ? filepq : 0;
 
             /* Loop over the columns in the dpdfile */
             for (rs = 0; rs < coltot; rs++) {
-                r = Buf->file.params->colorb[irrep ^ all_buf_irrep][rs][0];
-                s = Buf->file.params->colorb[irrep ^ all_buf_irrep][rs][1];
+                r = Buf->file_sp.params->colorb[irrep ^ all_buf_irrep][rs][0];
+                s = Buf->file_sp.params->colorb[irrep ^ all_buf_irrep][rs][1];
                 bufrs = Buf->params->colidx[r][s];
 
                 value = Buf->matrix[irrep][0][bufrs];
@@ -213,10 +213,10 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
             }
 
             /* Write out the row */
-            file4_mat_irrep_row_wrt(&(Buf->file), irrep, filepq);
+            file4_mat_irrep_row_wrt_sp(&(Buf->file_sp), irrep, filepq);
 
             /* Close the input buffer */
-            file4_mat_irrep_row_close(&(Buf->file), irrep);
+            file4_mat_irrep_row_close_sp(&(Buf->file_sp), irrep);
 
             break;
         case 42: /* Pack pq; unpack rs */

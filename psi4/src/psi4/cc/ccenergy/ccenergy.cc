@@ -300,6 +300,8 @@ double CCEnergyWavefunction::compute_energy() {
         checkpoint();
     }  // end loop over iterations
     } else if (params_.precision == 1){
+     tau_build_sp();
+     taut_build_sp();
      for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps_sp();
         
@@ -384,9 +386,9 @@ double CCEnergyWavefunction::compute_energy() {
             break;
         }
         if (params_.diis) diis(moinfo_.iter);
-        tsave(); // Make copies of single-precision t1, t2 for the next iteration
-        tau_build(); // sp copies needed
-        taut_build(); // sp copies needed
+        tsave_sp(); // Make copies of single-precision t1, t2 for the next iteration
+        tau_build_sp(); // sp copies needed
+        taut_build_sp(); // sp copies needed
         last_energy = moinfo_.ecc;
         moinfo_.ecc = energy();
         moinfo_.t1diag = diagnostic();
@@ -399,6 +401,8 @@ double CCEnergyWavefunction::compute_energy() {
     }  // end loop over iterations
 
     } else if (params_.precision == 2){
+     tau_build_sp();
+     taut_build_sp();
      for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps_sp();
         

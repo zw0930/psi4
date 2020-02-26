@@ -339,27 +339,27 @@ void CCEnergyWavefunction::taut_build() {
 void CCEnergyWavefunction::taut_build_sp() {
     int i, j, a, b, I, J, A, B;
     int Isym, Jsym, Asym, Bsym;
-    dpdbuf4<double> tauIjAb;
-    dpdbuf4<double> tIjAb;
-    dpdfile2<double> tIA;
+    dpdbuf4<float> tauIjAb;
+    dpdbuf4<float> tIjAb;
+    dpdfile2<float> tIA;
 
     auto nirreps = moinfo_.nirreps;
 
     if (params_.ref == 0) { /*** RHF ***/
 
-        global_dpd_->buf4_init(&tIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb");
-        global_dpd_->buf4_copy(&tIjAb, PSIF_CC_TAMPS, "tautIjAb");
-        global_dpd_->buf4_close(&tIjAb);
+        global_dpd_->buf4_init_sp(&tIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
+        global_dpd_->buf4_copy_sp(&tIjAb, PSIF_CC_TAMPS, "tautIjAb_sp");
+        global_dpd_->buf4_close_sp(&tIjAb);
 
-        global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
-        global_dpd_->file2_mat_init(&tIA);
-        global_dpd_->file2_mat_rd(&tIA);
+        global_dpd_->file2_init_sp(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
+        global_dpd_->file2_mat_init_sp(&tIA);
+        global_dpd_->file2_mat_rd_sp(&tIA);
 
-        global_dpd_->buf4_init(&tauIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tautIjAb");
+        global_dpd_->buf4_init_sp(&tauIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tautIjAb_sp");
 
         for (int h = 0; h < nirreps; h++) {
-            global_dpd_->buf4_mat_irrep_init(&tauIjAb, h);
-            global_dpd_->buf4_mat_irrep_rd(&tauIjAb, h);
+            global_dpd_->buf4_mat_irrep_init_sp(&tauIjAb, h);
+            global_dpd_->buf4_mat_irrep_rd_sp(&tauIjAb, h);
 
             for (int ij = 0; ij < tauIjAb.params->rowtot[h]; ij++) {
                 i = tauIjAb.params->roworb[h][ij][0];
@@ -381,14 +381,13 @@ void CCEnergyWavefunction::taut_build_sp() {
                 }
             }
 
-            global_dpd_->buf4_mat_irrep_wrt(&tauIjAb, h);
-            global_dpd_->buf4_mat_irrep_close(&tauIjAb, h);
+            global_dpd_->buf4_mat_irrep_wrt_sp(&tauIjAb, h);
+            global_dpd_->buf4_mat_irrep_close_sp(&tauIjAb, h);
         }
-        global_dpd_->buf4_cast_copy_dtof(&tauIjAb, PSIF_CC_TAMPS, "tautIjAb_sp");
-        global_dpd_->buf4_close(&tauIjAb);
+        global_dpd_->buf4_close_sp(&tauIjAb);
 
-        global_dpd_->file2_mat_close(&tIA);
-        global_dpd_->file2_close(&tIA);
+        global_dpd_->file2_mat_close_sp(&tIA);
+        global_dpd_->file2_close_sp(&tIA);
 
     } 
 }

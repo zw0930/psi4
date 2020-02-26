@@ -48,7 +48,7 @@ int DPD::buf4_dirprd_sp(dpdbuf4<float> *BufA, dpdbuf4<float> *BufB) {
     int h, nirreps, my_irrep;
 
     nirreps = BufA->params->nirreps;
-    my_irrep = BufA->file.my_irrep;
+    my_irrep = BufA->file_sp.my_irrep;
 
     for (h = 0; h < nirreps; h++) {
         buf4_mat_irrep_init_sp(BufA, h);

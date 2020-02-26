@@ -171,8 +171,8 @@ void CCEnergyWavefunction::sort_amps_sp() {
         global_dpd_->buf4_close_sp(&t2);
 
         /* TIjAb (ij,JB) */
-        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIAjb");
-        global_dpd_->buf4_sort_sp(&t2, PSIF_CC_TAMPS, rspq, 10, 10, "tiaJB");
+        global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 10, 10, 10, 10, 0, "tIAjb_sp");
+        global_dpd_->buf4_sort_sp(&t2, PSIF_CC_TAMPS, rspq, 10, 10, "tiaJB_sp");
         global_dpd_->buf4_close_sp(&t2);
 
         /* TIjAb (Ib,jA) */

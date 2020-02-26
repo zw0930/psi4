@@ -171,9 +171,9 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
     //double ***tmp_matrix;
     dpdbuf4<double> OutBuf;
     
-    my_irrep = InBuf->file.my_irrep;
+    my_irrep = InBuf->file_sp.my_irrep;
 
-    buf4_init(&OutBuf, outfilenum, InBuf->file.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
+    buf4_init(&OutBuf, outfilenum, InBuf->file_sp.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
               InBuf->params->pqnum, InBuf->params->rsnum, 0, label);
     
    // tmp_matrix = (double ***)malloc(OutBuf.params->nirreps * sizeof(double **));
