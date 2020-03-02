@@ -536,7 +536,7 @@ void CCEnergyWavefunction::t1_build_mp() {
             global_dpd_->buf4_mat_irrep_init_sp(&T2_sp, Gmi);
             global_dpd_->buf4_mat_irrep_rd_sp(&T2_sp, Gmi);
 
-            for (int ma = 0; ma < F.params->rowtot[Gma]; ma++) {
+            for (int ma = 0; ma < F_sp.params->rowtot[Gma]; ma++) {
                 global_dpd_->buf4_mat_irrep_row_rd_sp(&F_sp, Gma, ma);
 
                 m = F_sp.params->roworb[Gma][ma][0];

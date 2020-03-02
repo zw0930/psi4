@@ -69,9 +69,9 @@ int DPD::contract444_sp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z,
 #endif
 
     nirreps = X->params->nirreps;
-    GX = X->file.my_irrep;
-    GY = Y->file.my_irrep;
-    GZ = Z->file.my_irrep;
+    GX = X->file_sp.my_irrep;
+    GY = Y->file_sp.my_irrep;
+    GZ = Z->file_sp.my_irrep;
 
     if (target_X == 0) {
         Xtrans = 0;

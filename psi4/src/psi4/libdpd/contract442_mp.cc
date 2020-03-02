@@ -73,8 +73,8 @@ int DPD::contract442_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdfile2<double> *
     int row, col;
 
     nirreps = X->params->nirreps;
-    GX = X->file.my_irrep;
-    GY = Y->file.my_irrep;
+    GX = X->file_sp.my_irrep;
+    GY = Y->file_sp.my_irrep;
     GZ = Z->my_irrep;
 
     if ((target_X == 1) || (target_X == 2)) trans4_init_sp(&Xt, X);

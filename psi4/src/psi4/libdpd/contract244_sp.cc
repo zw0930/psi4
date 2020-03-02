@@ -78,8 +78,8 @@ int DPD::contract244_sp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z
 
     nirreps = Y->params->nirreps;
     GX = X->my_irrep;
-    GY = Y->file.my_irrep;
-    GZ = Z->file.my_irrep;
+    GY = Y->file_sp.my_irrep;
+    GZ = Z->file_sp.my_irrep;
 
     memoryd = dpd_main.memory;
     incore = 1; /* default */

@@ -70,8 +70,8 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
     float **TMP;
     int row, col;
     nirreps = X->params->nirreps;
-    GX = X->file.my_irrep;
-    GY = Y->file.my_irrep;
+    GX = X->file_sp.my_irrep;
+    GY = Y->file_sp.my_irrep;
     GZ = Z->file.my_irrep;
 
     if (target_X == 0) {

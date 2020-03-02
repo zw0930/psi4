@@ -64,7 +64,7 @@ int DPD::contract422_sp(dpdbuf4<float> *X, dpdfile2<float> *Y, dpdfile2<float> *
 #endif
 
     nirreps = X->params->nirreps;
-    GX = X->file.my_irrep;
+    GX = X->file_sp.my_irrep;
     GY = Y->my_irrep;
     GZ = Z->my_irrep;
 

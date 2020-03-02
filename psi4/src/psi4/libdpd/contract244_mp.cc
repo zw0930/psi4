@@ -82,7 +82,7 @@ int DPD::contract244_mp(dpdfile2<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *
 
     nirreps = Y->params->nirreps;
     GX = X->my_irrep;
-    GY = Y->file.my_irrep;
+    GY = Y->file_sp.my_irrep;
     GZ = Z->file.my_irrep;
 
     memoryd = dpd_main.memory;
