@@ -56,7 +56,7 @@ int DPD::trans4_mat_irrep_shift31_sp(dpdtrans4<float> *Trans, int buf_block) {
         Trans->shift.shift_type = 31;
 
     nirreps = Trans->buf.params->nirreps;
-    all_buf_irrep = Trans->buf.file.my_irrep;
+    all_buf_irrep = Trans->buf.file_sp.my_irrep;
     rowtot = Trans->buf.params->coltot[buf_block ^ all_buf_irrep];
     coltot = Trans->buf.params->rowtot[buf_block];
     if (rowtot == 0 || coltot == 0)

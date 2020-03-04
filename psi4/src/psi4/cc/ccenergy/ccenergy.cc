@@ -184,7 +184,7 @@ double CCEnergyWavefunction::compute_energy() {
     outfile->Printf("  Iter             Energy              RMS        T1Diag      D1Diag    New D1Diag    D2Diag\n");
     outfile->Printf("  ----     ---------------------    ---------   ----------  ----------  ----------   --------\n");
    
-    outfile->Printf(" !!test!!\n");
+    //outfile->Printf(" !!test!!\n");
     outfile->Printf("Precision: %d \n", params_.precision);
  
     moinfo_.ecc = energy();
@@ -299,7 +299,7 @@ double CCEnergyWavefunction::compute_energy() {
         update();
         checkpoint();
     }  // end loop over iterations
-    } else if (params_.precision == 1){
+    } else if (params_.precision == 1){ 
      tau_build_sp();
      taut_build_sp();
      for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
@@ -488,9 +488,11 @@ double CCEnergyWavefunction::compute_energy() {
         }
         if (params_.diis) diis(moinfo_.iter);
         // Save single-precision tamps
-        tsave_sp();
-        tau_build_sp();
+        tsave_sp(); // Make copies of sp t-amps from the new dp t-amps from the loop
+        tau_build_sp(); // sp tau/taut
         taut_build_sp();
+        tau_build();
+        taut_build(); //dp tau/taut for computing energy
         last_energy = moinfo_.ecc;
         moinfo_.ecc = energy();
         moinfo_.t1diag = diagnostic();

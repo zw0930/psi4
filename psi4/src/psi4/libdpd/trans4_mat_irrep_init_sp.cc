@@ -39,7 +39,7 @@ int DPD::trans4_mat_irrep_init_sp(dpdtrans4<float> *Trans, int irrep) {
     int rowtot, coltot, all_buf_irrep;
     long int size;
 
-    all_buf_irrep = Trans->buf.file.my_irrep;
+    all_buf_irrep = Trans->buf.file_sp.my_irrep;
 
     rowtot = Trans->buf.params->coltot[irrep ^ all_buf_irrep];
     coltot = Trans->buf.params->rowtot[irrep];

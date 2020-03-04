@@ -131,7 +131,7 @@ int DPD::contract444_sp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<float> *Z,
 
         size_Y = ((long)Y->params->rowtot[Hy]) * ((long)Y->params->coltot[Hy ^ GY]);
         size_Z = ((long)Z->params->rowtot[Hz]) * ((long)Z->params->coltot[Hz ^ GZ]);
-        size_file_X_row = ((long)X->file.params->coltot[0]); /* need room for a row of the X->file */
+        size_file_X_row = ((long)X->file_sp.params->coltot[0]); /* need room for a row of the X->file */
 
         memoryd = dpd_memfree() - (size_Y + size_Z + size_file_X_row);
 

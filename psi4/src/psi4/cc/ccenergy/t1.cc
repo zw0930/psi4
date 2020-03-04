@@ -124,7 +124,7 @@ void CCEnergyWavefunction::t1_build() {
 
                 nrows = moinfo_.occpi[Gi];
                 ncols = F.params->coltot[Gma];
-
+                
                 if (nrows && ncols && moinfo_.virtpi[Ga])
                     C_DGEMV('n', nrows, ncols, 1.0, T2.matrix[Gmi][T2.row_offset[Gmi][m]], ncols, F.matrix[Gma][0], 1,
                             1.0, &newtIA.matrix[Gi][0][A], moinfo_.virtpi[Ga]);
@@ -450,8 +450,8 @@ void CCEnergyWavefunction::t1_build() {
 
 // Mixed-precision
 void CCEnergyWavefunction::t1_build_mp() {
-    dpdfile2<double> newtIA, tIA, fIA, file2_tmp_double;
-    dpdfile2<float> tIA_sp, fIA_sp, file2_tmp_float;
+    dpdfile2<double> newtIA, tIA, fIA;
+    dpdfile2<float> tIA_sp, fIA_sp;
     dpdfile2<double> FAE, FMI, FME;
     dpdfile2<float> FAE_sp, FMI_sp, FME_sp;
     dpdbuf4<double> tIjAb, T2;
@@ -461,6 +461,9 @@ void CCEnergyWavefunction::t1_build_mp() {
     int Gmi, Gm, Gi, Ga, m, a, A, nrows, ncols;
     int row, col;
     float **TMP;
+    //**
+    dpdfile2<float> newtIA_tmp_sp;
+    dpdfile2<double> newtIA_tmp;
 
     if (params_.ref == 0) { /** RHF **/
         // **1
@@ -521,12 +524,14 @@ void CCEnergyWavefunction::t1_build_mp() {
 
         /* t(i,a) <-- (2 t(mi,ef) - t(mi,fe)) <ma|ef> */
         /* out-of-core version replacing the *stupid* code above 3/22/05, TDC */
-        
-        global_dpd_->file2_mat_init(&newtIA);
-        global_dpd_->file2_mat_rd(&newtIA);
-        //global_dpd_->file2_init_sp(&TMP, PSIF_CC_TMP0, 0, 0, 1, "TMP newtIA");
-        //global_dpd_->file2_mat_init_sp(&TMP);
-        //global_dpd_->file2_mat_rd_sp(&TMP);
+        //**
+        global_dpd_->file2_init_sp(&newtIA_tmp_sp, PSIF_CC_TMP0, 0, 0, 1, "newtIA_tmp_sp");
+        global_dpd_->file2_mat_init_sp(&newtIA_tmp_sp);
+        global_dpd_->file2_mat_rd_sp(&newtIA_tmp_sp);
+        //**
+        //global_dpd_->file2_mat_init(&newtIA);
+        //global_dpd_->file2_mat_rd(&newtIA);
+
         global_dpd_->buf4_init_sp(&T2_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "2 tIjAb - tIjBa sp");
         global_dpd_->buf4_init_sp(&F_sp, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
         for (int Gma = 0; Gma < moinfo_.nirreps; Gma++) {
@@ -535,6 +540,10 @@ void CCEnergyWavefunction::t1_build_mp() {
             global_dpd_->buf4_mat_irrep_row_init_sp(&F_sp, Gma);
             global_dpd_->buf4_mat_irrep_init_sp(&T2_sp, Gmi);
             global_dpd_->buf4_mat_irrep_rd_sp(&T2_sp, Gmi);
+            //Assign memory for TMP matrix
+            //TMP = global_dpd_->dpd_block_matrix_sp(newtIA.params->rowtot[Gma], newtIA.params->coltot[Gma^newtIA.my_irrep]);
+
+            //TMP = (float **)malloc(newtIA.params->rowtot[Gma] *  newtIA.params->coltot[Gma ^ newtIA.my_irrep]);          
 
             for (int ma = 0; ma < F_sp.params->rowtot[Gma]; ma++) {
                 global_dpd_->buf4_mat_irrep_row_rd_sp(&F_sp, Gma, ma);
@@ -548,26 +557,41 @@ void CCEnergyWavefunction::t1_build_mp() {
 
                 nrows = moinfo_.occpi[Gi];
                 ncols = F_sp.params->coltot[Gma];
-
                 if (nrows && ncols && moinfo_.virtpi[Ga]){
+                   // C_SGEMV('n', nrows, ncols, 1.0, T2_sp.matrix[Gmi][T2_sp.row_offset[Gmi][m]], ncols, F_sp.matrix[Gma][0], 1,
+                     //       0.0, &TMP[0][A], moinfo_.virtpi[Ga]);
                     C_SGEMV('n', nrows, ncols, 1.0, T2_sp.matrix[Gmi][T2_sp.row_offset[Gmi][m]], ncols, F_sp.matrix[Gma][0], 1,
-                            0.0, &(TMP[0][0]), moinfo_.virtpi[Ga]);
-                    for (row = 0; row < moinfo_.virtpi[Ga]; row++){
-                         newtIA.matrix[Gi][0][A+row] += static_cast<double>(TMP[0][row]);   
-                    }
+                            0.0, &newtIA_tmp_sp.matrix[Gi][0][A], moinfo_.virtpi[Ga]);
+
+                    //for (row = 0; row < moinfo_.virtpi[Ga]; row++){
+                      //   newtIA.matrix[Gi][0][A] += static_cast<double>(TMP[0][A]);   
+                    //}
                }
             }
-
+             
             global_dpd_->buf4_mat_irrep_close_sp(&T2_sp, Gmi);
             global_dpd_->buf4_mat_irrep_row_close_sp(&F_sp, Gma);
+            //free(TMP);
         }
         global_dpd_->buf4_close_sp(&F_sp);
         global_dpd_->buf4_close_sp(&T2_sp);
         //global_dpd_->file2_close_sp(&TMP);
-        free(TMP);
-        global_dpd_->file2_mat_wrt(&newtIA);
-        global_dpd_->file2_mat_close(&newtIA);
+       // free(TMP);
 
+       //**
+        global_dpd_->file2_mat_wrt_sp(&newtIA_tmp_sp);
+        global_dpd_->file2_mat_close_sp(&newtIA_tmp_sp);
+
+        //global_dpd_->file2_mat_wrt(&newtIA);
+        //global_dpd_->file2_mat_close(&newtIA);
+        
+        //** 
+        global_dpd_->file2_cast_copy_ftod(&newtIA_tmp_sp, PSIF_CC_TMP0, "newtIA_tmp");        global_dpd_->file2_init(&newtIA_tmp, PSIF_CC_TMP0, 0, 0, 1, "newtIA_tmp");
+        global_dpd_->file2_axpy(&newtIA_tmp, &newtIA, 1, 0);
+        global_dpd_->file2_close(&newtIA_tmp);
+        global_dpd_->file2_close_sp(&newtIA_tmp_sp);
+        
+        //*7
         global_dpd_->buf4_init_sp(&E_sp, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E 2<ai|jk> - <ai|kj> sp");
         global_dpd_->buf4_init_sp(&tIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
         global_dpd_->contract442_mp(&E_sp, &tIjAb_sp, &newtIA, 1, 3, -1, 1);

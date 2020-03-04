@@ -354,9 +354,9 @@ void CCEnergyWavefunction::BT2_mp() {
             global_dpd_->buf4_close(&tau_a);
             global_dpd_->buf4_init(&tau_a, PSIF_CC_TMP0, 0, 3, 8, 0, 5, 0, "tau(+)(ij,ab)");
             global_dpd_->buf4_copy(&tau_a, PSIF_CC_TAMPS, "tau(+)(ij,ab)");
-            global_dpd_->buf4_close(&tau_a);
             global_dpd_->buf4_cast_copy_dtof(&tau_a, PSIF_CC_TAMPS, "tau(+)(ij,ab)_sp");
-
+            global_dpd_->buf4_close(&tau_a);
+                    
             timer_on("ABCD:S");
             global_dpd_->buf4_init_sp(&tau_s_sp, PSIF_CC_TAMPS, 0, 3, 8, 3, 8, 0, "tau(+)(ij,ab)_sp");
             global_dpd_->buf4_init_sp(&B_s_sp, PSIF_CC_BINTS, 0, 8, 8, 8, 8, 0, "B(+) <ab|cd> + <ab|dc> sp");
@@ -450,7 +450,7 @@ void CCEnergyWavefunction::BT2_mp() {
             global_dpd_->buf4_mat_irrep_wrt(&S, 0);
             global_dpd_->buf4_mat_irrep_close(&S, 0);
             global_dpd_->buf4_close(&S);
-            global_dpd_->buf4_close_sp(&B_s_sp);
+            global_dpd_->buf4_close(&B_s);
             global_dpd_->free_dpd_block(B_diag, rows_per_bucket, moinfo_.nvirt);
             global_dpd_->free_dpd_block(tau_diag, tau.params->rowtot[0], moinfo_.nvirt);
             global_dpd_->free_dpd_block_sp(B_diag_sp, rows_per_bucket, moinfo_.nvirt);
@@ -463,9 +463,11 @@ void CCEnergyWavefunction::BT2_mp() {
             global_dpd_->buf4_init(&B_a, PSIF_CC_BINTS, 0, 9, 9, 9, 9, 0, "B(-) <ab|cd> - <ab|dc>");
             global_dpd_->buf4_cast_copy_dtof(&B_a, PSIF_CC_BINTS, "b(-) <ab|cd> - <ab|dc> sp");
             global_dpd_->buf4_init(&A, PSIF_CC_TMP0, 0, 9, 4, 9, 4, 0, "A(ab,ij)");
+            global_dpd_->buf4_init_sp(&B_a_sp, PSIF_CC_BINTS, 0, 9, 9, 9, 9, 0, "B(-) <ab|cd> - <ab|dc> sp");
             global_dpd_->contract444_mp(&B_a_sp, &tau_a_sp, &A, 0, 0, 0.5, 0);
             global_dpd_->buf4_close(&A);
             global_dpd_->buf4_close_sp(&B_a_sp);
+            global_dpd_->buf4_close(&B_a);
             global_dpd_->buf4_close_sp(&tau_a_sp);
             timer_off("ABCD:A");
 

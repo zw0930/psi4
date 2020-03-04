@@ -40,7 +40,7 @@ int DPD::trans4_mat_irrep_wrt_sp(dpdtrans4<float> *Trans, int irrep) {
     dpdbuf4<float> *Buf;
 
     Buf = &(Trans->buf);
-    all_buf_irrep = Buf->file.my_irrep;
+    all_buf_irrep = Buf->file_sp.my_irrep;
 
 #ifdef DPD_TIMER
     timer_on("trans4_rw");

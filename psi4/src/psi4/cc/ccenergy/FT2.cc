@@ -318,6 +318,7 @@ void CCEnergyWavefunction::FT2_mp() {
             global_dpd_->buf4_close(&t2);
             global_dpd_->buf4_close_sp(&Toovv);
         } else {
+            //global_dpd_->buf4_init(&X, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "X(Ij,Ab)");
             global_dpd_->buf4_init_sp(&X_sp, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "X(Ij,Ab)_sp");
             global_dpd_->buf4_init_sp(&F_sp, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
             global_dpd_->file2_init_sp(&t1_sp, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
@@ -326,7 +327,8 @@ void CCEnergyWavefunction::FT2_mp() {
             for (int Gie = 0; Gie < moinfo_.nirreps; Gie++) {
                 Gab = Gie; /* F is totally symmetric */
                 Gij = Gab; /* T2 is totally symmetric */
-                global_dpd_->buf4_mat_irrep_init(&X, Gij);
+                //global_dpd_->buf4_mat_irrep_init(&X, Gij);
+                global_dpd_->buf4_mat_irrep_init_sp(&X_sp, Gij);
                 ncols = F_sp.params->coltot[Gie];
 
                 for (int Gi = 0; Gi < moinfo_.nirreps; Gi++) {
@@ -336,28 +338,31 @@ void CCEnergyWavefunction::FT2_mp() {
                     nrows = moinfo_.occpi[Gj];
 
                     global_dpd_->buf4_mat_irrep_init_block_sp(&F_sp, Gie, nlinks);
-		    global_dpd_->dpd_block_matrix_sp(nrows, ncols);
+                    //TMP = (float**)malloc(nrows * ncols); 	
                     for (int i = 0; i < moinfo_.occpi[Gi]; i++) {
                         I = F_sp.params->poff[Gi] + i;
                         global_dpd_->buf4_mat_irrep_rd_block_sp(&F_sp, Gie, F_sp.row_offset[Gie][I], nlinks);
 
                         if (nrows && ncols && nlinks)
                             C_SGEMM('n', 'n', nrows, ncols, nlinks, 1.0, t1_sp.matrix[Gj][0], nlinks, F_sp.matrix[Gie][0],
-                                    ncols, 0.0, &(TMP[0][0]), ncols);
-                        for (row = 0; row < nrows; row++){
-  		        	for (col = 0; col < ncols; col++){
-			            X.matrix[Gij][X.row_offset[Gij][I]+row][col] = static_cast<double>(TMP[row][col]);
-				}
-		        } 
+                                    ncols, 0.0, X_sp.matrix[Gij][X_sp.row_offset[Gij][I]], ncols);
+                        //for (row = 0; row < nrows; row++){
+  		        //	for (col = 0; col < ncols; col++){
+			 //           X.matrix[Gij][X.row_offset[Gij][I]+row][col] = static_cast<double>(TMP[row][col]);
+		//		}
+		//        } 
                      }
 
                     global_dpd_->buf4_mat_irrep_close_block_sp(&F_sp, Gie, nlinks);
-                    global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
+                    //global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
                 }
 
-                global_dpd_->buf4_mat_irrep_wrt(&X, Gij);
-                global_dpd_->buf4_mat_irrep_close(&X, Gij);
+                global_dpd_->buf4_mat_irrep_wrt_sp(&X_sp, Gij);
+                global_dpd_->buf4_mat_irrep_close_sp(&X_sp, Gij);
             }
+            global_dpd_->buf4_cast_copy_ftod(&X_sp, PSIF_CC_TMP0, "X(Ij,Ab)");
+            global_dpd_->buf4_close_sp(&X_sp);
+            global_dpd_->buf4_init(&X, PSIF_CC_TMP0, 0, 0, 5, 0, 5, 0, "X(Ij,Ab)");
             global_dpd_->file2_mat_close_sp(&t1_sp);
             global_dpd_->file2_close_sp(&t1_sp);
             global_dpd_->buf4_close_sp(&F_sp);
@@ -366,7 +371,7 @@ void CCEnergyWavefunction::FT2_mp() {
             global_dpd_->buf4_close(&t2);
             global_dpd_->buf4_sort_axpy(&X, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1);
             global_dpd_->buf4_close(&X);
-            global_dpd_->buf4_close_sp(&X_sp);
+            //global_dpd_->buf4_close_sp(&X_sp);
         } // df
     } // RHF
 } // mp

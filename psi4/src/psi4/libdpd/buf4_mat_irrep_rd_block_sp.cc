@@ -182,38 +182,16 @@ int DPD::buf4_mat_irrep_rd_block_sp(dpdbuf4<float> *Buf, int irrep, int start_pq
 
         case 12: /* no change in pq or rs */
            
-           /* if (Buf->file.incore)
+           if (Buf->file_sp.incore)
                 for (pq = 0; pq < num_pq; pq++)
                     for (rs = 0; rs < coltot; rs++)
-                        Buf->matrix[irrep][pq][rs] = static_cast<float>(Buf->file.matrix[irrep][pq + start_pq][rs]);
+                        Buf->matrix[irrep][pq][rs] = Buf->file_sp.matrix[irrep][pq + start_pq][rs];
             else {
-                Buf->file.matrix[irrep] = Buf->matrix[irrep];
-                file4_mat_irrep_rd_block(&(Buf->file), irrep, start_pq, num_pq);
-            }
-*/
-             /* Prepare the input buffer from the input file */
-            file4_mat_irrep_row_init_sp(&(Buf->file_sp), irrep);
-
-            /* Loop over rows in the dpdbuf/dpdfile */
-            for (pq = 0; pq < num_pq; pq++) {
-                filerow = Buf->file_sp.incore ? pq : 0;
-
-                /* Fill the buffer */
-                file4_mat_irrep_row_rd_sp(&(Buf->file_sp), irrep, pq + start_pq);
-
-                /* Loop over the columns in the dpdbuf */
-                for (rs = 0; rs < coltot; rs++) {
-                                   
-                    value = Buf->file_sp.matrix[irrep][pq + start_pq][rs];
-
-                    /* Assign the value */
-                    Buf->matrix[irrep][pq][rs] = value;
-                }
+                Buf->file_sp.matrix[irrep] = Buf->matrix[irrep];
+                file4_mat_irrep_rd_block_sp(&(Buf->file_sp), irrep, start_pq, num_pq);
             }
 
-            /* Close the input buffer */
-            file4_mat_irrep_row_close_sp(&(Buf->file_sp), irrep);
-
+             
             break;
         case 21: /* unpack pq; no change in rs */
             /* prepare the input buffer from the input file */
