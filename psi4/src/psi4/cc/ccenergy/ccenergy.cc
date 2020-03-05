@@ -491,6 +491,8 @@ double CCEnergyWavefunction::compute_energy() {
         tsave_sp(); // Make copies of sp t-amps from the new dp t-amps from the loop
         tau_build_sp(); // sp tau/taut
         taut_build_sp();
+        // Save the double-precision amps to update tau, taut, energy... for checking the convergence
+        tsave();
         tau_build();
         taut_build(); //dp tau/taut for computing energy
         last_energy = moinfo_.ecc;
