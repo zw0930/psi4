@@ -165,8 +165,10 @@ list(APPEND sources
   file2_init_sp.cc
   file2_mat_close_sp.cc
   file2_mat_init_sp.cc
+  file2_mat_print_sp.cc
   file2_mat_rd_sp.cc
   file2_mat_wrt_sp.cc
+  file2_print_sp.cc
   file2_scm_sp.cc
   trans4_close_sp.cc
   trans4_init_sp.cc

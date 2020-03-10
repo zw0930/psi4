@@ -378,7 +378,9 @@ class PSI_API DPD {
     int file2_mat_wrt_sp(dpdfile2<float> *File);
 //**
     int file2_print(dpdfile2<double> *File, std::string out_fname);
+    int file2_print_sp(dpdfile2<float> *File, std::string out_fname);
     int file2_mat_print(dpdfile2<double> *File, std::string out_fname);
+    int file2_mat_print_sp(dpdfile2<float> *File, std::string out_fname);
     int file2_copy(dpdfile2<double> *InFile, int outfilenum, const char *label);
     int file2_copy_sp(dpdfile2<float> *InFile, int outfilenum, const char *label);
 

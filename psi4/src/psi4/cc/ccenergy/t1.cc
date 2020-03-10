@@ -37,6 +37,7 @@
 #include "Params.h"
 #include "MOInfo.h"
 #include "psi4/cc/ccwave.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi {
 namespace ccenergy {
@@ -61,6 +62,8 @@ void CCEnergyWavefunction::t1_build() {
         global_dpd_->contract222(&tIA, &FAE, &newtIA, 0, 0, 1, 1);
         global_dpd_->file2_close(&FAE);
 
+        
+
         global_dpd_->file2_init(&FMI, PSIF_CC_OEI, 0, 0, 0, "FMI");
         global_dpd_->contract222(&FMI, &tIA, &newtIA, 1, 1, -1, 1);
         global_dpd_->file2_close(&FMI);
@@ -74,7 +77,10 @@ void CCEnergyWavefunction::t1_build() {
         global_dpd_->buf4_close(&tIjAb);
 
         global_dpd_->file2_close(&FME);
-
+         
+        //outfile->Printf("newtIA_4");
+       // global_dpd_->file2_print(&newtIA, "outfile"); 
+     
         global_dpd_->buf4_init(&C_anti, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia||jb>");
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab>");
 
@@ -87,7 +93,9 @@ void CCEnergyWavefunction::t1_build() {
 
         global_dpd_->buf4_close(&C_anti);
         global_dpd_->buf4_close(&D);
-
+         
+        //outfile->Printf("newtIA_5:\n");
+        //global_dpd_->file2_print(&newtIA, "outfile");
         /*
           dpd_buf4_init(&Z, CC_TMP0, 0, 10, 0, 10, 0, 0, "Z(ma,mi)");
           dpd_buf4_init(&F, CC_FINTS, 0, 10, 5, 10, 5, 0, "F 2<ia|bc> - <ia|cb>");
@@ -104,7 +112,13 @@ void CCEnergyWavefunction::t1_build() {
         global_dpd_->file2_mat_init(&newtIA);
         global_dpd_->file2_mat_rd(&newtIA);
         global_dpd_->buf4_init(&T2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "2 tIjAb - tIjBa");
+        //outfile->Printf("T2:\n");
+        //global_dpd_->buf4_print(&T2, "outfile", 1);
+
         global_dpd_->buf4_init(&F, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc>");
+        //outfile->Printf("F:\n");
+        //global_dpd_->buf4_print(&F, "outfile", 1);
+
         for (int Gma = 0; Gma < moinfo_.nirreps; Gma++) {
             Gmi = Gma; /* T1 is totally symmetric */
 
@@ -137,12 +151,19 @@ void CCEnergyWavefunction::t1_build() {
         global_dpd_->buf4_close(&T2);
         global_dpd_->file2_mat_wrt(&newtIA);
         global_dpd_->file2_mat_close(&newtIA);
-
+        
+        //outfile->Printf("newtIA_6");
+        //global_dpd_->file2_print(&newtIA, "outfile");
+    
         global_dpd_->buf4_init(&E, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E 2<ai|jk> - <ai|kj>");
         global_dpd_->buf4_init(&tIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb");
         global_dpd_->contract442(&E, &tIjAb, &newtIA, 1, 3, -1, 1);
         global_dpd_->buf4_close(&E);
         global_dpd_->buf4_close(&tIjAb);
+
+        //outfile->Printf("newtIA_7");
+        //global_dpd_->file2_print(&newtIA, "outfile");
+
 
         if (params_.just_residuals) {
             global_dpd_->file2_close(&newtIA);
@@ -473,6 +494,9 @@ void CCEnergyWavefunction::t1_build_mp() {
         
         // **2
         global_dpd_->file2_init(&newtIA, PSIF_CC_OEI, 0, 0, 1, "New tIA");
+        
+        //outfile->Printf("newtIA_1: fIA");
+        //global_dpd_->file2_print(&newtIA, "outfile");
 
         global_dpd_->file2_init_sp(&tIA_sp, PSIF_CC_OEI, 0, 0, 1, "tIA_sp");
         
@@ -480,13 +504,19 @@ void CCEnergyWavefunction::t1_build_mp() {
         // Contractions of tIA and FAE in single-precision (the second term in t1 eqn ) -> cast to double-precision -> add to the residual 
         global_dpd_->contract222_mp(&tIA_sp, &FAE_sp, &newtIA, 0, 0, 1, 1);
         global_dpd_->file2_close_sp(&FAE_sp);
-        
+       
+        //outfile->Printf("newtIA_2: FAE_sp");
+        //global_dpd_->file2_print(&newtIA, "outfile");
+ 
         // **3
         global_dpd_->file2_init_sp(&FMI_sp, PSIF_CC_OEI, 0, 0, 0, "FMI_sp");
         global_dpd_->contract222_mp(&FMI_sp, &tIA_sp, &newtIA, 1, 1, -1, 1);
         global_dpd_->file2_close_sp(&FMI_sp);
             
         global_dpd_->file2_close_sp(&tIA_sp);
+       
+        //outfile->Printf("newtIA_3: FMI_sp");
+        //global_dpd_->file2_print(&newtIA, "outfile");
 
         // **4
         global_dpd_->file2_init_sp(&FME_sp, PSIF_CC_OEI, 0, 0, 1, "FME_sp");
@@ -496,7 +526,10 @@ void CCEnergyWavefunction::t1_build_mp() {
         global_dpd_->buf4_close_sp(&tIjAb_sp);
 
         global_dpd_->file2_close_sp(&FME_sp);
-               
+        
+        //outfile->Printf("newtIA_4: FME_sp, tIjAb_sp");
+        //global_dpd_->file2_print(&newtIA, "outfile");       
+        
         // **5
         global_dpd_->buf4_init_sp(&C_anti_sp, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia||jb> sp");
         global_dpd_->buf4_init_sp(&D_sp, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab> sp");
@@ -509,6 +542,9 @@ void CCEnergyWavefunction::t1_build_mp() {
 
         global_dpd_->buf4_close_sp(&C_anti_sp);
         global_dpd_->buf4_close_sp(&D_sp);
+
+        //outfile->Printf("newtIA_5: C_anti, D");
+        //global_dpd_->file2_print(&newtIA, "outfile");
         
         // **6
         /*
@@ -534,6 +570,11 @@ void CCEnergyWavefunction::t1_build_mp() {
 
         global_dpd_->buf4_init_sp(&T2_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "2 tIjAb - tIjBa sp");
         global_dpd_->buf4_init_sp(&F_sp, PSIF_CC_FINTS, 0, 10, 5, 10, 5, 0, "F <ia|bc> sp");
+        //outfile->Printf("T2_sp:\n");
+        //global_dpd_->buf4_print_sp(&T2_sp, "outfile", 1);
+        //outfile->Printf("F_sp:\n");
+        //global_dpd_->buf4_print_sp(&F_sp, "outfile", 1);
+
         for (int Gma = 0; Gma < moinfo_.nirreps; Gma++) {
             Gmi = Gma; /* T1 is totally symmetric */
 
@@ -561,7 +602,7 @@ void CCEnergyWavefunction::t1_build_mp() {
                    // C_SGEMV('n', nrows, ncols, 1.0, T2_sp.matrix[Gmi][T2_sp.row_offset[Gmi][m]], ncols, F_sp.matrix[Gma][0], 1,
                      //       0.0, &TMP[0][A], moinfo_.virtpi[Ga]);
                     C_SGEMV('n', nrows, ncols, 1.0, T2_sp.matrix[Gmi][T2_sp.row_offset[Gmi][m]], ncols, F_sp.matrix[Gma][0], 1,
-                            0.0, &newtIA_tmp_sp.matrix[Gi][0][A], moinfo_.virtpi[Ga]);
+                            1.0, &newtIA_tmp_sp.matrix[Gi][0][A], moinfo_.virtpi[Ga]);
 
                     //for (row = 0; row < moinfo_.virtpi[Ga]; row++){
                       //   newtIA.matrix[Gi][0][A] += static_cast<double>(TMP[0][A]);   
@@ -590,6 +631,9 @@ void CCEnergyWavefunction::t1_build_mp() {
         global_dpd_->file2_axpy(&newtIA_tmp, &newtIA, 1, 0);
         global_dpd_->file2_close(&newtIA_tmp);
         global_dpd_->file2_close_sp(&newtIA_tmp_sp);
+
+        //outfile->Printf("newtIA_6: **");
+        //global_dpd_->file2_print(&newtIA, "outfile");
         
         //*7
         global_dpd_->buf4_init_sp(&E_sp, PSIF_CC_EINTS, 0, 11, 0, 11, 0, 0, "E 2<ai|jk> - <ai|kj> sp");
@@ -597,7 +641,9 @@ void CCEnergyWavefunction::t1_build_mp() {
         global_dpd_->contract442_mp(&E_sp, &tIjAb_sp, &newtIA, 1, 3, -1, 1);
         global_dpd_->buf4_close_sp(&E_sp);
         global_dpd_->buf4_close_sp(&tIjAb_sp);
-        
+       
+        //outfile->Printf("newtIA_7: E, tIjAb");
+       // global_dpd_->file2_print(&newtIA, "outfile"); 
                
         if (params_.just_residuals) {
             global_dpd_->file2_close(&newtIA);

@@ -80,6 +80,12 @@ double CCEnergyWavefunction::compute_energy() {
     int **cachelist;
     double *emp2_aa, *emp2_ab, *ecc_aa, *ecc_ab;
 
+   // Files for checking values
+    dpdfile2<double> TEST0;
+    dpdfile2<float> TEST1;
+    dpdbuf4<double> TEST2;
+    dpdbuf4<float> TEST3;
+
     moinfo_.iter = 0;
 
     init_io();
@@ -198,6 +204,11 @@ double CCEnergyWavefunction::compute_energy() {
     moinfo_.d2diag = d2diag();
     update();
     checkpoint();
+
+    //Check point 1: initial values for t1, t2 amps
+   // outfile->Printf("Check initial values of t1, t2 amps\n");
+   // amp_write();
+
     if (params_.precision == 0){
   //  outfile->Printf(" !!test!!\n");
     for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
@@ -210,7 +221,28 @@ double CCEnergyWavefunction::compute_energy() {
         if (params_.print & 2) status("F intermediates", "outfile");
         timer_off("F build");
 
+        // Check point 2: initial values for F intermediates, newtIA
+/*
+        outfile->Printf("Check initial values of double-precision F intermediates\n");
+        global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 1, 1, "FAE");
+        global_dpd_->file2_print(&TEST0, "outfile");
+        global_dpd_->file2_close(&TEST0);
+
+        global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 0, 0, "FMI");
+        global_dpd_->file2_print(&TEST0, "outfile");
+        global_dpd_->file2_close(&TEST0);
+
+        global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 0, 1, "FME");
+        global_dpd_->file2_print(&TEST0, "outfile");
+        global_dpd_->file2_close(&TEST0);
+*/
         t1_build();
+/*        
+        outfile->Printf("new tIA: t1_build"); 
+        global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 0, 1, "New tIA");  
+        global_dpd_->file2_print(&TEST0, "outfile");
+        global_dpd_->file2_close(&TEST0);
+*/        
         if (params_.print & 2) status("T1 amplitudes", "outfile");
 
         if (params_.wfn == "CC2" || params_.wfn == "EOM_CC2") {
@@ -241,6 +273,22 @@ double CCEnergyWavefunction::compute_energy() {
             if (params_.print & 2) status("Z", "outfile");
             Wmnij_build();
             if (params_.print & 2) status("Wmnij", "outfile");
+           
+            // Check point: initial values for W intermediates
+
+            outfile->Printf("Check initial values of double-precision W intermediates\n");
+            global_dpd_->buf4_init(&TEST2, PSIF_CC_HBAR, 0, 10, 11, 10, 11, 0, "WMbEj");
+            global_dpd_->buf4_print(&TEST2, "outfile", 1);
+            global_dpd_->buf4_close(&TEST2);
+      
+           // global_dpd_->buf4_init(&TEST2, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbeJ");
+           // global_dpd_->buf4_print(&TEST2, "outfile", 1);
+           // global_dpd_->buf4_close(&TEST2);
+
+           // global_dpd_->buf4_init(&TEST2, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMnIj");
+           // global_dpd_->buf4_print(&TEST2, "outfile", 1);
+           // global_dpd_->buf4_close(&TEST2);
+
 
             timer_on("T2 Build");
             t2_build();
@@ -297,6 +345,9 @@ double CCEnergyWavefunction::compute_energy() {
         moinfo_.new_d1diag = new_d1diag();
         moinfo_.d2diag = d2diag();
         update();
+         // Test ** 
+        amp_write();
+
         checkpoint();
     }  // end loop over iterations
     } else if (params_.precision == 1){ 
@@ -311,7 +362,7 @@ double CCEnergyWavefunction::compute_energy() {
         Fmi_build_sp();
         if (params_.print & 2) status("F intermediates", "outfile");
         timer_off("F build");
-
+        
         t1_build_sp();
         if (params_.print & 2) status("T1 amplitudes", "outfile");
 
@@ -403,6 +454,11 @@ double CCEnergyWavefunction::compute_energy() {
     } else if (params_.precision == 2){
      tau_build_sp();
      taut_build_sp();
+
+     // Check point 1: initial values for t1, t2 amps
+     //outfile->Printf("Check initial values of single-precision t1, t2 amps\n");
+     //amp_write_sp();
+
      for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps_sp();
         
@@ -410,10 +466,32 @@ double CCEnergyWavefunction::compute_energy() {
         Fme_build_sp();
         Fae_build_sp();
         Fmi_build_sp();
-        if (params_.print & 2) status("F intermediates", "outfile");
+        
+       if (params_.print & 2) status("F intermediates", "outfile");
         timer_off("F build");
 
+        // Check point 2: initial values for F intermediates
+/*
+        outfile->Printf("Check initial values of single-precision F intermediates\n");
+        global_dpd_->file2_init_sp(&TEST1, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
+        global_dpd_->file2_print_sp(&TEST1, "outfile");
+        global_dpd_->file2_close_sp(&TEST1);
+
+        global_dpd_->file2_init_sp(&TEST1, PSIF_CC_OEI, 0, 0, 0, "FMI_sp");
+        global_dpd_->file2_print_sp(&TEST1, "outfile");
+        global_dpd_->file2_close_sp(&TEST1);
+
+        global_dpd_->file2_init_sp(&TEST1, PSIF_CC_OEI, 0, 0, 1, "FME_sp");
+        global_dpd_->file2_print_sp(&TEST1, "outfile");
+        global_dpd_->file2_close_sp(&TEST1);
+*/ 
         t1_build_mp(); // sp(tamps&F)->dp(residual)
+/*
+        outfile->Printf("newtIA: t1_build_mp");
+        global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 0, 1, "New tIA");  
+        global_dpd_->file2_print(&TEST0, "outfile");
+        global_dpd_->file2_close(&TEST0);
+*/
         if (params_.print & 2) status("T1 amplitudes", "outfile");
 
         if (params_.wfn == "CC2" || params_.wfn == "EOM_CC2") {
@@ -444,6 +522,22 @@ double CCEnergyWavefunction::compute_energy() {
             if (params_.print & 2) status("Z", "outfile");
             Wmnij_build_sp();
             if (params_.print & 2) status("Wmnij", "outfile");
+       
+            // Check point: initial values for W intermediates
+
+            outfile->Printf("Check initial values of single-precision W intermediates\n");
+            global_dpd_->buf4_init_sp(&TEST3, PSIF_CC_HBAR, 0, 10, 11, 10, 11, 0, "WMbEj_sp");
+            global_dpd_->buf4_print_sp(&TEST3, "outfile", 1);
+            global_dpd_->buf4_close_sp(&TEST3);
+      
+           // global_dpd_->buf4_init_sp(&TEST3, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbeJ_sp");
+           // global_dpd_->buf4_print_sp(&TEST3, "outfile", 1);
+           // global_dpd_->buf4_close_sp(&TEST3);
+
+           // global_dpd_->buf4_init_sp(&TEST3, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMnIj_sp");
+           // global_dpd_->buf4_print_sp(&TEST3, "outfile", 1);
+           // global_dpd_->buf4_close_sp(&TEST3);
+
 
             timer_on("T2 Build");
             t2_build_mp(); // sp->dp
@@ -502,6 +596,8 @@ double CCEnergyWavefunction::compute_energy() {
         moinfo_.new_d1diag = new_d1diag();
         moinfo_.d2diag = d2diag();
         update();
+        // Test ** 
+        amp_write();
         checkpoint();
         }  // end loop over iterations
     }

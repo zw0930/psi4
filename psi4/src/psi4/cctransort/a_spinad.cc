@@ -37,6 +37,8 @@ void a_spinad() {
     global_dpd_->buf4_init(&A, PSIF_CC_AINTS, 0, 0, 0, 0, 0, 0, "A <ij|kl>");
     global_dpd_->buf4_scmcopy(&A, PSIF_CC_AINTS, "A 2<ij|kl> - <ij|lk>", 2);
     global_dpd_->buf4_sort_axpy(&A, PSIF_CC_AINTS, pqsr, 0, 0, "A 2<ij|kl> - <ij|lk>", -1);
+    global_dpd_->buf4_close(&A);
+    global_dpd_->buf4_init(&A, PSIF_CC_AINTS, 0, 0, 0, 0, 0, 0, "A 2<ij|kl> - <ij|lk>");
     global_dpd_->buf4_cast_copy_dtof(&A, PSIF_CC_AINTS, "A 2<ij|kl> - <ij|lk> sp");
     global_dpd_->buf4_close(&A);
 }

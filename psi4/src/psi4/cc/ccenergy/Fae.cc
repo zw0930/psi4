@@ -38,7 +38,7 @@
 #include "Params.h"
 #include "psi4/libciomr/libciomr.h"
 #include "psi4/cc/ccwave.h"
-
+#include "psi4/libpsi4util/PsiOutStream.h"
 namespace psi {
 namespace ccenergy {
 
@@ -55,6 +55,9 @@ void CCEnergyWavefunction::Fae_build() {
     dpdbuf4<double> tautIJAB, tautijab, tautIjAb, taut;
 
     nirreps = moinfo_.nirreps;
+
+    //Check Fae_build
+    outfile->Printf("Check Fae_build\n");    
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&fAB, PSIF_CC_OEI, 0, 1, 1, "fAB");
@@ -80,6 +83,9 @@ void CCEnergyWavefunction::Fae_build() {
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&FAE, PSIF_CC_OEI, 0, 1, 1, "FAE");
+        
+       // outfile->Printf("1:");
+       // global_dpd_->file2_print(&FAE, "outfile");
 
         global_dpd_->file2_mat_init(&FAE);
         global_dpd_->file2_mat_rd(&FAE);
@@ -151,6 +157,10 @@ void CCEnergyWavefunction::Fae_build() {
         global_dpd_->contract222(&tIA, &fIA, &FAE, 1, 1, -0.5, 1);
         global_dpd_->file2_close(&tIA);
         global_dpd_->file2_close(&fIA);
+
+       // outfile->Printf("2:");
+       // global_dpd_->file2_print(&FAE, "outfile");
+
         global_dpd_->file2_close(&FAE);
 
         /*
@@ -214,6 +224,10 @@ void CCEnergyWavefunction::Fae_build() {
         global_dpd_->file2_close(&tIA);
         global_dpd_->file2_mat_wrt(&FAE);
         global_dpd_->file2_mat_close(&FAE);
+
+       // outfile->Printf("3:");
+       // global_dpd_->file2_print(&FAE, "outfile");
+
         global_dpd_->file2_close(&FAE);
 
         global_dpd_->file2_init(&FAE, PSIF_CC_OEI, 0, 1, 1, "FAE");
@@ -221,11 +235,21 @@ void CCEnergyWavefunction::Fae_build() {
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D 2<ij|ab> - <ij|ba>");
         global_dpd_->buf4_init(&tautIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tautIjAb");
         global_dpd_->contract442(&tautIjAb, &D, &FAE, 3, 3, -1, 1);
+        
+        //outfile->Printf("D:");
+        //global_dpd_->buf4_print(&D, "outfile", 1);
+        //outfile->Printf("tautIjAb:");
+        //global_dpd_->buf4_print(&tautIjAb, "outfile", 1);
+        
         global_dpd_->buf4_close(&D);
         global_dpd_->buf4_close(&tautIjAb);
 
         /* Build the tilde intermediates */
         global_dpd_->file2_copy(&FAE, PSIF_CC_OEI, "FAEt");
+
+        //outfile->Printf("4:");
+        //global_dpd_->file2_print(&FAE, "outfile");
+
         global_dpd_->file2_close(&FAE);
 
         global_dpd_->file2_init(&FAEt, PSIF_CC_OEI, 0, 1, 1, "FAEt");
@@ -235,6 +259,9 @@ void CCEnergyWavefunction::Fae_build() {
         global_dpd_->contract222(&tIA, &FME, &FAEt, 1, 1, -0.5, 1);
         global_dpd_->file2_close(&tIA);
         global_dpd_->file2_close(&FME);
+
+        //outfile->Printf("5:");
+        //global_dpd_->file2_print(&FAEt, "outfile");
 
         global_dpd_->file2_close(&FAEt);
     } else if (params_.ref == 1) { /** ROHF **/

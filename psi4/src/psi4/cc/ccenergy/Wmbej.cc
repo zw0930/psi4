@@ -37,6 +37,7 @@
 #include "Params.h"
 #include "MOInfo.h"
 #include "psi4/cc/ccwave.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi {
 namespace ccenergy {
@@ -117,6 +118,7 @@ void CCEnergyWavefunction::Wmbej_build() {
     }
 
     timer_off("C->Wmbej");
+
     timer_on("F->Wmbej");
 
     if (params_.ref == 0) { /** RHF **/
@@ -366,12 +368,12 @@ void CCEnergyWavefunction::Wmbej_build() {
 
         global_dpd_->buf4_init(&WMbEj, PSIF_CC_TMP0, 0, 10, 11, 10, 11, 0, "WMbEj");
         global_dpd_->buf4_sort(&WMbEj, PSIF_CC_HBAR, prsq, 10, 10, "WMbEj");
-        global_dpd_->buf4_cast_copy_dtof(&WMbEj, PSIF_CC_HBAR, "WMbEj_sp");
+        //global_dpd_->buf4_cast_copy_dtof(&WMbEj, PSIF_CC_HBAR, "WMbEj_sp");
         global_dpd_->buf4_close(&WMbEj);
 
         global_dpd_->buf4_init(&WMbeJ, PSIF_CC_TMP0, 0, 10, 10, 10, 10, 0, "WMbeJ");
         global_dpd_->buf4_sort(&WMbeJ, PSIF_CC_HBAR, psrq, 10, 10, "WMbeJ");
-        global_dpd_->buf4_cast_copy_dtof(&WMbeJ, PSIF_CC_HBAR, "WMbeJ_sp");
+        //global_dpd_->buf4_cast_copy_dtof(&WMbeJ, PSIF_CC_HBAR, "WMbeJ_sp");
         global_dpd_->buf4_close(&WMbeJ);
 
     } else if (params_.ref == 1) { /** ROHF **/
@@ -425,6 +427,15 @@ void CCEnergyWavefunction::Wmbej_build() {
         global_dpd_->buf4_sort(&W, PSIF_CC_HBAR, psrq, 27, 27, "WmBEj");
         global_dpd_->buf4_close(&W);
     }
+    
+    //Check WMbEj
+
+     outfile->Printf("Check WMbEj: E(sort)\n");
+     global_dpd_->buf4_init(&WMbEj, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbEj");
+     global_dpd_->buf4_print(&WMbEj, "outfile", 1);
+     global_dpd_->buf4_close(&WMbEj);
+
+    
 
     timer_on("X->Wmbej");
 

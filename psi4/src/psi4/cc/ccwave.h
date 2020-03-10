@@ -84,8 +84,9 @@ class CCEnergyWavefunction : public Wavefunction {
     void ccdump();
     void spinad_amps();
     void amp_write();
+    void amp_write_sp();
     void checkpoint();
-
+    
     /* intermediates */
     void update();
     void Fae_build();

@@ -29,6 +29,7 @@ target_sources(cc
     ${CMAKE_CURRENT_SOURCE_DIR}/Z_sp.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/ZT2.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/amp_write.cc
+    ${CMAKE_CURRENT_SOURCE_DIR}/amp_write_sp.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/analyze.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/cache.cc
     ${CMAKE_CURRENT_SOURCE_DIR}/cc2_Wabei.cc

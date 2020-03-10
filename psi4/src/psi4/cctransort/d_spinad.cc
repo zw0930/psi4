@@ -40,8 +40,15 @@ void d_spinad() {
     global_dpd_->buf4_close(&D);
 
     global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D 2<ij|ab> - <ij|ba>");
+    global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D 2<ij|ab> - <ij|ba> sp");
     global_dpd_->buf4_sort(&D, PSIF_CC_DINTS, prqs, 10, 10, "D 2<ij|ab> - <ij|ba> (ia,jb)");
     global_dpd_->buf4_close(&D);
+    
+    global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D 2<ij|ab> - <ij|ba> (ia,jb)");
+    global_dpd_->buf4_cast_copy_dtof(&D, PSIF_CC_DINTS, "D 2<ij|ab> - <ij|ba> (ia,jb) sp");
+    global_dpd_->buf4_close(&D);
+
+
 }
 
 }  // namespace cctransort
