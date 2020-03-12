@@ -35,6 +35,7 @@
 #include "psi4/libdpd/dpd.h"
 #include "Params.h"
 #include "psi4/cc/ccwave.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi {
 namespace ccenergy {
@@ -57,6 +58,8 @@ void CCEnergyWavefunction::FaetT2() {
         global_dpd_->buf4_close(&newtIjAb);
         global_dpd_->buf4_sort_axpy(&Z, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1);
         global_dpd_->buf4_close(&Z);
+               
+
     } else if (params_.ref == 1) { /** ROHF **/
         global_dpd_->buf4_init(&newtIJAB, PSIF_CC_TAMPS, 0, 2, 5, 2, 7, 0, "New tIJAB");
         global_dpd_->buf4_init(&newtijab, PSIF_CC_TAMPS, 0, 2, 5, 2, 7, 0, "New tijab");
@@ -151,8 +154,8 @@ void CCEnergyWavefunction::FaetT2_mp() {
         global_dpd_->buf4_axpy(&Z, &newtIjAb, 1);
         global_dpd_->buf4_close(&newtIjAb);
         global_dpd_->buf4_sort_axpy(&Z, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1);
-        global_dpd_->buf4_close(&Z);
-    }
+           
+     }
 }
 
 void CCEnergyWavefunction::FaetT2_sp() {

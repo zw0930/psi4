@@ -182,12 +182,6 @@ void CCEnergyWavefunction::Wmbej_build_sp() {
 
     }
      
-    // Check WMbEj
-    outfile->Printf("Check WMbEj_sp: E(sort)\n");
-    global_dpd_->buf4_init_sp(&WMbEj, PSIF_CC_HBAR, 0, 10, 10, 10, 10, 0, "WMbEj_sp");
-    global_dpd_->buf4_print_sp(&WMbEj, "outfile", 1);
-    global_dpd_->buf4_close_sp(&WMbEj);
-
  
     timer_on("X->Wmbej");
 

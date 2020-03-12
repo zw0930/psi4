@@ -171,6 +171,7 @@ void CCEnergyWavefunction::Wmnij_build() {
         global_dpd_->buf4_close(&Wmnij);
         global_dpd_->buf4_close(&WMnIj);
     }
+     
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init(&WMnIj, PSIF_CC_HBAR, 0, 0, 0, 0, 0, 0, "WMnIj");
@@ -233,6 +234,8 @@ void CCEnergyWavefunction::Wmnij_build() {
         global_dpd_->buf4_close(&Wmnij);
         global_dpd_->buf4_close(&WMnIj);
     }
+
+
 }
 }  // namespace ccenergy
 }  // namespace psi

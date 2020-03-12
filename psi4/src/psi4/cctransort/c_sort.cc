@@ -109,6 +109,8 @@ void c_sort(int reference) {
         global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb>");
         global_dpd_->buf4_sort(&C, PSIF_CC_CINTS, sprq, 11, 10, "C <ia|jb> (bi,ja)");
         //Cast and make a copy of buf4 in single-precision
+        global_dpd_->buf4_close(&C);
+        global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 11, 10, 11, 10, 0, "C <ia|jb> (bi,ja)"); 
         global_dpd_->buf4_cast_copy_dtof(&C, PSIF_CC_CINTS, "C <ia|jb> (bi,ja) sp");
         global_dpd_->buf4_close(&C);
 
@@ -116,6 +118,8 @@ void c_sort(int reference) {
         global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia||jb>");
         global_dpd_->buf4_sort(&C, PSIF_CC_CINTS, sprq, 11, 10, "C <ia||jb> (bi,ja)");
         //Cast and make a copy of buf4 in single-precision
+        global_dpd_->buf4_close(&C);
+        global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 11, 10, 11, 10, 0, "C <ia||jb> (bi,ja)");
         global_dpd_->buf4_cast_copy_dtof(&C, PSIF_CC_CINTS, "C <ia||jb> (bi,ja) sp");
         global_dpd_->buf4_close(&C);
 
@@ -123,6 +127,8 @@ void c_sort(int reference) {
         global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb>");
         global_dpd_->buf4_sort(&C, PSIF_CC_CINTS, pqsr, 10, 11, "C <ia|jb> (ia,bj)");
         //Cast and make a copy of buf4 in single-precision
+        global_dpd_->buf4_close(&C);
+        global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 10, 11, 10, 11, 0, "C <ia|jb> (ia,bj)");
         global_dpd_->buf4_cast_copy_dtof(&C, PSIF_CC_CINTS, "C <ia|jb> (ia,bj) sp");
         global_dpd_->buf4_close(&C);
 
@@ -130,6 +136,8 @@ void c_sort(int reference) {
         global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia||jb>");
         global_dpd_->buf4_sort(&C, PSIF_CC_CINTS, pqsr, 10, 11, "C <ia||jb> (ia,bj)");
         //Cast and make a copy of buf4 in single-precision
+        global_dpd_->buf4_close(&C);
+        global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 10, 11, 10, 11, 0, "C <ia||jb> (ia,bj)");
         global_dpd_->buf4_cast_copy_dtof(&C, PSIF_CC_CINTS, "C <ia||jb> (ia,bj) sp");
         global_dpd_->buf4_close(&C);
 
@@ -137,6 +145,8 @@ void c_sort(int reference) {
         global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb>");
         global_dpd_->buf4_sort(&C, PSIF_CC_CINTS, qpsr, 11, 11, "C <ai|bj>");
         //Cast and make a copy of buf4 in single-precision
+        global_dpd_->buf4_close(&C);
+        global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 11, 11, 11, 11, 0, "C <ai|bj>");
         global_dpd_->buf4_cast_copy_dtof(&C, PSIF_CC_CINTS, "C <ai|bj> sp");
         global_dpd_->buf4_close(&C);
     }

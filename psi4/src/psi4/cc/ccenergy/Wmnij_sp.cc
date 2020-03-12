@@ -37,6 +37,7 @@
 #include "psi4/libqt/qt.h"
 #include "Params.h"
 #include "psi4/cc/ccwave.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi {
 namespace ccenergy {
@@ -67,7 +68,9 @@ void CCEnergyWavefunction::Wmnij_build_sp() {
 
         global_dpd_->file2_close_sp(&tIA);
         global_dpd_->buf4_close_sp(&WMnIj);
-    }   
+    }  
+     
+
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->buf4_init_sp(&WMnIj, PSIF_CC_HBAR, 0, 0, 0, 0, 0, 0, "WMnIj_sp");
         global_dpd_->buf4_init_sp(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D <ij|ab> sp");
@@ -77,6 +80,8 @@ void CCEnergyWavefunction::Wmnij_build_sp() {
         global_dpd_->buf4_close_sp(&D);
         global_dpd_->buf4_close_sp(&WMnIj);
     }
+
+
 }
 }  // namespace ccenergy
 }  // namespace psi

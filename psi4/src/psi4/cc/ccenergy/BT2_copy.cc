@@ -305,9 +305,9 @@ void CCEnergyWavefunction::BT2_mp() {
     dpdbuf4<double> tauIjAb;
     dpdbuf4<double> Z1, Z2;
     dpdbuf4<double> tau_a, tau_s, tau;
-    dpdbuf4<float> tau_a_sp, tau_s_sp, S_sp;
+    dpdbuf4<float> tau_a_sp, tau_s_sp;
     dpdbuf4<double> B_a, B_s;
-    dpdbuf4<float> B_a_sp, B_s_sp, B_sp;
+    dpdbuf4<float> B_a_sp, B_s_sp;
     dpdbuf4<double> S, A;
     double **B_diag, **tau_diag;
     float **B_diag_sp, **tau_diag_sp;
@@ -373,8 +373,6 @@ void CCEnergyWavefunction::BT2_mp() {
             global_dpd_->buf4_close_sp(&B_s_sp);
             global_dpd_->buf4_close_sp(&tau_s_sp);
             timer_off("ABCD:S");
-            
-            outfile->Printf("test!!!");
 
             /* tau_diag(ij,c)  = 2 * tau(ij,cc)*/
             global_dpd_->buf4_init(&tau, PSIF_CC_TAMPS, 0, 3, 8, 3, 8, 0, "tau(+)(ij,ab)");
@@ -394,13 +392,10 @@ void CCEnergyWavefunction::BT2_mp() {
             global_dpd_->buf4_mat_irrep_close(&tau, 0);
 
             global_dpd_->buf4_init(&B_s, PSIF_CC_BINTS, 0, 8, 8, 8, 8, 0, "B(+) <ab|cd> + <ab|dc>");
-            //global_dpd_->buf4_init(&S, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij)");
-            //global_dpd_->buf4_mat_irrep_init(&S, 0);
-            //global_dpd_->buf4_mat_irrep_rd(&S, 0);
-            global_dpd_->buf4_init_sp(&S_sp, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij) sp");
-            global_dpd_->buf4_mat_irrep_init_sp(&S_sp, 0);
-            global_dpd_->buf4_mat_irrep_rd_sp(&S_sp, 0);
-           
+            global_dpd_->buf4_init(&S, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij)");
+            global_dpd_->buf4_mat_irrep_init(&S, 0);
+            global_dpd_->buf4_mat_irrep_rd(&S, 0);
+
             rows_per_bucket = dpd_memfree() / (B_s.params->coltot[0] + moinfo_.nvirt);
             if (rows_per_bucket > B_s.params->rowtot[0]) rows_per_bucket = B_s.params->rowtot[0];
             nbuckets = (int)ceil((double)B_s.params->rowtot[0] / (double)rows_per_bucket);
@@ -415,7 +410,7 @@ void CCEnergyWavefunction::BT2_mp() {
             for (m = 0; m < (rows_left ? nbuckets - 1 : nbuckets); m++) {
                 row_start = m * rows_per_bucket;
                 nrows = rows_per_bucket;
-                //TMP = global_dpd_->dpd_block_matrix_sp(nrows, ncols);
+                TMP = global_dpd_->dpd_block_matrix_sp(nrows, ncols);
                 if (nrows && ncols && nlinks) {
                     psio_read(PSIF_CC_BINTS, "B(+) <ab|cc>", (char *)B_diag[0], sizeof(double) * nrows * nlinks, next,
                               &next);
@@ -425,21 +420,19 @@ void CCEnergyWavefunction::BT2_mp() {
 			}
 		    }
                     C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag_sp[0], nlinks, tau_diag_sp[0], nlinks, 1,
-                            S_sp.matrix[0][row_start], ncols);
-/*
+                            &(TMP[0][0]), ncols);
                     for (row = 0; row < nrows; row++){
 			for (col = 0; col < ncols; col++){
 				S.matrix[0][row_start + row][col] = static_cast<double>(TMP[row][col]);
 			}
 		    }
-*/
                 }
-                //global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
+                global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
             }
             if (rows_left) {
                 row_start = m * rows_per_bucket;
                 nrows = rows_left;
-                //TMP = global_dpd_->dpd_block_matrix_sp(nrows, ncols);
+                TMP = global_dpd_->dpd_block_matrix_sp(nrows, ncols);
                 if (nrows && ncols && nlinks) {
                     psio_read(PSIF_CC_BINTS, "B(+) <ab|cc>", (char *)B_diag[0], sizeof(double) * nrows * nlinks, next,
                               &next);
@@ -450,30 +443,20 @@ void CCEnergyWavefunction::BT2_mp() {
 		    }
 
                     C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag_sp[0], nlinks, tau_diag_sp[0], nlinks, 1,
-                            S_sp.matrix[0][row_start], ncols);
-/*
+                            &(TMP[0][0]), ncols);
                     for (row = 0; row < nrows; row++){
 			for (col = 0; col < ncols; col++){
 				S.matrix[0][row_start + row][col] = static_cast<double>(TMP[row][col]);
 			}
 		    }
-*/
+
                 }
-               // global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
+                global_dpd_->free_dpd_block_sp(TMP, nrows, ncols);
 
             }
-            global_dpd_->buf4_mat_irrep_wrt_sp(&S_sp, 0);
-            global_dpd_->buf4_mat_irrep_close_sp(&S_sp, 0);
-            global_dpd_->buf4_close_sp(&S_sp);
-/*
-            //Test cast_copy_ftod
-            global_dpd_->buf4_init_sp(&B_sp, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb> sp");
-            global_dpd_->buf4_cast_copy_ftod(&B_sp, PSIF_CC_CINTS, "C <ia|jb> test");
-            global_dpd_->buf4_close_sp(&B_sp);
-*/
-            global_dpd_->buf4_init_sp(&S_sp, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij) sp");
-            global_dpd_->buf4_cast_copy_ftod(&S_sp, PSIF_CC_TMP0, "S(ab,ij)");
-            global_dpd_->buf4_close_sp(&S_sp);
+            global_dpd_->buf4_mat_irrep_wrt(&S, 0);
+            global_dpd_->buf4_mat_irrep_close(&S, 0);
+            global_dpd_->buf4_close(&S);
             global_dpd_->buf4_close(&B_s);
             global_dpd_->free_dpd_block(B_diag, rows_per_bucket, moinfo_.nvirt);
             global_dpd_->free_dpd_block(tau_diag, tau.params->rowtot[0], moinfo_.nvirt);
