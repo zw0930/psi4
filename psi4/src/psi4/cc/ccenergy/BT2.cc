@@ -367,9 +367,9 @@ void CCEnergyWavefunction::BT2_mp() {
             timer_on("ABCD:S");
             global_dpd_->buf4_init_sp(&tau_s_sp, PSIF_CC_TAMPS, 0, 3, 8, 3, 8, 0, "tau(+)(ij,ab)_sp");
             global_dpd_->buf4_init_sp(&B_s_sp, PSIF_CC_BINTS, 0, 8, 8, 8, 8, 0, "B(+) <ab|cd> + <ab|dc> sp");
-            global_dpd_->buf4_init(&S, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij)");
-            global_dpd_->contract444_mp(&B_s_sp, &tau_s_sp, &S, 0, 0, 0.5, 0);
-            global_dpd_->buf4_close(&S);
+            global_dpd_->buf4_init_sp(&S_sp, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij) sp");
+            global_dpd_->contract444_sp(&B_s_sp, &tau_s_sp, &S_sp, 0, 0, 0.5, 0);
+            global_dpd_->buf4_close_sp(&S_sp);
             global_dpd_->buf4_close_sp(&B_s_sp);
             global_dpd_->buf4_close_sp(&tau_s_sp);
             timer_off("ABCD:S");
