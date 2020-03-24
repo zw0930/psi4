@@ -54,6 +54,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <cmath>
+#include <time.h>
 
 // Forward declaration to call cctriples
 namespace psi {
@@ -79,6 +80,7 @@ double CCEnergyWavefunction::compute_energy() {
     int done = 0;
     int **cachelist;
     double *emp2_aa, *emp2_ab, *ecc_aa, *ecc_ab;
+    clock_t time;
 
    // Files for checking values
     dpdfile2<double> TEST0;
@@ -192,7 +194,7 @@ double CCEnergyWavefunction::compute_energy() {
    
     //outfile->Printf(" !!test!!\n");
     outfile->Printf("Precision: %d \n", params_.precision);
- 
+
     moinfo_.ecc = energy();
     pair_energies(&emp2_aa, &emp2_ab);
     double last_energy = 0;
@@ -210,7 +212,7 @@ double CCEnergyWavefunction::compute_energy() {
    // amp_write();
 
     if (params_.precision == 0){
-  //  outfile->Printf(" !!test!!\n");
+    time = clock();  
     for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps();
 
@@ -237,12 +239,12 @@ double CCEnergyWavefunction::compute_energy() {
         global_dpd_->file2_close(&TEST0);
 */
         t1_build();
-      
+ /*     
         outfile->Printf("new tIA: t1_build"); 
         global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 0, 1, "New tIA");  
         global_dpd_->file2_print(&TEST0, "outfile");
         global_dpd_->file2_close(&TEST0);
-     
+  */   
         if (params_.print & 2) status("T1 amplitudes", "outfile");
 
         if (params_.wfn == "CC2" || params_.wfn == "EOM_CC2") {
@@ -292,6 +294,12 @@ double CCEnergyWavefunction::compute_energy() {
 
             timer_on("T2 Build");
             t2_build();
+           //Check tIjAb
+            //outfile->Printf("new tIjAb: t2_build"); 
+           // global_dpd_->buf4_init(&TEST2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");  
+       	   // global_dpd_->buf4_print(&TEST2, "outfile", 1);
+           // global_dpd_->buf4_close(&TEST2);
+
 
             if (params_.print & 2) status("T2 amplitudes", "outfile");
             timer_off("T2 Build");
@@ -347,13 +355,16 @@ double CCEnergyWavefunction::compute_energy() {
         moinfo_.d2diag = d2diag();
         update();
          // Test ** 
-        amp_write();
+        //amp_write();
 
         checkpoint();
     }  // end loop over iterations
+    time = clock() - time;
+    outfile->Printf("\nIt converged in %f seconds.\n", ((float)time)/CLOCKS_PER_SEC); 
     } else if (params_.precision == 1){ 
      tau_build_sp();
      taut_build_sp();
+     time = clock();
      for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps_sp();
         
@@ -441,6 +452,9 @@ double CCEnergyWavefunction::compute_energy() {
         tsave_sp(); // Make copies of single-precision t1, t2 for the next iteration
         tau_build_sp(); // sp copies needed
         taut_build_sp(); // sp copies needed
+        tsave();
+        tau_build();
+        taut_build();
         last_energy = moinfo_.ecc;
         moinfo_.ecc = energy();
         moinfo_.t1diag = diagnostic();
@@ -451,7 +465,8 @@ double CCEnergyWavefunction::compute_energy() {
         checkpoint();
        
     }  // end loop over iterations
-
+    time = clock() - time;
+    outfile->Printf("\nIt converged in %f seconds.\n", ((float)time)/CLOCKS_PER_SEC);
     } else if (params_.precision == 2){
      tau_build_sp();
      taut_build_sp();
@@ -459,7 +474,7 @@ double CCEnergyWavefunction::compute_energy() {
      // Check point 1: initial values for t1, t2 amps
      //outfile->Printf("Check initial values of single-precision t1, t2 amps\n");
      //amp_write_sp();
-
+     time = clock();
      for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps_sp();
         
@@ -485,14 +500,14 @@ double CCEnergyWavefunction::compute_energy() {
         global_dpd_->file2_init_sp(&TEST1, PSIF_CC_OEI, 0, 0, 1, "FME_sp");
         global_dpd_->file2_print_sp(&TEST1, "outfile");
         global_dpd_->file2_close_sp(&TEST1);
-*/ 
+*/
         t1_build_mp(); // sp(tamps&F)->dp(residual)
-
+/*
         outfile->Printf("newtIA: t1_build_mp");
         global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 0, 1, "New tIA");  
         global_dpd_->file2_print(&TEST0, "outfile");
         global_dpd_->file2_close(&TEST0);
-
+*/
         if (params_.print & 2) status("T1 amplitudes", "outfile");
 
         if (params_.wfn == "CC2" || params_.wfn == "EOM_CC2") {
@@ -542,6 +557,11 @@ double CCEnergyWavefunction::compute_energy() {
 
             timer_on("T2 Build");
             t2_build_mp(); // sp->dp
+             //Check tIjAb
+            //outfile->Printf("new tIjAb: t2_build"); 
+            //global_dpd_->buf4_init(&TEST2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");  
+       	    //global_dpd_->buf4_print(&TEST2, "outfile", 1);
+            //global_dpd_->buf4_close(&TEST2);
 
             if (params_.print & 2) status("T2 amplitudes", "outfile");
             timer_off("T2 Build");
@@ -599,10 +619,12 @@ double CCEnergyWavefunction::compute_energy() {
         moinfo_.d2diag = d2diag();
         update();
         // Test ** 
-        amp_write();
+        //amp_write();
  
        checkpoint();
         }  // end loop over iterations
+        time = clock() - time;
+        outfile->Printf("\nIt converged in %f seconds.\n", ((float)time)/CLOCKS_PER_SEC);
     }
 
 

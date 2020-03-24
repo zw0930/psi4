@@ -57,7 +57,7 @@ void CCEnergyWavefunction::Fae_build() {
     nirreps = moinfo_.nirreps;
 
     //Check Fae_build
-    outfile->Printf("Check Fae_build\n");    
+    //outfile->Printf("Check Fae_build\n");    
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&fAB, PSIF_CC_OEI, 0, 1, 1, "fAB");

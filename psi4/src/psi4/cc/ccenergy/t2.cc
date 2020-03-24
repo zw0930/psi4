@@ -135,10 +135,11 @@ void CCEnergyWavefunction::t2_build_mp() {
 }
 
 void CCEnergyWavefunction::t2_build_sp() {
+    dpdbuf4<float> T2new;
     DT2_sp();
     if (params_.print & 2) status("<ij||ab> -> T2", "outfile");
 
-    if (params_.wfn != "CC2" || params_.wfn != "EOM_CC2") { /* skip all this is wfn=CC2 */
+    if (params_.wfn != "CC2" || params_.wfn != "EOM_CC2") { /* skip all this if wfn=CC2 */
 
         FaetT2_sp();
         FmitT2_sp();
@@ -175,6 +176,8 @@ void CCEnergyWavefunction::t2_build_sp() {
         CT2_sp();
         if (params_.print & 2) status("<ia||jb> -> T2", "outfile");
         timer_off("CT2");
+        global_dpd_->buf4_init_sp(&T2new, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb sp");
+        global_dpd_->buf4_cast_copy_ftod(&T2new, PSIF_CC_TAMPS, "New tIjAb");
     } else { /* For CC2, just include (FT2)c->T2 */
         FT2_CC2();
     }
