@@ -75,7 +75,7 @@ int DPD::dot23_mp(dpdfile2<float> *T, dpdbuf4<float> *I, dpdfile2<double> *Z, in
 
     nirreps = T->params->nirreps;
     GT = T->my_irrep;
-    GI = I->file.my_irrep;
+    GI = I->file_sp.my_irrep;
     GZ = Z->my_irrep;
 
     /* Get the two-index quantities from disk */

@@ -61,7 +61,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
     nirreps = moinfo_.nirreps;
 
     // Print out files to check Fae_build
-    outfile->Printf("Check Fae_build\n");
+    //outfile->Printf("Check Fae_build\n");
 
 
     if (params_.ref == 0) { /** RHF **/

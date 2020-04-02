@@ -171,6 +171,8 @@ void CCEnergyWavefunction::BT2() {
             global_dpd_->free_dpd_block(B_diag, rows_per_bucket, moinfo_.nvirt);
             global_dpd_->free_dpd_block(tau_diag, tau.params->rowtot[0], moinfo_.nvirt);
             global_dpd_->buf4_close(&tau);
+            
+            
 
             timer_on("ABCD:A");
             global_dpd_->buf4_init(&tau_a, PSIF_CC_TAMPS, 0, 4, 9, 4, 9, 0, "tau(-)(ij,ab)");
@@ -193,11 +195,12 @@ void CCEnergyWavefunction::BT2() {
             timer_off("ABCD:new");
         }
          // Check BT2
+/*
         outfile->Printf("Check BT2");
         global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
         global_dpd_->buf4_print(&newtIjAb, "outfile", 1);
         global_dpd_->buf4_close(&newtIjAb);
-
+*/
     } else if (params_.ref == 1) { /** ROHF **/
 
         global_dpd_->buf4_init(&newtIJAB, PSIF_CC_TAMPS, 0, 2, 7, 2, 7, 0, "New tIJAB");
@@ -352,6 +355,7 @@ void CCEnergyWavefunction::BT2_mp() {
             /* tau(-)(ij,ab) (i>j, a>b) = tau(ij,ab) - tau(ij,ba) */
             global_dpd_->buf4_init(&tau_a, PSIF_CC_TAMPS, 0, 4, 9, 0, 5, 1, "tauIjAb");
             global_dpd_->buf4_copy(&tau_a, PSIF_CC_TAMPS, "tau(-)(ij,ab)");
+            global_dpd_->buf4_cast_copy_dtof(&tau_a, PSIF_CC_TAMPS, "tau(-)(ij,ab)_sp");
             global_dpd_->buf4_close(&tau_a);
 
             /* tau_s(+)(ij,ab) (i>=j, a>=b) = tau(ij,ab) + tau(ij,ba) */
@@ -372,9 +376,7 @@ void CCEnergyWavefunction::BT2_mp() {
             global_dpd_->buf4_close_sp(&S_sp);
             global_dpd_->buf4_close_sp(&B_s_sp);
             global_dpd_->buf4_close_sp(&tau_s_sp);
-            timer_off("ABCD:S");
-            
-            outfile->Printf("test!!!");
+            timer_off("ABCD:S"); 
 
             /* tau_diag(ij,c)  = 2 * tau(ij,cc)*/
             global_dpd_->buf4_init(&tau, PSIF_CC_TAMPS, 0, 3, 8, 3, 8, 0, "tau(+)(ij,ab)");
@@ -464,14 +466,12 @@ void CCEnergyWavefunction::BT2_mp() {
             }
             global_dpd_->buf4_mat_irrep_wrt_sp(&S_sp, 0);
             global_dpd_->buf4_mat_irrep_close_sp(&S_sp, 0);
-            global_dpd_->buf4_close_sp(&S_sp);
 /*
             //Test cast_copy_ftod
             global_dpd_->buf4_init_sp(&B_sp, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb> sp");
             global_dpd_->buf4_cast_copy_ftod(&B_sp, PSIF_CC_CINTS, "C <ia|jb> test");
             global_dpd_->buf4_close_sp(&B_sp);
 */
-            global_dpd_->buf4_init_sp(&S_sp, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij) sp");
             global_dpd_->buf4_cast_copy_ftod(&S_sp, PSIF_CC_TMP0, "S(ab,ij)");
             global_dpd_->buf4_close_sp(&S_sp);
             global_dpd_->buf4_close(&B_s);
@@ -497,7 +497,7 @@ void CCEnergyWavefunction::BT2_mp() {
 
             timer_on("ABCD:axpy");
             global_dpd_->buf4_init(&S, PSIF_CC_TMP0, 0, 5, 0, 8, 3, 0, "S(ab,ij)");
-            global_dpd_->buf4_sort_axpy(&S, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
+            global_dpd_->buf4_sort_axpy(&S, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);                 
             global_dpd_->buf4_close(&S);
             global_dpd_->buf4_init(&A, PSIF_CC_TMP0, 0, 5, 0, 9, 4, 0, "A(ab,ij)");
             global_dpd_->buf4_sort_axpy(&A, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
@@ -506,11 +506,12 @@ void CCEnergyWavefunction::BT2_mp() {
             timer_off("ABCD:new");
         }
      // Check BT2
+/*
      outfile->Printf("Check BT2");
      global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
      global_dpd_->buf4_print(&newtIjAb, "outfile", 1);
      global_dpd_->buf4_close(&newtIjAb);
-
+*/
     } 
 }
 
@@ -598,8 +599,8 @@ void CCEnergyWavefunction::BT2_sp() {
                     }
             global_dpd_->buf4_mat_irrep_close_sp(&tau, 0);
 
-            global_dpd_->buf4_init_sp(&B_s, PSIF_CC_BINTS, 0, 8, 8, 8, 8, 0, "B(+) <ab|cd> + <ab|dc>");
-            global_dpd_->buf4_init_sp(&S, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij)");
+            global_dpd_->buf4_init_sp(&B_s, PSIF_CC_BINTS, 0, 8, 8, 8, 8, 0, "B(+) <ab|cd> + <ab|dc> sp");
+            global_dpd_->buf4_init_sp(&S, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij)_sp");
             global_dpd_->buf4_mat_irrep_init_sp(&S, 0);
             global_dpd_->buf4_mat_irrep_rd_sp(&S, 0);
 
@@ -617,7 +618,7 @@ void CCEnergyWavefunction::BT2_sp() {
                 row_start = m * rows_per_bucket;
                 nrows = rows_per_bucket;
                 if (nrows && ncols && nlinks) {
-                    psio_read(PSIF_CC_BINTS, "B(+) <ab|cc>", (char *)B_diag[0], sizeof(double) * nrows * nlinks, next,
+                    psio_read(PSIF_CC_BINTS, "B(+) <ab|cc> sp", (char *)B_diag[0], sizeof(float) * nrows * nlinks, next,
                               &next);
                     C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag[0], nlinks, tau_diag[0], nlinks, 1,
                             S.matrix[0][row_start], ncols);
@@ -627,7 +628,7 @@ void CCEnergyWavefunction::BT2_sp() {
                 row_start = m * rows_per_bucket;
                 nrows = rows_left;
                 if (nrows && ncols && nlinks) {
-                    psio_read(PSIF_CC_BINTS, "B(+) <ab|cc>", (char *)B_diag[0], sizeof(double) * nrows * nlinks, next,
+                    psio_read(PSIF_CC_BINTS, "B(+) <ab|cc> sp", (char *)B_diag[0], sizeof(float) * nrows * nlinks, next,
                               &next);
                     C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag[0], nlinks, tau_diag[0], nlinks, 1,
                             S.matrix[0][row_start], ncols);
@@ -642,9 +643,9 @@ void CCEnergyWavefunction::BT2_sp() {
             global_dpd_->buf4_close_sp(&tau);
 
             timer_on("ABCD:A");
-            global_dpd_->buf4_init_sp(&tau_a, PSIF_CC_TAMPS, 0, 4, 9, 4, 9, 0, "tau(-)(ij,ab)");
-            global_dpd_->buf4_init_sp(&B_a, PSIF_CC_BINTS, 0, 9, 9, 9, 9, 0, "B(-) <ab|cd> - <ab|dc>");
-            global_dpd_->buf4_init_sp(&A, PSIF_CC_TMP0, 0, 9, 4, 9, 4, 0, "A(ab,ij)");
+            global_dpd_->buf4_init_sp(&tau_a, PSIF_CC_TAMPS, 0, 4, 9, 4, 9, 0, "tau(-)(ij,ab)_sp");
+            global_dpd_->buf4_init_sp(&B_a, PSIF_CC_BINTS, 0, 9, 9, 9, 9, 0, "B(-) <ab|cd> - <ab|dc> sp");
+            global_dpd_->buf4_init_sp(&A, PSIF_CC_TMP0, 0, 9, 4, 9, 4, 0, "A(ab,ij)_sp");
             global_dpd_->contract444_sp(&B_a, &tau_a, &A, 0, 0, 0.5, 0);
             global_dpd_->buf4_close_sp(&A);
             global_dpd_->buf4_close_sp(&B_a);
@@ -652,11 +653,11 @@ void CCEnergyWavefunction::BT2_sp() {
             timer_off("ABCD:A");
 
             timer_on("ABCD:axpy");
-	    global_dpd_->buf4_init_sp(&S, PSIF_CC_TMP0, 0, 5, 0, 8, 3, 0, "S(ab,ij)");
-	    global_dpd_->buf4_sort_axpy_sp(&S, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
+	    global_dpd_->buf4_init_sp(&S, PSIF_CC_TMP0, 0, 5, 0, 8, 3, 0, "S(ab,ij)_sp");
+	    global_dpd_->buf4_sort_axpy_sp(&S, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb sp", 1);
 	    global_dpd_->buf4_close_sp(&S);
-	    global_dpd_->buf4_init_sp(&A, PSIF_CC_TMP0, 0, 5, 0, 9, 4, 0, "A(ab,ij)");
-            global_dpd_->buf4_sort_axpy_sp(&A, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb", 1);
+	    global_dpd_->buf4_init_sp(&A, PSIF_CC_TMP0, 0, 5, 0, 9, 4, 0, "A(ab,ij)_sp");
+            global_dpd_->buf4_sort_axpy_sp(&A, PSIF_CC_TAMPS, rspq, 0, 5, "New tIjAb sp", 1);
             global_dpd_->buf4_close_sp(&A);
             timer_off("ABCD:axpy");
             timer_off("ABCD:new");
