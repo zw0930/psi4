@@ -355,7 +355,7 @@ double CCEnergyWavefunction::compute_energy() {
         moinfo_.d2diag = d2diag();
         update();
          // Test ** 
-        //amp_write();
+        amp_write();
 
         checkpoint();
     }  // end loop over iterations
@@ -619,7 +619,7 @@ double CCEnergyWavefunction::compute_energy() {
         moinfo_.d2diag = d2diag();
         update();
         // Test ** 
-        //amp_write();
+        amp_write();
  
        checkpoint();
         }  // end loop over iterations
