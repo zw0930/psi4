@@ -240,7 +240,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
                                 &(TMP[0][0]),  Z->params->coltot[Hz ^ GZ]);
                     for (row = 0; row < nrows; row++){
   			for (col = 0; col < ncols; col++){
-				Z->matrix[Hz][n * rows_per_bucket+row][col] = beta * Z->matrix[Hz][n * rows_per_bucket+row][col] + TMP[row][col];
+				Z->matrix[Hz][n * rows_per_bucket+row][col] = beta * Z->matrix[Hz][n * rows_per_bucket+row][col] + static_cast<double>(TMP[row][col]);
 			}
                     }
  		    free_dpd_block_sp(TMP,nrows,ncols);
@@ -261,7 +261,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
                                 Z->params->coltot[Hz ^ GZ]);
                      for (row = 0; row < nrows; row++){
   			for (col = 0; col < ncols; col++){
-				Z->matrix[Hz][n * rows_per_bucket+row][col] = beta * Z->matrix[Hz][n * rows_per_bucket+row][col] + TMP[row][col];
+				Z->matrix[Hz][n * rows_per_bucket+row][col] = beta * Z->matrix[Hz][n * rows_per_bucket+row][col] + static_cast<double>(TMP[row][col]);
 			}
                     }
  		    free_dpd_block_sp(TMP,nrows,ncols);

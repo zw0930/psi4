@@ -68,7 +68,7 @@ void b_spinad(std::shared_ptr<PSIO> psio) {
         global_dpd_->buf4_mat_irrep_row_close(&B, h);
     }
 
-    global_dpd_->buf4_cast_copy_dtof(&B, PSIF_CC_BINTS, "B <ab|cd> sp");
+    //global_dpd_->buf4_cast_copy_dtof(&B, PSIF_CC_BINTS, "B <ab|cd> sp");
     global_dpd_->buf4_cast_copy_dtof(&Ba, PSIF_CC_BINTS, "B(-) <ab|cd> - <ab|dc> sp");
     global_dpd_->buf4_close(&Ba);
     global_dpd_->buf4_close(&Bs);
