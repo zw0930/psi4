@@ -80,7 +80,7 @@ double CCEnergyWavefunction::compute_energy() {
     int done = 0;
     int **cachelist;
     double *emp2_aa, *emp2_ab, *ecc_aa, *ecc_ab;
-    clock_t time;
+    clock_t time, time_test;
 
    // Files for checking values
     dpdfile2<double> TEST0;
@@ -215,13 +215,16 @@ double CCEnergyWavefunction::compute_energy() {
     time = clock();  
     for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps();
-
+        time_test = clock();
         timer_on("F build");
         Fme_build();
         Fae_build();
         Fmi_build();
         if (params_.print & 2) status("F intermediates", "outfile");
         timer_off("F build");
+        time_test = clock() - time_test;
+        outfile->Printf("\n! F_dp built in %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
 
         // Check point 2: initial values for F intermediates, newtIA
 /*
@@ -238,7 +241,12 @@ double CCEnergyWavefunction::compute_energy() {
         global_dpd_->file2_print(&TEST0, "outfile");
         global_dpd_->file2_close(&TEST0);
 */
+        time_test = clock();
         t1_build();
+        time_test = clock() - time_test;
+        outfile->Printf("\n! t1_dp built in %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
+
  /*     
         outfile->Printf("new tIA: t1_build"); 
         global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 0, 1, "New tIA");  
@@ -266,6 +274,7 @@ double CCEnergyWavefunction::compute_energy() {
             if (params_.print & 2) status("T2 amplitudes", "outfile");
             timer_off("T2 Build");
         } else {
+            time_test = clock();
             timer_on("Wmbej build");
             Wmbej_build();
             if (params_.print & 2) status("Wmbej", "outfile");
@@ -275,7 +284,10 @@ double CCEnergyWavefunction::compute_energy() {
             if (params_.print & 2) status("Z", "outfile");
             Wmnij_build();
             if (params_.print & 2) status("Wmnij", "outfile");
-           
+            time_test = clock() - time_test;
+            outfile->Printf("\n! W_dp built in %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
+
             // Check point: initial values for W intermediates
 /*
             outfile->Printf("Check initial values of double-precision W intermediates\n");
@@ -291,7 +303,7 @@ double CCEnergyWavefunction::compute_energy() {
             global_dpd_->buf4_print(&TEST2, "outfile", 1);
             global_dpd_->buf4_close(&TEST2);
 */
-
+            time_test = clock();
             timer_on("T2 Build");
             t2_build();
            //Check tIjAb
@@ -303,6 +315,9 @@ double CCEnergyWavefunction::compute_energy() {
 
             if (params_.print & 2) status("T2 amplitudes", "outfile");
             timer_off("T2 Build");
+            time_test = clock() - time_test;
+            outfile->Printf("\n! t2_dp built in %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
 
             if (params_.wfn == "CC3" || params_.wfn == "EOM_CC3") {
                 /* step1: build cc3 intermediates, Wabei, Wmnie, Wmbij, Wamef */
@@ -470,6 +485,8 @@ double CCEnergyWavefunction::compute_energy() {
     } else if (params_.precision == 2){
      tau_build_sp();
      taut_build_sp();
+     tau_build();
+     taut_build();
 
      // Check point 1: initial values for t1, t2 amps
      //outfile->Printf("Check initial values of single-precision t1, t2 amps\n");
@@ -477,14 +494,20 @@ double CCEnergyWavefunction::compute_energy() {
      time = clock();
      for (moinfo_.iter = 1; moinfo_.iter <= params_.maxiter; moinfo_.iter++) {
         sort_amps_sp();
-        
+        time_test = clock(); 
         timer_on("F build");
         Fme_build_sp();
         Fae_build_sp();
         Fmi_build_sp();
+        //Fme_build();
+        //Fae_build();
+        //Fmi_build();
+
         
        if (params_.print & 2) status("F intermediates", "outfile");
         timer_off("F build");
+        time_test = clock() - time_test;
+        outfile->Printf("\n! F built in %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
 
         // Check point 2: initial values for F intermediates
 /*
@@ -500,8 +523,12 @@ double CCEnergyWavefunction::compute_energy() {
         global_dpd_->file2_init_sp(&TEST1, PSIF_CC_OEI, 0, 0, 1, "FME_sp");
         global_dpd_->file2_print_sp(&TEST1, "outfile");
         global_dpd_->file2_close_sp(&TEST1);
-*/
+*/     
+        time_test = clock();
         t1_build_mp(); // sp(tamps&F)->dp(residual)
+        time_test = clock() - time_test;
+        outfile->Printf("\n! t1 built in %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
 /*
         outfile->Printf("newtIA: t1_build_mp");
         global_dpd_->file2_init(&TEST0, PSIF_CC_OEI, 0, 0, 1, "New tIA");  
@@ -529,16 +556,20 @@ double CCEnergyWavefunction::compute_energy() {
             if (params_.print & 2) status("T2 amplitudes", "outfile");
             timer_off("T2 Build");
         } else {
+            time_test = clock();
             timer_on("Wmbej build");
             Wmbej_build_sp();
             if (params_.print & 2) status("Wmbej", "outfile");
             timer_off("Wmbej build");
-
+            
             Z_build_sp();
             if (params_.print & 2) status("Z", "outfile");
             Wmnij_build_sp();
             if (params_.print & 2) status("Wmnij", "outfile");
-       
+            time_test = clock() - time_test;
+            outfile->Printf("\n! W built in %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
+ 
             // Check point: initial values for W intermediates
 /*
             outfile->Printf("Check initial values of single-precision W intermediates\n");
@@ -554,7 +585,7 @@ double CCEnergyWavefunction::compute_energy() {
             global_dpd_->buf4_print_sp(&TEST3, "outfile", 1);
             global_dpd_->buf4_close_sp(&TEST3);
 */
-
+            time_test = clock();
             timer_on("T2 Build");
             t2_build_mp(); // sp->dp
              //Check tIjAb
@@ -565,6 +596,9 @@ double CCEnergyWavefunction::compute_energy() {
 
             if (params_.print & 2) status("T2 amplitudes", "outfile");
             timer_off("T2 Build");
+            time_test = clock() - time_test;
+            outfile->Printf("\n! t2 built in %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
 
             if (params_.wfn == "CC3" || params_.wfn == "EOM_CC3") {
                 /* step1: build cc3 intermediates, Wabei, Wmnie, Wmbij, Wamef */

@@ -55,13 +55,14 @@ void CCEnergyWavefunction::Fae_build_sp() {
     dpdfile2<float> fAB_sp, fab_sp, fIA_sp, fia_sp;
     dpdfile2<float> FAE_sp, Fae_sp;
     dpdfile2<float> FAEt_sp, Faet_sp;
+    dpdfile2<double> FAE_test;
     dpdbuf4<float> F_anti_sp, F_sp, D_anti_sp, D_sp;
     dpdbuf4<float> tautIJAB_sp, tautijab_sp, tautIjAb_sp, taut;
 
     nirreps = moinfo_.nirreps;
 
-    // Print out files to check Fae_build
-    //outfile->Printf("Check Fae_build\n");
+     //Print out files to check Fae_build
+     //outfile->Printf("Check Fae_build\n");
 
 
     if (params_.ref == 0) { /** RHF **/
@@ -74,7 +75,7 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
        
        // outfile->Printf("1:\n");
-       // global_dpd_->file2_print_sp(&FAE_sp, "outfile");
+        //global_dpd_->file2_print_sp(&FAE_sp, "outfile");
 
         global_dpd_->file2_mat_init_sp(&FAE_sp);
         global_dpd_->file2_mat_rd_sp(&FAE_sp);
@@ -99,8 +100,8 @@ void CCEnergyWavefunction::Fae_build_sp() {
         global_dpd_->file2_close_sp(&tIA_sp);
         global_dpd_->file2_close_sp(&fIA_sp);
 
-       // outfile->Printf("2, contract222_sp:\n");
-       // global_dpd_->file2_print_sp(&FAE_sp, "outfile");
+        //outfile->Printf("2, contract222_sp:\n");
+        //global_dpd_->file2_print_sp(&FAE_sp, "outfile");
 
 
         global_dpd_->file2_close_sp(&FAE_sp);
@@ -177,12 +178,25 @@ void CCEnergyWavefunction::Fae_build_sp() {
 
         global_dpd_->buf4_init_sp(&D_sp, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D 2<ij|ab> - <ij|ba> sp");
         global_dpd_->buf4_init_sp(&tautIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tautIjAb_sp");
-        global_dpd_->contract442_sp(&tautIjAb_sp, &D_sp, &FAE_sp, 3, 3, -1, 1);
+        //!!04/28 test contract442_sp 
+        global_dpd_->file2_cast_copy_ftod(&FAE_sp, PSIF_CC_OEI, "FAE_test");        
+        global_dpd_->file2_close_sp(&FAE_sp);
+        global_dpd_->file2_init(&FAE_test, PSIF_CC_OEI, 0, 1, 1, "FAE_test");
+        //global_dpd_->contract442_sp(&tautIjAb_sp, &D_sp, &TEST, 3, 3, -1, 0);
+        //outfile->Printf("Check contract442:\n");
+        //global_dpd_->file2_print_sp(&TEST, "outfile");
+        //global_dpd_->file2_close_sp(&TEST);
+        
+        global_dpd_->contract442_mp(&tautIjAb_sp, &D_sp, &FAE_test, 3, 3, -1, 1);
 
+        global_dpd_->file2_cast_copy_dtof(&FAE_test, PSIF_CC_OEI, "FAE_sp");        
+        global_dpd_->file2_close(&FAE_test); 
+        global_dpd_->file2_init_sp(&FAE_sp, PSIF_CC_OEI, 0, 1, 1, "FAE_sp");
+        //global_dpd_->contract442_sp(&tautIjAb_sp, &D_sp, &FAE_sp, 3, 3, -1, 1);
         //outfile->Printf("D_sp:\n");
         //global_dpd_->buf4_print_sp(&D_sp, "outfile", 1);
-       // outfile->Printf("tautIjAb_sp:\n");
-       // global_dpd_->buf4_print_sp(&tautIjAb_sp, "outfile", 1);
+        //outfile->Printf("tautIjAb_sp:\n");
+        //global_dpd_->buf4_print_sp(&tautIjAb_sp, "outfile", 1);
 
 
         global_dpd_->buf4_close_sp(&D_sp);

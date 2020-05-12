@@ -776,6 +776,7 @@ void CCEnergyWavefunction::t1_build_sp() {
         global_dpd_->buf4_close_sp(&tIjAb_sp);
 
         if (params_.just_residuals) {
+            global_dpd_->file2_cast_copy_ftod(&newtIA_sp, PSIF_CC_OEI, "New tIA");
             global_dpd_->file2_close_sp(&newtIA_sp);
             return;
         }

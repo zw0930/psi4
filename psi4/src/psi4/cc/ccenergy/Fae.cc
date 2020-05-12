@@ -51,13 +51,14 @@ void CCEnergyWavefunction::Fae_build() {
     dpdfile2<double> fAB, fab, fIA, fia;
     dpdfile2<double> FAE, Fae;
     dpdfile2<double> FAEt, Faet;
+    dpdfile2<double> TEST;
     dpdbuf4<double> F_anti, F, D_anti, D;
     dpdbuf4<double> tautIJAB, tautijab, tautIjAb, taut;
 
     nirreps = moinfo_.nirreps;
 
     //Check Fae_build
-    //outfile->Printf("Check Fae_build\n");    
+    outfile->Printf("Check Fae_build\n");    
 
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&fAB, PSIF_CC_OEI, 0, 1, 1, "fAB");
@@ -84,8 +85,8 @@ void CCEnergyWavefunction::Fae_build() {
     if (params_.ref == 0) { /** RHF **/
         global_dpd_->file2_init(&FAE, PSIF_CC_OEI, 0, 1, 1, "FAE");
         
-       // outfile->Printf("1:");
-       // global_dpd_->file2_print(&FAE, "outfile");
+        //outfile->Printf("1:");
+        //global_dpd_->file2_print(&FAE, "outfile");
 
         global_dpd_->file2_mat_init(&FAE);
         global_dpd_->file2_mat_rd(&FAE);
@@ -158,8 +159,8 @@ void CCEnergyWavefunction::Fae_build() {
         global_dpd_->file2_close(&tIA);
         global_dpd_->file2_close(&fIA);
 
-       // outfile->Printf("2:");
-       // global_dpd_->file2_print(&FAE, "outfile");
+        //outfile->Printf("2:");
+        //global_dpd_->file2_print(&FAE, "outfile");
 
         global_dpd_->file2_close(&FAE);
 
@@ -226,14 +227,23 @@ void CCEnergyWavefunction::Fae_build() {
         global_dpd_->file2_mat_close(&FAE);
 
        // outfile->Printf("3:");
-       // global_dpd_->file2_print(&FAE, "outfile");
+        //global_dpd_->file2_print(&FAE, "outfile");
 
         global_dpd_->file2_close(&FAE);
 
         global_dpd_->file2_init(&FAE, PSIF_CC_OEI, 0, 1, 1, "FAE");
 
         global_dpd_->buf4_init(&D, PSIF_CC_DINTS, 0, 0, 5, 0, 5, 0, "D 2<ij|ab> - <ij|ba>");
+        
         global_dpd_->buf4_init(&tautIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tautIjAb");
+
+         //!!04/28 test contract442_sp
+        //global_dpd_->file2_init(&TEST, PSIF_CC_TMP0, 0, 1, 1, "TEST");
+        //global_dpd_->contract442(&tautIjAb, &D, &TEST, 3, 3, -1, 0);
+        //outfile->Printf("Check contract442:\n");
+        //global_dpd_->file2_print(&TEST, "outfile");
+        //global_dpd_->file2_close(&TEST);
+
         global_dpd_->contract442(&tautIjAb, &D, &FAE, 3, 3, -1, 1);
         
         //outfile->Printf("D:");

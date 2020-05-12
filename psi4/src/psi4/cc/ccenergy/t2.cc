@@ -95,10 +95,13 @@ void CCEnergyWavefunction::t2_build_mp() {
     if (params_.wfn != "CC2" || params_.wfn != "EOM_CC2") { /* skip all this is wfn=CC2 */
 
         FaetT2_mp();
+        //FaetT2();
         FmitT2_mp();
+        //FmitT2();
         if (params_.print & 2) status("F -> T2", "outfile");
 
         WmnijT2_mp();
+        //WmnijT2();
         if (params_.print & 2) status("Wmnij -> T2", "outfile");
 
         timer_on("BT2");
@@ -106,27 +109,33 @@ void CCEnergyWavefunction::t2_build_mp() {
             BT2_AO();
         else
             BT2_mp();
+            //BT2();
         if (params_.print & 2) status("<ab||cd> -> T2", "outfile");
         timer_off("BT2");
 
         ZT2_mp();
+        //ZT2();
         if (params_.print & 2) status("Z -> T2", "outfile");
 
         timer_on("FT2");
         FT2_mp();
+        //FT2();
         if (params_.print & 2) status("<ia||bc> -> T2", "outfile");
         timer_off("FT2");
 
         ET2_mp();
+        //ET2();
         if (params_.print & 2) status("<ij||ka> -> T2", "outfile");
 
         timer_on("WmbejT2");
         WmbejT2_mp();
+       // WmbejT2();
         if (params_.print & 2) status("Wmbej -> T2", "outfile");
         timer_off("WmbejT2");
 
         timer_on("CT2");
         CT2_mp();
+        //CT2();
         if (params_.print & 2) status("<ia||jb> -> T2", "outfile");
         timer_off("CT2");
     } else { /* For CC2, just include (FT2)c->T2 */
