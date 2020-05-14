@@ -36,6 +36,7 @@
 #include "psi4/libqt/qt.h"
 #include "Params.h"
 #include "psi4/cc/ccwave.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi {
 namespace ccenergy {
@@ -511,8 +512,11 @@ void CCEnergyWavefunction::CT2() {
 
 void CCEnergyWavefunction::CT2_mp() {
     dpdfile2<float> tIA_sp;
+    dpdfile2<double> tIA;
     dpdbuf4<double> Y, C, D, T2new, T2;
     dpdbuf4<float> Y_sp, C_sp, D_sp;
+    clock_t time_test;
+    int i;
 
     if (params_.ref == 0) { /** RHF **/
 
@@ -525,6 +529,29 @@ void CCEnergyWavefunction::CT2_mp() {
         global_dpd_->buf4_init_sp(&C_sp, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb> sp");
         global_dpd_->contract424_sp(&C_sp, &tIA_sp, &Y_sp, 3, 1, 0, 1, 0);
         global_dpd_->buf4_close_sp(&C_sp);
+
+//Test contraction!!
+       // global_dpd_->buf4_init_sp(&C_sp, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb> sp");
+       // global_dpd_->file2_init(&tIA, PSIF_CC_OEI, 0, 0, 1, "tIA");
+       // global_dpd_->buf4_init(&Y, PSIF_CC_TMP0, 0, 10, 0, 10, 0, 0, "Y (mA,jI)");
+       // global_dpd_->buf4_init(&C, PSIF_CC_CINTS, 0, 10, 10, 10, 10, 0, "C <ia|jb>");
+       // time_test = clock();
+       // for (i = 0; i < 5000; i++){
+       //      global_dpd_->contract424_sp(&C_sp, &tIA_sp, &Y_sp, 3, 1, 0, 1, 0);
+       // }
+       // time_test = clock() - time_test;
+       // outfile->Printf("\n! contract424_sp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);\
+       // time_test = clock();
+       // for (i = 0; i < 5000; i++){
+       //      global_dpd_->contract424(&C, &tIA, &Y, 3, 1, 0, 1, 0);
+       // }
+       // time_test = clock() - time_test;
+       // outfile->Printf("\n! contract424_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+       // global_dpd_->buf4_close_sp(&C_sp);
+
+// Test end!
+        
+      
 
         /* T(m,b) * Y(mA,jI) --> T2(bA,jI) */
         global_dpd_->buf4_init(&T2new, PSIF_CC_TMP0, 0, 5, 0, 5, 0, 0, "X(5,0)");
@@ -609,6 +636,7 @@ void CCEnergyWavefunction::CT2_mp() {
 void CCEnergyWavefunction::CT2_sp() {
     dpdfile2<float> tIA;
     dpdbuf4<float> Y, C, D, T2new, T2;
+    
 
     if (params_.ref == 0) { /** RHF **/
 
