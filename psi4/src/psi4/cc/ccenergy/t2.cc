@@ -38,23 +38,33 @@
 #include "MOInfo.h"
 #include "psi4/cc/ccwave.h"
 #include "psi4/libqt/qt.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi {
 namespace ccenergy {
 
 void CCEnergyWavefunction::t2_build() {
+    
+    clock_t time_test;
+    time_test = clock();
     DT2();
+    time_test = clock() - time_test;
+    outfile->Printf("\n! DT2_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
     if (params_.print & 2) status("<ij||ab> -> T2", "outfile");
 
     if (params_.wfn != "CC2" || params_.wfn != "EOM_CC2") { /* skip all this is wfn=CC2 */
-
+        time_test = clock();
         FaetT2();
         FmitT2();
         if (params_.print & 2) status("F -> T2", "outfile");
 
         WmnijT2();
         if (params_.print & 2) status("Wmnij -> T2", "outfile");
-
+        time_test = clock() - time_test;
+        outfile->Printf("\n! FaetT2+FmitT2+WmnijT2_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+        
+        time_test = clock(); 
         timer_on("BT2");
         if (params_.aobasis == "DISK" || params_.aobasis == "DIRECT")
             BT2_AO();
@@ -62,73 +72,126 @@ void CCEnergyWavefunction::t2_build() {
             BT2();
         if (params_.print & 2) status("<ab||cd> -> T2", "outfile");
         timer_off("BT2");
-
+        time_test = clock() - time_test;
+        outfile->Printf("\n! BT2_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+       
+        time_test = clock();
         ZT2();
         if (params_.print & 2) status("Z -> T2", "outfile");
+        time_test = clock() - time_test;
+        outfile->Printf("\n! ZT2_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
 
+        time_test = clock();
         timer_on("FT2");
         FT2();
         if (params_.print & 2) status("<ia||bc> -> T2", "outfile");
         timer_off("FT2");
-
+        time_test = clock() - time_test;
+        outfile->Printf("\n! FT2_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+    
+        time_test = clock();
         ET2();
         if (params_.print & 2) status("<ij||ka> -> T2", "outfile");
-
+        time_test = clock() - time_test;
+        outfile->Printf("\n! ET2_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+   
+        time_test = clock();
         timer_on("WmbejT2");
         WmbejT2();
         if (params_.print & 2) status("Wmbej -> T2", "outfile");
         timer_off("WmbejT2");
+        time_test = clock() - time_test;
+        outfile->Printf("\n! WmbejT2_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
 
+        time_test = clock();
         timer_on("CT2");
         CT2();
         if (params_.print & 2) status("<ia||jb> -> T2", "outfile");
         timer_off("CT2");
-    } else { /* For CC2, just include (FT2)c->T2 */
+        time_test = clock() - time_test;
+        outfile->Printf("\n! CT2_dp took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
+    } else { /* For CC2, just include (FT2)c->T2 */       
         FT2_CC2();
     }
 }
 
 void CCEnergyWavefunction::t2_build_mp() {
+    clock_t time_test;
+    time_test = clock();
     DT2();
+    time_test = clock() - time_test;
+    outfile->Printf("\n! DT2 took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
     if (params_.print & 2) status("<ij||ab> -> T2", "outfile");
 
     if (params_.wfn != "CC2" || params_.wfn != "EOM_CC2") { /* skip all this is wfn=CC2 */
-
+        time_test = clock();
         FaetT2_mp();
+        //FaetT2();
         FmitT2_mp();
+        //FmitT2();
         if (params_.print & 2) status("F -> T2", "outfile");
 
         WmnijT2_mp();
+        //WmnijT2();
         if (params_.print & 2) status("Wmnij -> T2", "outfile");
-
+        time_test = clock() - time_test;
+        outfile->Printf("\n! FaetT2+FmitT2+WmnijT2 took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+      
+        time_test = clock();
         timer_on("BT2");
         if (params_.aobasis == "DISK" || params_.aobasis == "DIRECT")
             BT2_AO();
         else
             BT2_mp();
+            //BT2();
         if (params_.print & 2) status("<ab||cd> -> T2", "outfile");
         timer_off("BT2");
+        time_test = clock() - time_test;
+        outfile->Printf("\n! BT2 took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
 
+        time_test = clock();
         ZT2_mp();
+        //ZT2();
         if (params_.print & 2) status("Z -> T2", "outfile");
+        time_test = clock() - time_test;
+        outfile->Printf("\n! ZT2 took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
 
+        time_test = clock();
         timer_on("FT2");
         FT2_mp();
+        //FT2();
         if (params_.print & 2) status("<ia||bc> -> T2", "outfile");
         timer_off("FT2");
-
+        time_test = clock() - time_test;
+        outfile->Printf("\n! FT2 took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+  
+        time_test = clock();
         ET2_mp();
+        //ET2();
         if (params_.print & 2) status("<ij||ka> -> T2", "outfile");
-
+        time_test = clock() - time_test;
+        outfile->Printf("\n! ET2 took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+   
+        time_test = clock();
         timer_on("WmbejT2");
         WmbejT2_mp();
+       // WmbejT2();
         if (params_.print & 2) status("Wmbej -> T2", "outfile");
         timer_off("WmbejT2");
+        time_test = clock() - time_test;
+        outfile->Printf("\n! WmbejT2 took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
 
+        time_test = clock();
         timer_on("CT2");
         CT2_mp();
+        //CT2();
         if (params_.print & 2) status("<ia||jb> -> T2", "outfile");
         timer_off("CT2");
+        time_test = clock() - time_test;
+        outfile->Printf("\n! CT2 took %f seconds.\n", ((float)time_test)/CLOCKS_PER_SEC);
+
     } else { /* For CC2, just include (FT2)c->T2 */
         FT2_CC2();
     }

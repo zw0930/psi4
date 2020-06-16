@@ -473,10 +473,10 @@ void CCEnergyWavefunction::FT2_sp() {
             global_dpd_->file2_mat_close_sp(&t1);
             global_dpd_->file2_close_sp(&t1);
             global_dpd_->buf4_close_sp(&F);
-            global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
+            global_dpd_->buf4_init_sp(&t2, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb sp");
             global_dpd_->buf4_axpy_sp(&X, &t2, 1);
             global_dpd_->buf4_close_sp(&t2);
-            global_dpd_->buf4_sort_axpy_sp(&X, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb", 1);
+            global_dpd_->buf4_sort_axpy_sp(&X, PSIF_CC_TAMPS, qpsr, 0, 5, "New tIjAb sp", 1);
             global_dpd_->buf4_close_sp(&X);
         } // params.df = 0
     } // RHF

@@ -371,7 +371,7 @@ void CCEnergyWavefunction::BT2_mp() {
             timer_on("ABCD:S");
             global_dpd_->buf4_init_sp(&tau_s_sp, PSIF_CC_TAMPS, 0, 3, 8, 3, 8, 0, "tau(+)(ij,ab)_sp");
             global_dpd_->buf4_init_sp(&B_s_sp, PSIF_CC_BINTS, 0, 8, 8, 8, 8, 0, "B(+) <ab|cd> + <ab|dc> sp");
-            global_dpd_->buf4_init_sp(&S_sp, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij) sp");
+            global_dpd_->buf4_init_sp(&S_sp, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij)_sp");
             global_dpd_->contract444_sp(&B_s_sp, &tau_s_sp, &S_sp, 0, 0, 0.5, 0);
             global_dpd_->buf4_close_sp(&S_sp);
             global_dpd_->buf4_close_sp(&B_s_sp);
@@ -399,7 +399,7 @@ void CCEnergyWavefunction::BT2_mp() {
             //global_dpd_->buf4_init(&S, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij)");
             //global_dpd_->buf4_mat_irrep_init(&S, 0);
             //global_dpd_->buf4_mat_irrep_rd(&S, 0);
-            global_dpd_->buf4_init_sp(&S_sp, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij) sp");
+            global_dpd_->buf4_init_sp(&S_sp, PSIF_CC_TMP0, 0, 8, 3, 8, 3, 0, "S(ab,ij)_sp");
             global_dpd_->buf4_mat_irrep_init_sp(&S_sp, 0);
             global_dpd_->buf4_mat_irrep_rd_sp(&S_sp, 0);
            
@@ -510,7 +510,6 @@ void CCEnergyWavefunction::BT2_mp() {
      outfile->Printf("Check BT2");
      global_dpd_->buf4_init(&newtIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "New tIjAb");
      global_dpd_->buf4_print(&newtIjAb, "outfile", 1);
-     global_dpd_->buf4_close(&newtIjAb);
 */
     } 
 }
@@ -524,10 +523,12 @@ void CCEnergyWavefunction::BT2_sp() {
     dpdbuf4<float> tau_a, tau_s, tau;
     dpdbuf4<float> B_a, B_s;
     dpdbuf4<float> S, A;
-    float **B_diag, **tau_diag;
+    float **B_diag_sp, **tau_diag;
+    double **B_diag;
     int nbuckets, rows_per_bucket, rows_left, row_start;
     int nrows, ncols, nlinks;
     psio_address next;
+    int row, col;
 
     if (params_.ref == 0) { /** RHF **/
         if (params_.df) {
@@ -608,8 +609,8 @@ void CCEnergyWavefunction::BT2_sp() {
             if (rows_per_bucket > B_s.params->rowtot[0]) rows_per_bucket = B_s.params->rowtot[0];
             nbuckets = (int)ceil((double)B_s.params->rowtot[0] / (double)rows_per_bucket);
             rows_left = B_s.params->rowtot[0] % rows_per_bucket;
-
-            B_diag = global_dpd_->dpd_block_matrix_sp(rows_per_bucket, moinfo_.nvirt);
+            B_diag = global_dpd_->dpd_block_matrix(rows_per_bucket, moinfo_.nvirt);
+            B_diag_sp = global_dpd_->dpd_block_matrix_sp(rows_per_bucket, moinfo_.nvirt);
             next = PSIO_ZERO;
             ncols = tau.params->rowtot[0];
             nlinks = moinfo_.nvirt;
@@ -618,9 +619,15 @@ void CCEnergyWavefunction::BT2_sp() {
                 row_start = m * rows_per_bucket;
                 nrows = rows_per_bucket;
                 if (nrows && ncols && nlinks) {
-                    psio_read(PSIF_CC_BINTS, "B(+) <ab|cc> sp", (char *)B_diag[0], sizeof(float) * nrows * nlinks, next,
+                    psio_read(PSIF_CC_BINTS, "B(+) <ab|cc>", (char *)B_diag[0], sizeof(double) * nrows * nlinks, next,
                               &next);
-                    C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag[0], nlinks, tau_diag[0], nlinks, 1,
+                     for (row = 0; row < nrows; row++){
+			for (col = 0; col < nlinks; col++){
+				B_diag_sp[row][col] = static_cast<float>(B_diag[row][col]);
+			}
+		    }
+
+                    C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag_sp[0], nlinks, tau_diag[0], nlinks, 1,
                             S.matrix[0][row_start], ncols);
                 }
             }
@@ -628,9 +635,15 @@ void CCEnergyWavefunction::BT2_sp() {
                 row_start = m * rows_per_bucket;
                 nrows = rows_left;
                 if (nrows && ncols && nlinks) {
-                    psio_read(PSIF_CC_BINTS, "B(+) <ab|cc> sp", (char *)B_diag[0], sizeof(float) * nrows * nlinks, next,
+                    psio_read(PSIF_CC_BINTS, "B(+) <ab|cc>", (char *)B_diag[0], sizeof(double) * nrows * nlinks, next,
                               &next);
-                    C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag[0], nlinks, tau_diag[0], nlinks, 1,
+                     for (row = 0; row < nrows; row++){
+			for (col = 0; col < nlinks; col++){
+				B_diag_sp[row][col] = static_cast<float>(B_diag[row][col]);
+			}
+		    }
+
+                    C_SGEMM('n', 't', nrows, ncols, nlinks, -0.25, B_diag_sp[0], nlinks, tau_diag[0], nlinks, 1,
                             S.matrix[0][row_start], ncols);
                 }
             }
@@ -638,7 +651,9 @@ void CCEnergyWavefunction::BT2_sp() {
             global_dpd_->buf4_mat_irrep_close_sp(&S, 0);
             global_dpd_->buf4_close_sp(&S);
             global_dpd_->buf4_close_sp(&B_s);
-            global_dpd_->free_dpd_block_sp(B_diag, rows_per_bucket, moinfo_.nvirt);
+            global_dpd_->free_dpd_block(B_diag, rows_per_bucket, moinfo_.nvirt);
+            global_dpd_->free_dpd_block_sp(B_diag_sp, rows_per_bucket, moinfo_.nvirt);
+
             global_dpd_->free_dpd_block_sp(tau_diag, tau.params->rowtot[0], moinfo_.nvirt);
             global_dpd_->buf4_close_sp(&tau);
 
