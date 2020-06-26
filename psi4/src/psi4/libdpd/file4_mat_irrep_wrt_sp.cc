@@ -40,10 +40,10 @@ int DPD::file4_mat_irrep_wrt_sp(dpdfile4_sp *File, int irrep) {
     psio_address irrep_ptr, next_address;
     long int size;
    //Modified by ZW
-   // if (File->incore) {
-   //     file4_cache_dirty(File); /* Flag this cache entry for writing */
-   //     return 0;                /* We're keeping this data in core */
-   // }
+    if (File->incore) {
+        file4_cache_dirty_sp(File); /* Flag this cache entry for writing */
+        return 0;                /* We're keeping this data in core */
+    }
 
     my_irrep = File->my_irrep;
     irrep_ptr = File->lfiles[irrep];

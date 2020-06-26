@@ -67,15 +67,15 @@ int DPD::file4_init_sp(dpdfile4_sp *File, int filenum, int irrep, int pqnum, int
     File->filenum = filenum;
     File->my_irrep = irrep;
     //Modified by ZW
-    //this_entry = file4_cache_scan(filenum, irrep, pqnum, rsnum, label, dpd_default);
-    this_entry = nullptr;
-    //if (this_entry != nullptr) {
-    //    File->incore = 1;
-    //    File->matrix = this_entry->matrix;
-   // } else {
+    this_entry = file4_cache_scan(filenum, irrep, pqnum, rsnum, label, dpd_default);
+    //this_entry = nullptr;
+    if (this_entry != nullptr) {
+        File->incore = 1;
+        File->matrix = this_entry->matrix_sp;
+    } else {
         File->incore = 0;
         File->matrix = (float ***)malloc(File->params->nirreps * sizeof(float **));
-    //}
+    }
 
     /* Construct logical subfile pointers */
     File->lfiles = (psio_address *)malloc(File->params->nirreps * sizeof(psio_address));
@@ -105,18 +105,18 @@ int DPD::file4_init_sp(dpdfile4_sp *File, int filenum, int irrep, int pqnum, int
 
 
     /* Put this file4 into cache if requested */
-   // if (dpd_main.cachefiles[filenum] && dpd_main.cachelist[pqnum][rsnum]) {
+    if (dpd_main.cachefiles[filenum] && dpd_main.cachelist[pqnum][rsnum]) {
         /* Get the file4's cache priority */
-   //     if (dpd_main.cachetype == 1)
-   //         priority = file4_cache_get_priority(File);
-   //     else
-   //         priority = 0;
+        if (dpd_main.cachetype == 1)
+            priority = file4_cache_get_priority_sp(File);
+        else
+            priority = 0;
 
-   //     file4_cache_add(File, priority);
+        file4_cache_add_sp(File, priority);
 
         /* Make sure this cache entry can't be deleted until we're done */
-   //     file4_cache_lock(File);
-   // }
+        file4_cache_lock_sp(File);
+    }
 
     return 0;
 }

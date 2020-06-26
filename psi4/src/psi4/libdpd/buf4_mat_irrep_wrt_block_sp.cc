@@ -122,7 +122,7 @@ int DPD::buf4_mat_irrep_wrt_block_sp(dpdbuf4<float> *Buf, int irrep, int start_p
                 for (pq = 0; pq < num_pq; pq++)
                     for (rs = 0; rs < coltot; rs++)
                         Buf->file_sp.matrix[irrep][pq + start_pq][rs] = Buf->matrix[irrep][pq][rs];
-                file4_cache_dirty(&(Buf->file));
+                file4_cache_dirty_sp(&(Buf->file_sp));
             } else {
                 Buf->file_sp.matrix[irrep] = Buf->matrix[irrep];
                 file4_mat_irrep_wrt_block_sp(&(Buf->file_sp), irrep, start_pq, num_pq);

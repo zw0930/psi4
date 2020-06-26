@@ -119,7 +119,7 @@ int DPD::buf4_mat_irrep_row_wrt_sp(dpdbuf4<float> *Buf, int irrep, int pq) {
 
             if (Buf->file_sp.incore) {
                 for (rs = 0; rs < rowtot; rs++) Buf->file_sp.matrix[irrep][pq][rs] = Buf->matrix[irrep][0][rs];
-                file4_cache_dirty(&(Buf->file));
+                file4_cache_dirty_sp(&(Buf->file_sp));
             } else {
                 Buf->file_sp.matrix[irrep] = Buf->matrix[irrep];
                 file4_mat_irrep_row_wrt_sp(&(Buf->file_sp), irrep, pq);

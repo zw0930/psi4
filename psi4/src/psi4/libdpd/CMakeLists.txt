@@ -157,6 +157,7 @@ list(APPEND sources
 
   file2_axpbycz_sp.cc
   file2_axpy_sp.cc
+  file2_cache_sp.cc
   file2_close_sp.cc
   file2_copy_sp.cc
   file2_dirprd_sp.cc
@@ -179,7 +180,7 @@ list(APPEND sources
   trans4_mat_irrep_shift31_sp.cc
   trans4_mat_irrep_wrt_sp.cc
 
-  
+  file4_cache_sp.cc 
   file4_close_sp.cc
   file4_init_sp.cc
   file4_mat_irrep_close_sp.cc

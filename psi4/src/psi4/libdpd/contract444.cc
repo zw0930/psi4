@@ -67,7 +67,7 @@ int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z,
     int *xrow, *xcol, *yrow, *ycol, *zrow, *zcol;
     double byte_conv;
 #endif
-
+    timer_on("Test: contract444");
     nirreps = X->params->nirreps;
     GX = X->file.my_irrep;
     GY = Y->file.my_irrep;
@@ -181,6 +181,7 @@ int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z,
     */
 
         if (incore) {
+            timer_on("read444");
             buf4_mat_irrep_init(X, Hx);
             buf4_mat_irrep_rd(X, Hx);
 
@@ -189,18 +190,21 @@ int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z,
             buf4_mat_irrep_init(Z, Hz);
             
             if (std::fabs(beta) > 0.0) buf4_mat_irrep_rd(Z, Hz);
-
+            timer_off("read444");
+            timer_on("DGEMM444"); 
             if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx ^ symlink]) {
                 C_DGEMM(Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
                         numlinks[Hx ^ symlink], alpha, &(X->matrix[Hx][0][0]), X->params->coltot[Hx ^ GX],
                         &(Y->matrix[Hy][0][0]), Y->params->coltot[Hy ^ GY], beta, &(Z->matrix[Hz][0][0]), Z->params->coltot[Hz ^ GZ]);
             }
-
+            timer_off("DGEMM444");
+            timer_on("write444");
             buf4_mat_irrep_close(X, Hx);
 
             buf4_mat_irrep_wrt(Z, Hz);
             buf4_mat_irrep_close(Y, Hy);
             buf4_mat_irrep_close(Z, Hz);
+            timer_off("write444");
         } else {
             /* out-of-core algorithm coded only for NT and TN arrangements, not NN or TT */
             if ((!Ytrans && !Xtrans) || (Ytrans && Xtrans)) {
@@ -253,6 +257,7 @@ int DPD::contract444(dpdbuf4<double> *X, dpdbuf4<double> *Y, dpdbuf4<double> *Z,
 
         }  // !incore
     }      // Hx
+    timer_off("Test: contract444");
 
     return 0;
 }

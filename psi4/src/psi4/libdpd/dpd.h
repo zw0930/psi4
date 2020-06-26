@@ -180,7 +180,9 @@ struct dpd_file4_cache_entry {
     int pqnum;                   /* dpd pq value */
     int rsnum;                   /* dpd rs value */
     char label[PSIO_KEYLEN];     /* libpsio TOC keyword */
-    double ***matrix;            /* pointer to irrep blocks */
+    double ***matrix; 
+    float ***matrix_sp;          /* pointer to irrep blocks */
+    bool sp;                     /* is true if the entry is in single precision*/
     int size;                    /* size of entry in double words */
     size_t access;               /* access time */
     size_t usage;                /* number of accesses */
@@ -512,18 +514,29 @@ class PSI_API DPD {
 
     void file2_cache_init();
     void file2_cache_close();
+    void file2_cache_close_sp();
     void file2_cache_print(std::string out_fname);
+    void file2_cache_print_sp(std::string out_fname);
     dpd_file2_cache_entry *file2_cache_scan(int filenum, int irrep, int pnum, int qnum, const char *label, int dpdnum);
     dpd_file2_cache_entry *dpd_file2_cache_last();
     int file2_cache_add(dpdfile2<double> *File);
+    int file2_cache_add_sp(dpdfile2<float> *File);
     int file2_cache_del(dpdfile2<double> *File);
+    int file2_cache_del_sp(dpdfile2<float> *File);
     int file4_cache_del_low();
+    int file4_cache_del_low_sp();
     void file2_cache_dirty(dpdfile2<double> *File);
+    void file2_cache_dirty_sp(dpdfile2<float> *File);
 
     void file4_cache_init();
     void file4_cache_close();
     void file4_cache_print(std::string out_fname);
     void file4_cache_print_screen();
+   
+    void file4_cache_close_sp();
+    void file4_cache_print_sp(std::string out_fname);
+    void file4_cache_print_screen_sp();
+  
 //*
     int file4_cache_get_priority(dpdfile4 *File);
 
@@ -537,6 +550,15 @@ class PSI_API DPD {
     void file4_cache_dirty(dpdfile4 *File);
     void file4_cache_lock(dpdfile4 *File);
     void file4_cache_unlock(dpdfile4 *File);
+   
+    int file4_cache_get_priority_sp(dpdfile4_sp *File);
+
+    int file4_cache_add_sp(dpdfile4_sp *File, size_t priority);
+    int file4_cache_del_sp(dpdfile4_sp *File);
+    int file4_cache_del_lru_sp();
+    void file4_cache_dirty_sp(dpdfile4_sp *File);
+    void file4_cache_lock_sp(dpdfile4_sp *File);
+    void file4_cache_unlock_sp(dpdfile4_sp *File);
 
     void sort_3d(double ***Win, double ***Wout, int nirreps, int h, int *rowtot, int **rowidx, int ***roworb, int *asym,
                  int *bsym, int *aoff, int *boff, int *cpi, int *coff, int **rowidx_out, enum pattern index, int sum);

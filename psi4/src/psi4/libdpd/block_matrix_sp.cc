@@ -94,8 +94,8 @@ float **DPD::dpd_block_matrix_sp(size_t n, size_t m) {
 
         /* Priority-based cache */
         if (dpd_main.cachetype == 1) {
-            if (file4_cache_del_low()) {
-                file4_cache_print("outfile");
+            if (file4_cache_del_low_sp()) {
+                file4_cache_print_sp("outfile");
                 outfile->Printf("dpd_block_matrix: n = %zd  m = %zd\n", n, m);
                 dpd_error("dpd_block_matrix: No memory left.", "outfile");
             }
@@ -103,8 +103,8 @@ float **DPD::dpd_block_matrix_sp(size_t n, size_t m) {
 
         /* Least-recently-used cache */
         else if (dpd_main.cachetype == 0) {
-            if (file4_cache_del_lru()) {
-                file4_cache_print("outfile");
+            if (file4_cache_del_lru_sp()) {
+                file4_cache_print_sp("outfile");
                 outfile->Printf("dpd_block_matrix: n = %zd  m = %zd\n", n, m);
                 dpd_error("dpd_block_matrix: No memory left.", "outfile");
             }
@@ -137,8 +137,8 @@ float **DPD::dpd_block_matrix_sp(size_t n, size_t m) {
         //#endif
         /* Priority-based cache */
         if (dpd_main.cachetype == 1) {
-            if (file4_cache_del_low()) {
-                file4_cache_print("outfile");
+            if (file4_cache_del_low_sp()) {
+                file4_cache_print_sp("outfile");
                 outfile->Printf("dpd_block_matrix: n = %zd  m = %zd\n", n, m);
                 dpd_error("dpd_block_matrix: No memory left.", "outfile");
             }
@@ -146,8 +146,8 @@ float **DPD::dpd_block_matrix_sp(size_t n, size_t m) {
 
         /* Least-recently-used cache */
         else if (dpd_main.cachetype == 0) {
-            if (file4_cache_del_lru()) {
-                file4_cache_print("outfile");
+            if (file4_cache_del_lru_sp()) {
+                file4_cache_print_sp("outfile");
                 outfile->Printf("dpd_block_matrix: n = %zd  m = %zd\n", n, m);
                 dpd_error("dpd_block_matrix: No memory left.", "outfile");
             }
