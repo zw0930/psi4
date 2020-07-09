@@ -141,9 +141,9 @@ int DPD::buf4_mat_irrep_wrt_sp(dpdbuf4<float> *Buf, int irrep) {
             timer_on("buf_wrt_12");
 #endif
 
-     //       if (Buf->file.incore && size) {
-       //         file4_cache_dirty(&(Buf->file));
-       //     }
+            if (Buf->file_sp.incore && size) {
+                file4_cache_dirty_sp(&(Buf->file_sp));
+            }
             /*
           memcpy((void *) &(Buf->file.matrix[irrep][0][0]),
              (const void *) &(Buf->matrix[irrep][0][0]),

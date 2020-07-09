@@ -37,7 +37,7 @@
 #include "dpd.h"
 #include "psi4/libpsi4util/PsiOutStream.h"
 namespace psi {
-
+/*
 void DPD::file4_cache_init() {
     dpd_main.file4_cache = nullptr;
     dpd_main.file4_cache_most_recent = 0;
@@ -45,13 +45,12 @@ void DPD::file4_cache_init() {
     dpd_main.file4_cache_lru_del = 0;
     dpd_main.file4_cache_low_del = 0;
 }
-
-void DPD::file4_cache_close() {
+*/
+void DPD::file4_cache_close_sp() {
     int dpdnum;
     dpd_file4_cache_entry *this_entry, *next_entry;
-    dpdfile4 Outfile;
-    dpdfile4_sp Outfile_sp;   
- 
+    dpdfile4_sp Outfile;
+
     this_entry = dpd_main.file4_cache;
 
     /* save the current dpd_default */
@@ -59,31 +58,23 @@ void DPD::file4_cache_close() {
 
     while (this_entry != nullptr) {
         dpd_set_default(this_entry->dpdnum);
+
         /* Clean out each file4_cache entry */
-        if(this_entry->sp)
-          file4_init_sp(&Outfile_sp, this_entry->filenum, this_entry->irrep, this_entry->pqnum, this_entry->rsnum,
+        file4_init_sp(&Outfile, this_entry->filenum, this_entry->irrep, this_entry->pqnum, this_entry->rsnum,
                    this_entry->label);
-        else
-          file4_init(&Outfile, this_entry->filenum, this_entry->irrep, this_entry->pqnum, this_entry->rsnum,
-                   this_entry->label);
-                  
+
         next_entry = this_entry->next;
-        
-        if(this_entry->sp){
-          file4_cache_del_sp(&Outfile_sp);
-          file4_close_sp(&Outfile_sp);
-        }
-        else{
-          file4_cache_del(&Outfile);
-          file4_close(&Outfile);
-        }       
+
+        file4_cache_del_sp(&Outfile);
+        file4_close_sp(&Outfile);
+
         this_entry = next_entry;
     }
 
     /* return the dpd_default to its original value */
     dpd_set_default(dpdnum);
 }
-
+/*
 dpd_file4_cache_entry *DPD::file4_cache_scan(int filenum, int irrep, int pqnum, int rsnum, const char *label,
                                              int dpdnum) {
     dpd_file4_cache_entry *this_entry;
@@ -100,11 +91,14 @@ dpd_file4_cache_entry *DPD::file4_cache_scan(int filenum, int irrep, int pqnum, 
 #ifdef DPD_TIMER
             timer_off("file4_cache");
 #endif
+*/
             /* increment the access timers */
+/*
             dpd_main.file4_cache_most_recent++;
             this_entry->access = dpd_main.file4_cache_most_recent;
-
+*/
             /* increment the usage counter */
+/*
             this_entry->usage++;
 
             return (this_entry);
@@ -118,7 +112,8 @@ dpd_file4_cache_entry *DPD::file4_cache_scan(int filenum, int irrep, int pqnum, 
 #endif
     return (this_entry);
 }
-
+*/
+/*
 dpd_file4_cache_entry *DPD::file4_cache_last() {
     dpd_file4_cache_entry *this_entry;
 
@@ -131,8 +126,8 @@ dpd_file4_cache_entry *DPD::file4_cache_last() {
 
     return (nullptr);
 }
-
-int DPD::file4_cache_add(dpdfile4 *File, size_t priority) {
+*/
+int DPD::file4_cache_add_sp(dpdfile4_sp *File, size_t priority) {
     int h, dpdnum;
     dpd_file4_cache_entry *this_entry;
 
@@ -159,10 +154,10 @@ int DPD::file4_cache_add(dpdfile4 *File, size_t priority) {
         this_entry->size = 0;
         for (h = 0; h < File->params->nirreps; h++) {
             this_entry->size += File->params->rowtot[h] * File->params->coltot[h ^ (File->my_irrep)];
-            file4_mat_irrep_init(File, h);
-            file4_mat_irrep_rd(File, h);
+            file4_mat_irrep_init_sp(File, h);
+            file4_mat_irrep_rd_sp(File, h);
         }
-        this_entry->sp = false; /*indicate this_entry is in double-precision*/
+        this_entry->sp = true; /*indicate this_entry is in single-precision*/
         this_entry->dpdnum = File->dpdnum;
         this_entry->filenum = File->filenum;
         this_entry->irrep = File->my_irrep;
@@ -192,7 +187,7 @@ int DPD::file4_cache_add(dpdfile4 *File, size_t priority) {
         /* Set the priority level */
         this_entry->priority = priority;
 
-        this_entry->matrix = File->matrix;
+        this_entry->matrix_sp = File->matrix;
 
         File->incore = 1;
 
@@ -208,7 +203,7 @@ int DPD::file4_cache_add(dpdfile4 *File, size_t priority) {
     return 0;
 }
 
-int DPD::file4_cache_del(dpdfile4 *File) {
+int DPD::file4_cache_del_sp(dpdfile4_sp *File) {
     int h, dpdnum;
     dpd_file4_cache_entry *this_entry, *next_entry, *last_entry;
 
@@ -224,14 +219,14 @@ int DPD::file4_cache_del(dpdfile4 *File) {
         dpd_set_default(File->dpdnum);
 
         /* Unlock the entry first */
-        file4_cache_unlock(File);
+        file4_cache_unlock_sp(File);
 
         File->incore = 0;
 
         /* Write all the data to disk and free the memory */
         for (h = 0; h < File->params->nirreps; h++) {
-            if (!(this_entry->clean)) file4_mat_irrep_wrt(File, h);
-            file4_mat_irrep_close(File, h);
+            if (!(this_entry->clean)) file4_mat_irrep_wrt_sp(File, h);
+            file4_mat_irrep_close_sp(File, h);
         }
 
         next_entry = this_entry->next;
@@ -256,7 +251,7 @@ int DPD::file4_cache_del(dpdfile4 *File) {
     return 0;
 }
 
-void DPD::file4_cache_print_screen() {
+void DPD::file4_cache_print_screen_sp() {
     int total_size = 0;
     dpd_file4_cache_entry *this_entry;
 
@@ -269,7 +264,7 @@ void DPD::file4_cache_print_screen() {
         outfile->Printf("%-22s  %1d   %3d   %1d   %2d  %2d  %3zu %3zu    %1d  %6zu   %1d  %8.1f\n", this_entry->label,
                         this_entry->dpdnum, this_entry->filenum, this_entry->irrep, this_entry->pqnum,
                         this_entry->rsnum, this_entry->usage, this_entry->access, this_entry->clean,
-                        this_entry->priority, this_entry->lock, (this_entry->size) * sizeof(double) / 1e3);
+                        this_entry->priority, this_entry->lock, (this_entry->size) * sizeof(float) / 1e3);
         total_size += this_entry->size;
         this_entry = this_entry->next;
     }
@@ -279,7 +274,7 @@ void DPD::file4_cache_print_screen() {
     outfile->Printf("#LRU deletions = %6zu; #Low-priority deletions = %6zu\n", dpd_main.file4_cache_lru_del,
                     dpd_main.file4_cache_low_del);
     outfile->Printf("Core max size:  %9.1f kB\n", (dpd_main.memory) * sizeof(double) / 1e3);
-    outfile->Printf("Core used:      %9.1f kB\n", (dpd_main.memused) * sizeof(double) / 1e3);
+    outfile->Printf("Core used:      %9.1f kB\n", (dpd_main.memused) * sizeof(float) / 1e3);
     outfile->Printf("Core available: %9.1f kB\n", dpd_memfree() * sizeof(double) / 1e3);
     outfile->Printf("Core cached:    %9.1f kB\n", (dpd_main.memcache) * sizeof(double) / 1e3);
     outfile->Printf("Locked cached:  %9.1f kB\n", (dpd_main.memlocked) * sizeof(double) / 1e3);
@@ -287,7 +282,7 @@ void DPD::file4_cache_print_screen() {
     outfile->Printf("Least recent entry = %zu\n", dpd_main.file4_cache_least_recent);
 }
 
-void DPD::file4_cache_print(std::string out) {
+void DPD::file4_cache_print_sp(std::string out) {
     int total_size = 0;
     std::shared_ptr<psi::PsiOutStream> printer = (out == "outfile" ? outfile : std::make_shared<PsiOutStream>(out));
     dpd_file4_cache_entry *this_entry;
@@ -301,12 +296,12 @@ void DPD::file4_cache_print(std::string out) {
         printer->Printf("%-22s  %1d   %3d   %1d   %2d  %2d  %3zu %3zu    %1d  %6zu   %1d  %8.1f\n", this_entry->label,
                         this_entry->dpdnum, this_entry->filenum, this_entry->irrep, this_entry->pqnum,
                         this_entry->rsnum, this_entry->usage, this_entry->access, this_entry->clean,
-                        this_entry->priority, this_entry->lock, (this_entry->size) * sizeof(double) / 1e3);
+                        this_entry->priority, this_entry->lock, (this_entry->size) * sizeof(float) / 1e3);
         total_size += this_entry->size;
         this_entry = this_entry->next;
     }
     printer->Printf("--------------------------------------------------------------------------------\n");
-    printer->Printf("Total cached: %8.1f kB; MRU = %6zu; LRU = %6zu\n", (total_size * sizeof(double)) / 1e3,
+    printer->Printf("Total cached: %8.1f kB; MRU = %6zu; LRU = %6zu\n", (total_size * sizeof(float)) / 1e3,
                     dpd_main.file4_cache_most_recent, dpd_main.file4_cache_least_recent);
     printer->Printf("#LRU deletions = %6zu; #Low-priority deletions = %6zu\n", dpd_main.file4_cache_lru_del,
                     dpd_main.file4_cache_low_del);
@@ -318,22 +313,26 @@ void DPD::file4_cache_print(std::string out) {
     printer->Printf("Most recent entry  = %zu\n", dpd_main.file4_cache_most_recent);
     printer->Printf("Least recent entry = %zu\n", dpd_main.file4_cache_least_recent);
 }
-
+/*
 dpd_file4_cache_entry *DPD::file4_cache_find_lru() {
     dpd_file4_cache_entry *this_entry;
 
     this_entry = dpd_main.file4_cache;
 
     if (this_entry == nullptr) return (nullptr);
-
+*/
     /* find the first unlocked entry */
-    while (this_entry != nullptr) {
+/* 
+   while (this_entry != nullptr) {
         if (this_entry->lock)
             this_entry = this_entry->next;
         else
-            break; /* Is this right? */
-    }
 
+            break; 
+*/
+           /* Is this right? */
+//    }
+/*
     while (dpd_main.file4_cache_least_recent <= dpd_main.file4_cache_most_recent) {
         while (this_entry != nullptr) {
             if (this_entry->access <= dpd_main.file4_cache_least_recent && !this_entry->lock) return (this_entry);
@@ -342,18 +341,18 @@ dpd_file4_cache_entry *DPD::file4_cache_find_lru() {
         dpd_main.file4_cache_least_recent++;
         this_entry = dpd_main.file4_cache;
     }
-
+*/
     /*
   dpd_file4_cache_print("outfile");
   outfile->Printf( "Possibly out of memory!\n");
   dpd_error("Error locating file4_cache LRU!", "outfile");
   */
-    return (nullptr);
-}
+//    return (nullptr);
+//}
 
-int DPD::file4_cache_del_lru() {
+int DPD::file4_cache_del_lru_sp() {
     int dpdnum;
-    dpdfile4 File;
+    dpdfile4_sp File;
     dpd_file4_cache_entry *this_entry;
 
 #ifdef DPD_TIMER
@@ -371,7 +370,7 @@ int DPD::file4_cache_del_lru() {
 #ifdef DPD_DEBUG
         printf("Deleteing LRU: %-22s %3d %2d %2d %6d %1d %6d %8.1f\n", this_entry->label, this_entry->filenum,
                this_entry->pqnum, this_entry->rsnum, this_entry->usage, this_entry->clean, this_entry->priority,
-               (this_entry->size * sizeof(double)) / 1e3);
+               (this_entry->size * sizeof(float)) / 1e3);
 #endif
 
         /* increment the global LRU deletion counter */
@@ -381,11 +380,11 @@ int DPD::file4_cache_del_lru() {
         dpdnum = dpd_default;
         dpd_set_default(this_entry->dpdnum);
 
-        file4_init(&File, this_entry->filenum, this_entry->irrep, this_entry->pqnum, this_entry->rsnum,
+        file4_init_sp(&File, this_entry->filenum, this_entry->irrep, this_entry->pqnum, this_entry->rsnum,
                    this_entry->label);
 
-        file4_cache_del(&File);
-        file4_close(&File);
+        file4_cache_del_sp(&File);
+        file4_close_sp(&File);
 
         /* Return the default DPD to its original value */
         dpd_set_default(dpdnum);
@@ -398,7 +397,7 @@ int DPD::file4_cache_del_lru() {
     }
 }
 
-void DPD::file4_cache_dirty(dpdfile4 *File) {
+void DPD::file4_cache_dirty_sp(dpdfile4_sp *File) {
     dpd_file4_cache_entry *this_entry;
 
     this_entry = file4_cache_scan(File->filenum, File->my_irrep, File->params->pqnum, File->params->rsnum, File->label,
@@ -412,7 +411,7 @@ void DPD::file4_cache_dirty(dpdfile4 *File) {
     }
 }
 
-int DPD::file4_cache_get_priority(dpdfile4 *File) {
+int DPD::file4_cache_get_priority_sp(dpdfile4_sp *File) {
     dpd_file4_cache_entry *this_entry;
 
     this_entry = dpd_main.file4_cache_priority;
@@ -429,7 +428,7 @@ int DPD::file4_cache_get_priority(dpdfile4 *File) {
     return (0);
 }
 
-dpd_file4_cache_entry *dpd_file4_cache_find_low() {
+dpd_file4_cache_entry *dpd_file4_cache_find_low_sp() {
     dpd_file4_cache_entry *this_entry, *low_entry;
 
     this_entry = dpd_main.file4_cache;
@@ -441,10 +440,11 @@ dpd_file4_cache_entry *dpd_file4_cache_find_low() {
         if (this_entry->lock)
             this_entry = this_entry->next;
         else
-            break; /* Is this right? */
+            break; 
+           /* Is this right? */
     }
-
     /* Now search for the lowest priority entry */
+
     low_entry = this_entry;
     while (this_entry != nullptr && low_entry != nullptr) {
         if ((this_entry->priority < low_entry->priority) && !this_entry->lock) low_entry = this_entry;
@@ -454,16 +454,16 @@ dpd_file4_cache_entry *dpd_file4_cache_find_low() {
     return low_entry;
 }
 
-int DPD::file4_cache_del_low() {
+int DPD::file4_cache_del_low_sp() {
     int dpdnum;
-    dpdfile4 File;
+    dpdfile4_sp File;
     dpd_file4_cache_entry *this_entry;
 
 #ifdef DPD_TIMER
     timer_on("cache_low");
 #endif
 
-    this_entry = dpd_file4_cache_find_low();
+    this_entry = dpd_file4_cache_find_low_sp();
 
     if (this_entry == nullptr) {
 #ifdef DPD_TIMER
@@ -474,7 +474,7 @@ int DPD::file4_cache_del_low() {
 #ifdef DPD_DEBUG
         printf("Delete LOW: %-22s %3d %2d %2d %6d %1d %6d %8.1f\n", this_entry->label, this_entry->filenum,
                this_entry->pqnum, this_entry->rsnum, this_entry->usage, this_entry->clean, this_entry->priority,
-               (this_entry->size * sizeof(double)) / 1e3);
+               (this_entry->size * sizeof(float)) / 1e3);
 #endif
 
         /* increment the global LOW deletion counter */
@@ -485,10 +485,10 @@ int DPD::file4_cache_del_low() {
 
         dpd_set_default(this_entry->dpdnum);
 
-        file4_init(&File, this_entry->filenum, this_entry->irrep, this_entry->pqnum, this_entry->rsnum,
+        file4_init_sp(&File, this_entry->filenum, this_entry->irrep, this_entry->pqnum, this_entry->rsnum,
                    this_entry->label);
-        file4_cache_del(&File);
-        file4_close(&File);
+        file4_cache_del_sp(&File);
+        file4_close_sp(&File);
 
         /* return the default dpd to its original value */
         dpd_set_default(dpdnum);
@@ -501,7 +501,7 @@ int DPD::file4_cache_del_low() {
     }
 }
 
-void DPD::file4_cache_lock(dpdfile4 *File) {
+void DPD::file4_cache_lock_sp(dpdfile4_sp *File) {
     int h;
     dpd_file4_cache_entry *this_entry;
 
@@ -518,7 +518,7 @@ void DPD::file4_cache_lock(dpdfile4 *File) {
     }
 }
 
-void DPD::file4_cache_unlock(dpdfile4 *File) {
+void DPD::file4_cache_unlock_sp(dpdfile4_sp *File) {
     int h;
     dpd_file4_cache_entry *this_entry;
 

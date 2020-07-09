@@ -69,6 +69,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
 #endif
     float **TMP;
     int row, col;
+    timer_on("Test: contract444_mp");
     nirreps = X->params->nirreps;
     GX = X->file_sp.my_irrep;
     GY = Y->file_sp.my_irrep;
@@ -169,7 +170,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
             outfile->Printf("Contract444: out of core algorithm used.\n");
             outfile->Printf("Contract444: memtotal = %d.\n", memtotal);
             outfile->Printf("Contract444: Need %5.2f MB to run in memory.\n", ((double)memtotal) * byte_conv);
-            dpd_file4_cache_print("outfile");
+            dpd_file4_cache_print_sp("outfile");
             fflush("outfile");
         }
 #endif
@@ -182,6 +183,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
     */
 
         if (incore) {
+            timer_on("read_mp444");
             buf4_mat_irrep_init_sp(X, Hx);
             buf4_mat_irrep_rd_sp(X, Hx);
 
@@ -191,7 +193,8 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
             
             if (std::fabs(beta) > 0.0) buf4_mat_irrep_rd(Z, Hz);
             TMP = dpd_block_matrix_sp(Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
-
+            timer_off("read_mp444");
+            timer_on("SGEMM_mp444");
             if (Z->params->rowtot[Hz] && Z->params->coltot[Hz ^ GZ] && numlinks[Hx ^ symlink]) {
                 C_SGEMM(Xtrans ? 't' : 'n', Ytrans ? 't' : 'n', Z->params->rowtot[Hz], Z->params->coltot[Hz ^ GZ],
                         numlinks[Hx ^ symlink], alpha, &(X->matrix[Hx][0][0]), X->params->coltot[Hx ^ GX],
@@ -201,14 +204,18 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
   		for (col = 0; col < Z->params->coltot[Hz ^ GZ]; col++){
 			Z->matrix[Hz][row][col] = beta * Z->matrix[Hz][row][col] + static_cast<double>(TMP[row][col]);
 		}
-	    }
-            free_dpd_block_sp(TMP,Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+	    }           
+            outfile->Printf("Size444: %d\n", row * col);
 
+            free_dpd_block_sp(TMP,Z->params->rowtot[Hz],Z->params->coltot[Hz ^ GZ]);
+            timer_off("SGEMM_mp444");
+            timer_on("write_mp444");
             buf4_mat_irrep_close_sp(X, Hx);
 
             buf4_mat_irrep_wrt(Z, Hz);
             buf4_mat_irrep_close_sp(Y, Hy);
             buf4_mat_irrep_close(Z, Hz);
+            timer_off("write_mp444");
         } else {
             /* out-of-core algorithm coded only for NT and TN arrangements, not NN or TT */
             if ((!Ytrans && !Xtrans) || (Ytrans && Xtrans)) {
@@ -277,6 +284,7 @@ int DPD::contract444_mp(dpdbuf4<float> *X, dpdbuf4<float> *Y, dpdbuf4<double> *Z
 
         }  // !incore
     }      // Hx
+    timer_off("Test: contract444_mp");
 
     return 0;
 }

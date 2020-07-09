@@ -41,10 +41,10 @@ int DPD::file4_mat_irrep_row_wrt_sp(dpdfile4_sp *File, int irrep, int row) {
     int coltot, my_irrep, seek_block;
     psio_address irrep_ptr, row_ptr, next_address;
     //Modified by ZW
-    //if (File->incore) {
-    //    file4_cache_dirty(File); /* Flag this cache entry for writing */
-    //    return 0;                /* We're keeping the data in core */
-    //}
+    if (File->incore) {
+        file4_cache_dirty_sp(File); /* Flag this cache entry for writing */
+        return 0;                /* We're keeping the data in core */
+    }
 
     my_irrep = File->my_irrep;
 

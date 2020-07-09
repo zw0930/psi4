@@ -34,7 +34,7 @@
 #include <cstring>
 #include <cmath>
 #include "dpd.h"
-
+#include "psi4/libqt/qt.h"
 namespace psi {
 
 /* dpd_buf4_cast_copy(): Casts the an existing four-index dpdbuf4<double>and copies it into another file.
@@ -58,7 +58,8 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
     long int memoryd, rows_per_bucket, rows_left, size;
     //float ***tmp_matrix;
     dpdbuf4<float> OutBuf;
-    
+   
+    timer_on("Test: cast_copy_dtof"); 
     my_irrep = InBuf->file.my_irrep;
 
     buf4_init_sp(&OutBuf, outfilenum, InBuf->file.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
@@ -159,7 +160,7 @@ int DPD::buf4_cast_copy_dtof(dpdbuf4<double> *InBuf, int outfilenum, const char 
     }
    // free(tmp_matrix);
     buf4_close_sp(&OutBuf);
-
+    timer_off("Test: cast_copy_dtof");
     return 0;
 }
 
@@ -170,7 +171,7 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
     long int memoryd, rows_per_bucket, rows_left, size;
     //double ***tmp_matrix;
     dpdbuf4<double> OutBuf;
-    
+    timer_on("Test: cast_copy_ftod");
     my_irrep = InBuf->file_sp.my_irrep;
 
     buf4_init(&OutBuf, outfilenum, InBuf->file_sp.my_irrep, InBuf->params->pqnum, InBuf->params->rsnum,
@@ -271,7 +272,7 @@ int DPD::buf4_cast_copy_ftod(dpdbuf4<float> *InBuf, int outfilenum, const char *
     }
     //free(tmp_matrix);
     buf4_close(&OutBuf);
-
+    timer_off("Test: cast_copy_ftod"); 
     return 0;
 }
 
