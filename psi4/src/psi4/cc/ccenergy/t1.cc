@@ -153,7 +153,9 @@ void CCEnergyWavefunction::t1_build() {
         global_dpd_->buf4_init(&tIjAb, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb");
         global_dpd_->contract442(&E, &tIjAb, &newtIA, 1, 3, -1, 1);
         global_dpd_->buf4_close(&E);
+        outfile->Printf("T1 residual checksum = %20.12f\n", global_dpd_->buf4_dot_self(&tIjAb));
         global_dpd_->buf4_close(&tIjAb);
+
 
         //outfile->Printf("newtIA_7");
         //global_dpd_->file2_print(&newtIA, "outfile");
@@ -631,10 +633,12 @@ void CCEnergyWavefunction::t1_build_mp() {
         global_dpd_->buf4_init_sp(&tIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
         global_dpd_->contract442_mp(&E_sp, &tIjAb_sp, &newtIA, 1, 3, -1, 1);
         global_dpd_->buf4_close_sp(&E_sp);
+        outfile->Printf("T1 residual checksum = %20.12f\n", global_dpd_->buf4_dot_self_sp(&tIjAb_sp));
         global_dpd_->buf4_close_sp(&tIjAb_sp);
        
         //outfile->Printf("newtIA_7: E, tIjAb");
        // global_dpd_->file2_print(&newtIA, "outfile"); 
+
                
         if (params_.just_residuals) {
             global_dpd_->file2_close(&newtIA);
@@ -773,7 +777,9 @@ void CCEnergyWavefunction::t1_build_sp() {
         global_dpd_->buf4_init_sp(&tIjAb_sp, PSIF_CC_TAMPS, 0, 0, 5, 0, 5, 0, "tIjAb_sp");
         global_dpd_->contract442_sp(&E_sp, &tIjAb_sp, &newtIA_sp, 1, 3, -1, 1);
         global_dpd_->buf4_close_sp(&E_sp);
+        outfile->Printf("T1 residual checksum = %20.12f\n", global_dpd_->buf4_dot_self_sp(&tIjAb_sp));
         global_dpd_->buf4_close_sp(&tIjAb_sp);
+
 
         if (params_.just_residuals) {
             global_dpd_->file2_cast_copy_ftod(&newtIA_sp, PSIF_CC_OEI, "New tIA");

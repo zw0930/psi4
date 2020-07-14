@@ -35,6 +35,7 @@
 #include "psi4/libdpd/dpd.h"
 #include "Params.h"
 #include "psi4/cc/ccwave.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi {
 namespace ccenergy {
@@ -61,6 +62,7 @@ void CCEnergyWavefunction::Fme_build_sp() {
         global_dpd_->buf4_close_sp(&D_anti_sp);
         global_dpd_->buf4_close_sp(&D_sp);
 
+        outfile->Printf("Fme checksum = %20.12f\n", global_dpd_->file2_dot_self_sp(&FME_sp));
         global_dpd_->file2_close_sp(&FME_sp);
     }
 }

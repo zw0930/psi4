@@ -36,6 +36,7 @@
 #include "Params.h"
 #include "MOInfo.h"
 #include "psi4/cc/ccwave.h"
+#include "psi4/libpsi4util/PsiOutStream.h"
 
 namespace psi {
 namespace ccenergy {
@@ -94,6 +95,8 @@ void CCEnergyWavefunction::Fmi_build_sp() {
         global_dpd_->contract442_sp(&D, &tautIjAb, &FMI, 0, 0, 1, 1);
         global_dpd_->buf4_close_sp(&tautIjAb);
         global_dpd_->buf4_close_sp(&D);
+
+        outfile->Printf("Fmi checksum = %20.12f\n", global_dpd_->file2_dot_self_sp(&FMI));
 
         /* Build the tilde intermediate */
         global_dpd_->file2_copy_sp(&FMI, PSIF_CC_OEI, "FMIt_sp");

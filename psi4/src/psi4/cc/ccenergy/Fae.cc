@@ -254,6 +254,8 @@ void CCEnergyWavefunction::Fae_build() {
         global_dpd_->buf4_close(&D);
         global_dpd_->buf4_close(&tautIjAb);
 
+        outfile->Printf("Fae checksum = %20.12f\n", global_dpd_->file2_dot_self(&FAE));
+
         /* Build the tilde intermediates */
         global_dpd_->file2_copy(&FAE, PSIF_CC_OEI, "FAEt");
 
